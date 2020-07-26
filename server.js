@@ -1,9 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const User = require("./models/User");
 
 const app = express();
 app.use(bodyParser.json())
+// Define Routes
+app.use('/api/users', require('./routes/users'));
+app.use('/api/auth', require('./routes/auth'));
 
 const connectDB = async () => {
   try {
@@ -28,37 +32,6 @@ const connectDB = async () => {
 // Connect Database
 connectDB();
 
-const User = mongoose.model("User", { 
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    profilePic: {
-        type: String,
-        required: false
-    },
-    school: {
-        type: String,
-        required: false
-    },
-    major: {
-        type: String,
-        required: false
-    },
-    year: {
-        type: Number,
-        required: false
-    },
-    
-});
 
 //req : request
 //res : response
