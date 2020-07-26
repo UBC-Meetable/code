@@ -41,6 +41,23 @@ const User = mongoose.model("User", {
         type: String,
         required: true
     },
+    profilePic: {
+        type: String,
+        required: false
+    },
+    school: {
+        type: String,
+        required: false
+    },
+    major: {
+        type: String,
+        required: false
+    },
+    year: {
+        type: Number,
+        required: false
+    },
+    
 });
 
 //req : request
@@ -57,8 +74,6 @@ app.post("/submitForm", (req, res) => {
   const name = body.name;
   const email = body.email;
   const password = body.password;
-
-
 
   const u = new User({ name, email, password });
   u.save().then(() => {
