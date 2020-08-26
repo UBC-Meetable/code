@@ -7,6 +7,8 @@ const app = express();
 app.use(bodyParser.json())
 // Define Routes
 app.use('/api/users', require('./routes/users'));
+app.use('/api/quizs', require('./routes/quizs'));
+app.use('/api/responses', require('./routes/responses'));
 app.use('/api/auth', require('./routes/auth'));
 
 const connectDB = async () => {
@@ -59,4 +61,4 @@ app.post("/submitForm", (req, res) => {
 
 });
 
-app.listen(3000, () => console.log("Meetable api listening on port 3000"));
+app.listen(4000, () => console.log("Meetable api listening on port 4000"));
