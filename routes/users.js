@@ -81,8 +81,12 @@ router.post(
   }
 );
 
+
+// @route    GET api/users
+// @desc     Get all users
+// @access   Private
 router.get('/', async (req, res)=>{
-  const users = await find()
+  const users = await User.find()
   res.json({success:true, users})
 
 })
@@ -100,4 +104,4 @@ router.get('/getgroupsbyuserid', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
