@@ -1,12 +1,12 @@
-import { Router } from 'express';
-const router = Router();
-import gravatar from 'gravatar';
-import { genSalt, hash } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
-import { check, validationResult, body } from 'express-validator';
-import normalize from 'normalize-url';
+const express = require('express');
+const router = express.Router();
+const gravatar = require('gravatar');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const { check, validationResult, body } = require('express-validator');
+const normalize = require('normalize-url');
 
-import User, { findOne, find } from '../models/User';
+const User = require('../models/User');
 
 // @route    POST api/users
 // @desc     Register user

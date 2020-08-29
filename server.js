@@ -1,7 +1,7 @@
-import express from "express";
-import { connect } from "mongoose";
-import { json } from 'body-parser';
-import User from "../models/User";
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require('body-parser');
+const User = require("./models/User");
 
 const app = express();
 app.use(json())
