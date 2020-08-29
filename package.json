@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "api-meetable",
   "version": "1.0.0",
   "description": "",
@@ -10,7 +11,11 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
     "express-validator": "^6.6.0",
-    "jsonwebtoken": "^8.5.1"
+    "gravatar": "^1.8.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.2",
+    "normalize-url": "^5.1.0"
   }
 }

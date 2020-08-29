@@ -3,12 +3,23 @@ const Quiz = require('../models/Quiz');
 const { generateResponse } = require('./responses');
 const router = express.router()
 
+
+// get all quiz instances
 router.get('/', async (req,res)=>{
-    
     const quizes = await Quiz.find()
     res.status(200).send({
         success: true,
         quizes
+    })
+
+})
+
+// get quiz instance for user
+router.get('/', async (req,res)=>{
+    const quiz = await Quiz.find({uid: req.body.uid})
+    res.status(200).send({
+        success: true,
+        quiz
     })
 
 })
@@ -19,7 +30,7 @@ router.post('/', async (req,res)=>{
 
     
     const q = new Quiz({
-        uid
+        uid: uid // correct?
     })
     
     try {
