@@ -1,7 +1,7 @@
 const express = require('express');
 const Quiz = require('../models/Quiz');
 const { generateResponse } = require('./responses');
-const router = express.router()
+const router = express.Router()
 
 router.get('/', async (req,res)=>{
     

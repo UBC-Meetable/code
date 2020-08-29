@@ -1,6 +1,6 @@
 const express = require('exprses');
 const Question = require('../models/Question');
-const router = express.router()
+const router = express.Router()
 
 router.get('/', async (req, res) => {
     const questions = await Question.find()
