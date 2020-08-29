@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Group = require('./Group');
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -14,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  avatar: {
+  avatar: { // string? or identifier for image hosted on server?
     type: String
   },
   verified: {
@@ -24,6 +25,20 @@ const UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  groups: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    maxSize: {type: Number, default: 10}
+  },
+  blurb: {
+    type: String,
+    maxChar: 300
+  },
+  socialMedia: { 
+    type: Map, // key: social media platform
+    of: String, // value: either links or identifiers such as usernames
+    minSize: 1,
+    maxSize: 3 // arbitrary, per design on figma
   }
 });
 

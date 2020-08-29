@@ -33,7 +33,7 @@ router.post(
     console.log(req.body);
 
     try {
-      let user = await User.findOne({ email });
+      let user = await findOne({ email });
 
       if (user) {
         return res
@@ -51,9 +51,9 @@ router.post(
         major
       });
 
-      const salt = await bcrypt.genSalt(10);
+      const salt = await genSalt(10);
 
-      user.password = await bcrypt.hash(password, salt);
+      user.password = await hash(password, salt);
 
       await user.save();
 
@@ -65,7 +65,7 @@ router.post(
 
       payload.user.id
 
-      jwt.sign(
+      sign(
         payload,
         process.env.jwtSecret,
         { expiresIn: '5 days' },
@@ -82,9 +82,22 @@ router.post(
 );
 
 router.get('/', async (req, res)=>{
-  const users = await User.find()
+  const users = await find()
   res.json({success:true, users})
 
 })
 
-module.exports = router;
+// @route    GET api/users
+// @desc     Get group(s) which user is part of
+// @access   Private
+router.get('/getgroupsbyuserid', async (req, res) => {
+  try {
+    const groups = await find({_id : req.body.uid}).populate("groups");
+    res.json(groups);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Error getting user groups');
+  }
+});
+
+export default router;

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Response Instance
 const ResponseSchema = mongoose.Schema({
     uid: {
         type: mongoose.SchemaTypes.ObjectId,

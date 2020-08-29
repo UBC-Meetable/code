@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 
+// Quiz Instance
 const QuizSchema = mongoose.Schema({
     uid: {
         type: mongoose.SchemaTypes.ObjectId,

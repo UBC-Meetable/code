@@ -4,16 +4,17 @@ const bodyParser = require('body-parser');
 const User = require("./models/User");
 
 const app = express();
-app.use(bodyParser.json())
+app.use(json())
 // Define Routes
-app.use('/api/users', require('./routes/users'));
+app.use('/api/users', require('./routes/users').default);
 app.use('/api/quizs', require('./routes/quizs'));
 app.use('/api/responses', require('./routes/responses'));
 app.use('/api/auth', require('./routes/auth'));
+app.use('/api/groups', require('./routes/groups'));
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(
+    await connect(
       "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster0.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
