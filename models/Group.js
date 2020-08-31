@@ -6,8 +6,9 @@ const GroupSchema = mongoose.Schema({
         type: [mongoose.SchemaTypes.ObjectId]
     }
     */
+   name: {type: String, required: true},
    memberids: [mongoose.SchemaTypes.ObjectId],
-   maxSize: {type: Number, default: 10, required: true}
+   maxSize: {type: Number, default: 10}
 })
 
 module.exports = Group = mongoose.model("group", GroupSchema);

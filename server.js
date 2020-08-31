@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const User = require("./models/User");
+const Question = require("./models/Question");
+
 
 const app = express();
 app.use(bodyParser.json())
@@ -61,5 +63,8 @@ app.post("/submitForm", (req, res) => {
   });
 
 });
+
+// hard coded quiz questions
+
 
 app.listen(4000, () => console.log("Meetable api listening on port 4000"));

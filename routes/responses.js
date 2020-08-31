@@ -1,6 +1,6 @@
 
 const Question = require("../models/Question")
-const Quiz = require('../models/Quiz')
+const QuizInstance = require('../models/QuizInstance')
 const Response = require('../models/Response')
 
 const mongoose = require("mongoose");
