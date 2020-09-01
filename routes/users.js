@@ -7,6 +7,10 @@ const { check, validationResult, body } = require('express-validator');
 const normalize = require('normalize-url');
 
 const User = require('../models/User');
+const Group = require('../models/Group');
+const { count } = require('../models/Group');
+
+const NUM_ADDITIONAL_CRITERIA = 3;
 
 // @route    POST api/users
 // @desc     Register user
@@ -103,5 +107,71 @@ router.get('/getgroupsbyuserid', async (req, res) => {
     res.status(500).send('Error getting user groups');
   }
 });
+
+// @route    PUT api/users
+// @desc     update user profile information
+// @access   Private
+// how to validate email?
+router.put('/updateprofile', async (req, res) => {
+  try {
+  const body = req.body;
+  /* body
+  {uid: ...,
+  instagram: "...",
+  snapchat: "...",
+  ..., 
+  blurb: "...",
+  email: "..."}
+  */
+  const uid = body.uid;
+  const user = await User.find({_id: uid});
+  for (const attr in body) {
+    user[attr] = body[attr];
+  }
+  user.save();
+  res.status(200).send("Success");
+  } catch (err) {
+  console.error(err.message);
+  res.status(500).send("Error updating profile");
+  } 
+});
+
+// @route    PUT api/users
+// @desc     put user in a group (modify later to allow multiple groups)
+// @access   Private
+router.put('/group', async (req, res) => {
+  const body = req.body;
+  const uid = body.uid;
+  const user = await User.find({id_: uid});
+  const quizInstance = await QuizInstance.find({uid: uid});
+  const responses = quizInstance.resposes;
+  groupName = [];
+  groupName.push(responses[0].answer); // year
+  groupName.push(responses[1].answer); // major
+
+  count = 0;
+  while (count < NUM_ADDITIONAL_CRITERIA) {
+    random = responses[Math.floor(Math.random() * responses.length)].answer;
+    if (!groupName.includes(random)) {
+      groupName.push(responses[Math.floor(Math.random() * responses.length)].answer);
+      count++;
+    }
+  }
+
+  group;
+  await Group.findOne({name: groupName, full: false}, (err, result) => {
+    if (result == null) {
+      group = new Group({name: groupName,});
+      user.groups.push(group._id);
+      group.memberids.push(uid);
+    } else {
+      group = result;
+      user.groups.push(group._id);
+      group.memberids.push(uid);
+    }
+    if (group.memberids.length == group.maxSize) group.full = true; 
+  });
+});
+
 
 module.exports = router;

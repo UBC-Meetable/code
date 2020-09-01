@@ -26,14 +26,15 @@ router.get('/', async (req,res)=>{
 })
 
 // I'm assuming this is to create a new quiz instance before serving it to client
+// if client doesn't need to maintain its own quiz instance, send quiz instance id instead
 router.post('/', async (req,res)=>{
     const body = req.body
     const uid = body.uid
-    const quiz = await Quiz.find({name: "hardcoded"}) // note: manually add to db
+    // const quiz = await Quiz.find({name: "hardcoded"}) not needed for MVP
 
     const q = new QuizInstance({
         uid: uid,
-        quiz: quiz
+        //quiz: quiz
     })
     
     try {

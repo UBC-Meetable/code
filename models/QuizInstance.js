@@ -8,7 +8,7 @@ const QuizInstanceSchema = mongoose.Schema({
     },
     quiz: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: false // quiz not served by backend for MVP
     },
     responses: {
         type: [mongoose.SchemaTypes.ObjectId],
