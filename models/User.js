@@ -36,15 +36,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxChar: 300
   },
-  instagram: {type: String,
+  instagram: {type: String, // make social media attributes unique and sparse??
     required: false,
-    unique: true},
+    },
   snapchat: {type: String,
     required: false,
-    unique: true},
+    },
   facebook: {type: String,
     required: false,
-    unique: true},
+    },
     /*
   socialMedia: { 
     type: Map, // key: social media platform

@@ -117,7 +117,7 @@ router.get('/', async (req, res)=>{
 })
 
 // @route    GET api/users
-// @desc     Get group(s) which user is part of
+// @desc     Get group(s) which user is part of, populated with users
 // @access   Private
 router.get('/getgroupsbyuserid', async (req, res) => {
   try {
@@ -162,6 +162,7 @@ router.put('/updateprofile', async (req, res) => {
   user.save();
   res.status(200).send("Success");
   } catch (err) {
+  console.log(err);
   console.error(err.message);
   res.status(500).send("Error updating profile");
   } 
@@ -176,13 +177,8 @@ router.put('/group', async (req, res) => {
     const body = req.body;
     const uid = body.uid;
     user = await User.findOne({_id: uid});
-    const quizInstance = await QuizInstance.findOne({uid: uid});
-    const responseIds = quizInstance.responses;
-    const responses = [];
-    for (let i = 0; i < responseIds.length; i++) {
-      response = await Response.findOne({_id: responseIds[i]});
-      responses.push(response);
-    }
+    const quizInstance = await QuizInstance.findOne({uid: uid}).populate("response");
+    const responses = quizInstance.responses;
     groupName = [];
     groupName.push(responses[0].answer); // year
     groupName.push(responses[1].answer); // major
