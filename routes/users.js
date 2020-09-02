@@ -8,20 +8,23 @@ const normalize = require('normalize-url');
 
 const User = require('../models/User');
 const Group = require('../models/Group');
-const { count } = require('../models/Group');
+const QuizInstance = require('../models/QuizInstance');
+//const { count } = require('../models/Group');
 
-const NUM_ADDITIONAL_CRITERIA = 3;
+
 
 // add user for testing purposes
 router.post('/test', async (req, res) => {
   try {
-    const { name, email, password, profileImage, school, major, year } = req.body;
+    //const { name, email, password, profileImage,} = req.body;
+    console.log(req.body);
     user = new User({
-      name,
-      email,
-      avatar: profileImage,
-      password,
+      name: req.body.name,
+      email: req.body.email,
+      avatar: req.body.profileImage,
+      password: req.body.password,
     });
+    console.log(user);
     await user.save();
     res.json(user._id);
   } catch (err) {
@@ -118,8 +121,18 @@ router.get('/', async (req, res)=>{
 // @access   Private
 router.get('/getgroupsbyuserid', async (req, res) => {
   try {
-    const groups = await find({_id : req.body.uid}).populate("groups");
+    /* couldn't get this implementation to work...
+    const groups = await User.find({_id : req.body.uid}).populate("groups");
     res.json(groups);
+    */
+   const user = await User.findOne({_id: req.body.uid});
+   const groupIds = user.groups;
+   let groups = [];
+   for (let i = 0; i < groupIds.length; i++) {
+     group = await Group.findOne({_id: groupIds[i]});
+     groups.push(group);
+   }
+   res.json(groups);
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Error getting user groups');
@@ -142,7 +155,7 @@ router.put('/updateprofile', async (req, res) => {
   email: "..."}
   */
   const uid = body.uid;
-  const user = await User.find({_id: uid});
+  const user = await User.findOne({_id: uid});
   for (const attr in body) {
     user[attr] = body[attr];
   }
@@ -158,12 +171,18 @@ router.put('/updateprofile', async (req, res) => {
 // @desc     put user in a group (modify later to allow multiple groups)
 // @access   Private
 router.put('/group', async (req, res) => {
+  const NUM_ADDITIONAL_CRITERIA = 3;
   try {
     const body = req.body;
     const uid = body.uid;
-    const user = await User.find({id_: uid});
-    const quizInstance = await QuizInstance.find({uid: uid});
-    const responses = quizInstance.resposes;
+    user = await User.findOne({_id: uid});
+    const quizInstance = await QuizInstance.findOne({uid: uid});
+    const responseIds = quizInstance.responses;
+    const responses = [];
+    for (let i = 0; i < responseIds.length; i++) {
+      response = await Response.findOne({_id: responseIds[i]});
+      responses.push(response);
+    }
     groupName = [];
     groupName.push(responses[0].answer); // year
     groupName.push(responses[1].answer); // major
@@ -177,21 +196,22 @@ router.put('/group', async (req, res) => {
       }
     }
 
-    group = {};
-    await Group.findOne({name: groupName, full: false}, (err, result) => {
-      if (result == null) {
-        group = new Group({name: groupName,});
-        user.groups.push(group._id);
-        group.memberids.push(uid);
-      } else {
-        group = result;
-        user.groups.push(group._id);
-        group.memberids.push(uid);
-      }
-      if (group.memberids.length == group.maxSize) group.full = true; 
-    });
+    group = await Group.findOne({name: groupName, full: false});
+    if (group == null) {
+      group = new Group({name: groupName,});
+      user.groups.push(group._id);
+      group.memberids.push(uid);
+    } else {
+      user.groups.push(group._id);
+      group.memberids.push(uid);
+    }
+    if (group.memberids.length == group.maxSize) group.full = true; 
+
+    await user.save();
+    await group.save();
     res.status(200).send("Success");
   } catch (err) {
+    console.log(err);
     console.error(err.message);
     res.status(500).send("Error placing user in group");
   }

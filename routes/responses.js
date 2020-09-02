@@ -24,9 +24,10 @@ router.put('/', async (req, res) => {
     const response = new Response({uid: uid, 
         question: body.question, 
         answer: body.answer});
-    response.save();
-    quizInstance = await QuizInstance.find({_id: body.quizid});
+    await response.save();
+    quizInstance = await QuizInstance.findOne({_id: body.quizid});
     quizInstance.responses.push(response._id);
+    await quizInstance.save();
     res.status(200).send("Success");
     } catch (err) {
     console.error(err.message);

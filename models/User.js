@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema({
   },
   groups: {
     type: [mongoose.SchemaTypes.ObjectId],
+    ref: 'Group',
     default: [],
     maxSize: {type: Number, default: 10}
   },
