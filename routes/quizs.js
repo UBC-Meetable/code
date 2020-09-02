@@ -41,7 +41,7 @@ router.post('/', async (req,res)=>{
         const quiz = await q.save()
         res.status(200).send({
             success: true,
-            quiz
+            quiz // kv notation not needed here
         })
         
     } catch (error) {

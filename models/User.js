@@ -36,13 +36,13 @@ const UserSchema = new mongoose.Schema({
     maxChar: 300
   },
   instagram: {type: String,
-    required: true,
+    required: false,
     unique: true},
   snapchat: {type: String,
-    required: true,
+    required: false,
     unique: true},
   facebook: {type: String,
-    required: true,
+    required: false,
     unique: true},
     /*
   socialMedia: { 

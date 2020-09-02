@@ -12,6 +12,24 @@ const { count } = require('../models/Group');
 
 const NUM_ADDITIONAL_CRITERIA = 3;
 
+// add user for testing purposes
+router.post('/test', async (req, res) => {
+  try {
+    const { name, email, password, profileImage, school, major, year } = req.body;
+    user = new User({
+      name,
+      email,
+      avatar: profileImage,
+      password,
+    });
+    await user.save();
+    res.json(user._id);
+  } catch (err) {
+    console.log(err);
+    res.status(400);
+  }
+});
+
 // @route    POST api/users
 // @desc     Register user
 // @access   Public
@@ -140,37 +158,44 @@ router.put('/updateprofile', async (req, res) => {
 // @desc     put user in a group (modify later to allow multiple groups)
 // @access   Private
 router.put('/group', async (req, res) => {
-  const body = req.body;
-  const uid = body.uid;
-  const user = await User.find({id_: uid});
-  const quizInstance = await QuizInstance.find({uid: uid});
-  const responses = quizInstance.resposes;
-  groupName = [];
-  groupName.push(responses[0].answer); // year
-  groupName.push(responses[1].answer); // major
+  try {
+    const body = req.body;
+    const uid = body.uid;
+    const user = await User.find({id_: uid});
+    const quizInstance = await QuizInstance.find({uid: uid});
+    const responses = quizInstance.resposes;
+    groupName = [];
+    groupName.push(responses[0].answer); // year
+    groupName.push(responses[1].answer); // major
 
-  count = 0;
-  while (count < NUM_ADDITIONAL_CRITERIA) {
-    random = responses[Math.floor(Math.random() * responses.length)].answer;
-    if (!groupName.includes(random)) {
-      groupName.push(responses[Math.floor(Math.random() * responses.length)].answer);
-      count++;
+    count = 0;
+    while (count < NUM_ADDITIONAL_CRITERIA) {
+      random = responses[Math.floor(Math.random() * responses.length)].answer;
+      if (!groupName.includes(random)) {
+        groupName.push(random);
+        count++;
+      }
     }
+
+    group = {};
+    await Group.findOne({name: groupName, full: false}, (err, result) => {
+      if (result == null) {
+        group = new Group({name: groupName,});
+        user.groups.push(group._id);
+        group.memberids.push(uid);
+      } else {
+        group = result;
+        user.groups.push(group._id);
+        group.memberids.push(uid);
+      }
+      if (group.memberids.length == group.maxSize) group.full = true; 
+    });
+    res.status(200).send("Success");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Error placing user in group");
   }
 
-  group;
-  await Group.findOne({name: groupName, full: false}, (err, result) => {
-    if (result == null) {
-      group = new Group({name: groupName,});
-      user.groups.push(group._id);
-      group.memberids.push(uid);
-    } else {
-      group = result;
-      user.groups.push(group._id);
-      group.memberids.push(uid);
-    }
-    if (group.memberids.length == group.maxSize) group.full = true; 
-  });
 });
 
 
