@@ -28,18 +28,30 @@ const UserSchema = new mongoose.Schema({
   },
   groups: {
     type: [mongoose.SchemaTypes.ObjectId],
+    default: [],
     maxSize: {type: Number, default: 10}
   },
   blurb: {
     type: String,
     maxChar: 300
   },
+  instagram: {type: String,
+    required: false,
+    unique: true},
+  snapchat: {type: String,
+    required: false,
+    unique: true},
+  facebook: {type: String,
+    required: false,
+    unique: true},
+    /*
   socialMedia: { 
     type: Map, // key: social media platform
     of: String, // value: either links or identifiers such as usernames
     minSize: 1,
     maxSize: 3 // arbitrary, per design on figma
   }
+  */
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

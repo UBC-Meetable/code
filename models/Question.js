@@ -7,7 +7,7 @@ const QuestionSchema = mongoose.Schema({
     },
     possibleAnswers: {
         type: [String],
-        required: true
+        required: true 
     },
     dateCreated: {
         type: Date,

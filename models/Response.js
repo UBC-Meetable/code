@@ -6,12 +6,8 @@ const ResponseSchema = mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
-    qid: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
-    },
     question: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String, // for hard coded MVP questions
         required: true
     },
     answer: {

@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
-// Quiz Instance
+// Quiz Model
 const QuizSchema = mongoose.Schema({
-    uid: {
-        type: mongoose.SchemaTypes.ObjectId,
+    name: {
+        type: String,
         required: true
     },
-    responses: {
+    questions: {
         type: [mongoose.SchemaTypes.ObjectId],
-        default: []
+        required: true
     },
     dateCreated: {
         type: Date,
