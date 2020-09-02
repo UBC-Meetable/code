@@ -11,7 +11,7 @@ const QuizInstanceSchema = mongoose.Schema({
         required: false // quiz not served by backend for MVP
     },
     responses: {
-        type: [mongoose.SchemaTypes.ObjectId],
+        type: [{type: mongoose.SchemaTypes.ObjectId, ref: "response"}],
         default: []
     },
     dateCreated: {

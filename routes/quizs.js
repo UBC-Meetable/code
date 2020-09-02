@@ -15,9 +15,9 @@ router.get('/', async (req,res)=>{
 
 })
 
-// get quiz instance for user
-router.get('/', async (req,res)=>{
-    const quiz = await QuizInstance.find({uid: req.body.uid})
+// get quiz instance for user (for now just one quiz)
+router.get('/byid', async (req,res)=>{
+    const quiz = await QuizInstance.findOne({uid: req.body.uid})
     res.status(200).send({
         success: true,
         quiz
@@ -41,7 +41,7 @@ router.post('/', async (req,res)=>{
         const quiz = await q.save()
         res.status(200).send({
             success: true,
-            quiz // kv notation not needed here
+            quizInstance: quiz
         })
         
     } catch (error) {
@@ -52,6 +52,7 @@ router.post('/', async (req,res)=>{
     }
 })
 
+/*
 // assuming client sends back finished quiz instance
 // unsure if user should be added to a group here or in groups.js
 router.post('/submitcomplete', async (req,res)=>{
@@ -62,5 +63,6 @@ router.post('/submitcomplete', async (req,res)=>{
 
 
 })
+*/
 
 module.exports = router;

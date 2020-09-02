@@ -28,6 +28,7 @@ const UserSchema = new mongoose.Schema({
   },
   groups: {
     type: [mongoose.SchemaTypes.ObjectId],
+    ref: 'Group',
     default: [],
     maxSize: {type: Number, default: 10}
   },
@@ -35,15 +36,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     maxChar: 300
   },
-  instagram: {type: String,
+  instagram: {type: String, // make social media attributes unique and sparse??
     required: false,
-    unique: true},
+    },
   snapchat: {type: String,
     required: false,
-    unique: true},
+    },
   facebook: {type: String,
     required: false,
-    unique: true},
+    },
     /*
   socialMedia: { 
     type: Map, // key: social media platform
