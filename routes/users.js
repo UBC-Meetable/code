@@ -1,26 +1,25 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const gravatar = require('gravatar');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { check, validationResult, body } = require('express-validator');
-const normalize = require('normalize-url');
+const gravatar = require("gravatar");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { check, validationResult, body } = require("express-validator");
+const normalize = require("normalize-url");
 
-const User = require('../models/User');
-const Group = require('../models/Group');
-const QuizInstance = require('../models/QuizInstance');
+const User = require("../models/User");
+const Group = require("../models/Group");
+const QuizInstance = require("../models/QuizInstance");
 //const { count } = require('../models/Group');
 
-
-
 // add user for testing purposes
-router.post('/test', async (req, res) => {
+router.post("/test", async (req, res) => {
+  console.log("test request");
   try {
     console.log(req.body);
     user = new User({
       name: req.body.name,
       avatar: req.body.profileImage,
-      authid: req.body.authid
+      authid: req.body.authid,
     });
     console.log(user);
     await user.save();
@@ -35,15 +34,15 @@ router.post('/test', async (req, res) => {
 // @desc     Register user
 // @access   Public
 router.post(
-  '/',
+  "/",
   [
-    check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Please include a valid email').isEmail(),
+    check("name", "Name is required").not().isEmpty(),
+    check("email", "Please include a valid email").isEmail(),
     check(
-      'password',
-      'Please enter a password with 6 or more characters'
+      "password",
+      "Please enter a password with 6 or more characters"
     ).isLength({ min: 6 }),
-    check('profilePicture', "Valid profile image").optional().isString()
+    check("profilePicture", "Valid profile image").optional().isString(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -51,8 +50,16 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, profileImage, school, major, year } = req.body;
-    
+    const {
+      name,
+      email,
+      password,
+      profileImage,
+      school,
+      major,
+      year,
+    } = req.body;
+
     console.log(req.body);
 
     try {
@@ -61,7 +68,7 @@ router.post(
       if (user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'User already exists' }] });
+          .json({ errors: [{ msg: "User already exists" }] });
       }
 
       user = new User({
@@ -71,7 +78,7 @@ router.post(
         password,
         school,
         year,
-        major
+        major,
       });
 
       const salt = await genSalt(10);
@@ -82,16 +89,16 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
 
-      payload.user.id
+      payload.user.id;
 
       sign(
         payload,
         process.env.jwtSecret,
-        { expiresIn: '5 days' },
+        { expiresIn: "5 days" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -99,41 +106,39 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );
 
-
 // @route    GET api/users
 // @desc     Get all users
 // @access   Private
-router.get('/', async (req, res)=>{
-  const users = await User.find()
-  res.json({success:true, users})
-
-})
+router.get("/", async (req, res) => {
+  const users = await User.find();
+  res.json({ success: true, users });
+});
 
 // @route    GET api/users
 // @desc     Get group(s) which user is part of, populated with users
 // @access   Private
-router.get('/getgroupsbyuserid', async (req, res) => {
+router.get("/getgroupsbyuserid", async (req, res) => {
   try {
     /* couldn't get this implementation to work...
     const groups = await User.find({_id : req.body.uid}).populate("groups");
     res.json(groups);
     */
-   const user = await User.findOne({_id: req.body.uid});
-   const groupIds = user.groups;
-   let groups = [];
-   for (let i = 0; i < groupIds.length; i++) {
-     group = await Group.findOne({_id: groupIds[i]});
-     groups.push(group);
-   }
-   res.json(groups);
+    const user = await User.findOne({ _id: req.body.uid });
+    const groupIds = user.groups;
+    let groups = [];
+    for (let i = 0; i < groupIds.length; i++) {
+      group = await Group.findOne({ _id: groupIds[i] });
+      groups.push(group);
+    }
+    res.json(groups);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Error getting user groups');
+    res.status(500).send("Error getting user groups");
   }
 });
 
@@ -141,10 +146,10 @@ router.get('/getgroupsbyuserid', async (req, res) => {
 // @desc     update user profile information
 // @access   Private
 // how to validate email?
-router.put('/updateprofile', async (req, res) => {
+router.put("/updateprofile", async (req, res) => {
   try {
-  const body = req.body;
-  /* body
+    const body = req.body;
+    /* body
   {uid: ...,
   instagram: "...",
   snapchat: "...",
@@ -152,63 +157,65 @@ router.put('/updateprofile', async (req, res) => {
   blurb: "...",
   email: "..."}
   */
-  const uid = body.uid;
-  const user = await User.findOne({_id: uid});
-  for (const attr in body) {
-    user[attr] = body[attr];
-  }
-  user.save();
-  res.status(200).send("Success");
+    const uid = body.uid;
+    const user = await User.findOne({ _id: uid });
+    for (const attr in body) {
+      user[attr] = body[attr];
+    }
+    user.save();
+    res.status(200).send("Success");
   } catch (err) {
-  console.log(err);
-  console.error(err.message);
-  res.status(500).send("Error updating profile");
-  } 
+    console.log(err);
+    console.error(err.message);
+    res.status(500).send("Error updating profile");
+  }
 });
 
 // @route    PUT api/users
 // @desc     put user in a group (modify later to allow multiple groups)
 // @access   Private
-router.put('/group', async (req, res) => {
+router.put("/group", async (req, res) => {
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
     const body = req.body;
     const uid = body.uid;
-    user = await User.findOne({_id: uid});
-    const quizInstance = await QuizInstance.findOne({uid: uid}).populate("response");
+    user = await User.findOne({ _id: uid });
+    const quizInstance = await QuizInstance.findOne({ uid: uid }).populate(
+      "response"
+    );
     const userResponses = quizInstance.responses;
 
-    group = await Group.findOne({full: false});
+    group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      group = new Group({name: "main"});
+      group = new Group({ name: "main" });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      nonFullGroups = Group.find({full: false}).populate("user");
+      nonFullGroups = Group.find({ full: false }).populate("user");
       // find most compatible user out of all users in non-full groups
       mostCompatibleUser = null;
       for (const item in nonFullGroups) {
         for (const u in item.members) {
-          if (moreCompatible(user, u, mostCompatibleUser)) mostCompatibleUser = u;
+          if (moreCompatible(user, u, mostCompatibleUser))
+            mostCompatibleUser = u;
         }
       }
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        group = new Group({name: "main"});
+        group = new Group({ name: "main" });
         user.groups.push(group._id);
         group.members.push(uid);
       } else {
         // join compatible user's group
-        group = await Group.findOne({_id: mostCompatibleUser.groups[0]});
+        group = await Group.findOne({ _id: mostCompatibleUser.groups[0] });
         user.groups.push(group._id);
         group.members.push(uid);
         // update full? status as necessary
         if (group.members.length == group.maxSize) group.full = true;
       }
     }
-
 
     /*
     groupName = [];
@@ -243,20 +250,26 @@ router.put('/group', async (req, res) => {
     console.log(err);
     res.status(500).send("Error placing user in group");
   }
-
 });
 
 // user, user, user -> boolean, return whether user1 is more compatible with user than user 2
 function moreCompatible(user, user1, user2) {
   const MIN_SCORE = 2;
   //if (user2 == null) return true;
-  userResponses = Response.find({uid: user._id}).sort({dateCreated: 1});
-  user1Responses = Response.find({uid: user1._id}).sort({dateCreated: 1});
-  user2Responses = Response.find({uid: user2._id}).sort({dateCreated: 1});
+  userResponses = Response.find({ uid: user._id }).sort({ dateCreated: 1 });
+  user1Responses = Response.find({ uid: user1._id }).sort({ dateCreated: 1 });
+  user2Responses = Response.find({ uid: user2._id }).sort({ dateCreated: 1 });
   // assume first two responses are always year and major
-  if (user1Responses[0].answer === userResponses[0].answer && user1Responses[1].answer === userResponses[1].answer 
-    && user2 == null) return true;
-  if (user1Responses[0].answer === userResponses[0].answer && user1Responses[1].answer === userResponses[1].answer) {
+  if (
+    user1Responses[0].answer === userResponses[0].answer &&
+    user1Responses[1].answer === userResponses[1].answer &&
+    user2 == null
+  )
+    return true;
+  if (
+    user1Responses[0].answer === userResponses[0].answer &&
+    user1Responses[1].answer === userResponses[1].answer
+  ) {
     let user1Score = 0;
     let user2Score = 0;
     for (let i = 2; i < userResponses.length; i++) {
@@ -268,10 +281,6 @@ function moreCompatible(user, user1, user2) {
   } else {
     return false;
   }
-
-
-  
 }
-
 
 module.exports = router;
