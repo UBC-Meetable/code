@@ -2,15 +2,17 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const User = require("./models/User");
+const Question = require("./models/Question");
+
 
 const app = express();
 app.use(bodyParser.json())
 // Define Routes
-// app.use('/api/users', require('./routes/users'));
-// app.use('/api/quizs', require('./routes/quizs'));
-// app.use('/api/responses', require('./routes/responses'));
-// app.use('/api/auth', require('./routes/auth'));
-// app.use('/api/groups', require('./routes/groups'));
+app.use('/api/users', require('./routes/users'));
+app.use('/api/quizs', require('./routes/quizs'));
+app.use('/api/responses', require('./routes/responses'));
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/groups', require('./routes/groups'));
 
 const connectDB = async () => {
   try {
