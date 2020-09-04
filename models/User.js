@@ -6,15 +6,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
+  authid: {type: String, required: true},
   avatar: { // string? or identifier for image hosted on server?
     type: String
   },

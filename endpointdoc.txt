@@ -1,15 +1,15 @@
 endpoint documentation based on user experience flow
 
-1. create user with name and profile picture after verification
+1. create user with name, auth0 id, profile picture, after verification
 POST api/users/test
-request body : {"name": "...", "profileImage": "..."}
+request body : {"name": "...", "profileImage": "...", "authid": "..."}
 
 2. create quiz instance by user's database id
 POST api/quizs
 request body : {"uid": "..."}
 
 3. send each quiz response back, containing the user id, the quiz instance id, the question text,
-and the answer text.
+and the answer text. If a user skips a question, do still send the response back with no answer attribute.
 PUT api/responses
 request body:
     {uid: ...,
