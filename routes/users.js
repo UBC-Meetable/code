@@ -179,6 +179,24 @@ router.put('/group', async (req, res) => {
     user = await User.findOne({_id: uid});
     const quizInstance = await QuizInstance.findOne({uid: uid}).populate("response");
     const responses = quizInstance.responses;
+
+    group = await Group.findOne({full: false});
+    if (group == null) {
+      group = new Group({name: "main"});
+      user.groups.push(group._id);
+      group.members.push(uid);
+    } else {
+      nonFullGroups = Group.find({full: false}).populate("user");
+      mostCompatibleUser = null;
+      for (const item in nonFullGroups) {
+        for (const u in item.members) {
+          if (moreCompatible(u, mostCompatibleUser)) mostCompatibleUser = u;
+        }
+      }
+
+    }
+
+    /*
     groupName = [];
     groupName.push(responses[0].answer); // year
     groupName.push(responses[1].answer); // major
@@ -196,12 +214,13 @@ router.put('/group', async (req, res) => {
     if (group == null) {
       group = new Group({name: groupName,});
       user.groups.push(group._id);
-      group.memberids.push(uid);
+      group.members.push(uid);
     } else {
       user.groups.push(group._id);
-      group.memberids.push(uid);
+      group.members.push(uid);
     }
-    if (group.memberids.length == group.maxSize) group.full = true; 
+    if (group.members.length == group.maxSize) group.full = true; 
+    */
 
     await user.save();
     await group.save();
@@ -213,6 +232,12 @@ router.put('/group', async (req, res) => {
   }
 
 });
+
+// user, user -> boolean, return whether user1 is more compatible than user 2
+function moreCompatible(user1, user2) {
+  if (user2 == null) return true;
+  
+}
 
 
 module.exports = router;
