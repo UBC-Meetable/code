@@ -1,0 +1,35 @@
+endpoint documentation based on user experience flow
+
+1. create user with name and profile picture after verification
+POST api/users/test
+request body : {"name": "...", "profileImage": "..."}
+
+2. create quiz instance by user's database id
+POST api/quizs
+request body : {"uid": "..."}
+
+3. send each quiz response back, containing the user id, the quiz instance id, the question text,
+and the answer text.
+PUT api/responses
+request body:
+    {uid: ...,
+    quizid: ...,
+    question: "...",
+    answer: "...",
+    }
+4. update user profile with social media identifiers and a blurb. 
+PUT api/users/updateprofile
+request body:
+  {uid: ...,
+  instagram: "...",
+  snapchat: "...",
+  facebook: "...", 
+  blurb: "..."}
+
+5. put user in a group.
+PUT api/users/group
+request body: {"uid": "..."}
+
+6. by user id, get the user's group. 
+GET api/users/getgroupsbyuserid
+request body: {"uid": "..."}
