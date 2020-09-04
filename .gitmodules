@@ -1,0 +1,3 @@
+[submodule "client-meetable"]
+	path = client-meetable
+	url = https://github.com/BrendanWu/client-meetable.git
