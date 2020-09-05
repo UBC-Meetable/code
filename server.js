@@ -1,18 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 const User = require("./models/User");
 const Question = require("./models/Question");
-
+const cors = require("cors");
 
 const app = express();
-app.use(bodyParser.json())
+app.use(cors());
+app.use(bodyParser.json());
 // Define Routes
-app.use('/api/users', require('./routes/users'));
-app.use('/api/quizs', require('./routes/quizs'));
-app.use('/api/responses', require('./routes/responses'));
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/groups', require('./routes/groups'));
+app.use("/api/users", require("./routes/users"));
+app.use("/api/quizs", require("./routes/quizs"));
+app.use("/api/responses", require("./routes/responses"));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/groups", require("./routes/groups"));
 
 const connectDB = async () => {
   try {
@@ -37,17 +38,16 @@ const connectDB = async () => {
 // Connect Database
 connectDB();
 
-
 //req : request
 //res : response
 
 app.post("/submitForm", (req, res) => {
-    // {
-    //     "name": "brendan",
-    //     "email": "wubrendan7@gmail.com",
-    //     "password": "asdfdsafsdfsa"
-    // }
-    
+  // {
+  //     "name": "brendan",
+  //     "email": "wubrendan7@gmail.com",
+  //     "password": "asdfdsafsdfsa"
+  // }
+
   const body = req.body;
   const name = body.name;
   const email = body.email;
@@ -56,15 +56,13 @@ app.post("/submitForm", (req, res) => {
   const u = new User({ name, email, password });
   u.save().then(() => {
     res.json({
-        status: "success",
-        code: 200,
-        msg: "User saved",
-      });
+      status: "success",
+      code: 200,
+      msg: "User saved",
+    });
   });
-
 });
 
 // hard coded quiz questions
-
 
 app.listen(4000, () => console.log("Meetable api listening on port 4000"));
