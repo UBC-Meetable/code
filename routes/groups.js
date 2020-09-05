@@ -15,6 +15,16 @@ router.get('/', async (req, res) => {
     }
   });
 
+router.delete('/byid', async (req, res) => {
+    try {
+        await Group.deleteOne({_id: req.body.id});
+        res.status(200).send('success');
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send(err);
+    }
+});
+
 
 
 
