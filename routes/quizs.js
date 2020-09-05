@@ -1,56 +1,52 @@
-const express = require('express');
-const QuizInstance = require('../models/QuizInstance');
-const { generateResponse } = require('./responses');
-const Quiz = require('../models/Quiz');
-const router = express.Router()
-
+const express = require("express");
+const QuizInstance = require("../models/QuizInstance");
+const { generateResponse } = require("./responses");
+const Quiz = require("../models/Quiz");
+const router = express.Router();
 
 // get all quiz instances
-router.get('/', async (req,res)=>{
-    const quizes = await QuizInstance.find()
-    res.status(200).send({
-        success: true,
-        quizes
-    })
-
-})
+router.get("/", async (req, res) => {
+  const quizes = await QuizInstance.find();
+  res.status(200).send({
+    success: true,
+    quizes,
+  });
+});
 
 // get quiz instance for user (for now just one quiz)
-router.get('/byid', async (req,res)=>{
-    const quiz = await QuizInstance.findOne({uid: req.body.uid})
-    res.status(200).send({
-        success: true,
-        quiz
-    })
-
-})
+router.get("/byid", async (req, res) => {
+  const quiz = await QuizInstance.findOne({ uid: req.body.uid });
+  res.status(200).send({
+    success: true,
+    quiz,
+  });
+});
 
 // I'm assuming this is to create a new quiz instance before serving it to client
 // if client doesn't need to maintain its own quiz instance, send quiz instance id instead
-router.post('/', async (req,res)=>{
-    const body = req.body
-    const uid = body.uid
-    // const quiz = await Quiz.find({name: "hardcoded"}) not needed for MVP
+router.post("/", async (req, res) => {
+  const body = req.body;
+  const uid = body.uid;
+  // const quiz = await Quiz.find({name: "hardcoded"}) not needed for MVP
+  console.log("making quiz instanse");
+  const q = new QuizInstance({
+    uid: uid,
+    //quiz: quiz
+  });
 
-    const q = new QuizInstance({
-        uid: uid,
-        //quiz: quiz
-    })
-    
-    try {
-        const quiz = await q.save()
-        res.status(200).send({
-            success: true,
-            quizInstance: quiz
-        })
-        
-    } catch (error) {
-        res.send({
-            success: false,
-            error: JSON.stringify(error)
-        })
-    }
-})
+  try {
+    const quiz = await q.save();
+    res.status(200).send({
+      success: true,
+      quizInstance: quiz,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      error: JSON.stringify(error),
+    });
+  }
+});
 
 /*
 // assuming client sends back finished quiz instance

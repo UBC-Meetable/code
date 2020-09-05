@@ -5,7 +5,6 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { check, validationResult, body } = require("express-validator");
 const normalize = require("normalize-url");
-
 const User = require("../models/User");
 const Group = require("../models/Group");
 const QuizInstance = require("../models/QuizInstance");
@@ -13,14 +12,24 @@ const QuizInstance = require("../models/QuizInstance");
 
 // add user for testing purposes
 router.post("/test", async (req, res) => {
-  console.log("test request");
   try {
     console.log(req.body);
+    const userInfo = {
+      name: req.body.name,
+      avatar: req.body.profileImage,
+      authid: req.body.authid,
+    };
+    let user = await User.findOne({ authid: userInfo.authid });
+    if (user) {
+      console.log("user exists");
+      console.log(user._id);
+      return res.status(400).json(user._id);
+    }
     user = new User({
       name: req.body.name,
       avatar: req.body.profileImage,
       authid: req.body.authid,
-      email: req.body.email
+      email: req.body.email,
     });
     console.log(user);
     await user.save();
@@ -120,7 +129,6 @@ router.get("/", async (req, res) => {
   res.json({ success: true, users });
 });
 
-
 // @route    GET api/users
 // @desc     Get group(s) which user is part of, populated with users
 // @access   Private
@@ -160,18 +168,18 @@ router.put("/updateprofile", async (req, res) => {
   email: "..."}
   */
 
-  const uid = body.uid;
-  const user = await User.findOne({_id: uid});
-  for (const attr in body) {
-    user[attr] = body[attr];
-  }
-  await user.save(); //bug fix: added await so that error could be caught 
-  res.status(200).send("Success");
+    const uid = body.uid;
+    const user = await User.findOne({ _id: uid });
+    for (const attr in body) {
+      user[attr] = body[attr];
+    }
+    await user.save(); //bug fix: added await so that error could be caught
+    res.status(200).send("Success");
   } catch (err) {
-  console.log(err);
-  console.error(err.message);
-  res.status(500).send(err);
-  } 
+    console.log(err);
+    console.error(err.message);
+    res.status(500).send(err);
+  }
 });
 
 // @route    PUT api/users
@@ -182,8 +190,10 @@ router.put("/group", async (req, res) => {
   try {
     const body = req.body;
     const uid = body.uid;
-    user = await User.findOne({_id: uid});
-    const quizInstance = await QuizInstance.findOne({uid: uid}).populate("responses");
+    user = await User.findOne({ _id: uid });
+    const quizInstance = await QuizInstance.findOne({ uid: uid }).populate(
+      "responses"
+    );
 
     const userResponses = quizInstance.responses;
     console.log(userResponses);
@@ -192,11 +202,13 @@ router.put("/group", async (req, res) => {
     if (group == null) {
       // create a new group and join it
 
-      group = new Group({name: ["main"]});
+      group = new Group({ name: ["main"] });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({full: false}).populate('members'); //try with lean
+      const nonFullGroups = await Group.find({ full: false }).populate(
+        "members"
+      ); //try with lean
       console.log(nonFullGroups);
       console.log(nonFullGroups[0]);
       // find most compatible user out of all users in non-full groups
@@ -204,13 +216,14 @@ router.put("/group", async (req, res) => {
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
         for (let j = 0; j < tempGroup.length; j++) {
-          if (moreCompatible(user, tempGroup[j], mostCompatibleUser)) mostCompatibleUser = tempGroup[j];
+          if (moreCompatible(user, tempGroup[j], mostCompatibleUser))
+            mostCompatibleUser = tempGroup[j];
         }
       }
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        group = new Group({name: ["main"]});
+        group = new Group({ name: ["main"] });
         user.groups.push(group._id);
         group.members.push(uid);
       } else {
@@ -261,16 +274,27 @@ router.put("/group", async (req, res) => {
 // user, user, user -> boolean, return whether user1 is more compatible with user than user 2
 async function moreCompatible(user, user1, user2) {
   const MIN_SCORE = 2;
-  
-  const userResponses = await Response.find({uid: user._id}).sort({dateCreated: 1});
-  const user1Responses = await Response.find({uid: user1._id}).sort({dateCreated: 1});
 
-  if (!(user1Responses[0].answer === userResponses[0].answer && user1Responses[1].answer === userResponses[1].answer)) {
+  const userResponses = await Response.find({ uid: user._id }).sort({
+    dateCreated: 1,
+  });
+  const user1Responses = await Response.find({ uid: user1._id }).sort({
+    dateCreated: 1,
+  });
+
+  if (
+    !(
+      user1Responses[0].answer === userResponses[0].answer &&
+      user1Responses[1].answer === userResponses[1].answer
+    )
+  ) {
     return false;
   } else if (user2 == null) {
     return true;
   } else {
-    const user2Responses = await Response.find({uid: user2._id}).sort({dateCreated: 1});
+    const user2Responses = await Response.find({ uid: user2._id }).sort({
+      dateCreated: 1,
+    });
     let user1Score = 0;
     let user2Score = 0;
     for (let i = 2; i < userResponses.length; i++) {
