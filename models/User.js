@@ -1,20 +1,24 @@
 const mongoose = require('mongoose');
 const Group = require('./Group');
 
+
+let validateEmail = function(email) {
+  let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email)
+};
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    maxlength: 40
   },
   email: {
-    type: String,
-    required: true,
-    unique: true
+    type: String, 
+    required: true, 
+    validate: [validateEmail, 'Please enter a valid email address']
   },
-  password: {
-    type: String,
-    required: true
-  },
+  authid: {type: String, required: true},
   avatar: { // string? or identifier for image hosted on server?
     type: String
   },
@@ -26,15 +30,16 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  groups: {
-    type: [mongoose.SchemaTypes.ObjectId],
+  groups: [{
+    type: mongoose.SchemaTypes.ObjectId,
     ref: 'Group',
     default: [],
-    maxSize: {type: Number, default: 10}
-  },
+  }],
+  maxGroups: {type: Number, default: 7},
   blurb: {
     type: String,
-    maxChar: 300
+    minlength: 20,
+    maxlength: 300
   },
   instagram: {type: String, // make social media attributes unique and sparse??
     required: false,
@@ -55,4 +60,4 @@ const UserSchema = new mongoose.Schema({
   */
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+module.exports = User = mongoose.model('User', UserSchema);
