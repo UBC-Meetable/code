@@ -15,6 +15,15 @@ router.get('/', async (req, res) => {
     }
   });
 
+router.get('/byid/:id', async (req, res) => {
+    try {
+        const group = await Group.findOne({_id: req.params.id}).populate("members");
+        res.status(200).send(group);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send(err);
+    }
+});
 router.delete('/byid', async (req, res) => {
     try {
         await Group.deleteOne({_id: req.body.id});

@@ -15,8 +15,8 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String, 
-    required: true, 
-    validate: [validateEmail, 'Please enter a valid email address']
+    required: false,
+   
   },
   authid: {type: String, required: true},
   avatar: { // string? or identifier for image hosted on server?

@@ -201,6 +201,7 @@ router.put("/updateprofile", async (req, res) => {
       snapchat: body.snapchat,
       blurb: body.blurb,
       avatar: body.avatar,
+      facebook: body.facebook
     };
     console.log(newUser);
     const uid = body.uid;
