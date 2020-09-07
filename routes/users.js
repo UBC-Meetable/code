@@ -192,22 +192,16 @@ router.put("/group", async (req, res) => {
     const body = req.body;
     const uid = body.uid;
     user = await User.findOne({ _id: uid });
-    const quizInstance = await QuizInstance.findOne({ uid: uid }).populate(
-      "responses"
-    );
-
-    const userResponses = quizInstance.responses;
-    console.log(userResponses);
-
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-
-      group = new Group({ name: ["main"] });
+      year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
+      major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
+      group = new Group({ name: [year.answer, major.answer]});
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({ full: false }).populate(
+      const nonFullGroups = await Group.find({ full: false }).lean().populate(
         "members"
       ); //try with lean
       console.log(nonFullGroups);
@@ -217,14 +211,16 @@ router.put("/group", async (req, res) => {
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
         for (let j = 0; j < tempGroup.length; j++) {
-          if (moreCompatible(user, tempGroup[j], mostCompatibleUser))
+          if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];
         }
       }
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        group = new Group({ name: ["main"] });
+        year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
+        major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
+        group = new Group({ name: [year.answer, major.answer]});
         user.groups.push(group._id);
         group.members.push(uid);
       } else {
@@ -236,33 +232,6 @@ router.put("/group", async (req, res) => {
         if (group.members.length == group.maxSize) group.full = true;
       }
     }
-
-    /*
-    groupName = [];
-    groupName.push(responses[0].answer); // year
-    groupName.push(responses[1].answer); // major
-
-    count = 0;
-    while (count < NUM_ADDITIONAL_CRITERIA) {
-      random = responses[Math.floor(Math.random() * responses.length)].answer;
-      if (!groupName.includes(random)) {
-        groupName.push(random);
-        count++;
-      }
-    }
-
-    group = await Group.findOne({name: groupName, full: false});
-    if (group == null) {
-      group = new Group({name: groupName,});
-      user.groups.push(group._id);
-      group.members.push(uid);
-    } else {
-      user.groups.push(group._id);
-      group.members.push(uid);
-    }
-    if (group.members.length == group.maxSize) group.full = true; 
-    */
-
     await user.save();
     await group.save();
     res.status(200).send("Success");
@@ -276,10 +245,10 @@ router.put("/group", async (req, res) => {
 async function moreCompatible(user, user1, user2) {
   const MIN_SCORE = 2;
 
-  const userResponses = await Response.find({ uid: user._id }).sort({
+  const userResponses = await Response.find({ uid: user._id }).lean().sort({
     dateCreated: 1,
   });
-  const user1Responses = await Response.find({ uid: user1._id }).sort({
+  const user1Responses = await Response.find({ uid: user1._id }).lean().sort({
     dateCreated: 1,
   });
 
@@ -293,7 +262,7 @@ async function moreCompatible(user, user1, user2) {
   } else if (user2 == null) {
     return true;
   } else {
-    const user2Responses = await Response.find({ uid: user2._id }).sort({
+    const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
       dateCreated: 1,
     });
     let user1Score = 0;
