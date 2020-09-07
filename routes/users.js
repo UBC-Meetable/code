@@ -236,11 +236,9 @@ router.put("/group", async (req, res) => {
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({ full: false })
-        .lean()
-        .populate("members"); //try with lean
-      console.log(nonFullGroups);
-      console.log(nonFullGroups[0]);
+      const nonFullGroups = await Group.find({ full: false }).lean().populate(
+        "members"
+      ); //try with lean
       // find most compatible user out of all users in non-full groups
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
@@ -275,7 +273,8 @@ router.put("/group", async (req, res) => {
     }
     await user.save();
     await group.save();
-    res.status(200).send("Success");
+    await group.populate("members").execPopulate();
+    res.status(200).json(group);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);

@@ -6,13 +6,17 @@ const ResponseSchema = mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: false
     },
+    qid: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
     question: {
         type: String, // for hard coded MVP questions
         required: true
     },
     answer: {
         type: String,
-        required: false
+        required: true
     },
     dateCreated: {
         type: Date,

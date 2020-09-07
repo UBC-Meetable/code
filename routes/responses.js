@@ -20,9 +20,9 @@ router.put("/", async (req, res) => {
     answer: "...",
     }
     */
-    const uid = body.uid;
+    const quizid = body.quizid;
     const response = new Response({
-      uid: uid,
+      qid: quizid,
       question: body.question,
       answer: body.answer,
     });
