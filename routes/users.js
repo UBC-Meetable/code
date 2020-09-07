@@ -191,22 +191,14 @@ router.put("/group", async (req, res) => {
     const body = req.body;
     const uid = body.uid;
     user = await User.findOne({ _id: uid });
-    const quizInstance = await QuizInstance.findOne({ uid: uid }).populate(
-      "responses"
-    );
-
-    const userResponses = quizInstance.responses;
-    console.log(userResponses);
-
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-
       group = new Group({ name: ["main"] });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({ full: false }).populate(
+      const nonFullGroups = await Group.find({ full: false }).lean().populate(
         "members"
       ); //try with lean
       console.log(nonFullGroups);
@@ -216,7 +208,7 @@ router.put("/group", async (req, res) => {
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
         for (let j = 0; j < tempGroup.length; j++) {
-          if (moreCompatible(user, tempGroup[j], mostCompatibleUser))
+          if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];
         }
       }
@@ -275,10 +267,10 @@ router.put("/group", async (req, res) => {
 async function moreCompatible(user, user1, user2) {
   const MIN_SCORE = 2;
 
-  const userResponses = await Response.find({ uid: user._id }).sort({
+  const userResponses = await Response.find({ uid: user._id }).lean().sort({
     dateCreated: 1,
   });
-  const user1Responses = await Response.find({ uid: user1._id }).sort({
+  const user1Responses = await Response.find({ uid: user1._id }).lean().sort({
     dateCreated: 1,
   });
 
@@ -292,7 +284,7 @@ async function moreCompatible(user, user1, user2) {
   } else if (user2 == null) {
     return true;
   } else {
-    const user2Responses = await Response.find({ uid: user2._id }).sort({
+    const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
       dateCreated: 1,
     });
     let user1Score = 0;
