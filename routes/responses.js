@@ -30,7 +30,11 @@ router.put("/", async (req, res) => {
     quizInstance = await QuizInstance.findOne({ _id: body.quizid });
     quizInstance.responses.push(response._id);
     await quizInstance.save();
-    res.status(200).send("Success");
+    res.status(200).send({
+      success:true,
+      quizInstance,
+      response
+    });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Error saving response");

@@ -23,7 +23,29 @@ router.post("/test", async (req, res) => {
     if (user) {
       console.log("user exists");
       console.log(user._id);
-      return res.status(400).json(user._id);
+
+      const socials = [user.snapchat, user.instagram, user.facebook];
+      if (socials.length < 1 || !user.blurb) {
+        return res
+          .status(200)
+          .send({
+            msg: "Meetable user exists additional steps required",
+            id: user._id,
+            snapchat: user.snapchat,
+            instagram: user.instagram,
+            blurb: user.blurb,
+          });
+      } else {
+        return res
+          .status(200)
+          .send({
+            msg: "Meetable user exists",
+            id: user._id,
+            snapchat: user.snapchat,
+            instagram: user.instagram,
+            blurb: user.blurb,
+          });
+      }
     }
     user = new User({
       name: req.body.name,
@@ -33,10 +55,10 @@ router.post("/test", async (req, res) => {
     });
     console.log(user);
     await user.save();
-    res.json(user._id);
+    res.status(200).send({ msg: "Success", id: user._id });
   } catch (err) {
     console.log(err);
-    res.status(500).send(err);
+    res.status(500).send(JSON.stringify(err));
   }
 });
 
@@ -128,6 +150,10 @@ router.get("/", async (req, res) => {
   const users = await User.find();
   res.json({ success: true, users });
 });
+router.get("/getById/:id", async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  res.json({ success: true, user });
+});
 
 // @route    GET api/users
 // @desc     Get group(s) which user is part of, populated with users
@@ -146,7 +172,7 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
       groups.push(group);
     }
     console.log(groups);
-    res.send(groups)
+    res.send(groups);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Error getting user groups");
@@ -168,14 +194,17 @@ router.put("/updateprofile", async (req, res) => {
   blurb: "...",
   email: "..."}
   */
-
+    const newUser = {
+      uid: body.uid,
+      instagram: body.instagram,
+      snapchat: body.snapchat,
+      blurb: body.blurb,
+      avatar: body.s3URL,
+    };
     const uid = body.uid;
-    const user = await User.findOne({ _id: uid });
-    for (const attr in body) {
-      user[attr] = body[attr];
-    }
-    await user.save(); //bug fix: added await so that error could be caught
-    res.status(200).send("Success");
+    const user = await User.findOneAndUpdate({ _id: uid }, newUser)
+
+    res.status(200).send({ msg: "Success", user });
   } catch (err) {
     console.log(err);
     console.error(err.message);
@@ -195,15 +224,21 @@ router.put("/group", async (req, res) => {
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
-      major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
-      group = new Group({ name: [year.answer, major.answer]});
+      year = await Response.findOne({
+        uid: user._id,
+        question: "What year are you going into?",
+      });
+      major = await Response.findOne({
+        uid: user._id,
+        question: "What is your intended major?",
+      });
+      group = new Group({ name: [year.answer, major.answer] });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({ full: false }).lean().populate(
-        "members"
-      ); //try with lean
+      const nonFullGroups = await Group.find({ full: false })
+        .lean()
+        .populate("members"); //try with lean
       console.log(nonFullGroups);
       console.log(nonFullGroups[0]);
       // find most compatible user out of all users in non-full groups
@@ -218,9 +253,15 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
-        major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
-        group = new Group({ name: [year.answer, major.answer]});
+        year = await Response.findOne({
+          uid: user._id,
+          question: "What year are you going into?",
+        });
+        major = await Response.findOne({
+          uid: user._id,
+          question: "What is your intended major?",
+        });
+        group = new Group({ name: [year.answer, major.answer] });
         user.groups.push(group._id);
         group.members.push(uid);
       } else {

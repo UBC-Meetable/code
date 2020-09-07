@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const User = require("./models/User");
 const Question = require("./models/Question");
 const cors = require("cors");
+require('dotenv').config()
 
 const app = express();
 app.use(cors());
@@ -14,6 +15,7 @@ app.use("/api/quizs", require("./routes/quizs"));
 app.use("/api/responses", require("./routes/responses"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/groups", require("./routes/groups"));
+app.use("/api/media", require("./routes/media"));
 
 const connectDB = async () => {
   try {

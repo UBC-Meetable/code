@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const ResponseSchema = mongoose.Schema({
     uid: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: false
     },
     question: {
         type: String, // for hard coded MVP questions
