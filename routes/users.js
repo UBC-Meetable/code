@@ -132,20 +132,21 @@ router.get("/", async (req, res) => {
 // @route    GET api/users
 // @desc     Get group(s) which user is part of, populated with users
 // @access   Private
-router.get("/getgroupsbyuserid", async (req, res) => {
+router.get("/getgroupsbyuserid/:uid", async (req, res) => {
   try {
     /* couldn't get this implementation to work...
-    const groups = await User.find({_id : req.body.uid}).populate("groups");
+    const groups = await User.find({_id : req.body.uid}).populate("group");
     res.json(groups);
     */
-    const user = await User.findOne({ _id: req.body.uid });
+    const user = await User.findOne({ _id: req.params.uid });
     const groupIds = user.groups;
     let groups = [];
     for (let i = 0; i < groupIds.length; i++) {
-      group = await Group.findOne({ _id: groupIds[i] });
+      group = await Group.findOne({ _id: groupIds[i] }).populate("members");
       groups.push(group);
     }
-    res.json(groups);
+    console.log(groups);
+    res.send(groups)
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Error getting user groups");
