@@ -66,8 +66,8 @@ app.post("/submitForm", (req, res) => {
 });
 
 // Serve static assets in production
-// if (true) {
-//   // Set static folder
-//   app.use(express.static('client-meetable/build'));
+if (true) {
+  // Set static folder
+  app.use(express.static('client-meetable/build'));
 
 app.listen(4000, () => console.log("Meetable api listening on port 4000"));
