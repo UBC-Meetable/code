@@ -208,6 +208,7 @@ router.put("/group", async (req, res) => {
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
+        if (tempGroup.includes(user.toObject())) continue;
         for (let j = 0; j < tempGroup.length; j++) {
           if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];
