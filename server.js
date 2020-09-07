@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const User = require("./models/User");
 const Question = require("./models/Question");
 const cors = require("cors");
+const path = require('path')
 require('dotenv').config()
 
 const app = express();
