@@ -1,23 +1,31 @@
 endpoint documentation based on user experience flow
 
-1. create user with name, auth0 id, profile picture, after verification
-POST api/users/test
-request body : {"name": "...", "profileImage": "...", "authid": "..."}
+if logged in and already completed the quiz:
+GET api/users/getgroupsbyuserid
+request body: {"uid": "..."}
 
-2. create quiz instance by user's database id
+otherwise:
+
+1. create quiz instance
 POST api/quizs
-request body : {"uid": "..."}
+request body : {} 
 
-3. send each quiz response back, containing the user id, the quiz instance id, the question text,
-and the answer text. If a user skips a question, do still send the response back with no answer attribute.
+2. send each quiz response back, containing the quiz instance id, the question text,
+and the answer text. If a user skips a question, do still send the response back with an empty string answer attribute.
 PUT api/responses
 request body:
-    {uid: ...,
+    {
     quizid: ...,
     question: "...",
     answer: "...",
     }
-4. update user profile with social media identifiers and a blurb. 
+
+2. create user with at least name, auth0 id, email 
+POST api/users/test
+request body : {"name": "...", "profileImage": "...", "authid": "...", "email" "..."}
+
+
+4. update user profile with social media identifiers and a blurb (or any user attribute)
 PUT api/users/updateprofile
 request body:
   {uid: ...,
@@ -26,10 +34,12 @@ request body:
   facebook: "...", 
   blurb: "..."}
 
-5. put user in a group.
+5. update quiz instance and responses with uid
+PUT api/quizs/byid
+request body: {qid: "...", uid: "..."}
+
+6. put user in a group and get back the group as a response.
 PUT api/users/group
 request body: {"uid": "..."}
 
-6. by user id, get the user's group. 
-GET api/users/getgroupsbyuserid
-request body: {"uid": "..."}
+

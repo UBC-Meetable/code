@@ -4,6 +4,10 @@ const mongoose = require('mongoose')
 const ResponseSchema = mongoose.Schema({
     uid: {
         type: mongoose.SchemaTypes.ObjectId,
+        required: false
+    },
+    qid: {
+        type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
     question: {
@@ -12,7 +16,7 @@ const ResponseSchema = mongoose.Schema({
     },
     answer: {
         type: String,
-        required: false
+        required: true
     },
     dateCreated: {
         type: Date,

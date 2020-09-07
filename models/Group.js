@@ -12,7 +12,7 @@ const GroupSchema = mongoose.Schema({
        type: mongoose.SchemaTypes.ObjectId, 
        ref: 'User', 
        default: []}],
-   maxSize: {type: Number, default: 10},
+   maxSize: {type: Number, default: 7},
    full : {type: Boolean, default: false},
 })
 

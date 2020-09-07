@@ -22,15 +22,31 @@ router.get("/byid", async (req, res) => {
   });
 });
 
+// get quizInstance using its id. Update its uid and the responses' uid
+router.put("/byid", async (req, res) => {
+  const quiz = await QuizInstance.findOne({ _id: req.body.qid }).populate("responses");
+  quiz.uid = req.body.uid;
+  for (let i = 0; i < quiz.responses.length; i++) {
+    quiz.responses[i].uid = req.body.uid;
+    await quiz.responses[i].save(); // saving populated doc does not save subdocs
+
+  }
+  await quiz.save();
+  res.status(200).send({
+    success: true,
+    quiz,
+  });
+});
+
 // I'm assuming this is to create a new quiz instance before serving it to client
 // if client doesn't need to maintain its own quiz instance, send quiz instance id instead
 router.post("/", async (req, res) => {
   const body = req.body;
-  const uid = body.uid;
+  //const uid = body.uid;
   // const quiz = await Quiz.find({name: "hardcoded"}) not needed for MVP
   console.log("making quiz instanse");
   const q = new QuizInstance({
-    uid: uid,
+    //uid: uid,
     //quiz: quiz
   });
 
