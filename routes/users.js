@@ -194,7 +194,9 @@ router.put("/group", async (req, res) => {
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      group = new Group({ name: ["main"] });
+      year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
+      major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
+      group = new Group({ name: [year.answer, major.answer]});
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
@@ -215,7 +217,9 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        group = new Group({ name: ["main"] });
+        year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
+        major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
+        group = new Group({ name: [year.answer, major.answer]});
         user.groups.push(group._id);
         group.members.push(uid);
       } else {
@@ -227,33 +231,6 @@ router.put("/group", async (req, res) => {
         if (group.members.length == group.maxSize) group.full = true;
       }
     }
-
-    /*
-    groupName = [];
-    groupName.push(responses[0].answer); // year
-    groupName.push(responses[1].answer); // major
-
-    count = 0;
-    while (count < NUM_ADDITIONAL_CRITERIA) {
-      random = responses[Math.floor(Math.random() * responses.length)].answer;
-      if (!groupName.includes(random)) {
-        groupName.push(random);
-        count++;
-      }
-    }
-
-    group = await Group.findOne({name: groupName, full: false});
-    if (group == null) {
-      group = new Group({name: groupName,});
-      user.groups.push(group._id);
-      group.members.push(uid);
-    } else {
-      user.groups.push(group._id);
-      group.members.push(uid);
-    }
-    if (group.members.length == group.maxSize) group.full = true; 
-    */
-
     await user.save();
     await group.save();
     res.status(200).send("Success");
