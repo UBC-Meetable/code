@@ -55,7 +55,8 @@ router.post("/test", async (req, res) => {
     });
     console.log(user);
     await user.save();
-    res.status(200).send({ msg: "Success", id: user._id });
+    
+    res.status(200).send({ msg: "Meetable user exists additional steps required", id: user._id });
   } catch (err) {
     console.log(err);
     res.status(500).send(JSON.stringify(err));
@@ -199,8 +200,9 @@ router.put("/updateprofile", async (req, res) => {
       instagram: body.instagram,
       snapchat: body.snapchat,
       blurb: body.blurb,
-      avatar: body.s3URL,
+      avatar: body.avatar,
     };
+    console.log(newUser);
     const uid = body.uid;
     const user = await User.findOneAndUpdate({ _id: uid }, newUser)
 
@@ -251,14 +253,15 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        year = await Response.findOne({
+        const year = await Response.findOne({
           uid: user._id,
           question: "What year are you going into?",
         });
-        major = await Response.findOne({
+        const major = await Response.findOne({
           uid: user._id,
           question: "What is your intended major?",
         });
+        console.log(year, major);
         group = new Group({ name: [year.answer, major.answer] });
         user.groups.push(group._id);
         group.members.push(uid);
