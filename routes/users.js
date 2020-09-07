@@ -245,6 +245,7 @@ router.put("/group", async (req, res) => {
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
+        if (hasUser(tempGroup, user.authid)) continue;
         for (let j = 0; j < tempGroup.length; j++) {
           if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];
@@ -317,6 +318,13 @@ async function moreCompatible(user, user1, user2) {
     if (user1Score > user2Score && user1Score >= MIN_SCORE) return true;
     else return false;
   }
+}
+
+function hasUser(tempGroup, authid) {
+  for (let i = 0; i < tempGroup.length; i++) {
+    if (tempGroup[i].authid === authid) return true;
+  }
+  return false;
 }
 
 module.exports = router;
