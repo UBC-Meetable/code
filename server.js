@@ -70,4 +70,4 @@ if (true) {
   // Set static folder
   app.use(express.static('client-meetable/build'));
 
-app.listen(4000, () => console.log("Meetable api listening on port 4000"));
+app.listen(process.env.PORT, () => console.log("Meetable api listening on port 4000"));
