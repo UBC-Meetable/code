@@ -38,8 +38,7 @@ const UserSchema = new mongoose.Schema({
   maxGroups: {type: Number, default: 7},
   blurb: {
     type: String,
-    minlength: 20,
-    maxlength: 300
+   
   },
   instagram: {type: String, // make social media attributes unique and sparse??
     required: false,

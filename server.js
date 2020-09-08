@@ -67,7 +67,7 @@ app.post("/submitForm", (req, res) => {
 });
 
 // Serve static assets in production
-if (process.env.NODE_ENV === 'production') {
+if (true) {
   // Set static folder
   app.use(express.static('client-meetable/build'));
 
@@ -75,4 +75,4 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client-meetable', 'build', 'index.html'));
   });
 }
-app.listen(process.env.PORT, () => console.log("Meetable api listening on port 4000"));
+app.listen(4000, () => console.log("Meetable api listening on port 4000"));

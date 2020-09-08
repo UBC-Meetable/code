@@ -223,6 +223,12 @@ router.put("/group", async (req, res) => {
   try {
     const body = req.body;
     const uid = body.uid;
+
+    const hasTakenQuiz = await QuizInstance.findOne({uid})
+    if(!hasTakenQuiz) {
+      res.send({msg: "User has not taken quiz", success:false})
+    }
+
     user = await User.findOne({ _id: uid });
     group = await Group.findOne({ full: false });
     if (group == null) {
