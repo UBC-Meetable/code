@@ -76,5 +76,5 @@ if (true) {
   });
 }
 
-const PORT = process.NODE_ENV === "production" ? process.env.PORT : 4000
+const PORT = process.env.NODE_ENV === "production" ? process.env.PORT : 4000
 app.listen(PORT, () => console.log("Meetable api listening on port 4000"));
