@@ -6,6 +6,7 @@ const Question = require("./models/Question");
 const cors = require("cors");
 const path = require('path')
 require('dotenv').config()
+const sslRedirect = require('heroku-ssl-redirect')
 
 const app = express();
 app.use(cors());
@@ -40,6 +41,7 @@ const connectDB = async () => {
 
 // Connect Database
 connectDB();
+app.use(sslRedirect())
 
 //req : request
 //res : response
