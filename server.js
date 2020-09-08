@@ -75,4 +75,4 @@ if (true) {
     res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
   });
 }
-app.listen(4000, () => console.log("Meetable api listening on port 4000"));
+app.listen(process.env.PORT, () => console.log("Meetable api listening on port 4000"));
