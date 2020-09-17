@@ -10,7 +10,7 @@ const Group = require("../models/Group");
 const QuizInstance = require("../models/QuizInstance");
 //const { count } = require('../models/Group');
 
-// add user for testing purposes
+// add user
 router.post("/test", async (req, res) => {
   try {
     console.log(req.body);
@@ -39,87 +39,6 @@ router.post("/test", async (req, res) => {
     res.status(500).send(err);
   }
 });
-
-// @route    POST api/users
-// @desc     Register user
-// @access   Public
-router.post(
-  "/",
-  [
-    check("name", "Name is required").not().isEmpty(),
-    check("email", "Please include a valid email").isEmail(),
-    check(
-      "password",
-      "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 }),
-    check("profilePicture", "Valid profile image").optional().isString(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const {
-      name,
-      email,
-      password,
-      profileImage,
-      school,
-      major,
-      year,
-    } = req.body;
-
-    console.log(req.body);
-
-    try {
-      let user = await findOne({ email });
-
-      if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
-      }
-
-      user = new User({
-        name,
-        email,
-        avatar: profileImage,
-        password,
-        school,
-        year,
-        major,
-      });
-
-      const salt = await genSalt(10);
-
-      user.password = await hash(password, salt);
-
-      await user.save();
-
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
-      payload.user.id;
-
-      sign(
-        payload,
-        process.env.jwtSecret,
-        { expiresIn: "5 days" },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server error");
-    }
-  }
-);
 
 // @route    GET api/users
 // @desc     Get all users
@@ -195,20 +114,20 @@ router.put("/group", async (req, res) => {
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
-      major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
+      year = await Response.findOne({ uid: user._id, question: "What year are you going into?" }).lean();
+      major = await Response.findOne({ uid: user._id, question: "What is your intended major?" }).lean();
       group = new Group({ name: [year.answer, major.answer]});
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
       const nonFullGroups = await Group.find({ full: false }).lean().populate(
         "members"
-      ); //try with lean
+      ); 
       // find most compatible user out of all users in non-full groups
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
-        if (hasUser(tempGroup, user.authid)) continue;
+        //if (hasUser(tempGroup, user.authid)) continue;
         for (let j = 0; j < tempGroup.length; j++) {
           if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];
@@ -217,8 +136,8 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        year = await Response.findOne({ uid: user._id, question: "What year are you going into?" });
-        major = await Response.findOne({ uid: user._id, question: "What is your intended major?" });
+        year = await Response.findOne({ uid: user._id, question: "What year are you going into?" }).lean();
+        major = await Response.findOne({ uid: user._id, question: "What is your intended major?" }).lean();
         group = new Group({ name: [year.answer, major.answer]});
         user.groups.push(group._id);
         group.members.push(uid);
