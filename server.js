@@ -14,6 +14,7 @@ app.use("/api/quizs", require("./routes/quizs"));
 app.use("/api/responses", require("./routes/responses"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/groups", require("./routes/groups"));
+app.use("/api/forms", require("./routes/forms"));
 
 const connectDB = async () => {
   try {
