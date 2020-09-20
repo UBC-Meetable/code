@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
  * @api {get} /quizs/byid/ Get Quiz by User id
  * @apiName GetQuizByUserId
  * @apiGroup Quiz
+ * @apiParam {String} uid User id
  * @apiSuccess {Object} quiz The quiz with id.
  */
 router.get("/byid", async (req, res) => {
@@ -37,8 +38,10 @@ router.get("/byid", async (req, res) => {
  * @api {put} /quizs/byid/ Update Quiz Add User id
  * @apiName AddIdToQuiz
  * @apiGroup Quiz
+ * @apiParam {String} qid Quiz id
+ * @apiParam {String} uid User id
  * @apiSuccess {Object} quiz The quiz modified.
- * @apiError ValidationError The given id is invalid.
+ * @apiError (500) ValidationError The given id is invalid.
  */
 router.put("/byid", async (req, res) => {
   try {
@@ -65,7 +68,7 @@ router.put("/byid", async (req, res) => {
  * @apiName PostNewQuiz
  * @apiGroup Quiz
  * @apiSuccess {Object} quiz The quiz posted.
- * @apiError ValidationError No apparent causes.
+ * @apiError (500) ValidationError No apparent causes.
  */
 router.post("/", async (req, res) => {
   const body = req.body;

@@ -14,9 +14,12 @@ const router = express.Router();
  * @api {put} /responses/ Put Response in Quiz
  * @apiName PutResponse
  * @apiGroup Response
+ * @apiParam {String} quizid Quiz instance id
+ * @apiParam {String} question Question text
+ * @apiParam {String} answer Answer text
  * @apiSuccess {String} message Success Message.
  * 
- * @apiError ValidationError The given attributes are invalid.
+ * @apiError (500) ValidationError The given attributes are invalid.
  */
 router.put("/", async (req, res) => {
   console.log("answer!");

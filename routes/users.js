@@ -10,17 +10,19 @@ const Group = require("../models/Group");
 const QuizInstance = require("../models/QuizInstance");
 //const { count } = require('../models/Group');
 
-
-router.post("/", async (req, res) => {
 /**
  * @api {post} /users/ Post User
  * @apiName PostUser
  * @apiGroup User
  * @apiSuccess {Object} user The User Posted.
- * 
- * @apiError ValidationError The given attributes are invalid.
- * @apiError UserExists The posted user already exists.
+ * @apiParam {String} name The user's name
+ * @apiParam {String} profileImage profile picture URL
+ * @apiParam {String} authid The user's auth0 id
+ * @apiParam {String} email The user's email
+ * @apiError (500) {Object} ValidationError The specified attributes are invalid for the specified reasons.
+ * @apiError (400) {String} UserExists The posted user already exists.
  */
+router.post("/", async (req, res) => {
   try {
     console.log(req.body);
     const userInfo = {
@@ -61,9 +63,14 @@ router.get("/", async (req, res) => {
   res.json({ success: true, users });
 });
 
-// @route    GET api/users
-// @desc     Get group(s) which user is part of, populated with users
-// @access   Private
+/**
+ * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
+ * @apiName GetUserById
+ * @apiGroup User
+ * @apiSuccess {Object[]} groups The list of groups joined by specified user.
+ * @apiParam {String} uid The user's id
+ * @apiError (500) {Object} Error Should never occur even if user has no groups.
+ */
 router.get("/getgroupsbyuserid/:uid", async (req, res) => {
   try {
     /* couldn't get this implementation to work...
@@ -81,14 +88,19 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
     res.send(groups)
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Error getting user groups");
+    res.status(500).send(err);
   }
 });
 
-// @route    PUT api/users
-// @desc     update user profile information
-// @access   Private
-// how to validate email?
+/**
+ * @api {put} /users/updateprofile/ Update User Profile with arbitrary number of attributes
+ * @apiName UpdateProfile
+ * @apiGroup User
+ * @apiSuccess {String} message Success message.
+ * @apiParam {String} uid The user's id
+ * @apiParam {any} any Any attribute specified in User model
+ * @apiError (500) {Object} ValidationError Specified attributes invalid for specified reasons.
+ */
 router.put("/updateprofile", async (req, res) => {
   try {
     const body = req.body;
@@ -115,9 +127,15 @@ router.put("/updateprofile", async (req, res) => {
   }
 });
 
-// @route    PUT api/users
-// @desc     put user in a group (modify later to allow multiple groups)
-// @access   Private
+
+/**
+ * @api {put} /users/group/ Put User in Group
+ * @apiName GroupUser
+ * @apiGroup User
+ * @apiSuccess {Object[]} group The group that user was put in, populated with users.
+ * @apiParam {String} uid The user's id
+ * @apiError (500) {Object} Error Any error resulting from bad state, not inputs to this endpoint.
+ */
 router.put("/group", async (req, res) => {
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {

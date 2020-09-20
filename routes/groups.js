@@ -5,6 +5,12 @@ const router = express.Router();
 // @route    GET api/groups
 // @desc     Get all groups
 // @access   Private
+/**
+ * @api {get} /groups/ Get all groups
+ * @apiName GetGroups
+ * @apiGroup Group
+ * @apiSuccess {Object[]} groups All groups in collection.
+ */
 router.get('/', async (req, res) => {
     try {
         const groups = await Group.find();
@@ -15,6 +21,13 @@ router.get('/', async (req, res) => {
     }
   });
 
+  /**
+ * @api {delete} /groups/ Delete a group
+ * @apiName DeleteGroup
+ * @apiGroup Group
+ * @apiParam {String} id Group id 
+ * @apiSuccess {String} message Sucess message.
+ */
 router.delete('/byid', async (req, res) => {
     try {
         await Group.deleteOne({_id: req.body.id});

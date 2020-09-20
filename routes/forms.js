@@ -78,9 +78,12 @@ router.get('/:email', async (req, res) => {
  * @api {post} /forms/ Post Form
  * @apiName PostForm
  * @apiGroup Form
+ * @apiParam {String} text Text content of feedback.
+ * @apiParam {String} uid User's id.
+ * @apiParam {String} [email] User's email.
  * @apiSuccess {String} message Success Message.
  * 
- * @apiError ValidationError The given attributes are invalid.
+ * @apiError (500) {Object} ValidationError The given attributes are invalid.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK

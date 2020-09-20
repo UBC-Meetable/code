@@ -95,6 +95,33 @@
     "title": "Post Form",
     "name": "PostForm",
     "group": "Form",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "text",
+            "description": "<p>Text content of feedback.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>User's id.</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "email",
+            "description": "<p>User's email.</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -117,9 +144,10 @@
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "500": [
           {
-            "group": "Error 4xx",
+            "group": "500",
+            "type": "Object",
             "optional": false,
             "field": "ValidationError",
             "description": "<p>The given attributes are invalid.</p>"
@@ -132,11 +160,90 @@
     "groupTitle": "Form"
   },
   {
+    "type": "delete",
+    "url": "/groups/",
+    "title": "Delete a group",
+    "name": "DeleteGroup",
+    "group": "Group",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Group id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Sucess message.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/groups.js",
+    "groupTitle": "Group"
+  },
+  {
+    "type": "get",
+    "url": "/groups/",
+    "title": "Get all groups",
+    "name": "GetGroups",
+    "group": "Group",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "groups",
+            "description": "<p>All groups in collection.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/groups.js",
+    "groupTitle": "Group"
+  },
+  {
     "type": "put",
     "url": "/quizs/byid/",
     "title": "Update Quiz Add User id",
     "name": "AddIdToQuiz",
     "group": "Quiz",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "qid",
+            "description": "<p>Quiz id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -152,9 +259,9 @@
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "500": [
           {
-            "group": "Error 4xx",
+            "group": "500",
             "optional": false,
             "field": "ValidationError",
             "description": "<p>The given id is invalid.</p>"
@@ -172,6 +279,19 @@
     "title": "Get Quiz by User id",
     "name": "GetQuizByUserId",
     "group": "Quiz",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -233,9 +353,9 @@
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "500": [
           {
-            "group": "Error 4xx",
+            "group": "500",
             "optional": false,
             "field": "ValidationError",
             "description": "<p>No apparent causes.</p>"
@@ -253,6 +373,33 @@
     "title": "Put Response in Quiz",
     "name": "PutResponse",
     "group": "Response",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "quizid",
+            "description": "<p>Quiz instance id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "question",
+            "description": "<p>Question text</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "answer",
+            "description": "<p>Answer text</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -268,9 +415,9 @@
     },
     "error": {
       "fields": {
-        "Error 4xx": [
+        "500": [
           {
-            "group": "Error 4xx",
+            "group": "500",
             "optional": false,
             "field": "ValidationError",
             "description": "<p>The given attributes are invalid.</p>"
@@ -281,6 +428,55 @@
     "version": "0.0.0",
     "filename": "routes/responses.js",
     "groupTitle": "Response"
+  },
+  {
+    "type": "get",
+    "url": "/users/getgroupsbyuserid/:uid",
+    "title": "Get User by Id",
+    "name": "GetUserById",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "groups",
+            "description": "<p>The list of groups joined by specified user.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>The user's id</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "500": [
+          {
+            "group": "500",
+            "type": "Object",
+            "optional": false,
+            "field": "Error",
+            "description": "<p>Should never occur even if user has no groups.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User"
   },
   {
     "type": "get",
@@ -297,6 +493,55 @@
             "optional": false,
             "field": "users",
             "description": "<p>All Users In Collection.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "put",
+    "url": "/users/group/",
+    "title": "Put User in Group",
+    "name": "GroupUser",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "group",
+            "description": "<p>The group that user was put in, populated with users.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>The user's id</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "500": [
+          {
+            "group": "500",
+            "type": "Object",
+            "optional": false,
+            "field": "Error",
+            "description": "<p>Any error resulting from bad state, not inputs to this endpoint.</p>"
           }
         ]
       }
@@ -324,20 +569,114 @@
         ]
       }
     },
-    "error": {
+    "parameter": {
       "fields": {
-        "Error 4xx": [
+        "Parameter": [
           {
-            "group": "Error 4xx",
+            "group": "Parameter",
+            "type": "String",
             "optional": false,
-            "field": "ValidationError",
-            "description": "<p>The given attributes are invalid.</p>"
+            "field": "name",
+            "description": "<p>The user's name</p>"
           },
           {
-            "group": "Error 4xx",
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "profileImage",
+            "description": "<p>profile picture URL</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "authid",
+            "description": "<p>The user's auth0 id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "email",
+            "description": "<p>The user's email</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "400": [
+          {
+            "group": "400",
+            "type": "String",
             "optional": false,
             "field": "UserExists",
             "description": "<p>The posted user already exists.</p>"
+          }
+        ],
+        "500": [
+          {
+            "group": "500",
+            "type": "Object",
+            "optional": false,
+            "field": "ValidationError",
+            "description": "<p>The specified attributes are invalid for the specified reasons.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "put",
+    "url": "/users/updateprofile/",
+    "title": "Update User Profile with arbitrary number of attributes",
+    "name": "UpdateProfile",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Success message.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>The user's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "any",
+            "optional": false,
+            "field": "any",
+            "description": "<p>Any attribute specified in User model</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "500": [
+          {
+            "group": "500",
+            "type": "Object",
+            "optional": false,
+            "field": "ValidationError",
+            "description": "<p>Specified attributes invalid for specified reasons.</p>"
           }
         ]
       }
