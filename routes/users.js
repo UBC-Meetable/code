@@ -10,8 +10,17 @@ const Group = require("../models/Group");
 const QuizInstance = require("../models/QuizInstance");
 //const { count } = require('../models/Group');
 
-// add user
-router.post("/test", async (req, res) => {
+
+router.post("/", async (req, res) => {
+/**
+ * @api {post} /users/ Post User
+ * @apiName PostUser
+ * @apiGroup User
+ * @apiSuccess {Object} user The User Posted.
+ * 
+ * @apiError ValidationError The given attributes are invalid.
+ * @apiError UserExists The posted user already exists.
+ */
   try {
     console.log(req.body);
     const userInfo = {
@@ -33,16 +42,20 @@ router.post("/test", async (req, res) => {
     });
     console.log(user);
     await user.save();
-    res.json(user._id);
+    res.send(user);
+    //res.json(user._id);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
   }
 });
 
-// @route    GET api/users
-// @desc     Get all users
-// @access   Private
+/**
+ * @api {get} /users/ Get Users
+ * @apiName GetUsers
+ * @apiGroup User
+ * @apiSuccess {Object} users All Users In Collection.
+ */
 router.get("/", async (req, res) => {
   const users = await User.find();
   res.json({ success: true, users });

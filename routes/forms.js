@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 
 
 /**
- * @api {get} /forms/:uid Get Forms Of User
+ * @api {get} /forms/:uid Get Forms By User Id
  * @apiName GetUserForms
  * @apiGroup Form
  * @apiSuccess {Object[]} form Forms of user.
@@ -79,6 +79,8 @@ router.get('/:email', async (req, res) => {
  * @apiName PostForm
  * @apiGroup Form
  * @apiSuccess {String} message Success Message.
+ * 
+ * @apiError ValidationError The given attributes are invalid.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -100,7 +102,7 @@ router.post('/', async (req, res) => {
         email: req.body.email,
     });
     await form.save();
-    res.status(200).send("form saved successfully");
+    res.status(200).send(form);
     } catch (err) {
         console.log(err);
         res.status(500).send(err);

@@ -4,7 +4,12 @@ const { generateResponse } = require("./responses");
 const Quiz = require("../models/Quiz");
 const router = express.Router();
 
-// get all quiz instances
+/**
+ * @api {get} /quizs/ Get All Quizzes
+ * @apiName GetQuizzes
+ * @apiGroup Quiz
+ * @apiSuccess {Object} quizzes All quizzes in collection.
+ */
 router.get("/", async (req, res) => {
   const quizes = await QuizInstance.find();
   res.status(200).send({
@@ -13,7 +18,13 @@ router.get("/", async (req, res) => {
   });
 });
 
-// get quiz instance for user (for now just one quiz)
+
+/**
+ * @api {get} /quizs/byid/ Get Quiz by User id
+ * @apiName GetQuizByUserId
+ * @apiGroup Quiz
+ * @apiSuccess {Object} quiz The quiz with id.
+ */
 router.get("/byid", async (req, res) => {
   const quiz = await QuizInstance.findOne({ uid: req.body.uid });
   res.status(200).send({
@@ -22,24 +33,40 @@ router.get("/byid", async (req, res) => {
   });
 });
 
-// get quizInstance using its id. Update its uid and the responses' uid
+/**
+ * @api {put} /quizs/byid/ Update Quiz Add User id
+ * @apiName AddIdToQuiz
+ * @apiGroup Quiz
+ * @apiSuccess {Object} quiz The quiz modified.
+ * @apiError ValidationError The given id is invalid.
+ */
 router.put("/byid", async (req, res) => {
-  const quiz = await QuizInstance.findOne({ _id: req.body.qid }).populate("responses");
-  quiz.uid = req.body.uid;
-  for (let i = 0; i < quiz.responses.length; i++) {
-    quiz.responses[i].uid = req.body.uid;
-    await quiz.responses[i].save(); // saving populated doc does not save subdocs
+  try {
+    const quiz = await QuizInstance.findOne({ _id: req.body.qid }).populate("responses");
+    quiz.uid = req.body.uid;
+    for (let i = 0; i < quiz.responses.length; i++) {
+      quiz.responses[i].uid = req.body.uid;
+      await quiz.responses[i].save(); // saving populated doc does not save subdocs
 
-  }
-  await quiz.save();
-  res.status(200).send({
-    success: true,
-    quiz,
-  });
+    }
+    await quiz.save();
+    res.status(200).send({
+      success: true,
+      quiz,
+    });
+} catch (err) {
+    res.status(500).send(err);
+}
 });
 
-// I'm assuming this is to create a new quiz instance before serving it to client
-// if client doesn't need to maintain its own quiz instance, send quiz instance id instead
+
+/**
+ * @api {post} /quizs/ Post New Quiz Instance
+ * @apiName PostNewQuiz
+ * @apiGroup Quiz
+ * @apiSuccess {Object} quiz The quiz posted.
+ * @apiError ValidationError No apparent causes.
+ */
 router.post("/", async (req, res) => {
   const body = req.body;
   //const uid = body.uid;
