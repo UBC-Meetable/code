@@ -10,8 +10,19 @@ const Group = require("../models/Group");
 const QuizInstance = require("../models/QuizInstance");
 //const { count } = require('../models/Group');
 
-// add user for testing purposes
-router.post("/test", async (req, res) => {
+/**
+ * @api {post} /users/ Post User
+ * @apiName PostUser
+ * @apiGroup User
+ * @apiSuccess {Object} user The User Posted.
+ * @apiParam {String} name The user's name
+ * @apiParam {String} profileImage profile picture URL
+ * @apiParam {String} authid The user's auth0 id
+ * @apiParam {String} email The user's email
+ * @apiError (500) {Object} ValidationError The specified attributes are invalid for the specified reasons.
+ * @apiError (400) {String} UserExists The posted user already exists.
+ */
+router.post("/", async (req, res) => {
   try {
     console.log(req.body);
     const userInfo = {
@@ -63,90 +74,12 @@ router.post("/test", async (req, res) => {
   }
 });
 
-// @route    POST api/users
-// @desc     Register user
-// @access   Public
-router.post(
-  "/",
-  [
-    check("name", "Name is required").not().isEmpty(),
-    check("email", "Please include a valid email").isEmail(),
-    check(
-      "password",
-      "Please enter a password with 6 or more characters"
-    ).isLength({ min: 6 }),
-    check("profilePicture", "Valid profile image").optional().isString(),
-  ],
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const {
-      name,
-      email,
-      password,
-      profileImage,
-      school,
-      major,
-      year,
-    } = req.body;
-
-    console.log(req.body);
-
-    try {
-      let user = await findOne({ email });
-
-      if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
-      }
-
-      user = new User({
-        name,
-        email,
-        avatar: profileImage,
-        password,
-        school,
-        year,
-        major,
-      });
-
-      const salt = await genSalt(10);
-
-      user.password = await hash(password, salt);
-
-      await user.save();
-
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
-      payload.user.id;
-
-      sign(
-        payload,
-        process.env.jwtSecret,
-        { expiresIn: "5 days" },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send("Server error");
-    }
-  }
-);
-
-// @route    GET api/users
-// @desc     Get all users
-// @access   Private
+/**
+ * @api {get} /users/ Get Users
+ * @apiName GetUsers
+ * @apiGroup User
+ * @apiSuccess {Object} users All Users In Collection.
+ */
 router.get("/", async (req, res) => {
   const users = await User.find();
   res.json({ success: true, users });
@@ -156,9 +89,14 @@ router.get("/getById/:id", async (req, res) => {
   res.json({ success: true, user });
 });
 
-// @route    GET api/users
-// @desc     Get group(s) which user is part of, populated with users
-// @access   Private
+/**
+ * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
+ * @apiName GetUserById
+ * @apiGroup User
+ * @apiSuccess {Object[]} groups The list of groups joined by specified user.
+ * @apiParam {String} uid The user's id
+ * @apiError (500) {Object} Error Should never occur even if user has no groups.
+ */
 router.get("/getgroupsbyuserid/:uid", async (req, res) => {
   try {
     /* couldn't get this implementation to work...
@@ -176,14 +114,19 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
     res.send(groups);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send("Error getting user groups");
+    res.status(500).send(err);
   }
 });
 
-// @route    PUT api/users
-// @desc     update user profile information
-// @access   Private
-// how to validate email?
+/**
+ * @api {put} /users/updateprofile/ Update User Profile with arbitrary number of attributes
+ * @apiName UpdateProfile
+ * @apiGroup User
+ * @apiSuccess {String} message Success message.
+ * @apiParam {String} uid The user's id
+ * @apiParam {any} any Any attribute specified in User model
+ * @apiError (500) {Object} ValidationError Specified attributes invalid for specified reasons.
+ */
 router.put("/updateprofile", async (req, res) => {
   try {
     const body = req.body;
@@ -215,9 +158,15 @@ router.put("/updateprofile", async (req, res) => {
   }
 });
 
-// @route    PUT api/users
-// @desc     put user in a group (modify later to allow multiple groups)
-// @access   Private
+
+/**
+ * @api {put} /users/group/ Put User in Group
+ * @apiName GroupUser
+ * @apiGroup User
+ * @apiSuccess {Object[]} group The group that user was put in, populated with users.
+ * @apiParam {String} uid The user's id
+ * @apiError (500) {Object} Error Any error resulting from bad state, not inputs to this endpoint.
+ */
 router.put("/group", async (req, res) => {
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
@@ -247,12 +196,12 @@ router.put("/group", async (req, res) => {
     } else {
       const nonFullGroups = await Group.find({ full: false }).lean().populate(
         "members"
-      ); //try with lean
+      ); 
       // find most compatible user out of all users in non-full groups
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
-        if (hasUser(tempGroup, user.authid)) continue;
+        //if (hasUser(tempGroup, user.authid)) continue;
         for (let j = 0; j < tempGroup.length; j++) {
           if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];

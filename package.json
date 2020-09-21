@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.747.0",
+    "apidoc": "^0.25.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dot-env": "0.0.1",
@@ -23,5 +24,9 @@
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
     "normalize-url": "^5.1.0"
+  },
+  "apidoc": {
+    "title": "meetable apidoc",
+    "description" : "api doc for meetable api"
   }
 }

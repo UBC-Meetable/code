@@ -18,11 +18,12 @@ app.use("/api/responses", require("./routes/responses"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/groups", require("./routes/groups"));
 app.use("/api/media", require("./routes/media"));
+app.use("/api/forms", require("./routes/forms"));
 
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster0.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority",
+      "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster1.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority",
       {
         useNewUrlParser: true,
         useCreateIndex: true,
