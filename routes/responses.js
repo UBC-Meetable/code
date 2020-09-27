@@ -38,7 +38,9 @@ router.put("/", async (req, res) => {
       question: body.question,
       answer: body.answer,
     });
+
     await response.save();
+
     quizInstance = await QuizInstance.findOne({ _id: body.quizid });
     quizInstance.responses.push(response._id);
     await quizInstance.save();
