@@ -143,8 +143,8 @@ router.put("/group", async (req, res) => {
     const body = req.body;
     const uid = body.uid;
 
-    const hasTakenQuiz = await QuizInstance.findOne({uid})
-    if(!hasTakenQuiz) {
+    const quiz = await QuizInstance.findOne({uid}).populate("responses");
+    if(!quiz) {
       res.send({msg: "User has not taken quiz", success:false})
     }
 
@@ -152,15 +152,14 @@ router.put("/group", async (req, res) => {
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      year = await Response.findOne({
-        uid: user._id,
-        question: "What year are you going into?",
-      });
-      major = await Response.findOne({
-        uid: user._id,
-        question: "What is your intended major?",
-      });
-      group = new Group({ name: [year.answer, major.answer] });
+      year = null;
+      major = null;
+      for (const response of quiz.responses) {
+        if (response.question === "What year are you going into?") year = response.answer;
+        if (response.question === "What is your intended major?") major = response.answer;
+      }
+      if (year == null || major == null) res.send({msg: "Year or Major unknown", success:false});
+      group = new Group({ name: [year, major] });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
@@ -180,16 +179,14 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        const year = await Response.findOne({
-          uid: user._id,
-          question: "What year are you going into?",
-        });
-        const major = await Response.findOne({
-          uid: user._id,
-          question: "What is your intended major?",
-        });
-        console.log(year, major);
-        group = new Group({ name: [year.answer, major.answer] });
+        year = null;
+        major = null;
+        for (const response of quiz.responses) {
+          if (response.question === "What year are you going into?") year = response.answer;
+          if (response.question === "What is your intended major?") major = response.answer;
+        }
+        if (year == null || major == null) res.send({msg: "Year or Major unknown", success:false});
+        group = new Group({ name: [year, major] });
         user.groups.push(group._id);
         group.members.push(uid);
       } else {
