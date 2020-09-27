@@ -8,21 +8,9 @@ const normalize = require("normalize-url");
 const User = require("../models/User");
 const Group = require("../models/Group");
 const QuizInstance = require("../models/QuizInstance");
-const Response = require("../models/Response");
 //const { count } = require('../models/Group');
 
-/**
- * @api {post} /users/ Post User
- * @apiName PostUser
- * @apiGroup User
- * @apiSuccess {Object} user The User Posted.
- * @apiParam {String} name The user's name
- * @apiParam {String} profileImage profile picture URL
- * @apiParam {String} authid The user's auth0 id
- * @apiParam {String} email The user's email
- * @apiError (500) {Object} ValidationError The specified attributes are invalid for the specified reasons.
- * @apiError (400) {String} UserExists The posted user already exists.
- */
+// add user for testing purposes
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);
@@ -38,55 +26,46 @@ router.post("/", async (req, res) => {
 
       const socials = [user.snapchat, user.instagram, user.facebook];
       if (socials.length < 1 || !user.blurb) {
-        return res.status(200).send({
-          msg: "Meetable user exists additional steps required",
-          id: user._id,
-          snapchat: user.snapchat,
-          instagram: user.instagram,
-          blurb: user.blurb,
-        });
+        return res
+          .status(200)
+          .send({
+            msg: "Meetable user exists additional steps required",
+            id: user._id,
+            snapchat: user.snapchat,
+            instagram: user.instagram,
+            blurb: user.blurb,
+          });
       } else {
-        return res.status(200).send({
-          msg: "Meetable user exists",
-          id: user._id,
-          snapchat: user.snapchat,
-          instagram: user.instagram,
-          blurb: user.blurb,
-        });
+        return res
+          .status(200)
+          .send({
+            msg: "Meetable user exists",
+            id: user._id,
+            snapchat: user.snapchat,
+            instagram: user.instagram,
+            blurb: user.blurb,
+          });
       }
     }
-    //create new user and update responses with uid
-    const u = new User({
+    user = new User({
       name: req.body.name,
       avatar: req.body.profileImage,
       authid: req.body.authid,
       email: req.body.email,
     });
-    console.log(u);
-    const us = u.save();
-    console.log("updating responses");
-    const docs = await Response.update({qid: req.body.qid}, {uid: us._id})
-    console.log(docs);
-
-
-    res
-      .status(200)
-      .send({
-        msg: "Meetable user created responses updated with quizid required",
-        id: user._id,
-      });
+    console.log(user);
+    await user.save();
+    
+    res.status(200).send({ msg: "Meetable user exists additional steps required", id: user._id });
   } catch (err) {
     console.log(err);
     res.status(500).send(JSON.stringify(err));
   }
 });
 
-/**
- * @api {get} /users/ Get Users
- * @apiName GetUsers
- * @apiGroup User
- * @apiSuccess {Object} users All Users In Collection.
- */
+// @route    GET api/users
+// @desc     Get all users
+// @access   Private
 router.get("/", async (req, res) => {
   const users = await User.find();
   res.json({ success: true, users });
@@ -96,14 +75,9 @@ router.get("/getById/:id", async (req, res) => {
   res.json({ success: true, user });
 });
 
-/**
- * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
- * @apiName GetUserById
- * @apiGroup User
- * @apiSuccess {Object[]} groups The list of groups joined by specified user.
- * @apiParam {String} uid The user's id
- * @apiError (500) {Object} Error Should never occur even if user has no groups.
- */
+// @route    GET api/users
+// @desc     Get group(s) which user is part of, populated with users
+// @access   Private
 router.get("/getgroupsbyuserid/:uid", async (req, res) => {
   try {
     /* couldn't get this implementation to work...
@@ -121,19 +95,14 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
     res.send(groups);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send(err);
+    res.status(500).send("Error getting user groups");
   }
 });
 
-/**
- * @api {put} /users/updateprofile/ Update User Profile with arbitrary number of attributes
- * @apiName UpdateProfile
- * @apiGroup User
- * @apiSuccess {String} message Success message.
- * @apiParam {String} uid The user's id
- * @apiParam {any} any Any attribute specified in User model
- * @apiError (500) {Object} ValidationError Specified attributes invalid for specified reasons.
- */
+// @route    PUT api/users
+// @desc     update user profile information
+// @access   Private
+// how to validate email?
 router.put("/updateprofile", async (req, res) => {
   try {
     const body = req.body;
@@ -151,11 +120,11 @@ router.put("/updateprofile", async (req, res) => {
       snapchat: body.snapchat,
       blurb: body.blurb,
       avatar: body.avatar,
-      facebook: body.facebook,
+      facebook: body.facebook
     };
     console.log(newUser);
     const uid = body.uid;
-    const user = await User.findOneAndUpdate({ _id: uid }, newUser);
+    const user = await User.findOneAndUpdate({ _id: uid }, newUser)
 
     res.status(200).send({ msg: "Success", user });
   } catch (err) {
@@ -165,23 +134,18 @@ router.put("/updateprofile", async (req, res) => {
   }
 });
 
-/**
- * @api {put} /users/group/ Put User in Group
- * @apiName GroupUser
- * @apiGroup User
- * @apiSuccess {Object[]} group The group that user was put in, populated with users.
- * @apiParam {String} uid The user's id
- * @apiError (500) {Object} Error Any error resulting from bad state, not inputs to this endpoint.
- */
+// @route    PUT api/users
+// @desc     put user in a group (modify later to allow multiple groups)
+// @access   Private
 router.put("/group", async (req, res) => {
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
     const body = req.body;
     const uid = body.uid;
 
-    const hasTakenQuiz = await QuizInstance.findOne({ uid });
-    if (!hasTakenQuiz) {
-      res.send({ msg: "User has not taken quiz", success: false });
+    const hasTakenQuiz = await QuizInstance.findOne({uid})
+    if(!hasTakenQuiz) {
+      res.send({msg: "User has not taken quiz", success:false})
     }
 
     user = await User.findOne({ _id: uid });
@@ -196,22 +160,18 @@ router.put("/group", async (req, res) => {
         uid: user._id,
         question: "What is your intended major?",
       });
-      console.log(year);
-      console.log(major);
-
-      if (year && major) {
-        group = new Group({ name: [year.answer, major.answer] });
-        user.groups.push(group._id);
-        group.members.push(uid);
-      }
+      group = new Group({ name: [year.answer, major.answer] });
+      user.groups.push(group._id);
+      group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({ full: false })
-        .populate("members");
+      const nonFullGroups = await Group.find({ full: false }).lean().populate(
+        "members"
+      ); //try with lean
       // find most compatible user out of all users in non-full groups
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
         let tempGroup = nonFullGroups[i].members;
-        //if (hasUser(tempGroup, user.authid)) continue;
+        if (hasUser(tempGroup, user.authid)) continue;
         for (let j = 0; j < tempGroup.length; j++) {
           if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
             mostCompatibleUser = tempGroup[j];
@@ -229,11 +189,9 @@ router.put("/group", async (req, res) => {
           question: "What is your intended major?",
         });
         console.log(year, major);
-        if (year && major) {
-          group = new Group({ name: [year.answer, major.answer] });
-          user.groups.push(group._id);
-          group.members.push(uid);
-        }
+        group = new Group({ name: [year.answer, major.answer] });
+        user.groups.push(group._id);
+        group.members.push(uid);
       } else {
         // join compatible user's group
         group = await Group.findOne({ _id: mostCompatibleUser.groups[0] });
@@ -255,6 +213,7 @@ router.put("/group", async (req, res) => {
 
 // user, user, user -> boolean, return whether user1 is more compatible with user than user 2
 async function moreCompatible(user, user1, user2) {
+  
   const MIN_SCORE = 2;
 
   const userResponses = await Response.find({ uid: user._id }).lean().sort({
@@ -263,12 +222,6 @@ async function moreCompatible(user, user1, user2) {
   const user1Responses = await Response.find({ uid: user1._id }).lean().sort({
     dateCreated: 1,
   });
-  const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
-    dateCreated: 1,
-  });
-
-  console.log(userResponses);
-  console.log(user1Responses);
 
   if (
     !(
@@ -280,7 +233,9 @@ async function moreCompatible(user, user1, user2) {
   } else if (user2 == null) {
     return true;
   } else {
- 
+    const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
+      dateCreated: 1,
+    });
     let user1Score = 0;
     let user2Score = 0;
     for (let i = 2; i < userResponses.length; i++) {
