@@ -36,25 +36,21 @@ router.post("/", async (req, res) => {
 
       const socials = [user.snapchat, user.instagram, user.facebook];
       if (socials.length < 1 || !user.blurb) {
-        return res
-          .status(200)
-          .send({
-            msg: "Meetable user exists additional steps required",
-            id: user._id,
-            snapchat: user.snapchat,
-            instagram: user.instagram,
-            blurb: user.blurb,
-          });
+        return res.status(200).send({
+          msg: "Meetable user exists additional steps required",
+          id: user._id,
+          snapchat: user.snapchat,
+          instagram: user.instagram,
+          blurb: user.blurb,
+        });
       } else {
-        return res
-          .status(200)
-          .send({
-            msg: "Meetable user exists",
-            id: user._id,
-            snapchat: user.snapchat,
-            instagram: user.instagram,
-            blurb: user.blurb,
-          });
+        return res.status(200).send({
+          msg: "Meetable user exists",
+          id: user._id,
+          snapchat: user.snapchat,
+          instagram: user.instagram,
+          blurb: user.blurb,
+        });
       }
     }
     user = new User({
@@ -65,8 +61,11 @@ router.post("/", async (req, res) => {
     });
     console.log(user);
     await user.save();
-    
-    res.status(200).send({ msg: "Meetable user exists additional steps required", id: user._id });
+
+    res.status(200).send({
+      msg: "Meetable user exists additional steps required",
+      id: user._id,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).send(JSON.stringify(err));
@@ -151,11 +150,12 @@ router.put("/updateprofile", async (req, res) => {
       snapchat: body.snapchat,
       blurb: body.blurb,
       avatar: body.avatar,
-      facebook: body.facebook
+      facebook: body.facebook,
+      name: body.name
     };
     console.log(newUser);
     const uid = body.uid;
-    const user = await User.findOneAndUpdate({ _id: uid }, newUser)
+    const user = await User.findOneAndUpdate({ _id: uid }, newUser);
 
     res.status(200).send({ msg: "Success", user });
   } catch (err) {
@@ -174,15 +174,17 @@ router.put("/updateprofile", async (req, res) => {
  * @apiError (500) {Object} Error Any error resulting from bad state, not inputs to this endpoint.
  */
 router.put("/group", async (req, res) => {
+  console.log("put group");
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
     const body = req.body;
     const uid = body.uid;
 
-    const quiz = await QuizInstance.findOne({uid: uid}).populate("responses");
-    if(!quiz) {
-      res.send({msg: "User has not taken quiz", success:false})
+    const quiz = await QuizInstance.findOne({ uid: uid }).populate("responses");
+    if (!quiz) {
+      res.send({ msg: "User has not taken quiz", success: false });
     }
+
 
     user = await User.findOne({ _id: uid });
     group = await Group.findOne({ full: false });
@@ -191,17 +193,21 @@ router.put("/group", async (req, res) => {
       year = null;
       major = null;
       for (const response of quiz.responses) {
-        if (response.question === "What year are you going into?") year = response.answer;
-        if (response.question === "What is your intended major?") major = response.answer;
+        console.log(response);
+        if (response.question === "What year are you going into?")
+          year = response.answer;
+        if (response.question === "What is your intended major?")
+          major = response.answer;
       }
-      if (year == null || major == null) res.send({msg: "Year or Major unknown", success:false});
+      if (year == null || major == null)
+        res.send({ msg: "Year or Major unknown", success: false });
       group = new Group({ name: [year, major] });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
-      const nonFullGroups = await Group.find({ full: false }).lean().populate(
-        "members"
-      ); 
+      const nonFullGroups = await Group.find({ full: false })
+        .lean()
+        .populate("members");
       // find most compatible user out of all users in non-full groups
       mostCompatibleUser = null;
       for (let i = 0; i < nonFullGroups.length; i++) {
@@ -209,11 +215,13 @@ router.put("/group", async (req, res) => {
         //if (hasUser(tempGroup, user.authid)) continue;
         for (let j = 0; j < tempGroup.length; j++) {
           try {
-          if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
-            mostCompatibleUser = tempGroup[j];
+            if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
+              mostCompatibleUser = tempGroup[j];
           } catch (err) {
             console.log(err);
-            console.log("Missing data encountered, continuing to next iteration");
+            console.log(
+              "Missing data encountered, continuing to next iteration"
+            );
           }
         }
       }
@@ -224,10 +232,13 @@ router.put("/group", async (req, res) => {
         year = null;
         major = null;
         for (const response of quiz.responses) {
-          if (response.question === "What year are you going into?") year = response.answer;
-          if (response.question === "What is your intended major?") major = response.answer;
+          if (response.question === "What year are you going into?")
+            year = response.answer;
+          if (response.question === "What is your intended major?")
+            major = response.answer;
         }
-        if (year == null || major == null) res.send({msg: "Year or Major unknown", success:false});
+        if (year == null || major == null)
+          res.send({ msg: "Year or Major unknown", success: false });
         group = new Group({ name: [year, major] });
         user.groups.push(group._id);
         group.members.push(uid);
@@ -252,8 +263,11 @@ router.put("/group", async (req, res) => {
 
 // user, user, user -> boolean, return whether user1 is more compatible with user than user 2
 async function moreCompatible(user, user1, user2) {
-  
   const MIN_SCORE = 2;
+
+  console.log(user?._id);
+  console.log(user1?._id);
+  console.log(user2?._id);
 
   const userResponses = await Response.find({ uid: user._id }).lean().sort({
     dateCreated: 1,
