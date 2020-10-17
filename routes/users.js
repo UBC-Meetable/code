@@ -187,6 +187,9 @@ router.put("/group", async (req, res) => {
 
 
     user = await User.findOne({ _id: uid });
+    if (user.groups.length != 0) {
+      res.send({ msg: "User is already in group", success: false }); 
+    }
     group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
