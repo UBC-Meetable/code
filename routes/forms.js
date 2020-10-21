@@ -47,7 +47,7 @@ router.get('/', async (req, res) => {
  *
  */
 router.get('/:uid', async (req, res) => {
-    const forms = await Form.find({uid: req.params.uid});
+    const forms = await Form.find({ uid: req.params.uid });
     res.json(forms);
 });
 
@@ -70,7 +70,7 @@ router.get('/:uid', async (req, res) => {
  *
  */
 router.get('/:email', async (req, res) => {
-    const forms = await Form.find({email: req.params.email});
+    const forms = await Form.find({ email: req.params.email });
     res.json(forms);
 });
 
@@ -99,13 +99,13 @@ router.get('/:email', async (req, res) => {
  */
 router.post('/', async (req, res) => {
     try {
-    let form = new Form({
-        text: req.body.text, 
-        uid: req.body.uid,
-        email: req.body.email,
-    });
-    await form.save();
-    res.status(200).send(form);
+        let form = new Form({
+            text: req.body.text,
+            uid: req.body.uid,
+            email: req.body.email,
+        });
+        await form.save();
+        res.status(200).send(form);
     } catch (err) {
         console.log(err);
         res.status(500).send(err);

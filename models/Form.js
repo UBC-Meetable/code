@@ -2,12 +2,11 @@ const mongoose = require('mongoose');
 
 const FormSchema = mongoose.Schema({
     text: {
-        type: String, 
+        type: String,
         required: true,
-        minlength: 30, 
         maxlength: 10000
     }, // probably best validated on frontend
-    dateCreated: {    
+    dateCreated: {
         type: Date,
         default: Date.now
     },
