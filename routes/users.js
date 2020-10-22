@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
     let user = await User.findOne({ authid: userInfo.authid });
     if (user) {
       console.log("user exists");
-      console.log(user?._id);
+     
 
       const socials = [user.snapchat, user.instagram, user.facebook];
       if (socials.length < 1 || !user.blurb) {
@@ -248,7 +248,7 @@ router.put("/group", async (req, res) => {
       } else {
         // join compatible user's group
         group = await Group.findOne({ _id: mostCompatibleUser.groups[0] });
-        user.groups.push(group?._id);
+        user.groups.push(group._id);
         group.members.push(uid);
         // update full? status as necessary
         if (group.members.length == group.maxSize) group.full = true;
@@ -267,10 +267,6 @@ router.put("/group", async (req, res) => {
 // user, user, user -> boolean, return whether user1 is more compatible with user than user 2
 async function moreCompatible(user, user1, user2) {
   const MIN_SCORE = 2;
-
-  console.log(user?._id);
-  console.log(user1?._id);
-  console.log(user2?._id);
 
   const userResponses = await Response.find({ uid: user._id }).lean().sort({
     dateCreated: 1,
