@@ -4,13 +4,43 @@ const bodyParser = require("body-parser");
 const User = require("./models/User");
 const Question = require("./models/Question");
 const cors = require("cors");
-const path = require('path')
-require('dotenv').config()
-const sslRedirect = require('heroku-ssl-redirect')
+const path = require("path");
+require("dotenv").config();
+const sslRedirect = require("heroku-ssl-redirect");
+
+const http = require("http");
+const socketIO = require("socket.io");
 
 const app = express();
+const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
+
+// Chat
+let io = socketIO(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
+  },
+});
+io.on("connection", (socket) => {
+  
+  // disconnect is fired when a client leaves the server
+  socket.on("message", (msg)=>{
+    console.log(msg);
+
+  })
+  socket.on("typing", (user)=>{
+    console.log(`username ${user} is typing..`);
+
+  })
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+server.listen(5000, () => console.log("Listening to chat room on port 5000"));
 // Define Routes
 app.use("/api/users", require("./routes/users"));
 app.use("/api/quizs", require("./routes/quizs"));
@@ -42,7 +72,7 @@ const connectDB = async () => {
 
 // Connect Database
 connectDB();
-app.use(sslRedirect())
+app.use(sslRedirect());
 
 //req : request
 //res : response
@@ -72,12 +102,12 @@ app.post("/submitForm", (req, res) => {
 // Serve static assets in production
 if (true) {
   // Set static folder
-  app.use(express.static('build'));
+  app.use(express.static("build"));
 
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "build", "index.html"));
   });
 }
 
-const PORT = process.env.NODE_ENV === "production" ? process.env.PORT : 4000
+const PORT = process.env.NODE_ENV === "production" ? process.env.PORT : 4000;
 app.listen(PORT, () => console.log(`Meetable api listening on port ${PORT}`));
