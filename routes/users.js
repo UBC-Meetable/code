@@ -96,6 +96,19 @@ router.get("/getById/:id", async (req, res) => {
 });
 
 /**
+ * @api {get} /users/getByEmail Get User by email
+ * @apiName GetUserByEmail
+ * @apiGroup User
+ * @apiSuccess {Object} The User.
+ * @apiParam {String} email The user's email
+ */
+router.get("/getByEmail", async (req, res) => {
+  const user = await User.findOne({ email: req.body.email });
+  res.send(user);
+  //res.json({ success: true, user });
+});
+
+/**
  * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
  * @apiName GetUserGroupsById
  * @apiGroup User

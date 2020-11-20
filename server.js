@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const User = require("./models/User");
-const Question = require("./models/Question");
+const ChatMessage = require("./models/ChatMessage");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
@@ -16,31 +16,9 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 
-// Chat
-let io = socketIO(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
-    credentials: true,
-  },
-});
-io.on("connection", (socket) => {
-  
-  // disconnect is fired when a client leaves the server
-  socket.on("message", (msg)=>{
-    console.log(msg);
 
-  })
-  socket.on("typing", (user)=>{
-    console.log(`username ${user} is typing..`);
 
-  })
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-});
-server.listen(5000, () => console.log("Listening to chat room on port 5000"));
+
 // Define Routes
 app.use("/api/users", require("./routes/users"));
 app.use("/api/quizs", require("./routes/quizs"));
@@ -73,6 +51,39 @@ const connectDB = async () => {
 // Connect Database
 connectDB();
 app.use(sslRedirect());
+
+// Chat
+let io = socketIO(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true,
+  },
+});
+io.on("connection", (socket) => {
+  
+  // disconnect is fired when a client leaves the server
+  socket.on("message", (msg)=>{
+    console.log(msg);
+    let msgObj = JSON.parse(msg);
+    let message = new ChatMessage({
+      text: msgObj.text,
+      uid: msgObj.uid,
+    });
+    message.save().catch((err) => {
+      console.log(err);
+    });
+  })
+  socket.on("typing", (user)=>{
+    console.log(`username ${user} is typing..`);
+
+  })
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+server.listen(5000, () => console.log("Listening to chat room on port 5000"));
 
 //req : request
 //res : response
