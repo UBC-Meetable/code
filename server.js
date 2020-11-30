@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const User = require("./models/User");
 const ChatMessage = require("./models/ChatMessage");
+const Group = require("./models/Group");
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
@@ -27,6 +28,7 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/groups", require("./routes/groups"));
 app.use("/api/media", require("./routes/media"));
 app.use("/api/forms", require("./routes/forms"));
+app.use("/api/chat", require("./routes/chat"));
 
 const connectDB = async () => {
   try {
@@ -71,7 +73,12 @@ io.on("connection", (socket) => {
       text: msgObj.text,
       uid: msgObj.uid,
     });
-    message.save().catch((err) => {
+    await message.save().catch((err) => {
+      console.log(err);
+    });
+    let group = Group.findOne({_id: msgObj.gid});
+    group.messages.push(message._id);
+    group.save().catch((err) => {
       console.log(err);
     });
   })
