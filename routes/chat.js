@@ -18,18 +18,28 @@ router.get('/', async (req, res) => {
  * @apiName GetMessagesByGroup
  * @apiGroup Chat
  * @apiParam {String} gid the group's database id
- * @apiParam {Number} period the number of days before present to fetch messages for
- * @apiSuccess {Object[]} messages array of Message, reverse chronological
+ * @apiParam {Number} period The number of days before end date to fetch messages for
+ * @apiParam {Number} end The number of days before present of end date
+ * @apiSuccess {Object[]} messages array of ChatMessage, reverse chronological
  */
 router.get('/gid/', async (req, res) => {
     const group = await Group.findOne({ _id: req.body.gid }).lean();
-    const earliest = new Date();
-    earliest.setDate(earliest.getDate() - req.body.period);
+    const actualDate = new Date();
+    const endOfToday = new Date(actualDate.getFullYear()
+                           ,actualDate.getMonth()
+                           ,actualDate.getDate()
+                           ,23,59,59); 
+    let earliest, latest = new Date();
+    latest.setDate(endOfToday.getDate() - req.body.end);
+    earliest.setDate(latest.getDate() - req.body.period);
 
     let result = [];
     // assumes that items in group.messages ordered from oldest to newest
     for (i = group.messages.length - 1; i >= 0; i--) {
         const msg = ChatMessage.findOne({_id: group.messages[i]}).lean();
+        if (msg.dateCreated > latest) {
+            continue;
+        }
         if (msg.dateCreated < earliest) {
             break;
         } else {
