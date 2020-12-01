@@ -1,5 +1,48 @@
 define({ "api": [
   {
+    "type": "delete",
+    "url": "/chat/",
+    "title": "Delete a message",
+    "name": "DeleteMessage",
+    "group": "Chat",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "mid",
+            "description": "<p>message _id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "gid",
+            "description": "<p>group _id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Sucess message.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/chat.js",
+    "groupTitle": "Chat"
+  },
+  {
     "type": "get",
     "url": "/chat/",
     "title": "Get All ChatMessage",
@@ -266,49 +309,6 @@ define({ "api": [
     },
     "version": "0.0.0",
     "filename": "routes/groups.js",
-    "groupTitle": "Group"
-  },
-  {
-    "type": "delete",
-    "url": "/chat/",
-    "title": "Delete a message",
-    "name": "DeleteMessage",
-    "group": "Group",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "mid",
-            "description": "<p>message _id</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "gid",
-            "description": "<p>group _id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "message",
-            "description": "<p>Sucess message.</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "routes/chat.js",
     "groupTitle": "Group"
   },
   {

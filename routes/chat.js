@@ -52,7 +52,7 @@ router.get('/gid/', async (req, res) => {
 /**
 * @api {delete} /chat/ Delete a message
 * @apiName DeleteMessage
-* @apiGroup Group
+* @apiGroup Chat
 * @apiParam {String} mid message _id
 * @apiParam {String} gid group _id
 * @apiSuccess {String} message Sucess message.
