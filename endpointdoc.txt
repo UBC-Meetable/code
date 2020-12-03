@@ -43,3 +43,11 @@ PUT api/users/group
 request body: {"uid": "..."}
 
 
+Main proposed design changes for mobile:
+
+- may want to eliminate the Response model and collection OR do indexed queries. Though MongoDB is designed for many small documents, so it should be ok
+- could use a Mongoose Map in quizInstance for the questions and answers, this would be flexible and entirely decoupled from frontend quiz implementation
+- if responses are still kept as an array of object refs in the model then at least do this:
+  - don't send quiz responses back in real time as they are selected as this excludes the possibility of changing quiz answers before submission
+    instead, add to the quizInstance obj that the client receives. Send it back when quiz is submitted.
+

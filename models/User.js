@@ -19,10 +19,10 @@ const UserSchema = new mongoose.Schema({
    
   },
   authid: {type: String, required: true},
-  avatar: { // string? or identifier for image hosted on server?
+  avatar: { 
     type: String
   },
-  verified: {
+  verified: {                          // TODO: determine if necessary
     type: Boolean,
     default: false
   },
@@ -30,11 +30,25 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  groups: [{
+  groups: [{                           // TODO: rename to friendGroups and create new courseGroups attribute
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Group',
     default: [],
   }],
+  courseGroups: [{
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'CourseGroup',
+    default: []
+  }],
+  courses: {
+    type: [String],
+  },
+  major: {
+    type: String
+  },
+  year: {
+    type: Number
+  },
   maxGroups: {type: Number, default: 7},
   blurb: {
     type: String,

@@ -7,6 +7,7 @@ const { check, validationResult, body } = require("express-validator");
 const normalize = require("normalize-url");
 const User = require("../models/User");
 const Group = require("../models/Group");
+const CourseGroup = require("../models/CourseGroup");
 const QuizInstance = require("../models/QuizInstance");
 //const { count } = require('../models/Group');
 /**
@@ -157,7 +158,10 @@ router.put("/updateprofile", async (req, res) => {
   blurb: "...",
   email: "..."}
   */
+
+
     const newUser = {
+      /*
       uid: body.uid,
       instagram: body.instagram,
       snapchat: body.snapchat,
@@ -165,7 +169,11 @@ router.put("/updateprofile", async (req, res) => {
       avatar: body.avatar,
       facebook: body.facebook,
       name: body.name
+      */
     };
+    for (const attr in body) {
+      newUser[attr] = body[attr];
+    }
     console.log(newUser);
     const uid = body.uid;
     const user = await User.findOneAndUpdate({ _id: uid }, newUser);
@@ -177,6 +185,45 @@ router.put("/updateprofile", async (req, res) => {
     res.status(500).send(err);
   }
 });
+
+
+/**
+ * @api {put} /users/courseGroup/ Put User in course groups
+ * @apiName GroupUserCourses
+ * @apiGroup User
+ * @apiSuccess {Object[]} group The group that user was put in, populated with users.
+ * @apiParam {String} uid The user's id
+ * 
+ */
+router.put("/courseGroup", async (req, res) => {
+  const uid = req.body.uid;
+  const user = await User.findOne({_id: uid}).populate("courseGroups");
+  for (const course in user.courses) {
+    let grouped = false;
+    for (const courseGroup in user.courseGroups) {
+      if (course === courseGroup.courseCode) {
+        grouped = true;
+        break;
+      }
+    }
+    if (!grouped) {
+      let newCourseGroup = await CourseGroup.findOne({courseCode: course});
+      if (newCourseGroup == null) {
+        newCourseGroup = new CourseGroup({courseCode: course});
+      }
+      newCourseGroup.members.push(uid);
+      user.courseGroups.push(newCourseGroup._id);
+    }
+  }
+  user.save().catch((err) => {
+    console.log(err);
+  });
+  newCourseGroup.save().catch((err) => {
+    console.log(err);
+  });
+});
+
+
 
 /**
  * @api {put} /users/group/ Put User in Group

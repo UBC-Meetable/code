@@ -94,17 +94,4 @@ router.post("/", async (req, res) => {
   }
 });
 
-/*
-// assuming client sends back finished quiz instance
-// unsure if user should be added to a group here or in groups.js
-router.post('/submitcomplete', async (req,res)=>{
-    const body = req.body
-    const quizInstance = body.quizInstance
-    const uid = body.uid
-
-
-
-})
-*/
-
 module.exports = router;

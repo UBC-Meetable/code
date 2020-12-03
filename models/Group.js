@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+
+
 const GroupSchema = mongoose.Schema({
    name: {type: [String], required: true}, // not sure if str or array of str
    // ['2024', 'sciences', 'cats', ..., ...,]
@@ -19,5 +21,11 @@ const GroupSchema = mongoose.Schema({
     default: Date.now
 },
 })
+const FriendGroupSchema = mongoose.Schema({
+    maxSize : {type: Number, default: 7},
+    full: {type: Boolean, default: false},
+});
 
-module.exports = Group = mongoose.model("group", GroupSchema);
+
+const Group = mongoose.model("group", GroupSchema);
+module.exports = Group;
