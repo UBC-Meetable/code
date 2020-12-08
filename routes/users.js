@@ -187,9 +187,21 @@ router.put("/updateprofile", async (req, res) => {
 });
 
 
-// TODO
+/**
+ * @api {get} /users/courseGroup/ get user's course groups
+ * @apiName GetCourseGroups
+ * @apiGroup User
+ * @apiSuccess {Object[]} groups The course group(s) that user was put in or undefined 
+ * TODO: determine if course groups should be deep-populated
+ * @apiParam {String} uid The user's id
+ */
 router.get("/courseGroup", async (req, res) => {
-
+  try {
+  let user = await User.findOne({_id: uid}).populate("courseGroups");
+  res.json(user.courseGroups);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 });
 
 /**
