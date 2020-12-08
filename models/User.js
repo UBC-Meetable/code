@@ -40,13 +40,14 @@ const UserSchema = new mongoose.Schema({
     ref: 'CourseGroup',
     default: []
   }],
-  courses: {
+  courses: {              // TODO: frontend or backend validation, possibly using SSC API https://github.com/qstevens/UBC-Courses-API
     type: [String],
+    default: []
   },
-  major: {
+  major: {                // TODO: frontend validation/choose from limited options
     type: String
   },
-  year: {
+  year: {                 // TODO: frontend validation/choose from limited options
     type: Number
   },
   maxGroups: {type: Number, default: 7},
@@ -64,7 +65,7 @@ const UserSchema = new mongoose.Schema({
     required: false,
     },
     /*
-  socialMedia: { 
+  socialMedia: {             // TODO: decide whether to implement map so users can put whatever social media
     type: Map, // key: social media platform
     of: String, // value: either links or identifiers such as usernames
     minSize: 1,

@@ -142,7 +142,7 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
  * @api {put} /users/updateprofile/ Update User Profile with arbitrary number of attributes
  * @apiName UpdateProfile
  * @apiGroup User
- * @apiSuccess {String} message Success message.
+ * @apiSuccess {Object} message Object with success message and user object.
  * @apiParam {String} uid The user's id
  * @apiParam {any} any Any attribute specified in User model
  * @apiError (500) {Object} ValidationError Specified attributes invalid for specified reasons.
@@ -187,17 +187,22 @@ router.put("/updateprofile", async (req, res) => {
 });
 
 
+// TODO
+router.get("/courseGroup", async (req, res) => {
+
+});
+
 /**
  * @api {put} /users/courseGroup/ Put User in course groups
  * @apiName GroupUserCourses
  * @apiGroup User
- * @apiSuccess {Object[]} group The group that user was put in, populated with users.
+ * @apiSuccess {Object[]} groups The group(s) that user was put in. 
+ * TODO: determine if course groups should be deep-populated
  * @apiParam {String} uid The user's id
- * 
  */
 router.put("/courseGroup", async (req, res) => {
   const uid = req.body.uid;
-  const user = await User.findOne({_id: uid}).populate("courseGroups");
+  let user = await User.findOne({_id: uid}).populate("courseGroups");
   for (const course in user.courses) {
     let grouped = false;
     for (const courseGroup in user.courseGroups) {
@@ -213,14 +218,43 @@ router.put("/courseGroup", async (req, res) => {
       }
       newCourseGroup.members.push(uid);
       user.courseGroups.push(newCourseGroup._id);
+      newCourseGroup.save().catch((err) => {
+        console.log(err);
+      });
     }
   }
   user.save().catch((err) => {
     console.log(err);
   });
-  newCourseGroup.save().catch((err) => {
-    console.log(err);
-  });
+  // shallow populate, frontend can send further get requests if needed
+  await user.populate("courseGroups").execPopulate(); // not sure if doc can be populated twice
+  res.status(200).json(user);
+});
+
+/**
+ * @api {delete} /users/courseGroup/ remove user from a course group
+ * @apiName DeleteUserCourseGroup
+ * @apiGroup User
+ * @apiSuccess {String} message A success message.
+ * @apiParam {String} courseCode The course code of the course group to remove user from
+ * @apiParam {String} uid The user's id
+ * @apiError (500) {Object} message user was not in specified course group
+ */
+router.delete("/courseGroup", async (req, res) => {
+  const uid = req.body.uid;
+  const course = req.body.courseCode;
+  let user = await User.findOne({_id: uid});
+  try {
+    let courseGroup = CourseGroup.findOne({courseCode: course});
+    let index = courseGroup.members.indexOf(uid);
+    // assumptions rule out need for if (index !== -1) guard
+    courseGroup.members.splice(index, 1);
+    let index = user.courseGroups.indexOf(courseGroup._id);
+    user.courseGroups.splice(index, 1);
+  } catch (err) {
+      console.error(err.message);
+      res.status(500).send(err);
+  }
 });
 
 
