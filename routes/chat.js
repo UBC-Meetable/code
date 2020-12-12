@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const ChatMessage = require('../models/ChatMessage');
+const Group = require('../models/Group');
 
+// tested, works, 11/12/2020
 /**
  * @api {get} /chat/ Get All ChatMessage
  * @apiName GetChatMessages
@@ -12,6 +14,13 @@ router.get('/', async (req, res) => {
     const messages = await ChatMessage.find();
     res.json(messages);
 });
+
+
+// tested, works, 11/12/2020, but need to do more in-detail tests
+/*
+this endpoint would benefit from unit testing, maybe move all the logic to a fn, then make
+another endpoint that creates some synthetic data to test on and calls the fn, and use asserts
+*/
 
 /**
  * @api {get} /chat/gid Get ChatMessages By group id
@@ -29,14 +38,15 @@ router.get('/gid/', async (req, res) => {
                            ,actualDate.getMonth()
                            ,actualDate.getDate()
                            ,23,59,59); 
-    let earliest, latest = new Date();
+    let earliest = new Date();
+    let latest = new Date();
     latest.setDate(endOfToday.getDate() - req.body.end);
     earliest.setDate(latest.getDate() - req.body.period);
 
     let result = [];
     // assumes that items in group.messages ordered from oldest to newest
     for (i = group.messages.length - 1; i >= 0; i--) {
-        const msg = ChatMessage.findOne({_id: group.messages[i]}).lean();
+        const msg = await ChatMessage.findOne({_id: group.messages[i]}).lean();
         if (msg.dateCreated > latest) {
             continue;
         }
@@ -46,9 +56,10 @@ router.get('/gid/', async (req, res) => {
             result.push(msg);
         }
     }
-    res.json(result);
+    res.status(200).send(result);
 });
 
+// tested, works, 11/12/2020
 /**
 * @api {delete} /chat/ Delete a message
 * @apiName DeleteMessage
@@ -59,8 +70,9 @@ router.get('/gid/', async (req, res) => {
 */
 router.delete('/delete', async (req, res) => {
     try {
+        // does this need to await?
         await ChatMessage.deleteOne({ _id: req.body.mid });
-        let group = Group.findOne({ _id: req.body.gid });
+        let group = await Group.findOne({ _id: req.body.gid });
         let index = group.messages.indexOf(req.body.mid);
         if (index !== -1) {
             group.messages.splice(index, 1);

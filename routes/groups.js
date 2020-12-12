@@ -47,6 +47,21 @@ router.delete('/byid', async (req, res) => {
     }
 });
 
+// add messages attribute to groups created before it was added to the schema
+// this should not overwrite existing messages attributes. 
+router.put("/injectmessages", async (req, res) => {
+    let groups = await Group.find({});
+    let promises = [];
+    groups.forEach(document => {
+        if (typeof document.messages === "undefined") {
+            document.messages = [];
+            promises.push(document.save());
+        }
+    });
+    await Promise.all(promises);
+    res.status(200).send("attribute added");
+});
+
 /**
  * @api {put} /groups/ Removes all duplicate users from all groups
  * @apiName PruneGroups

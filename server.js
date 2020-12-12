@@ -17,6 +17,9 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
 
+const prodCluster = "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster1.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority";
+const testCluster = "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster0.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority";
+
 
 
 
@@ -33,7 +36,7 @@ app.use("/api/chat", require("./routes/chat"));
 const connectDB = async () => {
   try {
     await mongoose.connect(
-      "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster1.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority",
+      testCluster,
       {
         useNewUrlParser: true,
         useCreateIndex: true,
@@ -66,7 +69,7 @@ let io = socketIO(server, {
 io.on("connection", (socket) => {
   
   // disconnect is fired when a client leaves the server
-  socket.on("message", (msg)=>{
+  socket.on("message", async (msg)=>{
     console.log(msg);
     let msgObj = JSON.parse(msg);
     let message = new ChatMessage({
@@ -76,7 +79,7 @@ io.on("connection", (socket) => {
     await message.save().catch((err) => {
       console.log(err);
     });
-    let group = Group.findOne({_id: msgObj.gid});
+    let group = await Group.findOne({_id: msgObj.gid});
     group.messages.push(message._id);
     group.save().catch((err) => {
       console.log(err);

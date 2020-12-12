@@ -261,7 +261,7 @@ router.delete("/courseGroup", async (req, res) => {
     let index = courseGroup.members.indexOf(uid);
     // assumptions rule out need for if (index !== -1) guard
     courseGroup.members.splice(index, 1);
-    let index = user.courseGroups.indexOf(courseGroup._id);
+    index = user.courseGroups.indexOf(courseGroup._id);
     user.courseGroups.splice(index, 1);
   } catch (err) {
       console.error(err.message);
