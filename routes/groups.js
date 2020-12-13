@@ -1,10 +1,9 @@
 const express = require("express");
 const Group = require("../models/Group");
+const CourseGroup = require("../models/CourseGroup");
 const router = express.Router();
 
-// @route    GET api/groups
-// @desc     Get all groups
-// @access   Private
+
 /**
  * @api {get} /groups/ Get all groups
  * @apiName GetGroups
@@ -18,6 +17,22 @@ router.get('/', async (req, res) => {
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
+    }
+});
+
+/**
+ * @api {get} /courseGroups/ Get all course groups
+ * @apiName GetCourseGroups
+ * @apiGroup Group
+ * @apiSuccess {Object[]} course groups All course groups in collection.
+ */
+router.get('/courseGroups', async (req, res) => {
+    try {
+        const groups = await CourseGroup.find();
+        res.json(groups);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send(err);
     }
 });
 

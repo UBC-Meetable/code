@@ -30,7 +30,7 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  groups: [{                           // TODO: rename to friendGroups and create new courseGroups attribute
+  groups: [{                           
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Group',
     default: [],
@@ -49,6 +49,9 @@ const UserSchema = new mongoose.Schema({
   },
   year: {                 // TODO: frontend validation/choose from limited options
     type: Number
+  },
+  school: {
+    type: String
   },
   maxGroups: {type: Number, default: 7},
   blurb: {

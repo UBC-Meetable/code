@@ -9,6 +9,9 @@ const User = require("../models/User");
 const Group = require("../models/Group");
 const CourseGroup = require("../models/CourseGroup");
 const QuizInstance = require("../models/QuizInstance");
+const major = require("./major");
+
+
 //const { count } = require('../models/Group');
 /**
  * @api {post} /users/ Post User
@@ -160,7 +163,7 @@ router.put("/updateprofile", async (req, res) => {
   */
 
 
-    const newUser = {
+    let newUser = {
       /*
       uid: body.uid,
       instagram: body.instagram,
@@ -176,7 +179,7 @@ router.put("/updateprofile", async (req, res) => {
     }
     console.log(newUser);
     const uid = body.uid;
-    const user = await User.findOneAndUpdate({ _id: uid }, newUser);
+    const user = await User.findOneAndUpdate({ _id: uid }, newUser, {new: true});
 
     res.status(200).send({ msg: "Success", user });
   } catch (err) {
@@ -197,8 +200,8 @@ router.put("/updateprofile", async (req, res) => {
  */
 router.get("/courseGroup", async (req, res) => {
   try {
-  let user = await User.findOne({_id: uid}).populate("courseGroups");
-  res.json(user.courseGroups);
+  let user = await User.findOne({_id: req.body.uid}).populate("courseGroups");
+  res.send(user.courseGroups); //.send, .json, does it matter? 
   } catch (err) {
     res.status(500).send(err);
   }
@@ -215,18 +218,18 @@ router.get("/courseGroup", async (req, res) => {
 router.put("/courseGroup", async (req, res) => {
   const uid = req.body.uid;
   let user = await User.findOne({_id: uid}).populate("courseGroups");
-  for (const course in user.courses) {
+  for (const course of user.courses) {
     let grouped = false;
-    for (const courseGroup in user.courseGroups) {
+    for (const courseGroup of user.courseGroups) {
       if (course === courseGroup.courseCode) {
         grouped = true;
         break;
       }
     }
     if (!grouped) {
-      let newCourseGroup = await CourseGroup.findOne({courseCode: course});
+      let newCourseGroup = await CourseGroup.findOne({courseCode: course, school: user.school});
       if (newCourseGroup == null) {
-        newCourseGroup = new CourseGroup({courseCode: course});
+        newCourseGroup = new CourseGroup({courseCode: course, school: user.school});
       }
       newCourseGroup.members.push(uid);
       user.courseGroups.push(newCourseGroup._id);
@@ -257,14 +260,17 @@ router.delete("/courseGroup", async (req, res) => {
   const course = req.body.courseCode;
   let user = await User.findOne({_id: uid});
   try {
-    let courseGroup = CourseGroup.findOne({courseCode: course});
+    let courseGroup = await CourseGroup.findOne({courseCode: course, school: user.school});
     let index = courseGroup.members.indexOf(uid);
     // assumptions rule out need for if (index !== -1) guard
     courseGroup.members.splice(index, 1);
     index = user.courseGroups.indexOf(courseGroup._id);
     user.courseGroups.splice(index, 1);
+    user.save();
+    courseGroup.save();
+    res.status(200).send(user);
   } catch (err) {
-      console.error(err.message);
+      console.log(err);
       res.status(500).send(err);
   }
 });
@@ -300,7 +306,7 @@ router.put("/group", async (req, res) => {
     if (group == null) {
       // create a new group and join it
       year = null;
-      major = null;
+      let major = null;
       for (const response of quiz.responses) {
         console.log(response);
         if (response.question === "What year are you going into?")
@@ -339,7 +345,7 @@ router.put("/group", async (req, res) => {
       if (mostCompatibleUser == null) {
         // create a new group and join it
         year = null;
-        major = null;
+        let major = null;
         for (const response of quiz.responses) {
           if (response.question === "What year are you going into?")
             year = response.answer;
@@ -412,5 +418,21 @@ function hasUser(tempGroup, authid) {
   }
   return false;
 }
+
+router.put("/inject", async (req, res) => {
+  let users = await User.find({});
+  let promises = [];
+  users.forEach(document => {
+      if (typeof document.courses === "undefined") {
+          document.courses = [];
+      }
+      if (typeof document.courseGroups === "undefined") {
+        document.courseGroups = [];
+      }
+      promises.push(document.save());
+  });
+  await Promise.all(promises);
+  res.status(200).send("attributes added");
+})
 
 module.exports = router;
