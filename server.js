@@ -4,8 +4,10 @@ const bodyParser = require("body-parser");
 const User = require("./models/User");
 const ChatMessage = require("./models/ChatMessage");
 const Group = require("./models/Group");
+/*
 const major = require("./routes/major");
 const majorRouter = major.router;
+*/
 const cors = require("cors");
 const path = require("path");
 require("dotenv").config();
@@ -34,7 +36,7 @@ app.use("/api/groups", require("./routes/groups"));
 app.use("/api/media", require("./routes/media"));
 app.use("/api/forms", require("./routes/forms"));
 app.use("/api/chat", require("./routes/chat"));
-app.use("/api/major", majorRouter);
+
 
 const connectDB = async () => {
   try {
