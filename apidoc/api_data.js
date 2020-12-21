@@ -2,7 +2,7 @@ define({ "api": [
   {
     "type": "delete",
     "url": "/chat/",
-    "title": "Delete a message",
+    "title": "Delete specified message from specified group; if message not in group do nothing",
     "name": "DeleteMessage",
     "group": "Chat",
     "parameter": {
@@ -33,7 +33,20 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "message",
-            "description": "<p>Sucess message.</p>"
+            "description": "<p>Success message.</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "500": [
+          {
+            "group": "500",
+            "type": "Object",
+            "optional": false,
+            "field": "Error",
+            "description": "<p>group not found.</p>"
           }
         ]
       }
@@ -109,7 +122,14 @@ define({ "api": [
             "description": "<p>array of ChatMessage, reverse chronological</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "    HTTP/1.1 200 OK\n[\n    {\n        \"_id\": \"5fd411b9965e402f099d6a61\",\n        \"text\": \"hi\",\n        \"uid\": \"5f590bb03cb7430017a84b47\",\n        \"dateCreated\": \"2020-12-12T00:41:29.029Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"5fd411b1965e402f099d6a60\",\n        \"text\": \"hello\",\n        \"uid\": \"5f590bb03cb7430017a84b47\",\n        \"dateCreated\": \"2020-12-12T00:41:21.750Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"5fd41112965e402f099d6a5f\",\n        \"text\": \"hello\",\n        \"uid\": \"5f590bb03cb7430017a84b47\",\n        \"dateCreated\": \"2020-12-12T00:38:42.879Z\",\n        \"__v\": 0\n    }\n]",
+          "type": "json"
+        }
+      ]
     },
     "version": "0.0.0",
     "filename": "routes/chat.js",
@@ -303,6 +323,29 @@ define({ "api": [
             "optional": false,
             "field": "message",
             "description": "<p>Sucess message.</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/groups.js",
+    "groupTitle": "Group"
+  },
+  {
+    "type": "get",
+    "url": "/courseGroups/",
+    "title": "Get all course groups",
+    "name": "GetCourseGroups",
+    "group": "Group",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "course",
+            "description": "<p>groups All course groups in collection.</p>"
           }
         ]
       }
@@ -568,6 +611,98 @@ define({ "api": [
     "groupTitle": "Response"
   },
   {
+    "type": "delete",
+    "url": "/users/courseGroup/",
+    "title": "remove user from a course group",
+    "name": "DeleteUserCourseGroup",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>A success message.</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "courseCode",
+            "description": "<p>The course code of the course group to remove user from</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>The user's id</p>"
+          }
+        ]
+      }
+    },
+    "error": {
+      "fields": {
+        "500": [
+          {
+            "group": "500",
+            "type": "Object",
+            "optional": false,
+            "field": "message",
+            "description": "<p>user was not in specified course group</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User"
+  },
+  {
+    "type": "get",
+    "url": "/users/courseGroup/",
+    "title": "get user's course groups",
+    "name": "GetCourseGroups",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "groups",
+            "description": "<p>The course group(s) that user was put in or undefined TODO: determine if course groups should be deep-populated</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>The user's id</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "get",
     "url": "/users/getByEmail",
     "title": "Get User by email",
@@ -761,6 +896,42 @@ define({ "api": [
     "groupTitle": "User"
   },
   {
+    "type": "put",
+    "url": "/users/courseGroup/",
+    "title": "Put User in course groups",
+    "name": "GroupUserCourses",
+    "group": "User",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "groups",
+            "description": "<p>The group(s) that user was put in. TODO: determine if course groups should be deep-populated</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>The user's id</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "routes/users.js",
+    "groupTitle": "User"
+  },
+  {
     "type": "post",
     "url": "/users/",
     "title": "Post User",
@@ -850,10 +1021,10 @@ define({ "api": [
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "String",
+            "type": "Object",
             "optional": false,
             "field": "message",
-            "description": "<p>Success message.</p>"
+            "description": "<p>Object with success message and user object.</p>"
           }
         ]
       }

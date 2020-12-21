@@ -9,7 +9,7 @@ const User = require("../models/User");
 const Group = require("../models/Group");
 const CourseGroup = require("../models/CourseGroup");
 const QuizInstance = require("../models/QuizInstance");
-const major = require("./major");
+//const major = require("./major");
 
 
 //const { count } = require('../models/Group');
