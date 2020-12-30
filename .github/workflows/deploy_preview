@@ -8,7 +8,7 @@ jobs:
     name: Lint & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -35,7 +35,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
       - uses: expo/expo-github-action@v5
         with:
@@ -61,6 +61,7 @@ jobs:
       - name: Add Comment To PR
         uses: mshick/add-pr-comment@v1
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           EXPO_PROJECT: "@meetabletech/meetable-app"
         with:
           message: |
