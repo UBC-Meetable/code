@@ -6,6 +6,10 @@ const ChatMessageSchema = mongoose.Schema({
         required: true,
         maxlength: 10000
     }, // probably best validated on frontend
+    file: {
+        data: Buffer,
+        contentType: String
+    },
     dateCreated: {
         type: Date,
         default: Date.now

@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const User = require("./models/User");
 const ChatMessage = require("./models/ChatMessage");
 const Group = require("./models/Group");
+const pushNotifications = require("./pushNotifications");
 /*
 const major = require("./routes/major");
 const majorRouter = major.router;
@@ -15,6 +16,7 @@ const sslRedirect = require("heroku-ssl-redirect");
 
 const http = require("http");
 const socketIO = require("socket.io");
+const { Expo } = require('expo-server-sdk')
 
 const app = express();
 const server = http.createServer(app);
@@ -62,6 +64,8 @@ const connectDB = async () => {
 connectDB();
 app.use(sslRedirect());
 
+
+
 // Chat
 let io = socketIO(server, {
   cors: {
@@ -78,17 +82,26 @@ io.on("connection", (socket) => {
     console.log(msg);
     let msgObj = JSON.parse(msg);
     let message = new ChatMessage({
+      author: msgObj.author,
       text: msgObj.text,
       uid: msgObj.uid,
+      file: msgObj.file
     });
-    await message.save().catch((err) => {
+    message.save().catch((err) => {
       console.log(err);
     });
-    let group = await Group.findOne({_id: msgObj.gid});
+    let group = await Group.findOne({_id: msgObj.gid}).populate('members');
     group.messages.push(message._id);
     group.save().catch((err) => {
       console.log(err);
     });
+    // push notification logic
+    let pushTokens = []
+    pushTokens = group.members.forEach((member) => {
+      pushTokens.push(member.expoPushToken)
+    })
+    pushNotifications.notifyGroup(pushTokens, message)
+    
   })
   socket.on("typing", (user)=>{
     console.log(`username ${user} is typing..`);

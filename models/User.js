@@ -19,6 +19,11 @@ const UserSchema = new mongoose.Schema({
    
   },
   authid: {type: String, required: true},
+  expoPushToken: {
+    type: String,
+    required: true                     // TODO: determine if frontend gets user's push token before or after user document is first posted
+    // also, can user mute individual groups, or only disable push notifications altogether?
+  },
   avatar: { 
     type: String
   },

@@ -12,7 +12,7 @@ const QuizInstance = require("../models/QuizInstance");
 //const major = require("./major");
 
 
-//const { count } = require('../models/Group');
+
 /**
  * @api {post} /users/ Post User
  * @apiName PostUser
@@ -28,11 +28,10 @@ const QuizInstance = require("../models/QuizInstance");
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);
-    const userInfo = {
-      name: req.body.name,
-      avatar: req.body.profileImage,
-      authid: req.body.authid,
-    };
+    let userInfo = {};
+    for (let attribute in req.body) {
+      userInfo[attribute] = req.body[attribute]
+    }
     let user = await User.findOne({ authid: userInfo.authid });
     if (user) {
       console.log("user exists");
@@ -58,11 +57,12 @@ router.post("/", async (req, res) => {
       }
     }
     user = new User({
-      name: req.body.name,
-      avatar: req.body.profileImage,
-      authid: req.body.authid,
-      email: req.body.email,
+      authid: userInfo.authid,
+      name: userInfo.name
     });
+    for (let attribute in userInfo) {
+      user[attribute] = userInfo[attribute]
+    }
     console.log(user);
     await user.save();
 
