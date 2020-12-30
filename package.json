@@ -1,0 +1,22 @@
+{
+  "name": "meetable",
+  "version": "1.0.0",
+  "description": "Meetable mobile app and api",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UBC-Meetable/code.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UBC-Meetable/code/issues"
+  },
+  "homepage": "https://github.com/UBC-Meetable/code#readme"
+}
