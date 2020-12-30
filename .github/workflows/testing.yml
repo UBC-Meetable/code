@@ -25,9 +25,6 @@ jobs:
             ${{ runner.os }}-
       - name: Install Packages
         run: npm install
-      # Perform a type check if using typescript before testing
-      - name: Typecheck
-        run: npx --no-install tsc --noEmit
       - name: Check Lint
         run: npm run lint
       - name: Test
