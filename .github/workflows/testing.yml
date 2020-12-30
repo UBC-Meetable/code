@@ -4,7 +4,9 @@ name: Deploy Branch Preview
 
 # Controls when the action will run. 
 on: [push, pull_request]
-
+defaults:
+  run:
+    working-directory: meetable-app
 jobs:
   test:
     name: Lint & Test
