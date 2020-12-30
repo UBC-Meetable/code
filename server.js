@@ -78,8 +78,14 @@ let io = socketIO(server, {
 io.on("connection", (socket) => {
   
   // disconnect is fired when a client leaves the server
+  // author, text, uid are String
+  /*
+       file: {
+        data: Buffer,
+        contentType: String // this would probably be like 'image/png' or 'video/mp4'
+    },
+    */
   socket.on("message", async (msg)=>{
-    console.log(msg);
     let msgObj = JSON.parse(msg);
     let message = new ChatMessage({
       author: msgObj.author,
@@ -88,12 +94,12 @@ io.on("connection", (socket) => {
       file: msgObj.file
     });
     message.save().catch((err) => {
-      console.log(err);
+      console.error(err);
     });
     let group = await Group.findOne({_id: msgObj.gid}).populate('members');
     group.messages.push(message._id);
     group.save().catch((err) => {
-      console.log(err);
+      console.error(err);
     });
     // push notification logic
     let pushTokens = []

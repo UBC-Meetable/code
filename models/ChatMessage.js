@@ -8,7 +8,7 @@ const ChatMessageSchema = mongoose.Schema({
     }, // probably best validated on frontend
     file: {
         data: Buffer,
-        contentType: String
+        contentType: String // this would probably be like 'image/png' or 'video/mp4'
     },
     dateCreated: {
         type: Date,
