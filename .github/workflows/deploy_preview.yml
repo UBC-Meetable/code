@@ -1,14 +1,17 @@
 
 name: Deploy Branch Preview
 
-on: [push, pull_request]
+on: [pull_request]
 
+defaults:
+  run:
+    working-directory: meetable-app
 jobs:
-  test:
+test:
     name: Lint & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - name: Cache Node Modules
         uses: actions/cache@v2
@@ -23,9 +26,6 @@ jobs:
             ${{ runner.os }}-
       - name: Install Packages
         run: npm install
-      # Perform a type check if using typescript before testing
-      - name: Typecheck
-        run: npx --no-install tsc --noEmit
       - name: Check Lint
         run: npm run lint
       - name: Test

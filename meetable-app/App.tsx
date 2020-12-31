@@ -5,7 +5,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Hello! Get ready to code!</Text>
+      <Text>Hello! You are all set to get started on the Meetable app:)</Text>
       <StatusBar style="auto" />
     </View>
   );

@@ -1,10 +1,9 @@
-name: Deploy Staging
+name: Lintcheck deploy staging
 
 on:
   push:
     branches:
       - master
-
 jobs:
   test:
     name: Lint & Test
@@ -31,20 +30,3 @@ jobs:
         run: npm run lint
       - name: Test
         run: npm run test
-  deploy_staging:
-    name: Deploy to Staging
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - uses: expo/expo-github-action@v5
-        with:
-          expo-packager: npm
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-          expo-cache: true
-      - name: Install Packages
-        run: npm install
-      - name: Expo Publish Channel
-        run: expo publish --non-interactive --release-channel staging
