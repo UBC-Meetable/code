@@ -12,8 +12,6 @@ import {
 } from "@expo-google-fonts/poppins";
 import profilePic from "../assets/images/profilePic2.jpg";
 
-type InspectProfileProps = {};
-
 const CrossIcon = () => (
   <Layout
     style={{

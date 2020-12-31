@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import {
-  Layout, Text,
+  Layout,
 } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
