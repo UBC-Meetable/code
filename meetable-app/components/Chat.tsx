@@ -1,9 +1,10 @@
 import { Layout } from "@ui-kitten/components";
-import React, {
-  useEffect, useRef, useState,
-} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-  StyleSheet, TextInput, KeyboardAvoidingView, ScrollView,
+  StyleSheet,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -11,7 +12,7 @@ import { MessageType } from "../types";
 import OtherMessage from "./OtherMessage";
 import SelfMessage from "./SelfMessage";
 
-const SendIcon = ({ onPress }: {onPress?: Function}) => (
+const SendIcon = ({ onPress }: { onPress?: Function }) => (
   <Layout
     style={{
       position: "absolute",
@@ -46,14 +47,16 @@ const SendIcon = ({ onPress }: {onPress?: Function}) => (
 const Chat = () => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
-  const [messages, setMessages] = useState(
-   [] as MessageType[],
-  );
+  const [messages] = useState([] as MessageType[]);
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
   }, []);
   return (
-    <KeyboardAvoidingView style={styles.chat} behavior="padding" keyboardVerticalOffset={100}>
+    <KeyboardAvoidingView
+      style={styles.chat}
+      behavior="padding"
+      keyboardVerticalOffset={100}
+    >
       <Layout style={styles.messageContainer}>
         <ScrollView
           ref={scrollRef}

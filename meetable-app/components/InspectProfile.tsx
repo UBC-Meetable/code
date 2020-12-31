@@ -36,7 +36,7 @@ const CrossIcon = () => (
   </Layout>
 );
 
-const InspectProfile = (props: InspectProfileProps) => {
+const InspectProfile = () => {
   const [fontsLoaded] = useFonts({
     Poppins_500Medium,
     Poppins_600SemiBold,

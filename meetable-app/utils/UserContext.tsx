@@ -3,7 +3,7 @@ import React, {
 } from "react";
 import { User } from "../types";
 
-export const UserContext = createContext({ user: false } as UserContextType);
+export const UserContext = createContext({ user: false }as unknown as UserContextType);
 type UserContextType = {
   user: User;
   setUser: React.Dispatch<React.SetStateAction<User>>;
