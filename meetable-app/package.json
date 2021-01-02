@@ -74,5 +74,5 @@
     "typescript": "~3.9.5"
   },
   "private": true,
-  "name": "mobile-meetable"
+  "name": "meetable-app"
 }
