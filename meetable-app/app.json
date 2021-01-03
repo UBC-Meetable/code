@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile-meetable",
-    "slug": "mobile-meetable",
+    "name": "meetable-app",
+    "slug": "meetable-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
