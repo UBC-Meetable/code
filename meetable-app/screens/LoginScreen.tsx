@@ -24,7 +24,7 @@ const LoginScreen = ({
   setUser: React.Dispatch<React.SetStateAction<User>>;
 }) => {
   const handleLogin = async (settings: { screenHint: "login" | "signup" }) => {
-    if (process.env.EXPO_SKIP_LOGIN === "true") {
+    if (ENV.SKIP_LOGIN) {
       setUser(true);
       console.log("skipping");
       navigation.replace("Tabs");
@@ -39,11 +39,8 @@ const LoginScreen = ({
       ...settings,
       prompt,
     });
-    // if login fails, do nothing
     if (user) {
       setUser(user);
-      // await fetch(ENV.)
-
       navigation.replace("Tabs");
     }
   };

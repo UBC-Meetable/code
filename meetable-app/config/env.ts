@@ -17,6 +17,7 @@ const ENV = {
   prod: {
     apiUrl: "[your.production.api.here]",
   },
+  SKIP_LOGIN: false,
 };
 
 export default ENV;

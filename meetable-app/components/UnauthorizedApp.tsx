@@ -25,7 +25,7 @@ type UnauthorizedAppProps = {
  */
 const UnauthorizedApp = (props: UnauthorizedAppProps) => {
   const handleLogin = async (settings: { screenHint: "login" | "signup" }) => {
-    if (process.env.EXPO_SKIP_LOGIN === "true") {
+    if (ENV.SKIP_LOGIN) {
       props.setUser(true);
       console.log("skipping");
 
