@@ -1,31 +1,33 @@
 import * as React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import {
+  KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity,
+} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 
 const ProfileScreen = () => (
-  <View style={styles.container}>
+  <KeyboardAvoidingView
+    behavior="height"
+    style={styles.container}
+  >
 
     <View style={styles.profile}>
-      <MaterialCommunityIcons name="pencil" size={24} style={styles.pencil} />
+      <MaterialCommunityIcons name="pencil" size={32} style={styles.pencil} />
     </View>
 
     <View style={styles.nameInputBubble}>
-      <Text style={styles.nameInput}>Name</Text>
-      <MaterialCommunityIcons name="pencil" size={24} style={styles.pencil} />
+      <TextInput placeholder="Name" maxLength={35} style={styles.Input} />
     </View>
 
     <View style={styles.writeBioBubble}>
-      <Text style={styles.writeBio}>Bio</Text>
-      <Text style={styles.bioInput}>Hi I am </Text>
-      <MaterialCommunityIcons name="pencil" size={24} style={styles.pencil} />
+      <TextInput placeholder="Write a short bio about yourself..." multiline maxLength={150} style={styles.Input} />
     </View>
 
     <TouchableOpacity style={styles.button}>
       <Text style={styles.buttonText}>Complete</Text>
     </TouchableOpacity>
 
-  </View>
+  </KeyboardAvoidingView>
 );
 
 const styles = StyleSheet.create({
@@ -40,52 +42,48 @@ const styles = StyleSheet.create({
     height: 144,
     width: 144,
     borderRadius: 100,
-    marginTop: 20,
-    marginBottom: 20,
+    paddingVertical: 10,
   },
-  nameInputBubble: {
-    flex: 0.15,
-    width: "90%",
-    borderRadius: 24,
-    backgroundColor: "white",
-    marginVertical: 5,
-  },
-  writeBioBubble: {
-    flex: 0.5,
-    width: "90%",
-    backgroundColor: "white",
-    borderRadius: 24,
-    marginVertical: 10,
-  },
-  writeBio: {
+  pencil: {
     color: "#7ED1EF",
-    position: "absolute",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    fontSize: 22,
-    fontWeight: "bold",
+    left: "80%",
   },
-  nameInput: {
+  Input: {
     color: "#D2E2EE",
-    position: "absolute",
     paddingHorizontal: 20,
     paddingVertical: 15,
     fontSize: 18,
     fontWeight: "normal",
   },
-  bioInput: {
-    color: "#D2E2EE",
-    position: "absolute",
-    paddingHorizontal: 20,
-    paddingVertical: 60,
-    fontSize: 18,
-    fontWeight: "normal",
+  nameInputBubble: {
+    height: 60,
+    width: "90%",
+    borderRadius: 24,
+    backgroundColor: "white",
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
-  pencil: {
-    color: "#7ED1EF",
-    paddingHorizontal: 20,
-    paddingVertical: 17.5,
-    left: "80%",
+  writeBioBubble: {
+    height: 160,
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 24,
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   button: {
     borderRadius: 24,
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     top: "32.5%",
-    left: "43%",
+    left: "40%",
     color: "#FFFFFF",
     fontSize: 18,
   },

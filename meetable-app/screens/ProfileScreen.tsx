@@ -35,11 +35,9 @@ const ProfileScreen = () => (
       </TouchableOpacity>
     </View>
 
-    <View style={styles.settingsButton}>
-      <TouchableOpacity style={styles.settingsButton}>
-        <Text style={styles.settingsText}>Account Settings</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity style={styles.settingsButton}>
+      <Text style={styles.settingsText}>Account Settings</Text>
+    </TouchableOpacity>
 
   </View>
 );

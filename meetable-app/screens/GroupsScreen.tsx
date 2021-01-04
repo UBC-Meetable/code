@@ -1,11 +1,13 @@
 import React from "react";
 import {
-  List,
+  List, Layout,
 } from "@ui-kitten/components";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet, Text, TouchableOpacity,
+} from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import { Avatar, Chip } from "react-native-paper";
 import { GroupTabParamList } from "../types";
-import { View } from "../components/Themed";
 
 const GroupsScreen = ({
   navigation,
@@ -42,20 +44,23 @@ const GroupsScreen = ({
           ECON 101
         </Text>
 
-        <View style={styles.sectionBubble}>
-          <Text style={styles.sectionBubbleText}>101</Text>
-        </View>
-        <Text style={styles.bubbleTextDesc}>lorem ipsum lorem ipsum lorem ipsum lorem ipsum</Text>
+        <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
+          100
+        </Chip>
 
-        <View>
-          <View>
-            <View>
-              <View>
+        <Text style={styles.bubbleTextDesc}>
+          lorem ipsum lorem ipsum lorem ipsum
+          {"\n"}
+          hi hi hi hi ih ih lorem ipsum lorem ipsum
+        </Text>
 
-              </View>
-            </View>
-          </View>
-        </View>
+        <Layout style={styles.facePileBubble}>
+          <Avatar.Icon size={35} style={styles.backPile} icon="folder" />
+          <Avatar.Text size={35} style={styles.secondBackPile} label="TF" />
+          <Avatar.Icon size={35} style={styles.secondPile} icon="folder" />
+          <Avatar.Text size={35} style={styles.frontPile} label="DS" />
+        </Layout>
+
       </TouchableOpacity>
     );
   };
@@ -104,10 +109,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 100,
     marginTop: -32.5,
     marginBottom: 10,
-    backgroundColor: "steelblue",
+    backgroundColor: "white",
   },
   sectionBubbleText: {
-    color: "white",
+    color: "black",
     marginLeft: 5,
   },
   bubbleText: {
@@ -117,10 +122,37 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   bubbleTextDesc: {
-    fontSize: 9,
+    fontSize: 10,
     marginHorizontal: 20,
-    marginVertical: 5,
-    paddingVertical: 5,
+    marginVertical: 10,
+
+  },
+  facePileBubble: {
+    position: "absolute",
+    flexDirection: "row",
+    left: "55%",
+    top: "50%",
+    backgroundColor: "#E6F4F9",
+  },
+  backPile: {
+    backgroundColor: "steelblue",
+    position: "relative",
+    left: "120%",
+  },
+  secondBackPile: {
+    backgroundColor: "skyblue",
+    position: "relative",
+    left: "90%",
+  },
+  secondPile: {
+    backgroundColor: "red",
+    position: "relative",
+    left: "60%",
+  },
+  frontPile: {
+    backgroundColor: "black",
+    position: "relative",
+    left: "30%",
   },
   card: {
     maxHeight: "100%",
