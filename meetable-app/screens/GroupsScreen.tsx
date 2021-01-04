@@ -3,11 +3,12 @@ import {
   List, Layout,
 } from "@ui-kitten/components";
 import {
-  StyleSheet, Text, TouchableOpacity,
+  Image, StyleSheet, Text, TouchableOpacity,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
 import { GroupTabParamList } from "../types";
+import { View } from "../components/Themed";
 
 const GroupsScreen = ({
   navigation,
@@ -44,9 +45,13 @@ const GroupsScreen = ({
           ECON 101
         </Text>
 
-        <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
+        <View style={styles.sectionBubble}>
+          <Text style={styles.sectionBubbleText}>201</Text>
+        </View>
+
+        {/* <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
           100
-        </Chip>
+        </Chip> */}
 
         <Text style={styles.bubbleTextDesc}>
           lorem ipsum lorem ipsum lorem ipsum
@@ -55,10 +60,10 @@ const GroupsScreen = ({
         </Text>
 
         <Layout style={styles.facePileBubble}>
-          <Avatar.Icon size={35} style={styles.backPile} icon="folder" />
-          <Avatar.Text size={35} style={styles.secondBackPile} label="TF" />
-          <Avatar.Icon size={35} style={styles.secondPile} icon="folder" />
-          <Avatar.Text size={35} style={styles.frontPile} label="DS" />
+          <Avatar.Icon size={38} style={styles.backPile} icon="folder" />
+          <Avatar.Text size={38} style={styles.secondBackPile} label="TF" />
+          <Avatar.Icon size={38} style={styles.secondPile} icon="folder" />
+          <Avatar.Text size={38} style={styles.frontPile} label="DS" />
         </Layout>
 
       </TouchableOpacity>
@@ -106,14 +111,14 @@ const styles = StyleSheet.create({
     width: 35,
     height: 20,
     borderRadius: 50,
-    marginHorizontal: 100,
-    marginTop: -32.5,
-    marginBottom: 10,
+    position: "absolute",
+    left: "26%",
+    top: "12%",
     backgroundColor: "white",
   },
   sectionBubbleText: {
     color: "black",
-    marginLeft: 5,
+    textAlign: "center",
   },
   bubbleText: {
     fontSize: 16,
@@ -124,14 +129,14 @@ const styles = StyleSheet.create({
   bubbleTextDesc: {
     fontSize: 10,
     marginHorizontal: 20,
-    marginVertical: 10,
-
+    marginTop: 7.5,
+    marginBottom: 10,
   },
   facePileBubble: {
     position: "absolute",
     flexDirection: "row",
-    left: "55%",
-    top: "50%",
+    left: "52.5%",
+    top: "45%",
     backgroundColor: "#E6F4F9",
   },
   backPile: {
