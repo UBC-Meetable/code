@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  List, Layout,
+  Button, List, Layout,
 } from "@ui-kitten/components";
 import {
-  Image, StyleSheet, Text, TouchableOpacity,
+  StyleSheet, Text, TouchableOpacity,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Avatar, Chip } from "react-native-paper";
+import { Avatar } from "react-native-paper";
 import { GroupTabParamList } from "../types";
 import { View } from "../components/Themed";
 
@@ -48,10 +48,6 @@ const GroupsScreen = ({
         <View style={styles.sectionBubble}>
           <Text style={styles.sectionBubbleText}>201</Text>
         </View>
-
-        {/* <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
-          100
-        </Chip> */}
 
         <Text style={styles.bubbleTextDesc}>
           lorem ipsum lorem ipsum lorem ipsum
