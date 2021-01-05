@@ -6,9 +6,10 @@ import {
   StyleSheet, Text, TouchableOpacity,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Avatar } from "react-native-paper";
+import { Avatar, Chip } from "react-native-paper";
 import { GroupTabParamList } from "../types";
 import { View } from "../components/Themed";
+import { Icon } from "react-native-vector-icons/Icon";
 
 const GroupsScreen = ({
   navigation,
@@ -45,9 +46,13 @@ const GroupsScreen = ({
           ECON 101
         </Text>
 
-        <View style={styles.sectionBubble}>
+        {/* <View style={styles.sectionBubble}>
           <Text style={styles.sectionBubbleText}>201</Text>
-        </View>
+        </View> */}
+
+        <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
+          100
+        </Chip>
 
         <Text style={styles.bubbleTextDesc}>
           lorem ipsum lorem ipsum lorem ipsum
@@ -104,23 +109,24 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   sectionBubble: {
-    width: 35,
-    height: 20,
+    width: 50,
+    height: 23,
     borderRadius: 50,
     position: "absolute",
-    left: "26%",
-    top: "12%",
+    left: 101,
+    top: 17,
     backgroundColor: "white",
   },
   sectionBubbleText: {
     color: "black",
-    textAlign: "center",
+    top: -5,
   },
   bubbleText: {
     fontSize: 16,
     lineHeight: 24,
     marginHorizontal: 20,
-    marginVertical: 10,
+    marginBottom: 20,
+    top: 16,
   },
   bubbleTextDesc: {
     fontSize: 10,

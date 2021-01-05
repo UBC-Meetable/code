@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: "bold",
-    marginTop: -30,
+    marginTop: -20,
     textAlign: "center",
   },
   profile: {

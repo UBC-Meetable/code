@@ -5,6 +5,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 
+
 const ProfileScreen = () => (
   <KeyboardAvoidingView
     behavior="height"
@@ -12,15 +13,18 @@ const ProfileScreen = () => (
   >
 
     <View style={styles.profile}>
-      <MaterialCommunityIcons name="pencil" size={32} style={styles.pencil} />
+      <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
     </View>
 
-    <View style={styles.nameInputBubble}>
-      <TextInput placeholder="Name" maxLength={35} style={styles.Input} />
+    <View style={styles.nameBubble}>
+      <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
+      <TextInput placeholder="Name" maxLength={30} style={styles.input} />
     </View>
 
-    <View style={styles.writeBioBubble}>
-      <TextInput placeholder="Write a short bio about yourself..." multiline maxLength={150} style={styles.Input} />
+    <View style={styles.bioBubble}>
+      <Text style={styles.bigBioHead}>Bio</Text>
+      <MaterialCommunityIcons name="pencil" size={30} style={styles.bioPencil} />
+      <TextInput placeholder="Write a short bio about yourself..." multiline maxLength={175} style={styles.bioInput} />
     </View>
 
     <TouchableOpacity style={styles.button}>
@@ -45,22 +49,24 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   pencil: {
+    position: "absolute",
     color: "#7ED1EF",
-    left: "80%",
+    left: "85%",
+    top: "15%",
   },
-  Input: {
+  input: {
     color: "#D2E2EE",
     paddingHorizontal: 20,
-    paddingVertical: 15,
-    fontSize: 18,
-    fontWeight: "normal",
+    position: "absolute",
+    top: 10,
+    fontSize: 16,
+    fontWeight: "600",
   },
-  nameInputBubble: {
-    height: 60,
+  nameBubble: {
+    height: 50,
     width: "90%",
     borderRadius: 24,
     backgroundColor: "white",
-    marginVertical: 5,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -70,7 +76,30 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
   },
-  writeBioBubble: {
+  bigBioHead: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#7ED1EF",
+
+    marginHorizontal: 20,
+    top: 10,
+  },
+  bioPencil: {
+    position: "absolute",
+    color: "#7ED1EF",
+    left: "85%",
+    top: 5,
+  },
+  bioInput: {
+    color: "#D2E2EE",
+    paddingHorizontal: 20,
+    position: "absolute",
+    top: 40,
+    fontSize: 16,
+    fontWeight: "600",
+    textAlignVertical: "top",
+  },
+  bioBubble: {
     height: 160,
     width: "90%",
     backgroundColor: "white",
