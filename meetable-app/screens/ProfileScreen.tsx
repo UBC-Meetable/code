@@ -4,6 +4,12 @@ import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { Text, View } from "../components/Themed";
 
+const SocialMediaButton = (props: { name: string; }) => (
+  <TouchableOpacity style={styles.socialButton}>
+    <FontAwesome5 size={50} color="#FBBA82" {...props} />
+  </TouchableOpacity>
+);
+
 const ProfileScreen = () => (
   <View style={styles.container}>
 
@@ -26,13 +32,10 @@ const ProfileScreen = () => (
     <Text style={styles.socialTitle}>Social Media</Text>
 
     <View style={styles.socialBubble}>
-      <TouchableOpacity style={styles.socialButton}>
-        <FontAwesome5 name="twitter-square" size={50} color="#FBBA82" />
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.socialButton}>
-        <FontAwesome5 name="instagram-square" size={50} color="#FBBA82" />
-      </TouchableOpacity>
+      <SocialMediaButton name="twitter-square" />
+      <SocialMediaButton name="facebook-square" />
+      <SocialMediaButton name="instagram-square" />
+      <SocialMediaButton name="snapchat-square" />
     </View>
 
     <TouchableOpacity style={styles.settingsButton}>
