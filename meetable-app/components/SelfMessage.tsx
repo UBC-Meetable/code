@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 import { MessageType } from "../types";
 import styles from "./styles/MessageStyles";
 
-const SelfMessage = ({ date, message, author }:MessageType) => (
+const SelfMessage = ({ message }:MessageType) => (
   <Layout style={[styles.messageContainer, selfStyles.messageContainer]}>
     <Layout style={[styles.bubble, selfStyles.bubble]}>
       <Text style={[styles.message, selfStyles.message]}>{message}</Text>

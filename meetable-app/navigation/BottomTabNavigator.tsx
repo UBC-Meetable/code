@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
@@ -27,6 +25,7 @@ export default function BottomTabNavigator() {
         name="Course Groups"
         component={CourseGroupStackNavigator}
         options={{
+          // eslint-disable-next-line react/prop-types
           tabBarIcon: ({ color }) => (
             <MaterialIcon
               name="school"
@@ -43,7 +42,7 @@ export default function BottomTabNavigator() {
         name="Friend Groups"
         component={FriendGroupStackNavigator}
         options={{
-          // tabBarVisible: false,
+          // eslint-disable-next-line react/prop-types
           tabBarIcon: ({ color }) => (
             <FAIcon name="user-friends" size={30} color={color} />
           ),
@@ -53,6 +52,7 @@ export default function BottomTabNavigator() {
         name="Profile"
         component={ProfileStackNavigator}
         options={{
+          // eslint-disable-next-line react/prop-types
           tabBarIcon: ({ color }) => (
             <FAIcon name="user-cog" size={30} color={color} />
           ),

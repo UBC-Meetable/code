@@ -1,4 +1,3 @@
-import { useHeaderHeight } from "@react-navigation/stack";
 import { Layout } from "@ui-kitten/components";
 import React, {
   useEffect, useRef, useState,
@@ -7,7 +6,6 @@ import {
   StyleSheet, TextInput, KeyboardAvoidingView, ScrollView,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { MessageType } from "../types";
 import OtherMessage from "./OtherMessage";
