@@ -23,7 +23,9 @@ jobs:
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
       - name: Install Packages
-        run: npm run postinstall
+        run: |
+         npm install
+         npm run postinstall
       - name: Check Lint
         run: npm run lint
       - name: Test
