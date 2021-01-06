@@ -24,13 +24,6 @@ const login = async (settings: any) => {
   // Retrieve the redirect URL, add this to the callback URL list
   // of your Auth0 application.
   const redirectUrl = AuthSessionNew.getRedirectUrl();
-<<<<<<< HEAD
-
-  // Structure the auth parameters and URL
-  const params = {
-    client_id: settings.auth0ClientId,
-    ...settings,
-=======
   // const redirectUrl = AuthSessionNew.makeRedirectUri({ path: "/", preferLocalhost: true });
 
   // Structure the auth parameters and URL
@@ -41,7 +34,6 @@ const login = async (settings: any) => {
     client_id: settings.auth0ClientId,
     ...settings,
     screen_hint: settings.screenHint,
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
     redirect_uri: redirectUrl,
     // response_type:
     // id_token will return a JWT token with the profile as described on the scope

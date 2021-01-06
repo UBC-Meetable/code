@@ -54,24 +54,14 @@ const LoginScreen = ({
       <Layout style={styles.bottomcontainer}>
         <Button
           style={styles.button}
-<<<<<<< HEAD
-          onPress={() => handleLogin({ screenHint: "login" })}
-=======
           // onPress={() => handleLogin({ screenHint: "login" })}
           onPress={() => navigation.replace("Tutorial")}
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
         >
           {(evaProps: any) => (
             <Text
               {...evaProps}
               style={{ ...evaProps.style, ...styles.buttonText }}
             >
-<<<<<<< HEAD
-              Log In
-            </Text>
-          )}
-        </Button>
-=======
               Sign Up
             </Text>
           )}
@@ -82,7 +72,6 @@ const LoginScreen = ({
         >
           Log In
         </Text>
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
       </Layout>
     </Layout>
   );

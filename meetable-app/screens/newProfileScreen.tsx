@@ -5,7 +5,6 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Text, View } from "../components/Themed";
 
-
 const ProfileScreen = () => (
   <KeyboardAvoidingView
     behavior="height"

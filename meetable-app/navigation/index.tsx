@@ -4,13 +4,6 @@ import {
   DefaultTheme,
   DarkTheme,
 } from "@react-navigation/native";
-<<<<<<< HEAD
-import { createStackNavigator } from "@react-navigation/stack";
-import * as React from "react";
-import { ColorSchemeName, useColorScheme } from "react-native";
-import * as eva from "@eva-design/eva";
-import { ApplicationProvider as UiProvider, Spinner } from "@ui-kitten/components";
-=======
 import {
   createStackNavigator, HeaderBackButton, StackNavigationOptions, StackNavigationProp,
 } from "@react-navigation/stack";
@@ -20,7 +13,6 @@ import * as eva from "@eva-design/eva";
 import {
   ApplicationProvider as UiProvider, Spinner, Layout, Text, Button,
 } from "@ui-kitten/components";
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
 import {
   useFonts,
   Poppins_500Medium,
@@ -35,16 +27,12 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import TutorialScreen from "../screens/TutorialScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ENV from "../config/env";
-<<<<<<< HEAD
-// import { logger } from "../utils/logger";
-=======
 import QuizScreen from "../screens/QuizScreen";
 import SignupScreen from "../screens/SignupScreen";
 import GroupScreen from "../screens/GroupScreen";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 
 const window = Dimensions.get("window");
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 
@@ -60,11 +48,7 @@ export default function Navigation({
         <UserContextProvider>
           <NavigationContainer
             linking={LinkingConfiguration}
-<<<<<<< HEAD
-            theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-=======
             theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
           >
             <App />
           </NavigationContainer>
@@ -87,13 +71,7 @@ const App = () => {
     );
   }
   return (
-<<<<<<< HEAD
-    <>
-      <AuthorizedApp />
-    </>
-=======
     <AuthorizedApp />
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
   );
 };
 
@@ -101,17 +79,6 @@ const App = () => {
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-<<<<<<< HEAD
-type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound"
-
-function AuthorizedApp() {
-  const { user, setUser } = React.useContext(UserContext);
-  const initRoute = ENV.SKIP_LOGIN ? "Tabs" : `${user ? "Tabs" : "Tutorial"}` as RootNames;
-  return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={initRoute}>
-      <Stack.Screen name="Tabs" component={BottomTabNavigator} />
-      <Stack.Screen name="Tutorial" component={TutorialScreen} />
-=======
 type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup"
 
 function AuthorizedApp() {
@@ -164,7 +131,6 @@ function AuthorizedApp() {
       <Stack.Screen name="Signup">
         {(props) => <SignupScreen setUser={setUser} {...props} />}
       </Stack.Screen>
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
       <Stack.Screen name="Login">
         {(props) => <LoginScreen setUser={setUser} {...props} />}
       </Stack.Screen>
@@ -176,8 +142,6 @@ function AuthorizedApp() {
     </Stack.Navigator>
   );
 }
-<<<<<<< HEAD
-=======
 
 const ChatBackButton = ({
   navigation,
@@ -204,4 +168,3 @@ const ChatBackButton = ({
     </Text>
   </Layout>
 );
->>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
