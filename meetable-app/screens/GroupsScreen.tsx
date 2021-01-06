@@ -5,19 +5,21 @@ import {
 import {
   StyleSheet, Text, TouchableOpacity,
 } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
-import { GroupTabParamList } from "../types";
+import { GroupStackParamList } from "../types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const GroupsScreen = ({
   navigation,
 }: {
-  navigation: StackNavigationProp<GroupTabParamList, "GroupScreen">;
+  navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
 }) => {
   const joinGroup = (groupId: string, groupName: string) => {
     navigation.navigate("GroupScreen", { groupId, groupName });
   };
 
+  const headerHeight = useHeaderHeight()
   const groups = [
     ["BUCS", "1"],
     ["group 2", "2"],
@@ -70,11 +72,9 @@ const GroupsScreen = ({
   };
 
   return (
-    <List
-      style={styles.card}
-      data={groups}
-      renderItem={renderItem}
-    />
+    <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
+      <List style={[styles.card]} data={groups} renderItem={renderItem} />
+    </Layout>
   );
 };
 
@@ -160,9 +160,9 @@ const styles = StyleSheet.create({
     left: "30%",
   },
   card: {
-    maxHeight: "100%",
+    // maxHeight: "100%",
     overflow: "scroll",
-    backgroundColor: "#FEEDDE",
+    backgroundColor: "#0000",
   },
 });
 
