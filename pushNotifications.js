@@ -36,6 +36,7 @@ function notifyGroup(pushTokens, msg) {
             console.error(error);
           }
         }
+    });
     let receiptIds = [];
     for (let ticket of tickets) {
         // NOTE: Not all tickets have IDs; for example, tickets for notifications
@@ -44,6 +45,7 @@ function notifyGroup(pushTokens, msg) {
         receiptIds.push(ticket.id);
         }
     }
+    
     let receiptIdChunks = expo.chunkPushNotificationReceiptIds(receiptIds);
     (async () => {
     // Like sending notifications, there are different strategies you could use
@@ -74,8 +76,7 @@ function notifyGroup(pushTokens, msg) {
         console.error(error);
         }
     }
-
-
+    })
 }
 
 
