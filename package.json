@@ -40,11 +40,7 @@
   "apidoc": {
     "title": "meetable apidoc",
     "description": "api doc for meetable api"
-<<<<<<< HEAD
-  },
-=======
 },
->>>>>>> b4b436ec2816a166b88acce903303e25d58f8488
   "homepage": "https://github.com/UBC-Meetable/code#readme",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.12.0",
