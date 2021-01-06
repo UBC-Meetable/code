@@ -2,7 +2,6 @@
 import {
   NavigationContainer,
   DefaultTheme,
-  DarkTheme,
 } from "@react-navigation/native";
 import {
   createStackNavigator, HeaderBackButton, StackNavigationOptions, StackNavigationProp,
@@ -11,7 +10,7 @@ import * as React from "react";
 import { ColorSchemeName, useColorScheme, Dimensions } from "react-native";
 import * as eva from "@eva-design/eva";
 import {
-  ApplicationProvider as UiProvider, Spinner, Layout, Text, Button,
+  ApplicationProvider as UiProvider, Spinner, Layout, Text,
 } from "@ui-kitten/components";
 import {
   useFonts,

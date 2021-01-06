@@ -3,7 +3,7 @@ import {
   Layout, Text, Button, Card,
 } from "@ui-kitten/components";
 import {
-  StyleSheet, Image, ImageBackground, Dimensions,
+  StyleSheet, Dimensions,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { StackNavigationProp } from "@react-navigation/stack";

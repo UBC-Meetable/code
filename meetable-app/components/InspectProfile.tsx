@@ -12,8 +12,6 @@ import {
 } from "@expo-google-fonts/poppins";
 import profilePic from "../assets/images/profilePic2.jpg";
 
-type InspectProfileProps = {};
-
 const CrossIcon = () => (
   <Layout
     style={{
@@ -36,7 +34,7 @@ const CrossIcon = () => (
   </Layout>
 );
 
-const InspectProfile = (props: InspectProfileProps) => {
+const InspectProfile = () => {
   const [fontsLoaded] = useFonts({
     Poppins_500Medium,
     Poppins_600SemiBold,
