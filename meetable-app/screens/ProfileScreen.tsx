@@ -37,7 +37,7 @@ const ProfileScreen = () => (
       <View style={styles.socialBubble}>
         <SocialMediaButton name="twitter-square" />
         <SocialMediaButton name="facebook-square" />
-        <SocialMediaButton name="instagram-square" />
+        <SocialMediaButton name="instagram" />
         <SocialMediaButton name="snapchat-square" />
       </View>
     </Layout>
