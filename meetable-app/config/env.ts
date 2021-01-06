@@ -17,7 +17,11 @@ const ENV = {
   prod: {
     apiUrl: "[your.production.api.here]",
   },
+<<<<<<< HEAD
   SKIP_LOGIN: true,
+=======
+  SKIP_LOGIN: false,
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
 };
 
 export default ENV;

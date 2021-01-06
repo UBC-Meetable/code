@@ -13,6 +13,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Tutorial: undefined;
   Login: undefined;
+<<<<<<< HEAD
 };
 
 export type BottomTabParamList = {
@@ -23,11 +24,35 @@ export type BottomTabParamList = {
 };
 
 export type GroupTabParamList = {
+=======
+  Signup: undefined;
+  Quiz: undefined;
+  Group: undefined;
+};
+
+export type BottomTabParamList = {
+  "Course Groups": {
+    groupName: string;
+    groupId: string;
+  };
+  Profile: undefined;
+  "Friend Groups": {
+    groupId: string;
+    groupName: string;
+  };
+};
+
+export type GroupStackParamList = {
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
   GroupsScreen: undefined;
   GroupScreen: {
     groupName: string;
     groupId: string;
   };
+<<<<<<< HEAD
+=======
+  ProfileScreen: undefined;
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
 };
 
 export type TabTwoParamList = {

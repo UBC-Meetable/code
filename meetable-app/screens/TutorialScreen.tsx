@@ -2,6 +2,7 @@ import React, { createRef, useState } from "react";
 import {
   Layout, Text, Button, Card,
 } from "@ui-kitten/components";
+<<<<<<< HEAD
 import { StyleSheet, Image } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -24,6 +25,21 @@ const Middle = (
 );
 
 const End = <Image source={logo} />;
+=======
+import {
+  StyleSheet, Image, ImageBackground, Dimensions,
+} from "react-native";
+import Carousel from "react-native-snap-carousel";
+import { StackNavigationProp } from "@react-navigation/stack";
+import MeetableCarousel from "../navigation/MeetableCarousel";
+import { RootStackParamList } from "../types";
+import BubbleBackground from "../assets/images/tutorial-bubble.svg";
+import Intro from "../components/tutorial_slides/Intro";
+import Middle from "../components/tutorial_slides/Middle";
+import End from "../components/tutorial_slides/End";
+
+const window = Dimensions.get("window");
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
 
 const Cards = [Intro, Middle, End];
 
@@ -32,17 +48,33 @@ const TutorialScreen = ({ navigation }: { navigation: StackNavigationProp<RootSt
   const carouselRef = createRef<Carousel<any>>();
   return (
     <Layout style={styles.root}>
+<<<<<<< HEAD
       <Layout style={styles.topcontainer}>
         <MeetableCarousel
           ref={carouselRef}
           layout="stack"
+=======
+      <BubbleBackground width={window.width} height={window.height} style={{ position: "absolute" }} />
+
+      <Layout style={styles.topcontainer}>
+        <MeetableCarousel
+          ref={carouselRef}
+          layout="default"
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
           slideState={[activeSlide, setActiveSlide]}
           style={styles.carouselContainer}
           containerStyle={styles.carouselContainer}
         >
+<<<<<<< HEAD
           {Cards.map((card, key) => (
             <Card key={key + 1} style={styles.card}>
               {card}
+=======
+
+          {Cards.map((TutScreen, key) => (
+            <Card style={styles.card} key={key}>
+              <TutScreen />
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
             </Card>
           ))}
         </MeetableCarousel>
@@ -53,7 +85,11 @@ const TutorialScreen = ({ navigation }: { navigation: StackNavigationProp<RootSt
           style={styles.button}
           onPress={() => {
             if (activeSlide === Cards.length - 1) {
+<<<<<<< HEAD
               navigation.replace("Login");
+=======
+              navigation.replace("Quiz");
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
             } else {
               carouselRef.current?.snapToNext();
             }
@@ -64,7 +100,11 @@ const TutorialScreen = ({ navigation }: { navigation: StackNavigationProp<RootSt
               {...evaProps}
               style={{ ...evaProps.style, ...styles.buttonText }}
             >
+<<<<<<< HEAD
               {activeSlide === Cards.length - 1 ? "Continue" : "Next"}
+=======
+              {activeSlide === Cards.length - 1 ? "Take the Quiz" : "Next"}
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
             </Text>
           )}
         </Button>
@@ -82,12 +122,19 @@ const TutorialScreen = ({ navigation }: { navigation: StackNavigationProp<RootSt
 };
 
 const styles = StyleSheet.create({
+<<<<<<< HEAD
+=======
+  title: {
+    color: "#FBBA82",
+  },
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
   root: {
     flex: 1,
     display: "flex",
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
+<<<<<<< HEAD
   },
   card: {
     width: "90%",
@@ -105,12 +152,29 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 5, height: 5 },
     shadowOpacity: 0.5,
     overflow: "visible",
+=======
+    backgroundColor: "#0000",
+  },
+  card: {
+    width: "100%",
+    padding: 0,
+    margin: 0,
+    height: "100%",
+    maxHeight: "91%",
+    backgroundColor: "#0000",
+    borderWidth: 0,
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
   },
   button: {
     marginBottom: 20,
     width: "90%",
     borderRadius: 100,
+<<<<<<< HEAD
     backgroundColor: "#000",
+=======
+    borderWidth: 0,
+    backgroundColor: "#02A3F4",
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
   },
   buttonText: {
     fontSize: 20,
@@ -137,6 +201,10 @@ const styles = StyleSheet.create({
   },
   topcontainer: {
     flex: 1,
+<<<<<<< HEAD
+=======
+    backgroundColor: "rgba(0,0,0,0)",
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
     width: "100%",
     display: "flex",
     justifyContent: "center",
@@ -148,6 +216,10 @@ const styles = StyleSheet.create({
     flexBasis: 150,
     flexDirection: "column",
     alignItems: "center",
+<<<<<<< HEAD
+=======
+    backgroundColor: "#0000",
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
   },
   carouselContainer: {
     display: "flex",

@@ -1,7 +1,13 @@
 {
   "expo": {
+<<<<<<< HEAD
     "name": "mobile-meetable",
     "slug": "mobile-meetable",
+=======
+    "name": "meetable-app",
+    "slug": "meetable-app",
+    "description": "Meetable Mobile Application",
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -27,6 +33,25 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+<<<<<<< HEAD
+=======
+    },
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "expo.ts",
+        "expo.tsx",
+        "expo.js",
+        "expo.jsx",
+        "ts",
+        "tsx",
+        "js",
+        "jsx",
+        "json",
+        "wasm",
+        "svg"
+      ]
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
     }
   }
 }

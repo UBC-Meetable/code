@@ -4,7 +4,11 @@ import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import { MessageType } from "../types";
+<<<<<<< HEAD
 import styles from "./MessageStyles";
+=======
+import styles from "./styles/MessageStyles";
+>>>>>>> 1dc95e5404d9b9e336c25b499a0f427193751d32
 
 const OtherMessage = ({ message, date, author } : MessageType) => (
   <Layout style={otherStyles.messageContainer}>
