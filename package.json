@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/UBC-Meetable/code/issues"
   },
-  "homepage": "https://github.com/UBC-Meetable/code#readme"
+  "homepage": "https://github.com/UBC-Meetable/code#readme",
+  "dependencies": {
+    "line": "^0.1.8",
+    "lint": "^0.7.0"
+  }
 }
