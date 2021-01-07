@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const mongoose = require("mongoose");
 const express = require("express");
 const Question = require("../models/Question");
@@ -41,7 +42,7 @@ router.put("/", async (req, res) => {
 
     await response.save();
 
-    quizInstance = await QuizInstance.findOne({ _id: body.quizid });
+    const quizInstance = await QuizInstance.findOne({ _id: body.quizid });
     quizInstance.responses.push(response._id);
     await quizInstance.save();
     res.status(200).send({

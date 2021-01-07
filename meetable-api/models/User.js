@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Group = require("./Group");
 
 const validateEmail = function (email) {
-  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email);
 };
 
@@ -20,7 +20,8 @@ const UserSchema = new mongoose.Schema({
   authid: { type: String, required: true },
   expoPushToken: {
     type: String,
-    required: true, // TODO: determine if frontend gets user's push token before or after user document is first posted
+    required: true, // TODO: determine if frontend gets user's
+    // push token before or after user document is first posted
     // also, can user mute individual groups, or only disable push notifications altogether?
   },
   avatar: {
@@ -75,7 +76,8 @@ const UserSchema = new mongoose.Schema({
     required: false,
   },
   /*
-  socialMedia: {             // TODO: decide whether to implement map so users can put whatever social media
+  socialMedia: {             // TODO:
+    decide whether to implement map so users can put whatever social media
     type: Map, // key: social media platform
     of: String, // value: either links or identifiers such as usernames
     minSize: 1,
@@ -84,4 +86,5 @@ const UserSchema = new mongoose.Schema({
   */
 });
 
-module.exports = User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", UserSchema);
+module.exports = User;

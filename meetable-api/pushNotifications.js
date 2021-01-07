@@ -1,9 +1,14 @@
+/* eslint-disable guard-for-in */
+/* eslint-disable no-continue */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 const { Expo } = require("expo-server-sdk");
 
 function notifyGroup(pushTokens, msg) {
   // Create new Expo SDK client
   const expo = new Expo({ accessToken: process.env.EXPO_ACCESS_TOKEN });
-  notifications = [];
+  const notifications = [];
   let pnBody;
   if (msg.file) {
     pnBody = `${msg.author} sent a file`;

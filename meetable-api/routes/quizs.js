@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const express = require("express");
 const QuizInstance = require("../models/QuizInstance");
 const { generateResponse } = require("./responses");
@@ -47,9 +48,10 @@ router.put("/byid", async (req, res) => {
   try {
     const quiz = await QuizInstance.findOne({ _id: req.body.qid }).populate("responses");
     quiz.uid = req.body.uid;
-    for (let i = 0; i < quiz.responses.length; i++) {
+    for (let i = 0; i < quiz.responses.length; i += 1) {
       quiz.responses[i].uid = req.body.uid;
       await quiz.responses[i].save(); // saving populated doc does not save subdocs
+      // can speed this up by awaiting all the promises at the end
     }
     await quiz.save();
     res.status(200).send({

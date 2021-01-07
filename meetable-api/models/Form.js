@@ -19,4 +19,5 @@ const FormSchema = mongoose.Schema({
   },
 });
 
-module.exports = Form = mongoose.model("form", FormSchema);
+const Form = mongoose.model("form", FormSchema);
+module.exports = Form;

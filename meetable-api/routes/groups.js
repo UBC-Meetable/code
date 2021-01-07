@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 const express = require("express");
 const Group = require("../models/Group");
 const CourseGroup = require("../models/CourseGroup");
@@ -103,7 +104,7 @@ router.put("/prune", async (req, res) => {
       return true;
     });
     promises.push(document.save());
-    if (flag) count++;
+    if (flag) count += 1;
   });
   await Promise.all(promises);
   console.log(`${count} groups pruned`);

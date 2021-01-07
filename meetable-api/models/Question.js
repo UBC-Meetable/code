@@ -15,4 +15,5 @@ const QuestionSchema = mongoose.Schema({
   },
 });
 
-module.exports = Question = mongoose.model("question", QuestionSchema);
+const Question = mongoose.model("question", QuestionSchema);
+module.exports = Question;
