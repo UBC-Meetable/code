@@ -10,11 +10,17 @@ type FriendGroupBubbleProps = {
 }
 
 const FriendGroupBubble = ({ onPress }: FriendGroupBubbleProps) => (
-  <TouchableOpacity
-    style={styles.bubble}
-    onPress={onPress}
-  >
-    <Layout style={styles.chips} />
+  <TouchableOpacity style={styles.bubble} onPress={onPress}>
+    <Layout style={[styles.bubbleSection, {
+      width: "100%", flexDirection: "row", justifyContent: "flex-start", alignItems: "center",
+    }]}
+    >
+
+      <Chip style={styles.chip}>
+        Gamer
+      </Chip>
+    </Layout>
+    <Layout style={styles.bubbleSection} />
   </TouchableOpacity>
 );
 
@@ -36,6 +42,15 @@ const styles = StyleSheet.create({
     shadowRadius: 6.27,
     elevation: 10,
     position: "relative",
+  },
+  bubbleSection: {
+    display: "flex",
+    flex: 1,
+    borderWidth: 1,
+    backgroundColor: "#0000",
+  },
+  chip: {
+    flex: 0,
   },
 });
 
