@@ -9,18 +9,36 @@ type FriendGroupBubbleProps = {
     onPress?: (event?: GestureResponderEvent) => void
 }
 
+const images = [
+  "http://placekitten.com/g/200/300",
+  "http://placekitten.com/g/200/300",
+  "http://placekitten.com/g/200/300",
+  "http://placekitten.com/g/200/300",
+];
+
 const FriendGroupBubble = ({ onPress }: FriendGroupBubbleProps) => (
   <TouchableOpacity style={styles.bubble} onPress={onPress}>
-    <Layout style={[styles.bubbleSection, {
-      width: "100%", flexDirection: "row", justifyContent: "flex-start", alignItems: "center",
-    }]}
-    >
-
-      <Chip style={styles.chip}>
-        Gamer
-      </Chip>
+    <Layout style={[styles.bubbleSection, styles.chips]}>
+      <Chip style={styles.chip}>Gamer</Chip>
+      <Chip style={styles.chip}>Arts</Chip>
+      <Chip style={styles.chip}>Coding</Chip>
+      <Chip style={styles.chip}>Sports</Chip>
     </Layout>
-    <Layout style={styles.bubbleSection} />
+    <Layout style={[styles.bubbleSection, styles.nameSection]}>
+      <Text style={styles.names} ellipsizeMode="tail" numberOfLines={1}>
+        Kevin, Lisa, John, Maggie, Kevin, Lisa, John, Maggie, Kevin, Lisa, John,
+        Maggie,
+      </Text>
+      <Layout style={styles.pics}>
+        {images.map((uri, index) => {
+          if (index >= 4) return;
+
+          // eslint-disable-next-line consistent-return
+          return (<Avatar.Image size={38} source={{ uri }} style={{ position: "absolute", right: 0 + index * 23 }} />);
+        })}
+      </Layout>
+
+    </Layout>
   </TouchableOpacity>
 );
 
@@ -30,6 +48,7 @@ const styles = StyleSheet.create({
     height: 100,
     display: "flex",
     margin: 10,
+    padding: 5,
     borderColor: "white",
     borderRadius: 24,
     backgroundColor: "#E6F4F9",
@@ -46,11 +65,35 @@ const styles = StyleSheet.create({
   bubbleSection: {
     display: "flex",
     flex: 1,
-    borderWidth: 1,
     backgroundColor: "#0000",
   },
   chip: {
     flex: 0,
+    backgroundColor: "#fff",
+  },
+  chips: {
+    paddingTop: 10,
+    width: "75%",
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+  names: {
+    maxWidth: 250,
+    overflow: "hidden",
+  },
+  nameSection: {
+    alignItems: "center",
+    padding: 10,
+    flexDirection: "row",
+  },
+  pics: {
+    flex: 1,
+    backgroundColor: "#0000",
+    flexDirection: "row",
+    position: "relative",
+    justifyContent: "flex-end",
+    height: "100%",
   },
 });
 
