@@ -22,6 +22,7 @@ module.exports = {
       2,
       { extensions: [".js", ".jsx", ".ts", ".tsx"] },
     ],
+    "import/no-unresolved": "warn",
     "import/extensions": ["warn", "never"],
     "react/require-default-props": "off",
     "react/no-unused-prop-types": "warn",

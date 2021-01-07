@@ -1,22 +1,24 @@
-const express = require('express');
+/* eslint-disable consistent-return */
+const express = require("express");
+
 const router = express.Router();
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
-const jwt = require('jsonwebtoken');
-const { check, validationResult } = require('express-validator');
+const jwt = require("jsonwebtoken");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../models/User');
+const User = require("../models/User");
 
 // @route    GET api/auth
 // @desc     Get user by token
 // @access   Private
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
@@ -24,10 +26,10 @@ router.get('/', async (req, res) => {
 // @desc     Authenticate user & get token
 // @access   Public
 router.post(
-  '/',
+  "/",
   [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists()
+    check("email", "Please include a valid email").isEmail(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -38,12 +40,12 @@ router.post(
     const { email, password } = req.body;
 
     try {
-      let user = await User.findOne({ email });
+      const user = await User.findOne({ email });
 
       if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
@@ -51,29 +53,29 @@ router.post(
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       const payload = {
         user: {
-          id: user.id
-        }
+          id: user.id,
+        },
       };
 
       jwt.sign(
         payload,
         process.env.jwtSecret,
-        { expiresIn: '5 days' },
+        { expiresIn: "5 days" },
         (err, token) => {
           if (err) throw err;
           res.json({ token });
-        }
+        },
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
-  }
+  },
 );
 
 module.exports = router;
