@@ -1,7 +1,10 @@
+/* eslint-disable no-continue */
+/* eslint-disable no-await-in-loop */
 const express = require("express");
+
 const router = express.Router();
-const ChatMessage = require('../models/ChatMessage');
-const Group = require('../models/Group');
+const ChatMessage = require("../models/ChatMessage");
+const Group = require("../models/Group");
 
 // tested, works, 11/12/2020
 /**
@@ -10,11 +13,10 @@ const Group = require('../models/Group');
  * @apiGroup Chat
  * @apiSuccess {Object[]} forms All chat messages in collection.
  */
-router.get('/', async (req, res) => {
-    const messages = await ChatMessage.find();
-    res.json(messages);
+router.get("/", async (req, res) => {
+  const messages = await ChatMessage.find();
+  res.json(messages);
 });
-
 
 // tested, works, 11/12/2020, but need to do more in-detail tests
 /*
@@ -56,37 +58,38 @@ another endpoint that creates some synthetic data to test on and calls the fn, a
     }
 ]
  */
-router.get('/gid/', async (req, res) => {
-    const group = await Group.findOne({ _id: req.body.gid }).lean();
-    const actualDate = new Date();
-    const endOfToday = new Date(actualDate.getFullYear()
-                           ,actualDate.getMonth()
-                           ,actualDate.getDate()
-                           ,23,59,59); 
-    let earliest = new Date();
-    let latest = new Date();
-    latest.setDate(endOfToday.getDate() - req.body.end);
-    earliest.setDate(latest.getDate() - req.body.period);
+router.get("/gid/", async (req, res) => {
+  const group = await Group.findOne({ _id: req.body.gid }).lean();
+  const actualDate = new Date();
+  const endOfToday = new Date(actualDate.getFullYear(),
+    actualDate.getMonth(),
+    actualDate.getDate(),
+    23, 59, 59);
+  const earliest = new Date();
+  const latest = new Date();
+  latest.setDate(endOfToday.getDate() - req.body.end);
+  earliest.setDate(latest.getDate() - req.body.period);
 
-    let result = [];
-    // assumes that items in group.messages ordered from oldest to newest
-    for (i = group.messages.length - 1; i >= 0; i--) {
-        const msg = await ChatMessage.findOne({_id: group.messages[i]}).lean();
-        if (msg.dateCreated > latest) {
-            continue;
-        }
-        if (msg.dateCreated < earliest) {
-            break;
-        } else {
-            result.push(msg);
-        }
+  const result = [];
+  // assumes that items in group.messages ordered from oldest to newest
+  for (let i = group.messages.length - 1; i >= 0; i -= 1) {
+    const msg = await ChatMessage.findOne({ _id: group.messages[i] }).lean();
+    if (msg.dateCreated > latest) {
+      continue;
     }
-    res.status(200).send(result);
+    if (msg.dateCreated < earliest) {
+      break;
+    } else {
+      result.push(msg);
+    }
+  }
+  res.status(200).send(result);
 });
 
 // tested, works, 11/12/2020
 /**
-* @api {delete} /chat/ Delete specified message from specified group; if message not in group do nothing
+* @api {delete} /chat/ Delete specified message from specified group;
+                    if message not in group do nothing
 * @apiName DeleteMessage
 * @apiGroup Chat
 * @apiParam {String} mid message _id
@@ -94,22 +97,21 @@ router.get('/gid/', async (req, res) => {
 * @apiSuccess {String} message Success message.
 * @apiError (500) {Object} Error group not found.
 */
-router.delete('/delete', async (req, res) => {
-    try {
-        let group = await Group.findOne({ _id: req.body.gid });
-        let index = group.messages.indexOf(req.body.mid);
-        if (index !== -1) {
-            group.messages.splice(index, 1);
-            // delete only if message belongs to group
-            ChatMessage.deleteOne({ _id: req.body.mid });
-        }
-        group.save();
-        res.status(200).send('success');
-    } catch (err) {
-        console.error(err.message);
-        res.status(500).send(err);
+router.delete("/delete", async (req, res) => {
+  try {
+    const group = await Group.findOne({ _id: req.body.gid });
+    const index = group.messages.indexOf(req.body.mid);
+    if (index !== -1) {
+      group.messages.splice(index, 1);
+      // delete only if message belongs to group
+      ChatMessage.deleteOne({ _id: req.body.mid });
     }
+    group.save();
+    res.status(200).send("success");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send(err);
+  }
 });
-
 
 module.exports = router;

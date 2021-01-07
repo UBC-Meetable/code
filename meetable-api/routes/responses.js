@@ -1,9 +1,10 @@
+/* eslint-disable no-underscore-dangle */
+const mongoose = require("mongoose");
+const express = require("express");
 const Question = require("../models/Question");
 const QuizInstance = require("../models/QuizInstance");
 const Response = require("../models/Response");
 
-const mongoose = require("mongoose");
-const express = require("express");
 const router = express.Router();
 
 // @route    PUT api/responses
@@ -18,13 +19,13 @@ const router = express.Router();
  * @apiParam {String} question Question text
  * @apiParam {String} answer Answer text
  * @apiSuccess {String} message Success Message.
- * 
+ *
  * @apiError (500) ValidationError The given attributes are invalid.
  */
 router.put("/", async (req, res) => {
   console.log("answer!");
   try {
-    const body = req.body;
+    const { body } = req;
     /*
     {uid: ...,
     quizid: ...,
@@ -32,7 +33,7 @@ router.put("/", async (req, res) => {
     answer: "...",
     }
     */
-    const quizid = body.quizid;
+    const { quizid } = body;
     const response = new Response({
       qid: quizid,
       question: body.question,
@@ -41,13 +42,13 @@ router.put("/", async (req, res) => {
 
     await response.save();
 
-    quizInstance = await QuizInstance.findOne({ _id: body.quizid });
+    const quizInstance = await QuizInstance.findOne({ _id: body.quizid });
     quizInstance.responses.push(response._id);
     await quizInstance.save();
     res.status(200).send({
-      success:true,
+      success: true,
       quizInstance,
-      response
+      response,
     });
   } catch (err) {
     console.error(err.message);

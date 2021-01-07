@@ -1,10 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const User = require("./models/User");
-const ChatMessage = require("./models/ChatMessage");
-const Group = require("./models/Group");
-const pushNotifications = require("./pushNotifications");
 /*
 const major = require("./routes/major");
 const majorRouter = major.router;
@@ -16,7 +13,11 @@ const sslRedirect = require("heroku-ssl-redirect");
 
 const http = require("http");
 const socketIO = require("socket.io");
-const { Expo } = require('expo-server-sdk')
+const { Expo } = require("expo-server-sdk");
+const pushNotifications = require("./pushNotifications");
+const Group = require("./models/Group");
+const ChatMessage = require("./models/ChatMessage");
+const User = require("./models/User");
 
 const app = express();
 const server = http.createServer(app);
@@ -25,9 +26,6 @@ app.use(bodyParser.json());
 
 const prodCluster = "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster1.t0s2m.mongodb.net/meetable?retryWrites=true&w=majority";
 const testCluster = "mongodb+srv://admin:Csi3i2h9cStvsRb@meetable-test.jwya1.mongodb.net/test?authSource=admin&replicaSet=atlas-jejadc-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
-
-
-
 
 // Define Routes
 app.use("/api/users", require("./routes/users"));
@@ -39,7 +37,6 @@ app.use("/api/media", require("./routes/media"));
 app.use("/api/forms", require("./routes/forms"));
 app.use("/api/chat", require("./routes/chat"));
 
-
 const connectDB = async () => {
   try {
     await mongoose.connect(
@@ -49,7 +46,7 @@ const connectDB = async () => {
         useCreateIndex: true,
         useFindAndModify: false,
         useUnifiedTopology: true,
-      }
+      },
     );
 
     console.log("MongoDB Connected...");
@@ -64,10 +61,8 @@ const connectDB = async () => {
 connectDB();
 app.use(sslRedirect());
 
-
-
 // Chat
-let io = socketIO(server, {
+const io = socketIO(server, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
@@ -76,7 +71,6 @@ let io = socketIO(server, {
   },
 });
 io.on("connection", (socket) => {
-  
   // disconnect is fired when a client leaves the server
   // author, text, uid are String
   /*
@@ -85,42 +79,40 @@ io.on("connection", (socket) => {
         contentType: String // this would probably be like 'image/png' or 'video/mp4'
     },
     */
-  socket.on("message", async (msg)=>{
-    let msgObj = JSON.parse(msg);
-    let message = new ChatMessage({
+  socket.on("message", async (msg) => {
+    const msgObj = JSON.parse(msg);
+    const message = new ChatMessage({
       author: msgObj.author,
       text: msgObj.text,
       uid: msgObj.uid,
-      file: msgObj.file
+      file: msgObj.file,
     });
     message.save().catch((err) => {
       console.error(err);
     });
-    let group = await Group.findOne({_id: msgObj.gid}).populate('members');
+    const group = await Group.findOne({ _id: msgObj.gid }).populate("members");
     group.messages.push(message._id);
     group.save().catch((err) => {
       console.error(err);
     });
     // push notification logic
-    let pushTokens = []
+    let pushTokens = [];
     pushTokens = group.members.forEach((member) => {
-      pushTokens.push(member.expoPushToken)
-    })
-    pushNotifications.notifyGroup(pushTokens, message)
-    
-  })
-  socket.on("typing", (user)=>{
+      pushTokens.push(member.expoPushToken);
+    });
+    pushNotifications.notifyGroup(pushTokens, message);
+  });
+  socket.on("typing", (user) => {
     console.log(`username ${user} is typing..`);
-
-  })
+  });
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
 });
 server.listen(5000, () => console.log("Listening to chat room on port 5000"));
 
-//req : request
-//res : response
+// req : request
+// res : response
 
 app.post("/submitForm", (req, res) => {
   // {
@@ -129,10 +121,10 @@ app.post("/submitForm", (req, res) => {
   //     "password": "asdfdsafsdfsa"
   // }
 
-  const body = req.body;
-  const name = body.name;
-  const email = body.email;
-  const password = body.password;
+  const { body } = req;
+  const { name } = body;
+  const { email } = body;
+  const { password } = body;
 
   const u = new User({ name, email, password });
   u.save().then(() => {
