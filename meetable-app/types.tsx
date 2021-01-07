@@ -31,7 +31,8 @@ export type BottomTabParamList = {
 };
 
 export type GroupStackParamList = {
-  GroupsScreen: undefined;
+  CourseGroups: undefined;
+  FriendGroups: undefined;
   GroupScreen: {
     groupName: string;
     groupId: string;

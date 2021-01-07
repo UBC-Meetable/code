@@ -1,17 +1,14 @@
 import React from "react";
-import {
-  List, Layout,
-} from "@ui-kitten/components";
-import {
-  StyleSheet, Text, TouchableOpacity,
-} from "react-native";
+import { List, Layout } from "@ui-kitten/components";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
-import { GroupStackParamList } from "../types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CommonActions } from "@react-navigation/native";
+import { GroupStackParamList } from "../types";
+import FriendGroupBubble from "../components/FriendGroupBubble";
 
-const GroupsScreen = ({
+const FriendGroups = ({
   navigation,
 }: {
   navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
@@ -22,14 +19,13 @@ const GroupsScreen = ({
         screen: "GroupScreen",
         groupId,
         groupName,
-      })
+      }),
     );
-
   };
 
-  const headerHeight = useHeaderHeight()
+  const headerHeight = useHeaderHeight();
   const groups = [
-    ["BUCS", "1"],
+    ["BUCS but friends", "1"],
     ["group 2", "2"],
     ["group 3", "3"],
     ["group 4", "4"],
@@ -46,36 +42,10 @@ const GroupsScreen = ({
     ["group 15", "15"],
   ];
 
-  const renderItem = ({ item }:{item: string[]}) => {
+  const renderItem = ({ item }: { item: string[] }) => {
     const [name, id] = item;
     return (
-      <TouchableOpacity style={styles.bubble} onPress={() => joinGroup(id, name)}>
-        <Text style={styles.bubbleText}>
-          ECON 101
-        </Text>
-
-        {/* <View style={styles.sectionBubble}>
-          <Text style={styles.sectionBubbleText}>201</Text>
-        </View> */}
-
-        <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
-          100
-        </Chip>
-
-        <Text style={styles.bubbleTextDesc}>
-          lorem ipsum lorem ipsum lorem ipsum
-          {"\n"}
-          hi hi hi hi ih ih lorem ipsum lorem ipsum
-        </Text>
-
-        <Layout style={styles.facePileBubble}>
-          <Avatar.Icon size={38} style={styles.backPile} icon="folder" />
-          <Avatar.Text size={38} style={styles.secondBackPile} label="TF" />
-          <Avatar.Icon size={38} style={styles.secondPile} icon="folder" />
-          <Avatar.Text size={38} style={styles.frontPile} label="DS" />
-        </Layout>
-
-      </TouchableOpacity>
+      <FriendGroupBubble onPress={() => joinGroup(id, name)} />
     );
   };
 
@@ -174,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GroupsScreen;
+export default FriendGroups;
