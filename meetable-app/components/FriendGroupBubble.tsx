@@ -68,6 +68,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000",
   },
   chip: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 14,
     flex: 0,
     backgroundColor: "#fff",
   },
@@ -79,6 +81,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   names: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 16,
     maxWidth: 250,
     overflow: "hidden",
   },
