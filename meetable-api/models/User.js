@@ -1,78 +1,80 @@
-const mongoose = require('mongoose');
-const Group = require('./Group');
+const mongoose = require("mongoose");
+const Group = require("./Group");
 
-
-let validateEmail = function(email) {
-  let re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email)
+const validateEmail = function (email) {
+  const re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email);
 };
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    maxlength: 40
+    maxlength: 40,
   },
   email: {
-    type: String, 
+    type: String,
     required: false,
-   
+
   },
-  authid: {type: String, required: true},
+  authid: { type: String, required: true },
   expoPushToken: {
     type: String,
-    required: true                     // TODO: determine if frontend gets user's push token before or after user document is first posted
+    required: true, // TODO: determine if frontend gets user's push token before or after user document is first posted
     // also, can user mute individual groups, or only disable push notifications altogether?
   },
-  avatar: { 
-    type: String
+  avatar: {
+    type: String,
   },
-  verified: {                          // TODO: determine if necessary
+  verified: { // TODO: determine if necessary
     type: Boolean,
-    default: false
+    default: false,
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  groups: [{                           
+  groups: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Group',
+    ref: "Group",
     default: [],
   }],
   courseGroups: [{
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'CourseGroup',
-    default: []
+    ref: "CourseGroup",
+    default: [],
   }],
-  courses: {              // TODO: frontend or backend validation, possibly using SSC API https://github.com/qstevens/UBC-Courses-API
+  courses: { // TODO: frontend or backend validation, possibly using SSC API https://github.com/qstevens/UBC-Courses-API
     type: [String],
-    default: []
+    default: [],
   },
-  major: {                // TODO: frontend validation/choose from limited options
-    type: String
+  major: { // TODO: frontend validation/choose from limited options
+    type: String,
   },
-  year: {                 // TODO: frontend validation/choose from limited options
-    type: Number
+  year: { // TODO: frontend validation/choose from limited options
+    type: Number,
   },
   school: {
-    type: String
+    type: String,
   },
-  maxGroups: {type: Number, default: 7},
+  maxGroups: { type: Number, default: 7 },
   blurb: {
     type: String,
-   
+
   },
-  instagram: {type: String, // make social media attributes unique and sparse??
+  instagram: {
+    type: String, // make social media attributes unique and sparse??
     required: false,
-    },
-  snapchat: {type: String,
+  },
+  snapchat: {
+    type: String,
     required: false,
-    },
-  facebook: {type: String,
+  },
+  facebook: {
+    type: String,
     required: false,
-    },
-    /*
+  },
+  /*
   socialMedia: {             // TODO: decide whether to implement map so users can put whatever social media
     type: Map, // key: social media platform
     of: String, // value: either links or identifiers such as usernames
@@ -82,4 +84,4 @@ const UserSchema = new mongoose.Schema({
   */
 });
 
-module.exports = User = mongoose.model('User', UserSchema);
+module.exports = User = mongoose.model("User", UserSchema);

@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "postinstall": "cd meetable-app && npm install",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
+    "start:dev": "concurrently \"cd meetable-api && npm start\" \"cd meetable-app && npm start\""
   },
   "jest": {
     "preset": "jest-expo"
@@ -35,5 +36,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "typescript": "~3.9.5",
     "jest-expo": "~39.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^5.3.0"
   }
 }

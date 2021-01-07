@@ -1,14 +1,14 @@
-const express = require('exprses');
-const Question = require('../models/Question');
-const router = express.Router()
+const express = require("exprses");
+const Question = require("../models/Question");
 
-router.get('/', async (req, res) => {
-    const questions = await Question.find()
-    res.status(200).send({
-        success:true,
-        questions
-    })
-})
+const router = express.Router();
 
+router.get("/", async (req, res) => {
+  const questions = await Question.find();
+  res.status(200).send({
+    success: true,
+    questions,
+  });
+});
 
 module.exports = router;

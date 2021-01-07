@@ -1,4 +1,12 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-shadow */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable guard-for-in */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable consistent-return */
 const express = require("express");
+
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
@@ -9,9 +17,7 @@ const User = require("../models/User");
 const Group = require("../models/Group");
 const CourseGroup = require("../models/CourseGroup");
 const QuizInstance = require("../models/QuizInstance");
-//const major = require("./major");
-
-
+// const major = require("./major");
 
 /**
  * @api {post} /users/ Post User
@@ -22,20 +28,20 @@ const QuizInstance = require("../models/QuizInstance");
  * @apiParam {String} profileImage profile picture URL
  * @apiParam {String} authid The user's auth0 id
  * @apiParam {String} email The user's email
- * @apiError (500) {Object} ValidationError The specified attributes are invalid for the specified reasons.
+ * @apiError (500) {Object} ValidationError
+ *           The specified attributes are invalid for the specified reasons.
  * @apiError (400) {String} UserExists The posted user already exists.
  */
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);
-    let userInfo = {};
-    for (let attribute in req.body) {
-      userInfo[attribute] = req.body[attribute]
+    const userInfo = {};
+    for (const attribute in req.body) {
+      userInfo[attribute] = req.body[attribute];
     }
     let user = await User.findOne({ authid: userInfo.authid });
     if (user) {
       console.log("user exists");
-     
 
       const socials = [user.snapchat, user.instagram, user.facebook];
       if (socials.length < 1 || !user.blurb) {
@@ -46,22 +52,21 @@ router.post("/", async (req, res) => {
           instagram: user.instagram,
           blurb: user.blurb,
         });
-      } else {
-        return res.status(200).send({
-          msg: "Meetable user exists",
-          id: user._id,
-          snapchat: user.snapchat,
-          instagram: user.instagram,
-          blurb: user.blurb,
-        });
       }
+      return res.status(200).send({
+        msg: "Meetable user exists",
+        id: user._id,
+        snapchat: user.snapchat,
+        instagram: user.instagram,
+        blurb: user.blurb,
+      });
     }
     user = new User({
       authid: userInfo.authid,
-      name: userInfo.name
+      name: userInfo.name,
     });
-    for (let attribute in userInfo) {
-      user[attribute] = userInfo[attribute]
+    for (const attribute in userInfo) {
+      user[attribute] = userInfo[attribute];
     }
     console.log(user);
     await user.save();
@@ -109,7 +114,7 @@ router.get("/getById/:id", async (req, res) => {
 router.get("/getByEmail", async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   res.send(user);
-  //res.json({ success: true, user });
+  // res.json({ success: true, user });
 });
 
 /**
@@ -128,9 +133,9 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
     */
     const user = await User.findOne({ _id: req.params.uid });
     const groupIds = user.groups;
-    let groups = [];
-    for (let i = 0; i < groupIds.length; i++) {
-      group = await Group.findOne({ _id: groupIds[i] }).populate("members");
+    const groups = [];
+    for (let i = 0; i < groupIds.length; i += 1) {
+      const group = await Group.findOne({ _id: groupIds[i] }).populate("members");
       groups.push(group);
     }
     console.log(groups);
@@ -152,18 +157,17 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
  */
 router.put("/updateprofile", async (req, res) => {
   try {
-    const body = req.body;
+    const { body } = req;
     /* body
   {uid: ...,
   instagram: "...",
   snapchat: "...",
-  ..., 
+  ...,
   blurb: "...",
   email: "..."}
   */
 
-
-    let newUser = {
+    const newUser = {
       /*
       uid: body.uid,
       instagram: body.instagram,
@@ -178,8 +182,8 @@ router.put("/updateprofile", async (req, res) => {
       newUser[attr] = body[attr];
     }
     console.log(newUser);
-    const uid = body.uid;
-    const user = await User.findOneAndUpdate({ _id: uid }, newUser, {new: true});
+    const { uid } = body;
+    const user = await User.findOneAndUpdate({ _id: uid }, newUser, { new: true });
 
     res.status(200).send({ msg: "Success", user });
   } catch (err) {
@@ -189,19 +193,18 @@ router.put("/updateprofile", async (req, res) => {
   }
 });
 
-
 /**
  * @api {get} /users/courseGroup/ get user's course groups
  * @apiName GetCourseGroups
  * @apiGroup User
- * @apiSuccess {Object[]} groups The course group(s) that user was put in or undefined 
+ * @apiSuccess {Object[]} groups The course group(s) that user was put in or undefined
  * TODO: determine if course groups should be deep-populated
  * @apiParam {String} uid The user's id
  */
 router.get("/courseGroup", async (req, res) => {
   try {
-  let user = await User.findOne({_id: req.body.uid}).populate("courseGroups");
-  res.send(user.courseGroups); //.send, .json, does it matter? 
+    const user = await User.findOne({ _id: req.body.uid }).populate("courseGroups");
+    res.send(user.courseGroups); // .send, .json, does it matter?
   } catch (err) {
     res.status(500).send(err);
   }
@@ -211,13 +214,13 @@ router.get("/courseGroup", async (req, res) => {
  * @api {put} /users/courseGroup/ Put User in course groups
  * @apiName GroupUserCourses
  * @apiGroup User
- * @apiSuccess {Object[]} groups The group(s) that user was put in. 
+ * @apiSuccess {Object[]} groups The group(s) that user was put in.
  * TODO: determine if course groups should be deep-populated
  * @apiParam {String} uid The user's id
  */
 router.put("/courseGroup", async (req, res) => {
-  const uid = req.body.uid;
-  let user = await User.findOne({_id: uid}).populate("courseGroups");
+  const { uid } = req.body;
+  const user = await User.findOne({ _id: uid }).populate("courseGroups");
   for (const course of user.courses) {
     let grouped = false;
     for (const courseGroup of user.courseGroups) {
@@ -227,9 +230,9 @@ router.put("/courseGroup", async (req, res) => {
       }
     }
     if (!grouped) {
-      let newCourseGroup = await CourseGroup.findOne({courseCode: course, school: user.school});
+      let newCourseGroup = await CourseGroup.findOne({ courseCode: course, school: user.school });
       if (newCourseGroup == null) {
-        newCourseGroup = new CourseGroup({courseCode: course, school: user.school});
+        newCourseGroup = new CourseGroup({ courseCode: course, school: user.school });
       }
       newCourseGroup.members.push(uid);
       user.courseGroups.push(newCourseGroup._id);
@@ -256,11 +259,11 @@ router.put("/courseGroup", async (req, res) => {
  * @apiError (500) {Object} message user was not in specified course group
  */
 router.delete("/courseGroup", async (req, res) => {
-  const uid = req.body.uid;
+  const { uid } = req.body;
   const course = req.body.courseCode;
-  let user = await User.findOne({_id: uid});
+  const user = await User.findOne({ _id: uid });
   try {
-    let courseGroup = await CourseGroup.findOne({courseCode: course, school: user.school});
+    const courseGroup = await CourseGroup.findOne({ courseCode: course, school: user.school });
     let index = courseGroup.members.indexOf(uid);
     // assumptions rule out need for if (index !== -1) guard
     courseGroup.members.splice(index, 1);
@@ -270,12 +273,10 @@ router.delete("/courseGroup", async (req, res) => {
     courseGroup.save();
     res.status(200).send(user);
   } catch (err) {
-      console.log(err);
-      res.status(500).send(err);
+    console.log(err);
+    res.status(500).send(err);
   }
 });
-
-
 
 /**
  * @api {put} /users/group/ Put User in Group
@@ -289,33 +290,29 @@ router.put("/group", async (req, res) => {
   console.log("put group");
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
-    const body = req.body;
-    const uid = body.uid;
+    const { body } = req;
+    const { uid } = body;
 
-    const quiz = await QuizInstance.findOne({ uid: uid }).populate("responses");
+    const quiz = await QuizInstance.findOne({ uid }).populate("responses");
     if (!quiz) {
       res.send({ msg: "User has not taken quiz", success: false });
     }
 
-
-    user = await User.findOne({ _id: uid });
-    if (user.groups.length != 0) {
-      res.send({ msg: "User is already in group", success: false }); 
+    const user = await User.findOne({ _id: uid });
+    if (user.groups.length !== 0) {
+      res.send({ msg: "User is already in group", success: false });
     }
-    group = await Group.findOne({ full: false });
+    let group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      year = null;
+      let year = null;
       let major = null;
       for (const response of quiz.responses) {
         console.log(response);
-        if (response.question === "What year are you going into?")
-          year = response.answer;
-        if (response.question === "What is your intended major?")
-          major = response.answer;
+        if (response.question === "What year are you going into?") year = response.answer;
+        if (response.question === "What is your intended major?") major = response.answer;
       }
-      if (year == null || major == null)
-        res.send({ msg: "Year or Major unknown", success: false });
+      if (year == null || major == null) res.send({ msg: "Year or Major unknown", success: false });
       group = new Group({ name: [year, major] });
       user.groups.push(group._id);
       group.members.push(uid);
@@ -324,18 +321,18 @@ router.put("/group", async (req, res) => {
         .lean()
         .populate("members");
       // find most compatible user out of all users in non-full groups
-      mostCompatibleUser = null;
-      for (let i = 0; i < nonFullGroups.length; i++) {
-        let tempGroup = nonFullGroups[i].members;
-        //if (hasUser(tempGroup, user.authid)) continue;
-        for (let j = 0; j < tempGroup.length; j++) {
+      let mostCompatibleUser = null;
+      for (let i = 0; i < nonFullGroups.length; i += 1) {
+        const tempGroup = nonFullGroups[i].members;
+        // if (hasUser(tempGroup, user.authid)) continue;
+        for (let j = 0; j < tempGroup.length; j += 1) {
           try {
-            if (await moreCompatible(user, tempGroup[j], mostCompatibleUser))
-              mostCompatibleUser = tempGroup[j];
+            if (await moreCompatible(user,
+              tempGroup[j], mostCompatibleUser)) mostCompatibleUser = tempGroup[j];
           } catch (err) {
             console.log(err);
             console.log(
-              "Missing data encountered, continuing to next iteration"
+              "Missing data encountered, continuing to next iteration",
             );
           }
         }
@@ -344,16 +341,13 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        year = null;
+        let year = null;
         let major = null;
         for (const response of quiz.responses) {
-          if (response.question === "What year are you going into?")
-            year = response.answer;
-          if (response.question === "What is your intended major?")
-            major = response.answer;
+          if (response.question === "What year are you going into?") year = response.answer;
+          if (response.question === "What is your intended major?") major = response.answer;
         }
-        if (year == null || major == null)
-          res.send({ msg: "Year or Major unknown", success: false });
+        if (year == null || major == null) res.send({ msg: "Year or Major unknown", success: false });
         group = new Group({ name: [year, major] });
         user.groups.push(group._id);
         group.members.push(uid);
@@ -363,7 +357,7 @@ router.put("/group", async (req, res) => {
         user.groups.push(group._id);
         group.members.push(uid);
         // update full? status as necessary
-        if (group.members.length == group.maxSize) group.full = true;
+        if (group.members.length === group.maxSize) group.full = true;
       }
     }
     await user.save();
@@ -383,56 +377,55 @@ async function moreCompatible(user, user1, user2) {
   const userResponses = await Response.find({ uid: user._id }).lean().sort({
     dateCreated: 1,
   });
-  //const userResponses = await QuizInstance.findOne({uid: user._id}).lean().populate("responses");
+  // const userResponses = await QuizInstance.findOne({uid: user._id}).lean().populate("responses");
   const user1Responses = await Response.find({ uid: user1._id }).lean().sort({
     dateCreated: 1,
   });
 
   if (
     !(
-      user1Responses[0].answer === userResponses[0].answer &&
-      user1Responses[1].answer === userResponses[1].answer
+      user1Responses[0].answer === userResponses[0].answer
+      && user1Responses[1].answer === userResponses[1].answer
     )
   ) {
     return false;
-  } else if (user2 == null) {
+  } if (user2 == null) {
     return true;
-  } else {
-    const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
-      dateCreated: 1,
-    });
-    let user1Score = 0;
-    let user2Score = 0;
-    for (let i = 2; i < userResponses.length; i++) {
-      if (userResponses[i].answer === user1Responses[i].answer) user1Score++;
-      if (userResponses[i].answer === user2Responses[i].answer) user2Score++;
-    }
-    if (user1Score > user2Score && user1Score >= MIN_SCORE) return true;
-    else return false;
   }
+  const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
+    dateCreated: 1,
+  });
+  let user1Score = 0;
+  let user2Score = 0;
+  for (let i = 2; i < userResponses.length; i += 1) {
+    if (userResponses[i].answer === user1Responses[i].answer) user1Score += 1;
+    if (userResponses[i].answer === user2Responses[i].answer) user2Score += 1;
+  }
+  if (user1Score > user2Score && user1Score >= MIN_SCORE) return true;
+  return false;
 }
 
 function hasUser(tempGroup, authid) {
-  for (let i = 0; i < tempGroup.length; i++) {
+  for (let i = 0; i < tempGroup.length; i += 1) {
     if (tempGroup[i].authid === authid) return true;
   }
   return false;
 }
 
 router.put("/inject", async (req, res) => {
-  let users = await User.find({});
-  let promises = [];
-  users.forEach(document => {
-      if (typeof document.courses === "undefined") {
-          document.courses = [];
-      }
-      if (typeof document.courseGroups === "undefined") {
-        document.courseGroups = [];
-      }
-      promises.push(document.save());
+  const users = await User.find({});
+  const promises = [];
+  users.forEach((document) => {
+    if (typeof document.courses === "undefined") {
+      document.courses = [];
+    }
+    if (typeof document.courseGroups === "undefined") {
+      document.courseGroups = [];
+    }
+    promises.push(document.save());
   });
   await Promise.all(promises);
   res.status(200).send("attributes added");
-})
+});
 
 module.exports = router;

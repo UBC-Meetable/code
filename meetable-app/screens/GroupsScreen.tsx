@@ -7,9 +7,9 @@ import {
 } from "react-native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
-import { GroupStackParamList } from "../types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CommonActions } from "@react-navigation/native";
+import { GroupStackParamList } from "../types";
 
 const GroupsScreen = ({
   navigation,
@@ -22,12 +22,11 @@ const GroupsScreen = ({
         screen: "GroupScreen",
         groupId,
         groupName,
-      })
+      }),
     );
-
   };
 
-  const headerHeight = useHeaderHeight()
+  const headerHeight = useHeaderHeight();
   const groups = [
     ["BUCS", "1"],
     ["group 2", "2"],

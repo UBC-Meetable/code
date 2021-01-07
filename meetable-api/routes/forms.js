@@ -1,8 +1,8 @@
 const express = require("express");
-const router = express.Router();
-const User = require('../models/User');
-const Form = require('../models/Form');
 
+const router = express.Router();
+const User = require("../models/User");
+const Form = require("../models/Form");
 
 /**
  * @api {get} /forms/ Get All Forms
@@ -22,11 +22,10 @@ const Form = require('../models/Form');
  *     ]
  *
  */
-router.get('/', async (req, res) => {
-    const forms = await Form.find();
-    res.json(forms);
+router.get("/", async (req, res) => {
+  const forms = await Form.find();
+  res.json(forms);
 });
-
 
 /**
  * @api {get} /forms/:uid Get Forms By User Id
@@ -46,9 +45,9 @@ router.get('/', async (req, res) => {
  *     ]
  *
  */
-router.get('/:uid', async (req, res) => {
-    const forms = await Form.find({ uid: req.params.uid });
-    res.json(forms);
+router.get("/:uid", async (req, res) => {
+  const forms = await Form.find({ uid: req.params.uid });
+  res.json(forms);
 });
 
 /**
@@ -69,9 +68,9 @@ router.get('/:uid', async (req, res) => {
  *     ]
  *
  */
-router.get('/:email', async (req, res) => {
-    const forms = await Form.find({ email: req.params.email });
-    res.json(forms);
+router.get("/:email", async (req, res) => {
+  const forms = await Form.find({ email: req.params.email });
+  res.json(forms);
 });
 
 /**
@@ -82,7 +81,7 @@ router.get('/:email', async (req, res) => {
  * @apiParam {String} uid User's id.
  * @apiParam {String} [email] User's email.
  * @apiSuccess {String} message Success Message.
- * 
+ *
  * @apiError (500) {Object} ValidationError The given attributes are invalid.
  *
  * @apiSuccessExample Success-Response:
@@ -97,21 +96,19 @@ router.get('/:email', async (req, res) => {
  *     ]
  *
  */
-router.post('/', async (req, res) => {
-    try {
-        let form = new Form({
-            text: req.body.text,
-            uid: req.body.uid,
-            email: req.body.email,
-        });
-        await form.save();
-        res.status(200).send(form);
-    } catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
+router.post("/", async (req, res) => {
+  try {
+    const form = new Form({
+      text: req.body.text,
+      uid: req.body.uid,
+      email: req.body.email,
+    });
+    await form.save();
+    res.status(200).send(form);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
 });
-
-
 
 module.exports = router;

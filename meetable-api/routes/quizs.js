@@ -2,6 +2,7 @@ const express = require("express");
 const QuizInstance = require("../models/QuizInstance");
 const { generateResponse } = require("./responses");
 const Quiz = require("../models/Quiz");
+
 const router = express.Router();
 
 /**
@@ -17,7 +18,6 @@ router.get("/", async (req, res) => {
     quizes,
   });
 });
-
 
 /**
  * @api {get} /quizs/byid/ Get Quiz by User id
@@ -50,18 +50,16 @@ router.put("/byid", async (req, res) => {
     for (let i = 0; i < quiz.responses.length; i++) {
       quiz.responses[i].uid = req.body.uid;
       await quiz.responses[i].save(); // saving populated doc does not save subdocs
-
     }
     await quiz.save();
     res.status(200).send({
       success: true,
       quiz,
     });
-} catch (err) {
+  } catch (err) {
     res.status(500).send(err);
-}
+  }
 });
-
 
 /**
  * @api {post} /quizs/ Post New Quiz Instance
@@ -71,13 +69,13 @@ router.put("/byid", async (req, res) => {
  * @apiError (500) ValidationError No apparent causes.
  */
 router.post("/", async (req, res) => {
-  const body = req.body;
-  //const uid = body.uid;
+  const { body } = req;
+  // const uid = body.uid;
   // const quiz = await Quiz.find({name: "hardcoded"}) not needed for MVP
   console.log("making quiz instanse");
   const q = new QuizInstance({
-    //uid: uid,
-    //quiz: quiz
+    // uid: uid,
+    // quiz: quiz
   });
 
   try {
