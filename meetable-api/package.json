@@ -38,7 +38,7 @@
     "gravatar": "^1.8.1",
     "heroku-ssl-redirect": "0.0.4",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.2",
+    "mongoose": "^5.11.10",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
     "normalize-url": "^5.1.0",
