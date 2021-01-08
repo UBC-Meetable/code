@@ -16,6 +16,8 @@ export type RootStackParamList = {
   Signup: undefined;
   Quiz: undefined;
   Group: undefined;
+  UniScreen: undefined;
+  EditCourses: undefined;
 };
 
 export type BottomTabParamList = {
