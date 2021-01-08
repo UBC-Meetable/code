@@ -1,4 +1,4 @@
-[
+define({ "api": [
   {
     "type": "delete",
     "url": "/chat/ Delete specified message from specified group;",
@@ -52,7 +52,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/chat.js",
+    "filename": "meetable-api/routes/chat.js",
     "groupTitle": "Chat"
   },
   {
@@ -75,7 +75,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/chat.js",
+    "filename": "meetable-api/routes/chat.js",
     "groupTitle": "Chat"
   },
   {
@@ -132,7 +132,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "routes/chat.js",
+    "filename": "meetable-api/routes/chat.js",
     "groupTitle": "Chat"
   },
   {
@@ -162,7 +162,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "routes/forms.js",
+    "filename": "meetable-api/routes/forms.js",
     "groupTitle": "Form"
   },
   {
@@ -192,7 +192,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "routes/forms.js",
+    "filename": "meetable-api/routes/forms.js",
     "groupTitle": "Form"
   },
   {
@@ -222,7 +222,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "routes/forms.js",
+    "filename": "meetable-api/routes/forms.js",
     "groupTitle": "Form"
   },
   {
@@ -292,7 +292,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/forms.js",
+    "filename": "meetable-api/routes/forms.js",
     "groupTitle": "Form"
   },
   {
@@ -328,7 +328,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/groups.js",
+    "filename": "meetable-api/routes/groups.js",
     "groupTitle": "Group"
   },
   {
@@ -351,7 +351,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/groups.js",
+    "filename": "meetable-api/routes/groups.js",
     "groupTitle": "Group"
   },
   {
@@ -374,7 +374,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/groups.js",
+    "filename": "meetable-api/routes/groups.js",
     "groupTitle": "Group"
   },
   {
@@ -396,7 +396,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/groups.js",
+    "filename": "meetable-api/routes/groups.js",
     "groupTitle": "Group"
   },
   {
@@ -451,7 +451,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/quizs.js",
+    "filename": "meetable-api/routes/quizs.js",
     "groupTitle": "Quiz"
   },
   {
@@ -487,7 +487,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/quizs.js",
+    "filename": "meetable-api/routes/quizs.js",
     "groupTitle": "Quiz"
   },
   {
@@ -510,7 +510,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/quizs.js",
+    "filename": "meetable-api/routes/quizs.js",
     "groupTitle": "Quiz"
   },
   {
@@ -545,7 +545,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/quizs.js",
+    "filename": "meetable-api/routes/quizs.js",
     "groupTitle": "Quiz"
   },
   {
@@ -607,7 +607,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/responses.js",
+    "filename": "meetable-api/routes/responses.js",
     "groupTitle": "Response"
   },
   {
@@ -663,7 +663,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -699,7 +699,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -735,7 +735,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -771,7 +771,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -820,7 +820,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -843,7 +843,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -892,7 +892,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -928,7 +928,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -1007,7 +1007,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   },
   {
@@ -1063,7 +1063,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "meetable-api/routes/users.js",
     "groupTitle": "User"
   }
-]
+] });
