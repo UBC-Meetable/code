@@ -1,0 +1,60 @@
+{
+  "name": "meetable",
+  "version": "1.0.0",
+  "description": "Meetable mobile app and api",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "postinstalln": "cd meetable-app && npm install",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/UBC-Meetable/code.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/UBC-Meetable/code/issues"
+  },
+  "homepage": "https://github.com/UBC-Meetable/code#readme",
+  "dependencies": {
+    "apidoc": "^0.25.0",
+    "aws-sdk": "^2.747.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dot-env": "0.0.1",
+    "dotenv": "^8.2.0",
+    "expo-server-sdk": "^3.6.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "gravatar": "^1.8.1",
+    "heroku-ssl-redirect": "0.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.10",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "normalize-url": "^5.1.0",
+    "socket.io": "^3.0.1",
+    "socket.io-client": "^3.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/parser": "^4.12.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "jest-expo": "~39.0.0",
+    "typescript": "~3.9.5"
+  }
+}

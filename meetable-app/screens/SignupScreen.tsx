@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Button, Card, Layout, Text,
+  Button, Layout, Text,
 } from "@ui-kitten/components";
 import { Dimensions, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";

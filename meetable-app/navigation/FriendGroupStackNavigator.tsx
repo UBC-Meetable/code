@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Layout } from "@ui-kitten/components";
 import React from "react";
 
 import GroupsScreen from "../screens/GroupsScreen";

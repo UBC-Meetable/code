@@ -5,7 +5,6 @@ import { Layout, Button } from "@ui-kitten/components";
 import Icon from "react-native-vector-icons/Ionicons";
 import GroupsScreen from "../screens/GroupsScreen";
 import { GroupStackParamList } from "../types";
-import BubbleHeader from "../assets/images/header-bubble.svg";
 import HeaderOptions from "./HeaderOptions";
 
 const GroupTabStack = createStackNavigator<GroupStackParamList>();

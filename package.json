@@ -7,7 +7,13 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --passWithNoTests",
+    "postinstall": "cd meetable-app && npm install",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
+    "start:dev": "concurrently \"cd meetable-api && npm start\" \"cd meetable-app && npm start\""
+  },
+  "jest": {
+    "preset": "jest-expo"
   },
   "repository": {
     "type": "git",
@@ -18,5 +24,20 @@
   "bugs": {
     "url": "https://github.com/UBC-Meetable/code/issues"
   },
-  "homepage": "https://github.com/UBC-Meetable/code#readme"
+  "homepage": "https://github.com/UBC-Meetable/code#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.12.0",
+    "@typescript-eslint/parser": "^4.12.0",
+    "eslint": "^7.17.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "typescript": "~3.9.5",
+    "jest-expo": "~39.0.0"
+  },
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
 }

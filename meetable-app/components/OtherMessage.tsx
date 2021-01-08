@@ -6,7 +6,7 @@ import { Avatar } from "react-native-paper";
 import { MessageType } from "../types";
 import styles from "./styles/MessageStyles";
 
-const OtherMessage = ({ message, date, author } : MessageType) => (
+const OtherMessage = ({ message, author } : MessageType) => (
   <Layout style={otherStyles.messageContainer}>
     <Layout style={otherStyles.messageAndAuthor}>
       <Layout style={otherStyles.nameContainer}>

@@ -1,0 +1,53 @@
+endpoint documentation based on user experience flow
+
+if logged in and already completed the quiz:
+GET api/users/getgroupsbyuserid
+request body: {"uid": "..."}
+
+otherwise:
+
+1. create quiz instance
+POST api/quizs
+request body : {} 
+
+2. send each quiz response back, containing the quiz instance id, the question text,
+and the answer text. If a user skips a question, do still send the response back with an empty string answer attribute.
+PUT api/responses
+request body:
+    {
+    quizid: ...,
+    question: "...",
+    answer: "...",
+    }
+
+2. create user with at least name, auth0 id, email 
+POST api/users/test
+request body : {"name": "...", "profileImage": "...", "authid": "...", "email" "..."}
+
+
+4. update user profile with social media identifiers and a blurb (or any user attribute)
+PUT api/users/updateprofile
+request body:
+  {uid: ...,
+  instagram: "...",
+  snapchat: "...",
+  facebook: "...", 
+  blurb: "..."}
+
+5. update quiz instance and responses with uid
+PUT api/quizs/byid
+request body: {qid: "...", uid: "..."}
+
+6. put user in a group and get back the group as a response.
+PUT api/users/group
+request body: {"uid": "..."}
+
+
+Main proposed design changes for mobile:
+
+- may want to eliminate the Response model and collection OR do indexed queries. Though MongoDB is designed for many small documents, so it should be ok
+- could use a Mongoose Map in quizInstance for the questions and answers, this would be flexible and entirely decoupled from frontend quiz implementation
+- if responses are still kept as an array of object refs in the model then at least do this:
+  - don't send quiz responses back in real time as they are selected as this excludes the possibility of changing quiz answers before submission
+    instead, add to the quizInstance obj that the client receives. Send it back when quiz is submitted.
+
