@@ -740,7 +740,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/users/getgroupsbyuserid/:uid",
+    "url": "/users/getById/:id",
     "title": "Get User by Id",
     "name": "GetUserById",
     "group": "User",
@@ -777,7 +777,7 @@ define({ "api": [
   {
     "type": "get",
     "url": "/users/getgroupsbyuserid/:uid",
-    "title": "Get User by Id",
+    "title": "Get User's Groups by Id",
     "name": "GetUserGroupsById",
     "group": "User",
     "success": {

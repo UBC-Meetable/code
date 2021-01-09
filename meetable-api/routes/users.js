@@ -93,7 +93,7 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
+ * @api {get} /users/getById/:id Get User by Id
  * @apiName GetUserById
  * @apiGroup User
  * @apiSuccess {Object} The User.
@@ -118,7 +118,7 @@ router.get("/getByEmail", async (req, res) => {
 });
 
 /**
- * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
+ * @api {get} /users/getgroupsbyuserid/:uid Get User's Groups by Id
  * @apiName GetUserGroupsById
  * @apiGroup User
  * @apiSuccess {Object[]} groups The list of groups joined by specified user.
