@@ -1,8 +1,8 @@
 [
   {
     "type": "delete",
-    "url": "/chat/ Delete specified message from specified group;",
-    "title": "if message not in group do nothing",
+    "url": "/chat/",
+    "title": "Delete specified message from specified group",
     "name": "DeleteMessage",
     "group": "Chat",
     "parameter": {
