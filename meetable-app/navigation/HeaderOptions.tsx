@@ -7,6 +7,7 @@ import BubbleHeader from "../assets/images/header-bubble.svg";
 const window = Dimensions.get("window");
 
 export default {
+  headerShown: false,
   headerStyle: {
     height: 150,
   },

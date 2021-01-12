@@ -3,42 +3,70 @@ import {
   KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Button } from "@ui-kitten/components";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Text, View } from "../components/Themed";
+import { RootStackParamList } from "../types";
+import { UserContext } from "../utils/UserContext";
 
-const ProfileScreen = () => (
-  <KeyboardAvoidingView
-    behavior="height"
-    style={styles.container}
-  >
+const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
+  const { user, setUser } = React.useContext(UserContext);
 
-    <View style={styles.profile}>
-      <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
-    </View>
+  const onSubmit = () => {
+    console.log(user);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Tabs" }],
+    });
+  };
 
-    <View style={styles.nameBubble}>
-      <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
-      <TextInput placeholder="Name" maxLength={30} style={styles.input} />
-    </View>
+  return (
+    <KeyboardAvoidingView
+      behavior="height"
+      style={styles.container}
+    >
 
-    <View style={styles.bioBubble}>
-      <Text style={styles.bigBioHead}>Bio</Text>
-      <MaterialCommunityIcons name="pencil" size={30} style={styles.bioPencil} />
-      <TextInput placeholder="Write a short bio about yourself..." multiline maxLength={175} style={styles.bioInput} />
-    </View>
+      <View style={styles.profile}>
+        <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
+      </View>
 
-    <TouchableOpacity style={styles.button}>
-      <Text style={styles.buttonText}>Complete</Text>
-    </TouchableOpacity>
+      <View style={styles.nameBubble}>
+        <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
+        <TextInput placeholder="Name" maxLength={30} style={styles.input} />
+      </View>
 
-  </KeyboardAvoidingView>
-);
+      <View style={styles.bioBubble}>
+        <Text style={styles.bigBioHead}>Bio</Text>
+        <MaterialCommunityIcons name="pencil" size={30} style={styles.bioPencil} />
+        <TextInput placeholder="Write a short bio about yourself..." multiline maxLength={175} style={styles.bioInput} />
+      </View>
+
+      <Button
+        style={styles.button}
+        onPress={() => {
+          onSubmit();
+        }}
+      >
+        {(evaProps: any) => (
+          <Text
+            {...evaProps}
+            style={{ ...evaProps.style, ...styles.buttonText }}
+          >
+            Next
+          </Text>
+        )}
+      </Button>
+
+    </KeyboardAvoidingView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: "#FEEDDE",
+    backgroundColor: "#FFF8F3",
   },
   profile: {
     backgroundColor: "#C9E8F3",
@@ -114,18 +142,17 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 24,
-    height: "10%",
-    width: "90%",
-    backgroundColor: "#7ED1EF",
-    marginBottom: 10,
+    marginBottom: 20,
+    width: "75%",
+    borderRadius: 100,
+    borderWidth: 0,
+    backgroundColor: "#02A3F4",
   },
   buttonText: {
-    top: "32.5%",
-    left: "40%",
-    color: "#FFFFFF",
-    fontSize: 18,
+    fontSize: 20,
+    textAlign: "center",
+    flex: 1,
   },
 });
 
-export default ProfileScreen;
+export default NewProfileScreen;
