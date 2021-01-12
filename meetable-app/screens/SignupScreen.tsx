@@ -31,7 +31,7 @@ const SignupScreen = ({
     if (ENV.SKIP_LOGIN) {
       setUser(true);
       console.log("skipping");
-      navigation.replace("Tabs");
+      navigation.replace("UniScreen");
       return;
     }
     const prompt = "";
@@ -45,8 +45,7 @@ const SignupScreen = ({
     });
     if (user) {
       setUser(user);
-      console.log(user);
-      navigation.replace("Tabs");
+      navigation.replace("UniScreen");
     }
   };
   return (

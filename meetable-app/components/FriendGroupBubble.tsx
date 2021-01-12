@@ -34,7 +34,7 @@ const FriendGroupBubble = ({ onPress }: FriendGroupBubbleProps) => (
           if (index >= 4) return;
 
           // eslint-disable-next-line consistent-return
-          return (<Avatar.Image size={38} source={{ uri }} style={{ position: "absolute", right: 0 + index * 23 }} />);
+          return (<Avatar.Image size={38} source={{ uri }} style={{ position: "absolute", right: 0 + index * 23 }} key={index} />);
         })}
       </Layout>
 
