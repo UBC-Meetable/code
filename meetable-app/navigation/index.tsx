@@ -32,6 +32,7 @@ import GroupScreen from "../screens/GroupScreen";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import UniScreen from "../screens/UniScreen";
 import EditCourseScreen from "../screens/EditCoursesScreen";
+import NewProfileScreen from "../screens/NewProfileScreen";
 
 const window = Dimensions.get("window");
 // If you are not familiar with React Navigation, we recommend going through the
@@ -80,7 +81,7 @@ const App = () => {
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" | "EditCourses" | "UniScreen"
+type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" | "EditCourses" | "UniScreen" | "NewProfileScreen"
 
 function AuthorizedApp() {
   const { user, setUser } = React.useContext(UserContext);
@@ -93,7 +94,7 @@ function AuthorizedApp() {
       }}
       initialRouteName={initRoute}
     >
-      <Stack.Screen name="Tabs" component={BottomTabNavigator} />
+      <Stack.Screen name="Tabs" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen
         name="Group"
         component={GroupScreen}
@@ -132,10 +133,46 @@ function AuthorizedApp() {
       <Stack.Screen name="Signup">
         {(props) => <SignupScreen setUser={setUser} {...props} />}
       </Stack.Screen>
-      <Stack.Screen name="UniScreen" component={UniScreen} />
+      <Stack.Screen
+        name="UniScreen"
+        component={UniScreen}
+      />
+      <Stack.Screen
+        name="NewProfileScreen"
+        options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => ({
+          cardStyle: {
+            backgroundColor: "#FEEDDE",
+          },
+          headerShown: true,
+          headerTitle: "",
+          headerLeft: () => (
+            <ChatBackButton navigation={navigation} label="" />
+          ),
+          headerBackground: (props) => (
+            <Layout
+              {...props}
+              style={{
+                backgroundColor: "#FFF8F3",
+              }}
+            >
+              <BubbleHeader
+                width={window.width}
+                height={170}
+              />
+            </Layout>
+          ),
+          headerLeftContainerStyle: {
+            marginLeft: 10,
+          },
+          headerStyle: {
+            height: 170,
+          },
+        } as StackNavigationOptions)}
+        component={NewProfileScreen}
+      />
       <Stack.Screen
         name="EditCourses"
-        options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "Group"> }) => ({
+        options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "EditCourses"> }) => ({
           cardStyle: {
             backgroundColor: "#FEEDDE",
           },
@@ -181,16 +218,20 @@ function AuthorizedApp() {
 const ChatBackButton = ({
   navigation,
   label,
+  showBack = true,
 }: {
-  navigation: StackNavigationProp<RootStackParamList, "Group">,
+  navigation: StackNavigationProp<RootStackParamList, RootNames | "Group">,
   label: string,
+  showBack?: boolean
 }) => (
   <Layout style={{ padding: 10, backgroundColor: "#0000" }}>
-    <HeaderBackButton
-      onPress={() => navigation.goBack()}
-      tintColor="#000"
-      labelVisible={false}
-    />
+    {showBack && (
+      <HeaderBackButton
+        onPress={() => navigation.goBack()}
+        tintColor="#000"
+        labelVisible={false}
+      />
+    )}
     <Text
       style={{
         fontFamily: "Poppins_600SemiBold",

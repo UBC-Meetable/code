@@ -45,7 +45,6 @@ const SignupScreen = ({
     });
     if (user) {
       setUser(user);
-      console.log(user);
       navigation.replace("UniScreen");
     }
   };

@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Group: undefined;
   UniScreen: undefined;
   EditCourses: undefined;
+  NewProfileScreen: undefined;
 };
 
 export type BottomTabParamList = {
@@ -61,6 +62,8 @@ export type User =
       picture: string;
       sub: string;
       updated_at: string;
+      major?: string;
+      university?: string;
     }
   | Boolean;
 

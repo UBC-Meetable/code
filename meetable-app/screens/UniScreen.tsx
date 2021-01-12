@@ -1,26 +1,42 @@
 import React, { useState } from "react";
 import {
-  Layout, Text, Button, IndexPath,
-  Select, SelectItem, Input,
+  Layout,
+  Text,
+  Button,
+  IndexPath,
+  Select,
+  SelectItem,
+  Input,
 } from "@ui-kitten/components";
 import { StyleSheet, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StackNavigationProp } from "@react-navigation/stack";
 import BubbleBackground from "../assets/images/tutorial-bubble.svg";
+import { RootStackParamList } from "../types";
+import { UserContext } from "../utils/UserContext";
 // import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 
-const UniScreen = () => {
-  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
-  const [major, setMajor] = useState("");
-  const university = selectedIndex.row === 0 ? "The University of British Columbia" : "The University of Toronto";
-  const window = Dimensions.get("window");
+const window = Dimensions.get("window");
 
-  const onSumbit = () => {
-    alert("Saved");
+const UniScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "UniScreen"> }) => {
+  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
+  const { user, setUser } = React.useContext(UserContext);
+  const [major, setMajor] = useState("");
+  const universities = ["The University of British Columbia", "The University of Toronto", "Simon Fraser University", "Queen's University"];
+  const university = universities[selectedIndex.row];
+
+  const onSubmit = () => {
+    setUser({ ...user, major, university });
+    navigation.navigate("NewProfileScreen");
   };
 
   return (
     <SafeAreaView style={styles.root}>
-      <BubbleBackground width={window.width} height={window.height} style={{ position: "absolute" }} />
+      <BubbleBackground
+        width={window.width}
+        height={window.height}
+        style={{ position: "absolute" }}
+      />
       <Layout style={stylesTwo.container}>
         <Text style={styles.textStyle}>
           What university are you currently attending?
@@ -31,14 +47,11 @@ const UniScreen = () => {
           style={styles.dropDownStyle}
           value={university}
         >
-          <SelectItem title="The University Of British Columbia" />
-          <SelectItem title="The University of Toronto" />
+          {universities.map((uni) => <SelectItem title={uni} key={uni} />)}
         </Select>
       </Layout>
       <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          What is your major?
-        </Text>
+        <Text style={styles.textStyle}>What is your major?</Text>
         <Input
           placeholder="Business"
           value={major}
@@ -47,10 +60,11 @@ const UniScreen = () => {
         />
       </Layout>
       <Button
-        style={styles.button}
+        style={major ? styles.button : styles.disabledButton}
         onPress={() => {
-          onSumbit();
+          onSubmit();
         }}
+        disabled={!major}
       >
         {(evaProps: any) => (
           <Text
@@ -60,6 +74,7 @@ const UniScreen = () => {
             Next
           </Text>
         )}
+
       </Button>
     </SafeAreaView>
   );
@@ -81,6 +96,12 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     borderWidth: 0,
     backgroundColor: "#02A3F4",
+  },
+  disabledButton: {
+    marginBottom: 20,
+    width: "75%",
+    borderRadius: 100,
+    borderWidth: 0,
   },
   buttonText: {
     fontFamily: "Poppins_600SemiBold",
