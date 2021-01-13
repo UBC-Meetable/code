@@ -315,7 +315,8 @@ router.put("/group", async (req, res) => {
             let candidateResponses = await QuizInstance.findOne({ uid: candidate._id });
             if (moreCompatible(quizInstance, candidateResponses, mostCompatibleUserResponses)) {
               mostCompatibleUser = candidate;
-              mostCompatibleUserResponses = await QuizInstance.findOne({ uid: mostCompatibleUser._id });
+              mostCompatibleUserResponses = await QuizInstance.findOne({
+                uid: mostCompatibleUser._id });
             }
           } catch (err) {
             console.log(err);
@@ -349,7 +350,8 @@ router.put("/group", async (req, res) => {
   }
 });
 
-// QuizInstance, QuizInstance, QuizInstance -> boolean, return whether user1 is more compatible with user than user 2
+// QuizInstance, QuizInstance, QuizInstance -> boolean,
+//return whether user1 is more compatible with user than user 2
 function moreCompatible(qi, qi1, qi2) {
   const MIN_SCORE = 2;
   if (qi2 == null) {
@@ -361,8 +363,8 @@ function moreCompatible(qi, qi1, qi2) {
   let user1Score = 0;
   let user2Score = 0;
   for (let [q, a] of userResponses) {
-    if (a === user1Responses.get(q)) user1score += 1;
-    if (a === user2Responses.get(q)) user2score += 1;
+    if (a === user1Responses.get(q)) user1Score += 1;
+    if (a === user2Responses.get(q)) user2Score += 1;
   }
   if (user1Score > user2Score && user1Score >= MIN_SCORE) return true;
   return false;
