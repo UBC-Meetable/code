@@ -25,7 +25,6 @@ const LoginScreen = ({
 }) => {
   const handleLogin = async (settings: { screenHint: "login" | "signup" }) => {
     if (ENV.SKIP_LOGIN) {
-      setUser(true);
       console.log("skipping");
       navigation.replace("Tabs");
       return;

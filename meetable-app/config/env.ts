@@ -18,6 +18,8 @@ const ENV = {
     apiUrl: "[your.production.api.here]",
   },
   SKIP_LOGIN: false,
+  API_URL: "http://localhost:4000",
+  CHAT_URL: "http://localhost:5000",
 };
 
 export default ENV;

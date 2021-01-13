@@ -85,7 +85,7 @@ type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" 
 
 function AuthorizedApp() {
   const { user, setUser } = React.useContext(UserContext);
-  const initRoute = ENV.SKIP_LOGIN ? "Tabs" : `${user ? "Tabs" : "Login"}` as RootNames;
+  const initRoute = ENV.SKIP_LOGIN ? "Tabs" : `${user.name ? "Tabs" : "Login"}` as RootNames;
   return (
     <Stack.Navigator
       screenOptions={{

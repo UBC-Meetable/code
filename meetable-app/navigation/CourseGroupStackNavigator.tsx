@@ -29,7 +29,7 @@ const CourseGroupStackNavigator = () => (
     }}
   >
     <GroupTabStack.Screen
-      name="GroupsScreen"
+      name="CourseGroups"
       options={({ navigation }) => ({
         headerShown: true,
         headerRight: () => (
