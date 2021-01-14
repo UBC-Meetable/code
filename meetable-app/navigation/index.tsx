@@ -18,8 +18,9 @@ import {
   Poppins_600SemiBold,
   Poppins_400Regular,
 } from "@expo-google-fonts/poppins";
+import * as SecureStore from "expo-secure-store";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import { RootStackParamList } from "../types";
+import { RootStackParamList, User } from "../types";
 import UserContextProvider, { UserContext } from "../utils/UserContext";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
@@ -66,8 +67,25 @@ const App = () => {
     Poppins_600SemiBold,
     Poppins_400Regular,
   });
+  const { user, setUser } = React.useContext(UserContext);
 
-  console.log(fontsLoaded);
+  React.useEffect(() => {
+    const f = async () => {
+      const storeAvailable = await SecureStore.isAvailableAsync();
+      console.log(storeAvailable);
+      if (!storeAvailable) {
+        console.error("Secure Store Not Available!");
+      } else {
+        const cachedUserString = await SecureStore.getItemAsync("user");
+        if (cachedUserString) {
+          const cachedUser = JSON.parse(cachedUserString) as User;
+          console.log(cachedUser);
+          setUser(cachedUser);
+        }
+      }
+    };
+    f();
+  }, []);
 
   if (!fontsLoaded) {
     return (

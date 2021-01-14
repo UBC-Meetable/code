@@ -59,7 +59,8 @@
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
     "react-native-web": "~0.13.12",
-    "expo-device": "~2.4.0"
+    "expo-device": "~2.4.0",
+    "expo-secure-store": "~9.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

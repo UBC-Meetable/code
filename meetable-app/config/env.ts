@@ -1,5 +1,3 @@
-import HOST from "../utils/environment";
-
 const ENV = {
   dev: {
     apiUrl: "localhost",
@@ -20,8 +18,8 @@ const ENV = {
     apiUrl: "[your.production.api.here]",
   },
   SKIP_LOGIN: false,
-  API_URL: `http://${HOST}:4000`,
-  CHAT_URL: `http://${HOST}:5000`,
+  // API_URL: `http://${HOST}:4000`,
+  // CHAT_URL: `http://${HOST}:5000`,
 };
 
 export default ENV;

@@ -8,10 +8,18 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Device from "expo-device";
+import Constants from "expo-constants";
+import { AppManifest } from "expo-constants/build/Constants.types";
 import noAvatar from "../assets/images/noavatar.png";
 import { Text } from "../components/Themed";
 import { RootStackParamList, User } from "../types";
 import { UserContext } from "../utils/UserContext";
+
+const { manifest } = Constants;
+
+const debuggerHost = manifest.debuggerHost as string;
+const uri = `http://${debuggerHost.split(":").shift()}:4000`;
+console.log(uri);
 
 const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
   const { user, setUser } = React.useContext(UserContext);
@@ -46,7 +54,7 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
     }
   };
 
-  const createUser = async (newUser: User) => fetch("http://localhost:4000/api/users", {
+  const createUser = async (newUser: User) => fetch(`${uri}/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

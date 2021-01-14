@@ -5,13 +5,13 @@ import {
 import { Dimensions, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as SecureStore from "expo-secure-store";
 import { RootStackParamList, User } from "../types";
 import ENV from "../config/env";
 import Auth from "../utils/Auth";
 import getSettings from "../config/GetSettings";
 import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 import Auth0Flair from "../assets/images/auth0-flair.svg";
-
 import { TutorialStyles } from "../components/styles";
 
 const window = Dimensions.get("window");
@@ -29,7 +29,6 @@ const SignupScreen = ({
 }) => {
   const handleLogin = async (settings: { screenHint: "login" | "signup" }) => {
     if (ENV.SKIP_LOGIN) {
-      setUser(true);
       console.log("skipping");
       navigation.replace("UniScreen");
       return;
@@ -44,6 +43,7 @@ const SignupScreen = ({
       prompt,
     });
     if (user) {
+      SecureStore.setItemAsync("user", JSON.stringify(user));
       setUser(user);
       navigation.replace("UniScreen");
     }
