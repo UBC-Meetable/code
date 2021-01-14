@@ -67,6 +67,8 @@ const App = () => {
     Poppins_400Regular,
   });
 
+  console.log(fontsLoaded);
+
   if (!fontsLoaded) {
     return (
       <Spinner />

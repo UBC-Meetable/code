@@ -1,19 +1,17 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { Button, Input, Layout } from "@ui-kitten/components";
+import { getExpoPushTokenAsync, requestPermissionsAsync } from "expo-notifications";
 import * as React from "react";
 import {
-  Keyboard,
-  KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity, Image,
+  Image, KeyboardAvoidingView, StyleSheet, TextInput,
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Button, Input, Layout } from "@ui-kitten/components";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Card, IconButton } from "react-native-paper";
-import { ExpoPushToken, getExpoPushTokenAsync, requestPermissionsAsync } from "expo-notifications";
-import { Text, View } from "../components/Themed";
+import { ScrollView } from "react-native-gesture-handler";
+import * as Device from "expo-device";
+import noAvatar from "../assets/images/noavatar.png";
+import { Text } from "../components/Themed";
 import { RootStackParamList, User } from "../types";
 import { UserContext } from "../utils/UserContext";
-import noAvatar from "../assets/images/noavatar.png";
-import ENV from "../config/env";
 
 const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
   const { user, setUser } = React.useContext(UserContext);
@@ -23,7 +21,10 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
 
   const onSubmit = async () => {
     const consent = await requestPermissionsAsync();
-    const token = await getExpoPushTokenAsync();
+    let token;
+    if (Device.isDevice) {
+      token = await getExpoPushTokenAsync();
+    }
     const newUser = {
       ...user, name, bio, token,
     };

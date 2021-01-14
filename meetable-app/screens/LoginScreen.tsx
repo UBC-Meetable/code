@@ -39,6 +39,7 @@ const LoginScreen = ({
       prompt,
     });
     if (user) {
+      console.log(user);
       setUser(user);
       navigation.replace("Tabs");
     }
