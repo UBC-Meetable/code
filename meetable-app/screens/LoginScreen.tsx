@@ -7,6 +7,7 @@ import {
 } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
+import * as SecureStore from "expo-secure-store";
 import { RootStackParamList, User } from "../types";
 import ENV from "../config/env";
 import Auth from "../utils/Auth";
@@ -39,7 +40,7 @@ const LoginScreen = ({
       prompt,
     });
     if (user) {
-      console.log(user);
+      SecureStore.setItemAsync("user", JSON.stringify(user));
       setUser(user);
       navigation.replace("Tabs");
     }

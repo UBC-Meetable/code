@@ -76,7 +76,7 @@ const SignupScreen = ({
               {...evaProps}
               style={{ ...evaProps.style, ...styles.buttonText }}
             >
-              Complete Sign Up
+              Create an Account
             </Text>
           )}
         </Button>

@@ -59,7 +59,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   maxGroups: { type: Number, default: 7 },
-  blurb: {
+  bio: {
     type: String,
 
   },

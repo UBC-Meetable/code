@@ -44,13 +44,13 @@ router.post("/", async (req, res) => {
       console.log("user exists");
 
       const socials = [user.snapchat, user.instagram, user.facebook];
-      if (socials.length < 1 || !user.blurb) {
+      if (socials.length < 1 || !user.bio) {
         return res.status(200).send({
           msg: "Meetable user exists additional steps required",
           id: user._id,
           snapchat: user.snapchat,
           instagram: user.instagram,
-          blurb: user.blurb,
+          bio: user.bio,
         });
       }
       return res.status(200).send({
@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
         id: user._id,
         snapchat: user.snapchat,
         instagram: user.instagram,
-        blurb: user.blurb,
+        bio: user.bio,
       });
     }
     user = new User({
@@ -183,7 +183,7 @@ router.put("/updateprofile", async (req, res) => {
     }
     console.log(newUser);
     const { uid } = body;
-    const user = await User.findOneAndUpdate({ _id: uid }, newUser, { new: true });
+    const user = await User.findOneAndUpdate({ authid: uid }, newUser, { new: true });
 
     res.status(200).send({ msg: "Success", user });
   } catch (err) {

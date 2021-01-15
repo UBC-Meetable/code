@@ -10,16 +10,12 @@ import { ScrollView } from "react-native-gesture-handler";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
 import { AppManifest } from "expo-constants/build/Constants.types";
+import * as SecureStore from "expo-secure-store";
 import noAvatar from "../assets/images/noavatar.png";
 import { Text } from "../components/Themed";
 import { RootStackParamList, User } from "../types";
 import { UserContext } from "../utils/UserContext";
-
-const { manifest } = Constants;
-
-const debuggerHost = manifest.debuggerHost as string;
-const uri = `http://${debuggerHost.split(":").shift()}:4000`;
-console.log(uri);
+import ENV from "../config/env";
 
 const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
   const { user, setUser } = React.useContext(UserContext);
@@ -44,6 +40,7 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
     const res = await createUser(newUser);
 
     if (res.ok) {
+      await SecureStore.setItemAsync("user", JSON.stringify(newUser));
       console.log(await res.json());
       navigation.reset({
         index: 0,
@@ -54,7 +51,7 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
     }
   };
 
-  const createUser = async (newUser: User) => fetch(`${uri}/api/users`, {
+  const createUser = async (newUser: User) => fetch(`${ENV.API_URL}/api/users`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -110,7 +107,7 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
       </Layout>
 
       <Layout
-        style={stylesTwo.container}
+        style={styles.nameContainer}
       >
         <Input
           value={name}
@@ -267,17 +264,13 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: "center",
   },
-});
-
-const stylesTwo = StyleSheet.create({
-  container: {
+  nameContainer: {
     backgroundColor: "#0000",
     width: "100%",
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 80,
+    margin: 10,
   },
 });
+
+export { styles };
 
 export default NewProfileScreen;
