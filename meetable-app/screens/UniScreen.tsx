@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
-  Layout,
-  Text,
   Button,
   IndexPath,
+
+  Input, Layout,
+
   Select,
-  SelectItem,
-  Input,
+  SelectItem, Text,
 } from "@ui-kitten/components";
+import React, { useState } from "react";
 import {
-  StyleSheet, Dimensions, KeyboardAvoidingView, Keyboard,
+  Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StackNavigationProp } from "@react-navigation/stack";
 import BubbleBackground from "../assets/images/tutorial-bubble.svg";
 import { RootStackParamList } from "../types";
 import { UserContext } from "../utils/UserContext";

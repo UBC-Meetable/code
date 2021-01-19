@@ -1,21 +1,19 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Button, Input, Layout } from "@ui-kitten/components";
+import * as Device from "expo-device";
 import { getExpoPushTokenAsync, requestPermissionsAsync } from "expo-notifications";
+import * as SecureStore from "expo-secure-store";
 import * as React from "react";
 import {
   Image, KeyboardAvoidingView, StyleSheet, TextInput,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import * as Device from "expo-device";
-import Constants from "expo-constants";
-import { AppManifest } from "expo-constants/build/Constants.types";
-import * as SecureStore from "expo-secure-store";
 import noAvatar from "../assets/images/noavatar.png";
 import { Text } from "../components/Themed";
+import ENV from "../config/env";
 import { RootStackParamList, User } from "../types";
 import { UserContext } from "../utils/UserContext";
-import ENV from "../config/env";
 
 const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
   const { user, setUser } = React.useContext(UserContext);

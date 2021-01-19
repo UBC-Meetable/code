@@ -1,12 +1,10 @@
-import React from "react";
-import { List, Layout } from "@ui-kitten/components";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
-import { Avatar, Chip } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { CommonActions } from "@react-navigation/native";
-import { GroupStackParamList } from "../types";
+import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
+import { Layout, List } from "@ui-kitten/components";
+import React from "react";
+import { StyleSheet } from "react-native";
 import FriendGroupBubble from "../components/FriendGroupBubble";
+import { GroupStackParamList } from "../types";
 
 const FriendGroups = ({
   navigation,

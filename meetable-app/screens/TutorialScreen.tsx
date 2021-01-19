@@ -1,18 +1,16 @@
-import React, { createRef, useState } from "react";
-import {
-  Layout, Text, Button, Card,
-} from "@ui-kitten/components";
-import {
-  StyleSheet, Dimensions,
-} from "react-native";
-import Carousel from "react-native-snap-carousel";
 import { StackNavigationProp } from "@react-navigation/stack";
-import MeetableCarousel from "../navigation/MeetableCarousel";
-import { RootStackParamList } from "../types";
+import {
+  Button, Card, Layout, Text,
+} from "@ui-kitten/components";
+import React, { createRef, useState } from "react";
+import { Dimensions, StyleSheet } from "react-native";
+import Carousel from "react-native-snap-carousel";
 import BubbleBackground from "../assets/images/tutorial-bubble.svg";
+import End from "../components/tutorial_slides/End";
 import Intro from "../components/tutorial_slides/Intro";
 import Middle from "../components/tutorial_slides/Middle";
-import End from "../components/tutorial_slides/End";
+import MeetableCarousel from "../navigation/MeetableCarousel";
+import { RootStackParamList } from "../types";
 
 const window = Dimensions.get("window");
 

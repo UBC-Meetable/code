@@ -1,7 +1,7 @@
-import React from "react";
 import { Layout } from "@ui-kitten/components";
+import React from "react";
 import {
-  StyleSheet, GestureResponderEvent, Text, TouchableOpacity,
+  GestureResponderEvent, StyleSheet, Text, TouchableOpacity,
 } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
 

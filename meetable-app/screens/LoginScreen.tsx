@@ -1,17 +1,17 @@
-import React from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button,
   Card,
   Layout,
   Text,
 } from "@ui-kitten/components";
-import { StyleSheet } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
 import * as SecureStore from "expo-secure-store";
-import { RootStackParamList, User } from "../types";
+import React from "react";
+import { StyleSheet } from "react-native";
 import ENV from "../config/env";
-import Auth from "../utils/Auth";
 import getSettings from "../config/GetSettings";
+import { RootStackParamList, User } from "../types";
+import Auth from "../utils/Auth";
 
 const {
   auth0: { passwordlessClient },

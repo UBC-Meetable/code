@@ -1,18 +1,18 @@
-import React from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
-import { Dimensions, StyleSheet } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { SafeAreaView } from "react-native-safe-area-context";
 import * as SecureStore from "expo-secure-store";
-import { RootStackParamList, User } from "../types";
-import ENV from "../config/env";
-import Auth from "../utils/Auth";
-import getSettings from "../config/GetSettings";
+import React from "react";
+import { Dimensions, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 import Auth0Flair from "../assets/images/auth0-flair.svg";
 import { TutorialStyles } from "../components/styles";
+import ENV from "../config/env";
+import getSettings from "../config/GetSettings";
+import { RootStackParamList, User } from "../types";
+import Auth from "../utils/Auth";
 
 const window = Dimensions.get("window");
 

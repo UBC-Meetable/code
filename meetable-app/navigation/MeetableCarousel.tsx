@@ -1,10 +1,10 @@
 import React, {
   forwardRef, ReactElement, useState,
 } from "react";
-import Carousel, { Pagination } from "react-native-snap-carousel";
 import {
-  View, Dimensions, StyleProp, ViewStyle,
+  Dimensions, StyleProp, View, ViewStyle,
 } from "react-native";
+import Carousel, { Pagination } from "react-native-snap-carousel";
 
 type MySlideComponentProps = {
   data: ReactElement;

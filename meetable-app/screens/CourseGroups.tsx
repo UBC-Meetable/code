@@ -7,7 +7,6 @@ import {
 } from "react-native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { CommonActions } from "@react-navigation/native";
 import { GroupStackParamList } from "../types";
 

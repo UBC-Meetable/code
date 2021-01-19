@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
 import {
-  Layout, Text, Button, Input,
+  Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import { StyleSheet, Dimensions } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import React, { useState } from "react";
+import { Dimensions, StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { RootStackParamList } from "../types";
-import BubbleBackground from "../assets/images/tutorial-bubble.svg";
 
 const EditCourseScreen = () => {
   const [courses, setCourses] = useState([] as string[]);

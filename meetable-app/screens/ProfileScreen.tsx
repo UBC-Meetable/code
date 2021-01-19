@@ -1,18 +1,18 @@
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useHeaderHeight } from "@react-navigation/stack";
+import { Input, Layout } from "@ui-kitten/components";
+import * as SecureStore from "expo-secure-store";
 import * as React from "react";
 import {
   Image, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity,
 } from "react-native";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
-import { Input, Layout } from "@ui-kitten/components";
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
-import { useHeaderHeight } from "@react-navigation/stack";
-import * as SecureStore from "expo-secure-store";
-import { Text, View } from "../components/Themed";
-import { UserContext } from "../utils/UserContext";
 import noAvatar from "../assets/images/noavatar.png";
-import { styles as profileStyles } from "./NewProfileScreen";
+import { Text } from "../components/Themed";
 import ENV from "../config/env";
+import { UserContext } from "../utils/UserContext";
+import { styles as profileStyles } from "./NewProfileScreen";
 
 const SocialMediaButton = (props: { name: string }) => (
   <TouchableOpacity style={styles.socialButton}>

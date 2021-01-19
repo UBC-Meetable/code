@@ -1,13 +1,9 @@
-import React from "react";
-import {
-  Layout, Text, Button,
-} from "@ui-kitten/components";
-import {
-  StyleSheet, Dimensions,
-} from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
+import { Button, Layout, Text } from "@ui-kitten/components";
+import React from "react";
+import { Dimensions, StyleSheet } from "react-native";
 import BubbleBackground from "../assets/images/tutorial-bubble.svg";
+import { RootStackParamList } from "../types";
 
 const window = Dimensions.get("window");
 

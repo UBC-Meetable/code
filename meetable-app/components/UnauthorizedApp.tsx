@@ -1,14 +1,14 @@
 import React from "react";
-import { ImageBackground, StyleSheet, Image } from "react-native";
-import { Text, View } from "./Themed";
+import { Image, ImageBackground, StyleSheet } from "react-native";
 import background from "../assets/images/background.png";
 import logo from "../assets/images/logo.png";
-import MeetableCarousel from "../navigation/MeetableCarousel";
-import Auth from "../utils/Auth";
-import getSettings from "../config/GetSettings";
-import Button from "./Button";
-import { User } from "../types";
 import ENV from "../config/env";
+import getSettings from "../config/GetSettings";
+import MeetableCarousel from "../navigation/MeetableCarousel";
+import { User } from "../types";
+import Auth from "../utils/Auth";
+import Button from "./Button";
+import { Text, View } from "./Themed";
 
 const {
   auth0: { passwordlessClient },

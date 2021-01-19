@@ -1,40 +1,37 @@
 /* eslint-disable camelcase */
+import * as eva from "@eva-design/eva";
 import {
-  NavigationContainer,
-  DefaultTheme,
+  Poppins_400Regular, Poppins_500Medium,
+  Poppins_600SemiBold, useFonts,
+} from "@expo-google-fonts/poppins";
+import {
+  DefaultTheme, NavigationContainer,
 } from "@react-navigation/native";
 import {
   createStackNavigator, HeaderBackButton, StackNavigationOptions, StackNavigationProp,
 } from "@react-navigation/stack";
-import * as React from "react";
-import { ColorSchemeName, useColorScheme, Dimensions } from "react-native";
-import * as eva from "@eva-design/eva";
 import {
-  ApplicationProvider as UiProvider, Spinner, Layout, Text,
+  ApplicationProvider as UiProvider, Layout, Spinner, Text,
 } from "@ui-kitten/components";
-import {
-  useFonts,
-  Poppins_500Medium,
-  Poppins_600SemiBold,
-  Poppins_400Regular,
-} from "@expo-google-fonts/poppins";
 import * as SecureStore from "expo-secure-store";
+import * as React from "react";
+import { ColorSchemeName, Dimensions, useColorScheme } from "react-native";
+import BubbleHeader from "../assets/images/chat-bubble.svg";
+import ENV from "../config/env";
+import EditCourseScreen from "../screens/EditCoursesScreen";
+import GroupScreen from "../screens/GroupScreen";
+import LoginScreen from "../screens/LoginScreen";
+import NewProfileScreen from "../screens/NewProfileScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
+import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
+import QuizScreen from "../screens/QuizScreen";
+import SignupScreen from "../screens/SignupScreen";
+import TutorialScreen from "../screens/TutorialScreen";
+import UniScreen from "../screens/UniScreen";
 import { RootStackParamList, User } from "../types";
 import UserContextProvider, { UserContext } from "../utils/UserContext";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
-import TutorialScreen from "../screens/TutorialScreen";
-import LoginScreen from "../screens/LoginScreen";
-import ENV from "../config/env";
-import QuizScreen from "../screens/QuizScreen";
-import SignupScreen from "../screens/SignupScreen";
-import GroupScreen from "../screens/GroupScreen";
-import BubbleHeader from "../assets/images/chat-bubble.svg";
-import UniScreen from "../screens/UniScreen";
-import EditCourseScreen from "../screens/EditCoursesScreen";
-import NewProfileScreen from "../screens/NewProfileScreen";
-import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 
 const window = Dimensions.get("window");
 // If you are not familiar with React Navigation, we recommend going through the

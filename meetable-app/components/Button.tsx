@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { Text } from "./Themed";
 import { ButtonProps } from "../types";
+import { Text } from "./Themed";
 
 const Button = (props: ButtonProps) => {
   const {

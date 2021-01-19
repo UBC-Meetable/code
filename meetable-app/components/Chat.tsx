@@ -3,7 +3,7 @@ import React, {
   useEffect, useRef, useState,
 } from "react";
 import {
-  StyleSheet, TextInput, KeyboardAvoidingView, ScrollView,
+  KeyboardAvoidingView, ScrollView, StyleSheet, TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";

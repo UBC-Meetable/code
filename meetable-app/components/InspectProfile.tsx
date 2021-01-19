@@ -1,15 +1,15 @@
 /* eslint-disable camelcase */
 import {
+  Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, useFonts,
+} from "@expo-google-fonts/poppins";
+import {
   Button, Card, Layout, Spinner, Text,
 } from "@ui-kitten/components";
-import React from "react";
-import Icon from "react-native-vector-icons/Entypo";
-import { StyleSheet, Image } from "react-native";
 import { BlurView } from "expo-blur";
+import React from "react";
+import { Image, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
-import {
-  useFonts, Poppins_500Medium, Poppins_600SemiBold, Poppins_400Regular,
-} from "@expo-google-fonts/poppins";
+import Icon from "react-native-vector-icons/Entypo";
 import profilePic from "../assets/images/profilePic2.jpg";
 
 const CrossIcon = () => (
