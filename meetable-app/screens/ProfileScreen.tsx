@@ -7,6 +7,7 @@ import { Input, Layout } from "@ui-kitten/components";
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
 import { useHeaderHeight } from "@react-navigation/stack";
+import * as SecureStore from "expo-secure-store";
 import { Text, View } from "../components/Themed";
 import { UserContext } from "../utils/UserContext";
 import noAvatar from "../assets/images/noavatar.png";
@@ -43,6 +44,7 @@ const ProfileScreen = () => {
       console.log(await res.json());
       console.log("user updated");
       setUser({ ...user, name, bio });
+      await SecureStore.setItemAsync("user", JSON.stringify({ ...user, name, bio }));
     } else {
       console.log(await res.text());
     }
@@ -115,16 +117,26 @@ const ProfileScreen = () => {
           onFocus={() => {
             setBioFocused(true);
           }}
+          onBlur={() => {
+            updateUser();
+            setBioFocused(false);
+          }}
           onSubmitEditing={() => {
             updateUser();
             setBioFocused(false);
           }}
           placeholder="Write a short bio about yourself..."
           multiline
+          scrollEnabled={false}
+          numberOfLines={1}
           maxLength={175}
-          style={profileStyles.bioInput}
+          style={styles.bioInput}
           value={bio}
-          onChangeText={(e) => setBio(e)}
+          onChangeText={(e) => {
+            if (e.endsWith("\n")) {
+              console.log("enter");
+            } else { setBio(e); }
+          }}
         />
 
       </KeyboardAvoidingView>
@@ -181,6 +193,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderWidth: 1,
     fontWeight: "normal",
+  },
+  bioInput: {
+    paddingHorizontal: 20,
+    position: "relative",
+    marginTop: 10,
+    fontSize: 16,
+    fontWeight: "600",
+    textAlignVertical: "top",
+    width: "100%",
+    height: "85%",
   },
   bioDescBubble: {
     flex: 1,

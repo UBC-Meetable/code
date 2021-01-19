@@ -40,7 +40,7 @@ const ProfileStackNavigator = () => (
         headerShown: true,
         headerRight: () => (
           // TODO make profile settings screen
-          <Button onPress={() => navigation.navigate("EditCourses")} style={styles.iconButton} appearance="ghost" accessoryLeft={StarIcon} />
+          <Button onPress={() => navigation.navigate("ProfileSettings")} style={styles.iconButton} appearance="ghost" accessoryLeft={StarIcon} />
         ),
       })}
     />

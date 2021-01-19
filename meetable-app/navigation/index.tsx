@@ -34,6 +34,7 @@ import BubbleHeader from "../assets/images/chat-bubble.svg";
 import UniScreen from "../screens/UniScreen";
 import EditCourseScreen from "../screens/EditCoursesScreen";
 import NewProfileScreen from "../screens/NewProfileScreen";
+import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 
 const window = Dimensions.get("window");
 // If you are not familiar with React Navigation, we recommend going through the
@@ -101,7 +102,7 @@ const App = () => {
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" | "EditCourses" | "UniScreen" | "NewProfileScreen"
+type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" | "EditCourses" | "UniScreen" | "NewProfileScreen" | "ProfileSettings"
 
 function AuthorizedApp() {
   const { user, setUser } = React.useContext(UserContext);
@@ -222,6 +223,39 @@ function AuthorizedApp() {
           },
         } as StackNavigationOptions)}
         component={EditCourseScreen}
+      />
+      <Stack.Screen
+        name="ProfileSettings"
+        options={({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "ProfileSettings"> }) => ({
+          cardStyle: {
+            backgroundColor: "#FEEDDE",
+          },
+          headerShown: true,
+          headerTitle: "",
+          headerLeft: () => (
+            <ChatBackButton navigation={navigation} label="Settings" />
+          ),
+          headerBackground: (props) => (
+            <Layout
+              {...props}
+              style={{
+                backgroundColor: "#FFF8F3",
+              }}
+            >
+              <BubbleHeader
+                width={window.width}
+                height={170}
+              />
+            </Layout>
+          ),
+          headerLeftContainerStyle: {
+            marginLeft: 10,
+          },
+          headerStyle: {
+            height: 170,
+          },
+        } as StackNavigationOptions)}
+        component={ProfileSettingsScreen}
       />
       <Stack.Screen name="Login">
         {(props) => <LoginScreen setUser={setUser} {...props} />}

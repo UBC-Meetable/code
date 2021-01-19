@@ -19,6 +19,7 @@ export type RootStackParamList = {
   Group: undefined;
   UniScreen: undefined;
   EditCourses: undefined;
+  ProfileSettings: undefined;
   NewProfileScreen: undefined;
 };
 
