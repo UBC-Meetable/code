@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Layout,
 } from "@ui-kitten/components";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../types";
 import Chat from "../components/Chat";
+import { RootStackParamList } from "../types";
 
 const GroupScreen = ({
   navigation,

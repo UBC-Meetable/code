@@ -1,14 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import * as React from "react";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import FAIcon from "react-native-vector-icons/FontAwesome5";
+import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { BottomTabParamList } from "../types";
+import CourseGroupStackNavigator from "./CourseGroupStackNavigator";
 import FriendGroupStackNavigator from "./FriendGroupStackNavigator";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import MyTabBar from "./TabBar";
-import CourseGroupStackNavigator from "./CourseGroupStackNavigator";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

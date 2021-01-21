@@ -9,7 +9,7 @@ type UserContextType = {
   setUser: React.Dispatch<React.SetStateAction<User>>;
 };
 const UserContextProvider = (props: {children?: any}) => {
-  const [user, setUser] = useState(false as User);
+  const [user, setUser] = useState({} as User);
   const { children } = props;
   return (
     <UserContext.Provider value={{ user, setUser }}>

@@ -1,9 +1,9 @@
+import { createStackNavigator } from "@react-navigation/stack";
+import { Button, Layout } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { Layout, Button } from "@ui-kitten/components";
 import Icon from "react-native-vector-icons/Ionicons";
-import GroupsScreen from "../screens/GroupsScreen";
+import CourseGroups from "../screens/CourseGroups";
 import { GroupStackParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
 
@@ -29,7 +29,7 @@ const CourseGroupStackNavigator = () => (
     }}
   >
     <GroupTabStack.Screen
-      name="GroupsScreen"
+      name="CourseGroups"
       options={({ navigation }) => ({
         headerShown: true,
         headerRight: () => (
@@ -37,7 +37,7 @@ const CourseGroupStackNavigator = () => (
         ),
       })}
     >
-      {(props) => <GroupsScreen {...props} />}
+      {(props) => <CourseGroups {...props} />}
     </GroupTabStack.Screen>
   </GroupTabStack.Navigator>
 );

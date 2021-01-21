@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-
-import GroupsScreen from "../screens/GroupsScreen";
+import FriendGroups from "../screens/FriendGroups";
 import { GroupStackParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
 
@@ -15,8 +14,8 @@ const FriendGroupStackNavigator = () => (
       ...HeaderOptions,
     }}
   >
-    <GroupTabStack.Screen name="GroupsScreen" options={{ headerShown: true }}>
-      {(props) => <GroupsScreen {...props} />}
+    <GroupTabStack.Screen name="FriendGroups" options={{ headerShown: true }}>
+      {(props) => <FriendGroups {...props} />}
     </GroupTabStack.Screen>
   </GroupTabStack.Navigator>
 );

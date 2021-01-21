@@ -9,7 +9,8 @@
   "scripts": {
     "test": "jest --passWithNoTests",
     "postinstalln": "cd meetable-app && npm install",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix"
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
+    "start": "node server.js"
   },
   "jest": {
     "preset": "jest-expo"

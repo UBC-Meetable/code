@@ -1,8 +1,7 @@
 /* eslint-disable */
 
-import { Layout } from "@ui-kitten/components";
-import React, { Fragment, useContext } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function MyTabBar({ state, descriptors, navigation }: any) {

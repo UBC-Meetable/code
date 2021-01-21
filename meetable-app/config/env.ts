@@ -1,3 +1,10 @@
+import Constants from "expo-constants";
+
+const { manifest } = Constants;
+
+const debuggerHost = manifest.debuggerHost as string;
+const uri = `http://${debuggerHost.split(":").shift()}:4000`;
+
 const ENV = {
   dev: {
     apiUrl: "localhost",
@@ -18,6 +25,8 @@ const ENV = {
     apiUrl: "[your.production.api.here]",
   },
   SKIP_LOGIN: false,
+  API_URL: uri,
+  // CHAT_URL: `http://${HOST}:5000`,
 };
 
 export default ENV;

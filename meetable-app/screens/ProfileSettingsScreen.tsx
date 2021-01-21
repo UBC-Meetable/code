@@ -1,111 +1,39 @@
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
-  Button, Input, Layout, Text,
+  Button, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import React from "react";
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { RootStackParamList } from "../types";
+import Auth from "../utils/Auth";
 
-const EditCourseScreen = () => {
-  const [courses, setCourses] = useState([] as string[]);
-  const [code, setCode] = useState("");
-  const [section, setSection] = useState("");
-  const courseName = "";
-  const window = Dimensions.get("window");
-
-  function addCourse() {
-    const newCourse = `${code} ${section}`;
-    setCourses([...courses, newCourse]);
-    alert("Course Added");
-  }
-
-  function deleteCourse(name: String) {
-    setCourses(courses.filter((course) => course !== name));
-  }
-
-  function onSave() {
-    alert("Changes saved!");
-  }
+const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
+  const handleLogout = async () => {
+    await Auth.logout();
+    await SecureStore.deleteItemAsync("user");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Login" }],
+    });
+  };
 
   return (
     <SafeAreaView style={styles.root}>
-      <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          Course Code
-        </Text>
-        <Input
-          style={styles.inputStyle}
-          placeholder="COMM 101"
-          value={code}
-          onChangeText={(newCode) => {
-            setCode(newCode);
-          }}
-        />
-      </Layout>
-      <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          Section
-        </Text>
-        <Input
-          style={styles.inputStyle}
-          placeholder="235"
-          value={section}
-          onChangeText={(newSection) => {
-            setSection(newSection);
-          }}
-        />
-      </Layout>
-      <Button
-        style={styles.addCoursebutton}
-        onPress={() => {
-          addCourse();
-        }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Add Course
-          </Text>
-        )}
-      </Button>
-      <ScrollView contentContainerStyle={styles.selectionsContainer}>
-        {courses.map((course, index) => (
-          <Layout key={index} style={styles.courseContainer}>
-            <Text style={styles.courseTextStyle}>
-              {course}
-            </Text>
-            <Button
-              appearance="ghost"
-              onPress={() => {
-                deleteCourse(course);
-              }}
-            >
-              {(evaProps: any) => (
-                <Text
-                  {...evaProps}
-                  style={{ ...evaProps.style, ...styles.deleteButtonText }}
-                >
-                  X
-                </Text>
-              )}
-            </Button>
-          </Layout>
-        ))}
-      </ScrollView>
+      <Layout style={stylesTwo.container} />
+      <ScrollView contentContainerStyle={styles.selectionsContainer} />
       <Button
         style={styles.button}
-        onPress={() => {
-          onSave();
-        }}
+        onPress={handleLogout}
       >
         {(evaProps: any) => (
           <Text
             {...evaProps}
             style={{ ...evaProps.style, ...styles.buttonText }}
           >
-            Save Changes
+            Log Out
           </Text>
         )}
       </Button>
@@ -238,4 +166,4 @@ const stylesTwo = StyleSheet.create({
   },
 });
 
-export default EditCourseScreen;
+export default ProfileSettingsScreen;

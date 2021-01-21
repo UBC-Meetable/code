@@ -1,16 +1,17 @@
-import React from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button,
   Card,
   Layout,
   Text,
 } from "@ui-kitten/components";
+import * as SecureStore from "expo-secure-store";
+import React from "react";
 import { StyleSheet } from "react-native";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList, User } from "../types";
 import ENV from "../config/env";
-import Auth from "../utils/Auth";
 import getSettings from "../config/GetSettings";
+import { RootStackParamList, User } from "../types";
+import Auth from "../utils/Auth";
 
 const {
   auth0: { passwordlessClient },
@@ -25,7 +26,6 @@ const LoginScreen = ({
 }) => {
   const handleLogin = async (settings: { screenHint: "login" | "signup" }) => {
     if (ENV.SKIP_LOGIN) {
-      setUser(true);
       console.log("skipping");
       navigation.replace("Tabs");
       return;
@@ -40,6 +40,7 @@ const LoginScreen = ({
       prompt,
     });
     if (user) {
+      SecureStore.setItemAsync("user", JSON.stringify(user));
       setUser(user);
       navigation.replace("Tabs");
     }

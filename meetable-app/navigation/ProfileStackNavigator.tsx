@@ -1,9 +1,13 @@
 // You can explore the built-in icon families and icons on the web at:
 
 import { createStackNavigator } from "@react-navigation/stack";
+import { Button, Layout } from "@ui-kitten/components";
 import React from "react";
+import { StyleSheet } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "../screens/ProfileScreen";
 import { TabTwoParamList } from "../types";
+import HeaderOptions from "./HeaderOptions";
 
 // https://icons.expo.fyi/
 
@@ -12,18 +16,47 @@ import { TabTwoParamList } from "../types";
 
 const ProfileTabStack = createStackNavigator<TabTwoParamList>();
 
+const StarIcon = () => (
+  <Layout style={{
+    display: "flex", justifyContent: "center", alignItems: "center",
+  }}
+  >
+    <Icon name="ios-settings" size={30} style={{ margin: -30 }} />
+  </Layout>
+);
+
 const ProfileStackNavigator = () => (
   <ProfileTabStack.Navigator
     screenOptions={{
-      headerShown: false,
+      headerTransparent: true,
+      headerTitle: "",
+      ...HeaderOptions,
     }}
   >
     <ProfileTabStack.Screen
       name="ProfileScreen"
       component={ProfileScreen}
-      options={{ headerShown: false }}
+      options={({ navigation }) => ({
+        headerShown: true,
+        headerRight: () => (
+          // TODO make profile settings screen
+          <Button onPress={() => navigation.navigate("ProfileSettings")} style={styles.iconButton} appearance="ghost" accessoryLeft={StarIcon} />
+        ),
+      })}
     />
   </ProfileTabStack.Navigator>
 );
+
+const styles = StyleSheet.create({
+  iconButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+    marginRight: 15,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+});
 
 export default ProfileStackNavigator;

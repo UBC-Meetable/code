@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
-  Layout,
-  Text,
   Button,
   IndexPath,
+
+  Input, Layout,
+
   Select,
-  SelectItem,
-  Input,
+  SelectItem, Text,
 } from "@ui-kitten/components";
-import { StyleSheet, Dimensions } from "react-native";
+import React, { useState } from "react";
+import {
+  Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { StackNavigationProp } from "@react-navigation/stack";
 import BubbleBackground from "../assets/images/tutorial-bubble.svg";
 import { RootStackParamList } from "../types";
 import { UserContext } from "../utils/UserContext";
@@ -31,7 +33,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackPa
   };
 
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={styles.root} onTouchStart={Keyboard.dismiss}>
       <BubbleBackground
         width={window.width}
         height={window.height}
@@ -50,7 +52,11 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackPa
           {universities.map((uni) => <SelectItem title={uni} key={uni} />)}
         </Select>
       </Layout>
-      <Layout style={stylesTwo.container}>
+      <KeyboardAvoidingView
+        behavior="padding"
+        keyboardVerticalOffset={100}
+        style={stylesTwo.container}
+      >
         <Text style={styles.textStyle}>What is your major?</Text>
         <Input
           placeholder="Business"
@@ -58,7 +64,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackPa
           onChangeText={(myMajor) => setMajor(myMajor)}
           style={styles.inputStyle}
         />
-      </Layout>
+      </KeyboardAvoidingView>
       <Button
         style={major ? styles.button : styles.disabledButton}
         onPress={() => {
@@ -175,12 +181,12 @@ const styles = StyleSheet.create({
 
 const stylesTwo = StyleSheet.create({
   container: {
+    backgroundColor: "#0000",
     width: "100%",
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 80,
-    backgroundColor: "#FFF8F3",
   },
 });
 

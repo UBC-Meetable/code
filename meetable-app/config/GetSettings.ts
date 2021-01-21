@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import Constants from "expo-constants";
-import { Platform } from "react-native";
 import { set } from "lodash";
+import { Platform } from "react-native";
 
 const localhost = Platform.OS === "ios" ? "localhost:19000" : "10.0.2.2:19000";
 

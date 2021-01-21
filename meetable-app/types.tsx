@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
+import { ExpoPushToken } from "expo-notifications";
 import React from "react";
 import {
   GestureResponderEvent,
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   Group: undefined;
   UniScreen: undefined;
   EditCourses: undefined;
+  ProfileSettings: undefined;
   NewProfileScreen: undefined;
 };
 
@@ -34,7 +36,8 @@ export type BottomTabParamList = {
 };
 
 export type GroupStackParamList = {
-  GroupsScreen: undefined;
+  CourseGroups: undefined;
+  FriendGroups: undefined;
   GroupScreen: {
     groupName: string;
     groupId: string;
@@ -47,7 +50,7 @@ export type TabTwoParamList = {
 };
 
 export type User =
-  | {
+  {
       at_hash: string;
       aud: string;
       exp: number;
@@ -64,8 +67,9 @@ export type User =
       updated_at: string;
       major?: string;
       university?: string;
+      bio?: string;
+      token?: ExpoPushToken;
     }
-  | Boolean;
 
 export type ButtonProps = {
   children: React.ReactChild;

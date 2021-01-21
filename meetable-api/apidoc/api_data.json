@@ -2,7 +2,7 @@
   {
     "type": "delete",
     "url": "/chat/",
-    "title": "Delete specified message from specified group; if message not in group do nothing",
+    "title": "Delete specified message from specified group",
     "name": "DeleteMessage",
     "group": "Chat",
     "parameter": {
@@ -740,7 +740,7 @@
   },
   {
     "type": "get",
-    "url": "/users/getgroupsbyuserid/:uid",
+    "url": "/users/getById/:id",
     "title": "Get User by Id",
     "name": "GetUserById",
     "group": "User",
@@ -777,7 +777,7 @@
   {
     "type": "get",
     "url": "/users/getgroupsbyuserid/:uid",
-    "title": "Get User by Id",
+    "title": "Get User's Groups by Id",
     "name": "GetUserGroupsById",
     "group": "User",
     "success": {
