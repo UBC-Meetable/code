@@ -222,7 +222,7 @@ router.put("/courseGroup", async (req, res) => {
   const { uid } = req.body;
   const user = await User.findOne({ _id: uid }).populate("courseGroups");
   for (const course of user.courses) {
-    let grouped = user.courseGroups.some(cg => cg.courseCode === course);
+    let grouped = user.courseGroups.some((cg) => cg.courseCode === course);
     if (!grouped) {
       let newCourseGroup = await CourseGroup.findOne({ courseCode: course, school: user.school });
       if (newCourseGroup == null) {
@@ -307,7 +307,7 @@ router.put("/group", async (req, res) => {
         .populate("members");
       // find most compatible user out of all users in non-full groups
       let mostCompatibleUser = null;
-      let mostCompatibleUserResponses = null
+      let mostCompatibleUserResponses = null;
       for (let nonFullGroup of nonFullGroups) {
         const tempGroup = nonFullGroup.members;
         for (let candidate of tempGroup) {
@@ -316,7 +316,8 @@ router.put("/group", async (req, res) => {
             if (moreCompatible(quizInstance, candidateResponses, mostCompatibleUserResponses)) {
               mostCompatibleUser = candidate;
               mostCompatibleUserResponses = await QuizInstance.findOne({
-                uid: mostCompatibleUser._id });
+                uid: mostCompatibleUser._id,
+              });
             }
           } catch (err) {
             console.log(err);
@@ -351,7 +352,7 @@ router.put("/group", async (req, res) => {
 });
 
 // QuizInstance, QuizInstance, QuizInstance -> boolean,
-//return whether user1 is more compatible with user than user 2
+// return whether user1 is more compatible with user than user 2
 function moreCompatible(qi, qi1, qi2) {
   const MIN_SCORE = 2;
   if (qi2 == null) {
