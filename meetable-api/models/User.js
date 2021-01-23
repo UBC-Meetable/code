@@ -45,6 +45,11 @@ const UserSchema = new mongoose.Schema({
     ref: "CourseGroup",
     default: [],
   }],
+  quizInstances: [{
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: "QuizInstance",
+    default: [],
+  }],
   courses: { // TODO: frontend or backend validation, possibly using SSC API https://github.com/qstevens/UBC-Courses-API
     type: [String],
     default: [],

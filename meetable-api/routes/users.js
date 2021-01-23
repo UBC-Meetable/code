@@ -93,7 +93,7 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
+ * @api {get} /users/getById/:id Get User by Id
  * @apiName GetUserById
  * @apiGroup User
  * @apiSuccess {Object} The User.
@@ -118,7 +118,7 @@ router.get("/getByEmail", async (req, res) => {
 });
 
 /**
- * @api {get} /users/getgroupsbyuserid/:uid Get User by Id
+ * @api {get} /users/getgroupsbyuserid/:uid Get User's Groups by Id
  * @apiName GetUserGroupsById
  * @apiGroup User
  * @apiSuccess {Object[]} groups The list of groups joined by specified user.
@@ -222,13 +222,7 @@ router.put("/courseGroup", async (req, res) => {
   const { uid } = req.body;
   const user = await User.findOne({ _id: uid }).populate("courseGroups");
   for (const course of user.courses) {
-    let grouped = false;
-    for (const courseGroup of user.courseGroups) {
-      if (course === courseGroup.courseCode) {
-        grouped = true;
-        break;
-      }
-    }
+    let grouped = user.courseGroups.some(cg => cg.courseCode === course);
     if (!grouped) {
       let newCourseGroup = await CourseGroup.findOne({ courseCode: course, school: user.school });
       if (newCourseGroup == null) {
@@ -287,14 +281,13 @@ router.delete("/courseGroup", async (req, res) => {
  * @apiError (500) {Object} Error Any error resulting from bad state, not inputs to this endpoint.
  */
 router.put("/group", async (req, res) => {
-  console.log("put group");
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
     const { body } = req;
     const { uid } = body;
 
-    const quiz = await QuizInstance.findOne({ uid }).populate("responses");
-    if (!quiz) {
+    const quizInstance = await QuizInstance.findOne({ uid }).populate("responses");
+    if (!quizInstance) {
       res.send({ msg: "User has not taken quiz", success: false });
     }
 
@@ -305,15 +298,7 @@ router.put("/group", async (req, res) => {
     let group = await Group.findOne({ full: false });
     if (group == null) {
       // create a new group and join it
-      let year = null;
-      let major = null;
-      for (const response of quiz.responses) {
-        console.log(response);
-        if (response.question === "What year are you going into?") year = response.answer;
-        if (response.question === "What is your intended major?") major = response.answer;
-      }
-      if (year == null || major == null) res.send({ msg: "Year or Major unknown", success: false });
-      group = new Group({ name: [year, major] });
+      group = new Group({ name: [user.year, user.school] });
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
@@ -322,18 +307,20 @@ router.put("/group", async (req, res) => {
         .populate("members");
       // find most compatible user out of all users in non-full groups
       let mostCompatibleUser = null;
-      for (let i = 0; i < nonFullGroups.length; i += 1) {
-        const tempGroup = nonFullGroups[i].members;
-        // if (hasUser(tempGroup, user.authid)) continue;
-        for (let j = 0; j < tempGroup.length; j += 1) {
+      let mostCompatibleUserResponses = null
+      for (let nonFullGroup of nonFullGroups) {
+        const tempGroup = nonFullGroup.members;
+        for (let candidate of tempGroup) {
           try {
-            if (await moreCompatible(user,
-              tempGroup[j], mostCompatibleUser)) mostCompatibleUser = tempGroup[j];
+            let candidateResponses = await QuizInstance.findOne({ uid: candidate._id });
+            if (moreCompatible(quizInstance, candidateResponses, mostCompatibleUserResponses)) {
+              mostCompatibleUser = candidate;
+              mostCompatibleUserResponses = await QuizInstance.findOne({
+                uid: mostCompatibleUser._id });
+            }
           } catch (err) {
             console.log(err);
-            console.log(
-              "Missing data encountered, continuing to next iteration",
-            );
+            console.log("Missing data encountered, continuing to next iteration");
           }
         }
       }
@@ -341,14 +328,7 @@ router.put("/group", async (req, res) => {
       // if minimum compatibility criteria not met by any user
       if (mostCompatibleUser == null) {
         // create a new group and join it
-        let year = null;
-        let major = null;
-        for (const response of quiz.responses) {
-          if (response.question === "What year are you going into?") year = response.answer;
-          if (response.question === "What is your intended major?") major = response.answer;
-        }
-        if (year == null || major == null) res.send({ msg: "Year or Major unknown", success: false });
-        group = new Group({ name: [year, major] });
+        group = new Group({ name: [user.year, user.school] });
         user.groups.push(group._id);
         group.members.push(uid);
       } else {
@@ -370,36 +350,21 @@ router.put("/group", async (req, res) => {
   }
 });
 
-// user, user, user -> boolean, return whether user1 is more compatible with user than user 2
-async function moreCompatible(user, user1, user2) {
+// QuizInstance, QuizInstance, QuizInstance -> boolean,
+//return whether user1 is more compatible with user than user 2
+function moreCompatible(qi, qi1, qi2) {
   const MIN_SCORE = 2;
-
-  const userResponses = await Response.find({ uid: user._id }).lean().sort({
-    dateCreated: 1,
-  });
-  // const userResponses = await QuizInstance.findOne({uid: user._id}).lean().populate("responses");
-  const user1Responses = await Response.find({ uid: user1._id }).lean().sort({
-    dateCreated: 1,
-  });
-
-  if (
-    !(
-      user1Responses[0].answer === userResponses[0].answer
-      && user1Responses[1].answer === userResponses[1].answer
-    )
-  ) {
-    return false;
-  } if (user2 == null) {
+  if (qi2 == null) {
     return true;
   }
-  const user2Responses = await Response.find({ uid: user2._id }).lean().sort({
-    dateCreated: 1,
-  });
+  const userResponses = qi.responses;
+  const user1Responses = qi1.responses;
+  const user2Responses = qi2.responses;
   let user1Score = 0;
   let user2Score = 0;
-  for (let i = 2; i < userResponses.length; i += 1) {
-    if (userResponses[i].answer === user1Responses[i].answer) user1Score += 1;
-    if (userResponses[i].answer === user2Responses[i].answer) user2Score += 1;
+  for (let [q, a] of userResponses) {
+    if (a === user1Responses.get(q)) user1Score += 1;
+    if (a === user2Responses.get(q)) user2Score += 1;
   }
   if (user1Score > user2Score && user1Score >= MIN_SCORE) return true;
   return false;

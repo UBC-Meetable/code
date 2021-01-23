@@ -2,6 +2,10 @@
   "name": "meetable",
   "version": "1.0.0",
   "description": "Meetable mobile app and api",
+  "apidoc": {
+    "title": "meetable apidoc",
+    "url" : "http://localhost:4000/api"
+  },
   "main": "index.js",
   "directories": {
     "doc": "docs"

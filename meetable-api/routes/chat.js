@@ -88,8 +88,7 @@ router.get("/gid/", async (req, res) => {
 
 // tested, works, 11/12/2020
 /**
-* @api {delete} /chat/ Delete specified message from specified group;
-                    if message not in group do nothing
+* @api {delete} /chat/ Delete specified message from specified group
 * @apiName DeleteMessage
 * @apiGroup Chat
 * @apiParam {String} mid message _id

@@ -10,11 +10,12 @@ const QuizInstanceSchema = mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     required: false, // quiz not served by backend for MVP
   },
-  responses: [{
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "Response",
-    default: [],
-  }],
+  responses: {
+    type: Map, // key: question
+    of: String, // value: answer
+    //minSize: 1,
+    //maxSize: 3
+  },
   dateCreated: {
     type: Date,
     default: Date.now(),
