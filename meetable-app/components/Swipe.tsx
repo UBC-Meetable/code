@@ -60,13 +60,6 @@ class Swipe extends Component<SwipeProps, SwipeState> {
         this.setState({ index: this.state.index + 1 });
       }
 
-      resetPosition() {
-        Animated.spring(this.state.position, {
-          toValue: { x: 0, y: 0 },
-          useNativeDriver: false
-        }).start();
-      }
-
       getCardStyle() {
         const { position } = this.state;
         const rotate = position.x.interpolate({
@@ -88,7 +81,13 @@ class Swipe extends Component<SwipeProps, SwipeState> {
           duration: SWIPE_OUT_DURATION
         }).start(() => this.onSwipeComplete(direction));
       }
-
+      
+      resetPosition() {
+        Animated.spring(this.state.position, {
+          toValue: { x: 0, y: 0 },
+          useNativeDriver: false
+        }).start();
+      }
     renderCards = () => {
         if (this.state.index >= this.props.data.length) {
           return this.props.renderNoMoreCards();
