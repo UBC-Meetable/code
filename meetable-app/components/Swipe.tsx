@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/no-access-state-in-setstate */
+
 import React, { Component } from 'react';
 import { StyleSheet, DeviceEventEmitter, PanResponderInstance } from 'react-native';
 import {
@@ -17,7 +20,7 @@ type SwipeProps = {
 }
 type SwipeState = {
     position: any,
-    _panResponder: PanResponderInstance,
+    panResponder: PanResponderInstance,
     index: number,
 }
 class Swipe extends Component<SwipeProps, SwipeState> {
@@ -25,7 +28,7 @@ class Swipe extends Component<SwipeProps, SwipeState> {
         super(props);
         this.state = {
             position: new Animated.ValueXY(),
-            _panResponder: PanResponder.create({
+            panResponder: PanResponder.create({
                 // Ask to be the responder:
                 onStartShouldSetPanResponder: (evt, gestureState) => true,
                 onPanResponderMove: (evt, gestureState) => {
@@ -47,29 +50,15 @@ class Swipe extends Component<SwipeProps, SwipeState> {
               }),
               index: 0,
         }
-        // this.eventListener = DeviceEventEmitter.addListener('cardBtnPressed', this.handleCardBtnActions);
       }
 
-      onSwipeComplete(direction: string, btnName = null) {
+    onSwipeComplete(direction: string, btnName = null) {
         const { onSwipe, data } = this.props;
         const item = data[this.state.index];
         direction === 'right' ? onSwipe(item, "liked") : onSwipe(item, "disliked");
         this.state.position.setValue({ x: 0, y: 0 });
         this.setState({ index: this.state.index + 1 });
       }
-
-      forceSwipe(direction: string) {
-        const x = direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH;
-        Animated.timing(this.state.position, {
-          toValue: { x, y: 0 },
-          useNativeDriver: false,
-          duration: SWIPE_OUT_DURATION
-        }).start(() => this.onSwipeComplete(direction));
-      }
-
-    //   handleCardBtnActions = (btn) => {
-    //     console.log("Hello!", btn);
-    //   }
 
       resetPosition() {
         Animated.spring(this.state.position, {
@@ -91,6 +80,15 @@ class Swipe extends Component<SwipeProps, SwipeState> {
         };
       }
 
+      forceSwipe(direction: string) {
+        const x = direction === 'right' ? SCREEN_WIDTH : -SCREEN_WIDTH;
+        Animated.timing(this.state.position, {
+          toValue: { x, y: 0 },
+          useNativeDriver: false,
+          duration: SWIPE_OUT_DURATION
+        }).start(() => this.onSwipeComplete(direction));
+      }
+
     renderCards = () => {
         if (this.state.index >= this.props.data.length) {
           return this.props.renderNoMoreCards();
@@ -104,7 +102,7 @@ class Swipe extends Component<SwipeProps, SwipeState> {
               <Animated.View
                 key={item.id}
                 style={[this.getCardStyle(), styles.cardStyle]}
-                {...this.state._panResponder.panHandlers}
+                {...this.state.panResponder.panHandlers}
               >
                 {this.props.renderCard(item)}
               </Animated.View>

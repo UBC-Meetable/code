@@ -5,6 +5,7 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable consistent-return */
+/* eslint-disable max-len */
 const express = require("express");
 
 const router = express.Router();
