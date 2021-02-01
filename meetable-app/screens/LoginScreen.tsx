@@ -1,17 +1,16 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  Button,
-  Card,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
+import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, ImageBackground, Dimensions } from "react-native";
 import ENV from "../config/env";
 import getSettings from "../config/GetSettings";
 import { RootStackParamList, User } from "../types";
 import Auth from "../utils/Auth";
+import LoginPage from "../assets/images/login-background.svg";
+import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
+
+const window = Dimensions.get("window");
 
 const {
   auth0: { passwordlessClient },
@@ -47,11 +46,17 @@ const LoginScreen = ({
   };
   return (
     <Layout style={styles.root}>
-      <Layout style={styles.topcontainer}>
-        <Card disabled style={styles.image}>
-          <Text>Nice Image</Text>
-        </Card>
-      </Layout>
+      <LoginPageBubbleTop
+        style={{ position: "absolute", top: 0 }}
+        width={window.width}
+        height={window.height}
+      />
+      <LoginPage
+        style={{ position: "absolute", top: 0 }}
+        width={window.width}
+        height={window.height}
+      />
+      {/* <ImageBackground source={LoginPage} style={styles.backgroundImage}> */}
       <Layout style={styles.bottomcontainer}>
         <Button
           style={styles.button}
@@ -74,6 +79,7 @@ const LoginScreen = ({
           Log In
         </Text>
       </Layout>
+      {/* </ImageBackground> */}
     </Layout>
   );
 };
@@ -83,8 +89,9 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     height: "100%",
-    justifyContent: "space-evenly",
+    justifyContent: "flex-end",
     alignItems: "center",
+    backgroundColor: "#fff8f3",
   },
   image: {
     width: "75%",
@@ -103,18 +110,28 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     overflow: "visible",
   },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+    width: "100%",
+    height: "auto",
+    flexDirection: "column",
+  },
   bottomcontainer: {
     flex: 0,
     display: "flex",
     flexBasis: 150,
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "transparent",
   },
   button: {
     marginBottom: 20,
     width: "90%",
     borderRadius: 100,
-    backgroundColor: "#000",
+    borderWidth: 0,
+    backgroundColor: "#02A3F4",
   },
   buttonText: {
     fontSize: 20,
