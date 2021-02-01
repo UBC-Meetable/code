@@ -5,12 +5,15 @@ import {
   StyleSheet, Text, View,
   Image,
   SafeAreaView,
+  Dimensions,
 } from "react-native";
-import { Card } from "react-native-elements";
+import { Card, Icon } from "react-native-elements";
 import Swipe from "../components/Swipe";
 import questions from "../data/data";
 import { QuestionType } from "../types";
+import BubbleBackground from "../assets/images/auth0-bubble.svg";
 
+const window = Dimensions.get("window");
 class QuizScreen extends Component {
   quizState = {
     id: null,
@@ -22,18 +25,56 @@ class QuizScreen extends Component {
     this.quizState.responses.push(question);
   }
 
+  handleButtonPress = () => {
+
+  }
+
   renderCards= (question: QuestionType) => (
-    <Card>
+    <View>
       <View style={styles.card}>
         <Text style={styles.questionTitle}>{question.title}</Text>
         <View style={styles.questionView}>
           <Image
             source={question.img}
-            style={{ width: "100%", height: 600 }}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Icon
+            name="undo-variant"
+            type="material-community"
+            color="#FDD0A9"
+            raised
+            onPress={this.handleButtonPress}
+            size={30}
+          />
+          <Icon
+            name="dislike1"
+            type="antdesign"
+            color="#F5A159"
+            raised
+            onPress={this.handleButtonPress}
+            size={40}
+          />
+          <Icon
+            name="like1"
+            type="antdesign"
+            color="#7ED1EF"
+            raised
+            onPress={this.handleButtonPress}
+            size={40}
+          />
+          <Icon
+            name="heart"
+            type="antdesign"
+            color="#FF8D8D"
+            raised
+            onPress={this.handleButtonPress}
+            size={30}
           />
         </View>
       </View>
-    </Card>
+    </View>
   );
 
   renderNoMoreCards = () => (
@@ -45,10 +86,11 @@ class QuizScreen extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        {/* <BubbleBackground
-        width={window.width}
-        height={window.height}
-        style={{ position: "absolute" }} /> */}
+        <BubbleBackground
+          width={window.width}
+          height={window.height}
+          style={{ position: "absolute" }}
+        />
         <Swipe
           onSwipe={this.handleResponse}
           data={questions}
@@ -67,19 +109,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFF8F3",
   },
   card: {
-    backgroundColor: "#FFF8F3", // CHANGE TO TRANSPARENT
-    marginTop: -20,
-    marginBottom: -20,
-    marginRight: -20,
-    marginLeft: -20,
+    backgroundColor: "#FFF8F3",
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "10%",
+    height: "145%",
+    borderRadius: 30,
   },
   questionView: {
     alignContent: "center",
     backgroundColor: "#F9DAC4",
-    borderRadius: 30,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
   },
   questionTitle: {
     color: "#FBBA82",
+    backgroundColor: "#FFF8F3",
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",
@@ -91,6 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: -20,
   },
   buttonContainer: {
     flex: 1,
