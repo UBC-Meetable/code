@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-shadow */
 /* eslint-disable no-await-in-loop */
@@ -13,7 +15,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { check, validationResult, body } = require("express-validator");
 const normalize = require("normalize-url");
-const User = require("../models/User");
+const { User, UserClass } = require("../models/User");
 const Group = require("../models/Group");
 const CourseGroup = require("../models/CourseGroup");
 const QuizInstance = require("../models/QuizInstance");
@@ -152,40 +154,40 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
  * @apiGroup User
  * @apiSuccess {Object} message Object with success message and user object.
  * @apiParam {String} uid The user's id
- * @apiParam {any} any Any attribute specified in User model
+ * @apiParam {Object} newAttributes new values for user attributes
+ * @apiParamExample {json} Entire-Body:
+ *  {
+ *   "newAttributes":
+ *   {
+ *     "name": "testChangeName2",
+ *     "email": "testChangeEmail2@somethingtest.yeet"
+ *   },
+ *   "uid": "6018b59cde24ad0577bf48e2"
+ *  }
  * @apiError (500) {Object} ValidationError Specified attributes invalid for specified reasons.
  */
 router.put("/updateprofile", async (req, res) => {
+  console.log(req.body);
   try {
-    const { body } = req;
-    /* body
-  {uid: ...,
-  instagram: "...",
-  snapchat: "...",
-  ...,
-  blurb: "...",
-  email: "..."}
-  */
-
-    const newUser = {
-      /*
-      uid: body.uid,
-      instagram: body.instagram,
-      snapchat: body.snapchat,
-      blurb: body.blurb,
-      avatar: body.avatar,
-      facebook: body.facebook,
-      name: body.name
-      */
-    };
-    for (const attr in body) {
-      newUser[attr] = body[attr];
+    const newAttributes = req.body.newAttributes;
+    // const { newAttributes } = req.body.newAttributes; results in undefined
+    // why??
+    let user = await User.findOne({ _id: req.body.uid });
+    console.log(newAttributes);
+    for (const attr in newAttributes) {
+      console.log(attr);
+      user[attr] = newAttributes[attr];
     }
-    console.log(newUser);
-    const { uid } = body;
-    const user = await User.findOneAndUpdate({ authid: uid }, newUser, { new: true });
-
-    res.status(200).send({ msg: "Success", user });
+    console.log(user);
+    user.save()
+      .then((user) => {
+        res.status(200).send({ msg: "Success", user });
+      })
+      .catch((err) => {
+        console.err(err);
+        res.status(500).send(err);
+      });
+    // const user = await User.findOneAndUpdate({ authid: uid }, newUser, { new: true });
   } catch (err) {
     console.log(err);
     console.error(err.message);
@@ -283,10 +285,12 @@ router.delete("/courseGroup", async (req, res) => {
 router.put("/group", async (req, res) => {
   const NUM_ADDITIONAL_CRITERIA = 3;
   try {
-    const { body } = req;
-    const { uid } = body;
+    // const { body } = req;
+    // const { uid } = body;
+    const uid = req.body.uid;
+    console.log(uid);
 
-    const quizInstance = await QuizInstance.findOne({ uid }).populate("responses");
+    const quizInstance = await QuizInstance.findOne({ uid: uid });
     if (!quizInstance) {
       res.send({ msg: "User has not taken quiz", success: false });
     }
@@ -302,6 +306,7 @@ router.put("/group", async (req, res) => {
       user.groups.push(group._id);
       group.members.push(uid);
     } else {
+      console.log("entered groups exist case");
       const nonFullGroups = await Group.find({ full: false })
         .lean()
         .populate("members");
@@ -363,7 +368,7 @@ function moreCompatible(qi, qi1, qi2) {
   const user2Responses = qi2.responses;
   let user1Score = 0;
   let user2Score = 0;
-  for (let [q, a] of userResponses) {
+  for (const [q, a] of userResponses) {
     if (a === user1Responses.get(q)) user1Score += 1;
     if (a === user2Responses.get(q)) user2Score += 1;
   }
@@ -394,4 +399,15 @@ router.put("/inject", async (req, res) => {
   res.status(200).send("attributes added");
 });
 
-module.exports = router;
+function constructUser(attributes) {
+  const user = new UserClass(attributes.name, attributes.id);
+  return user;
+}
+
+module.exports = {
+  router,
+  constructUser,
+  moreCompatible,
+};
+
+// module.exports = router;

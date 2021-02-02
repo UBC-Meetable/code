@@ -28,7 +28,7 @@ const prodCluster = "mongodb+srv://admin:S4FxYOzuB1fsn01P@cluster1.t0s2m.mongodb
 const testCluster = "mongodb+srv://admin:Csi3i2h9cStvsRb@meetable-test.jwya1.mongodb.net/test?authSource=admin&replicaSet=atlas-jejadc-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
 
 // Define Routes
-app.use("/api/users", require("./routes/users"));
+app.use("/api/users", require("./routes/users").router);
 app.use("/api/quizs", require("./routes/quizs"));
 app.use("/api/responses", require("./routes/responses"));
 app.use("/api/auth", require("./routes/auth"));
