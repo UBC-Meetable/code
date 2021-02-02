@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-indent */
 import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
-import { Input, Layout } from "@ui-kitten/components";
+import {
+  Button, Card, Input, Layout,
+} from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import * as React from "react";
 import {
-  Image, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity,
+  Image, KeyboardAvoidingView, Modal, StyleSheet, TextInput, TouchableOpacity,
 } from "react-native";
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
@@ -14,8 +17,25 @@ import ENV from "../config/env";
 import { UserContext } from "../utils/UserContext";
 import { styles as profileStyles } from "./NewProfileScreen";
 
+const [visible, setVisible] = React.useState(false);
+
+const socialPress = () => (
+  <Modal
+    visible={visible}
+    backdropStyle={styles.backdrop}
+    onBackdropPress={() => setVisible(false)}
+  >
+    <Card disabled>
+      <Text>Welcome to UI Kitten 😻</Text>
+      <Button onPress={() => setVisible(false)}>
+            DISMISS
+      </Button>
+    </Card>
+  </Modal>
+);
+
 const SocialMediaButton = (props: { name: string }) => (
-  <TouchableOpacity style={styles.socialButton}>
+  <TouchableOpacity onPress={socialPress} style={styles.socialButton}>
     <FontAwesome5 size={50} color="#FBBA82" {...props} />
   </TouchableOpacity>
 );
@@ -103,6 +123,7 @@ const ProfileScreen = () => {
         <SocialMediaButton name="facebook-square" />
         <SocialMediaButton name="instagram" />
         <SocialMediaButton name="snapchat-square" />
+        <MaterialCommunityIcons name="pencil" size={30} />
       </Layout>
 
       <KeyboardAvoidingView
@@ -150,6 +171,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-evenly",
     backgroundColor: "#FEEDDE",
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   name: {
     fontSize: 24,
