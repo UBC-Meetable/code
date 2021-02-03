@@ -26,7 +26,7 @@ const socialPress = () => (
     onBackdropPress={() => setVisible(false)}
   >
     <Card disabled>
-      <Text>Welcome to UI Kitten 😻</Text>
+      <Text>Testing 1 2 3</Text>
       <Button onPress={() => setVisible(false)}>
             DISMISS
       </Button>
