@@ -27,9 +27,6 @@ const socialPress = () => (
   >
     <Card disabled>
       <Text>Testing 1 2 3</Text>
-      <Button onPress={() => setVisible(false)}>
-            DISMISS
-      </Button>
     </Card>
   </Modal>
 );
