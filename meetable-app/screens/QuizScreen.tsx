@@ -1,118 +1,148 @@
-import { StackNavigationProp } from "@react-navigation/stack";
-import { Button, Layout, Text } from "@ui-kitten/components";
-import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
-import BubbleBackground from "../assets/images/tutorial-bubble.svg";
-import { RootStackParamList } from "../types";
+/* eslint-disable no-array-constructor */
+/* eslint-disable no-param-reassign */
+import React, { Component } from "react";
+import {
+  StyleSheet, Text, View,
+  Image,
+  SafeAreaView,
+  Dimensions,
+} from "react-native";
+import { Card, Icon } from "react-native-elements";
+import Swipe from "../components/Swipe";
+import questions from "../data/data";
+import { QuestionType } from "../types";
+import BubbleBackground from "../assets/images/auth0-bubble.svg";
 
 const window = Dimensions.get("window");
+class QuizScreen extends Component {
+  quizState = {
+    id: null,
+    responses: Array<QuestionType>(),
+  };
 
-const QuizScreen = ({
-  navigation,
-}: {
-  navigation: StackNavigationProp<RootStackParamList, "Quiz">;
-}) => (
-  <Layout style={styles.root}>
-    <BubbleBackground
-      width={window.width}
-      height={window.height}
-      style={{ position: "absolute" }}
-    />
+  handleResponse = (question: QuestionType, response: string) => {
+    question.response = response;
+    this.quizState.responses.push(question);
+  }
 
-    <Layout style={styles.bottomcontainer}>
-      <Button
-        style={styles.button}
-        onPress={() => {
-          navigation.replace("Signup");
-        }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            End Quiz
-          </Text>
-        )}
-      </Button>
-    </Layout>
-  </Layout>
-);
+  handleButtonPress = () => {
+
+  }
+
+  renderCards= (question: QuestionType) => (
+    <View>
+      <View style={styles.card}>
+        <Text style={styles.questionTitle}>{question.title}</Text>
+        <View style={styles.questionView}>
+          <Image
+            source={question.img}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Icon
+            name="undo-variant"
+            type="material-community"
+            color="#FDD0A9"
+            raised
+            onPress={this.handleButtonPress}
+            size={30}
+          />
+          <Icon
+            name="dislike1"
+            type="antdesign"
+            color="#F5A159"
+            raised
+            onPress={this.handleButtonPress}
+            size={40}
+          />
+          <Icon
+            name="like1"
+            type="antdesign"
+            color="#7ED1EF"
+            raised
+            onPress={this.handleButtonPress}
+            size={40}
+          />
+          <Icon
+            name="heart"
+            type="antdesign"
+            color="#FF8D8D"
+            raised
+            onPress={this.handleButtonPress}
+            size={30}
+          />
+        </View>
+      </View>
+    </View>
+  );
+
+  renderNoMoreCards = () => (
+    <Card>
+      <Text>No more cards to render. Call move to auth0 screen fn</Text>
+    </Card>
+  );
+
+  render() {
+    return (
+      <SafeAreaView style={styles.container}>
+        <BubbleBackground
+          width={window.width}
+          height={window.height}
+          style={{ position: "absolute" }}
+        />
+        <Swipe
+          onSwipe={this.handleResponse}
+          data={questions}
+          keyProp="id"
+          renderCard={this.renderCards}
+          renderNoMoreCards={this.renderNoMoreCards}
+        />
+      </SafeAreaView>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
-  title: {
-    color: "#FBBA82",
-  },
-  root: {
+  container: {
     flex: 1,
-    display: "flex",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
     backgroundColor: "#FFF8F3",
   },
   card: {
-    width: "100%",
-    padding: 0,
-    margin: 0,
-    height: "100%",
-    maxHeight: "91%",
-    backgroundColor: "#0000",
-    borderWidth: 0,
-  },
-  button: {
-    marginBottom: 20,
+    backgroundColor: "#FFF8F3",
     width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "10%",
+    height: "145%",
+    borderRadius: 30,
   },
-  buttonText: {
-    fontSize: 20,
+  questionView: {
+    alignContent: "center",
+    backgroundColor: "#F9DAC4",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  questionTitle: {
+    color: "#FBBA82",
+    backgroundColor: "#FFF8F3",
+    fontSize: 30,
+    fontWeight: "bold",
     textAlign: "center",
-    flex: 1,
-  },
-  carousel: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
-  blacktext: {
-    color: "#000",
-  },
-  slide: {
-    height: "90%",
-    display: "flex",
-    width: "90%",
-    marginTop: 10,
-    backgroundColor: "rgba(0,0,0,0)",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#000000",
-  },
-  topcontainer: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0)",
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomcontainer: {
-    flex: 0,
-    display: "flex",
-    flexBasis: 150,
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "#0000",
-  },
-  carouselContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
     marginTop: 30,
+    marginBottom: 30,
+  },
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: -20,
+  },
+  buttonContainer: {
+    flex: 1,
   },
 });
 

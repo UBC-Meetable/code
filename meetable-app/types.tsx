@@ -87,3 +87,10 @@ export type MessageType = {
 export type MessageProps = {
   message: MessageType;
 };
+
+export type QuestionType= {
+  title: string,
+  id: string,
+  img: number,
+  response?: string,
+}
