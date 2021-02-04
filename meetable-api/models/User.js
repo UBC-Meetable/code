@@ -6,6 +6,13 @@ const validateEmail = function (email) {
   return re.test(email);
 };
 
+class UserClass {
+  constructor(name, id) {
+    this.name = name;
+    this.id = id;
+  }
+}
+
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -92,4 +99,7 @@ const UserSchema = new mongoose.Schema({
 });
 
 const User = mongoose.model("User", UserSchema);
-module.exports = User;
+module.exports = {
+  User, UserClass,
+};
+// module.exports = User;

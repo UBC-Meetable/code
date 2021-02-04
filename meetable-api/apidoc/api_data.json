@@ -519,6 +519,26 @@
     "title": "Post New Quiz Instance",
     "name": "PostNewQuiz",
     "group": "Quiz",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "responses",
+            "description": "<p>Mapping where property is question, value is answer</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "uid",
+            "description": "<p>User id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -1041,13 +1061,20 @@
           },
           {
             "group": "Parameter",
-            "type": "any",
+            "type": "Object",
             "optional": false,
-            "field": "any",
-            "description": "<p>Any attribute specified in User model</p>"
+            "field": "newAttributes",
+            "description": "<p>new values for user attributes</p>"
           }
         ]
-      }
+      },
+      "examples": [
+        {
+          "title": "Entire-Body:",
+          "content": "{\n \"newAttributes\":\n {\n   \"name\": \"testChangeName2\",\n   \"email\": \"testChangeEmail2@somethingtest.yeet\"\n },\n \"uid\": \"6018b59cde24ad0577bf48e2\"\n}",
+          "type": "json"
+        }
+      ]
     },
     "error": {
       "fields": {

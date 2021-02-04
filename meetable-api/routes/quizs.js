@@ -1,8 +1,10 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-await-in-loop */
 const express = require("express");
 const QuizInstance = require("../models/QuizInstance");
 const { generateResponse } = require("./responses");
 const Quiz = require("../models/Quiz");
+const { User } = require("../models/User");
 
 const router = express.Router();
 
@@ -67,20 +69,21 @@ router.put("/byid", async (req, res) => {
  * @api {post} /quizs/ Post New Quiz Instance
  * @apiName PostNewQuiz
  * @apiGroup Quiz
+ * @apiParam {Object} responses Mapping where property is question, value is answer
+ * @apiParam {String} uid User id
  * @apiSuccess {Object} quiz The quiz posted.
  * @apiError (500) ValidationError No apparent causes.
  */
 router.post("/", async (req, res) => {
-  const { body } = req;
-  // const uid = body.uid;
-  // const quiz = await Quiz.find({name: "hardcoded"}) not needed for MVP
-  console.log("making quiz instanse");
-  const q = new QuizInstance({
-    // uid: uid,
-    // quiz: quiz
-  });
-
   try {
+    const q = new QuizInstance({
+      uid: req.body.uid,
+      responses: req.body.responses,
+    });
+    let user = await User.findOne({ _id: req.body.uid });
+    console.log(user.quizInstances);
+    user.quizInstances.push(q._id);
+    user.save().catch((err) => { res.status(500).send(err); });
     const quiz = await q.save();
     res.status(200).send({
       success: true,

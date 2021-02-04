@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 const QuizInstanceSchema = mongoose.Schema({
   uid: {
     type: mongoose.SchemaTypes.ObjectId,
-    required: false,
+    required: false, // may be able to be required for this flow,
+    // but probably not needed to be required
   },
   quiz: {
     type: mongoose.SchemaTypes.ObjectId,
@@ -13,8 +14,8 @@ const QuizInstanceSchema = mongoose.Schema({
   responses: {
     type: Map, // key: question
     of: String, // value: answer
-    //minSize: 1,
-    //maxSize: 3
+    // minSize: 1,
+    // maxSize: 3
   },
   dateCreated: {
     type: Date,
