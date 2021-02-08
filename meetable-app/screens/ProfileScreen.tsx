@@ -26,7 +26,15 @@ const socialPress = () => (
     onBackdropPress={() => setVisible(false)}
   >
     <Card disabled>
-      <Text>Testing 1 2 3</Text>
+      <Text>Socials:</Text>
+      "/n"
+      <Text>Facebook</Text>
+      "/n"
+      <Text>Facebook</Text>
+      "/n"
+      <Text>Facebook</Text>
+      "/n"
+      <Text>Facebook</Text>
     </Card>
   </Modal>
 );
@@ -120,7 +128,7 @@ const ProfileScreen = () => {
         <SocialMediaButton name="facebook-square" />
         <SocialMediaButton name="instagram" />
         <SocialMediaButton name="snapchat-square" />
-        <MaterialCommunityIcons name="pencil" size={30} />
+        <MaterialCommunityIcons name="pencil" size={30} style={styles.pencil} />
       </Layout>
 
       <KeyboardAvoidingView
