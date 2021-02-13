@@ -28,13 +28,14 @@ const socialPress = () => (
     <Card disabled>
       <Text>Socials:</Text>
       "/n"
-      <Text>Facebook</Text>
+      <Text>Twitter:</Text>
       "/n"
-      <Text>Facebook</Text>
+      <Text>Facebook:</Text>
       "/n"
-      <Text>Facebook</Text>
+      <Text>Instagram:</Text>
       "/n"
-      <Text>Facebook</Text>
+      <Text>Snapchat:</Text>
+      "/n"
     </Card>
   </Modal>
 );
