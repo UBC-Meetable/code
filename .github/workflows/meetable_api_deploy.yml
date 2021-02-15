@@ -1,12 +1,13 @@
-# This is a basic workflow to help you get started with Actions
 
-name: Deploy Branch Preview
 
-# Controls when the action will run. 
+name: Meetable-API
 on: [pull_request]
+defaults:
+  run:
+    working-directory: meetable-api
 jobs:
   test:
-    name: Lint & Test
+    name: Run and Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -23,8 +24,8 @@ jobs:
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
       - name: Install Packages
-        run: |
-         npm install
-         npm run postinstall
-      - name: Check Lint
-        run: npm run lint
+        run: npm install
+      - name: Run API
+        run: npm run start
+      - name: Run tests
+        run: npm run test
