@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix"
   },
   "proxy": "http://localhost:4000",
   "jest": {

@@ -8,8 +8,6 @@
   },
   "scripts": {
     "test": "jest --passWithNoTests",
-    "postinstall": "cd meetable-app && npm install",
-    "lint": "eslint '*/**/*.{js,ts,tsx}' --fix",
     "start:dev": "concurrently \"cd meetable-api && npm start\" \"cd meetable-app && npm start\""
   },
   "jest": {
