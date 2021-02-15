@@ -1,5 +1,3 @@
-
-
 name: Meetable-API
 on: [pull_request]
 defaults:
@@ -25,7 +23,5 @@ jobs:
             ${{ runner.os }}-
       - name: Install Packages
         run: npm install
-      - name: Run API
-        run: npm run start
       - name: Run tests
         run: npm run test
