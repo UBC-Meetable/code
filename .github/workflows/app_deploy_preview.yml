@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Deploy Branch Preview (App)
+name: Meetable-APP
 
 # Controls when the action will run. 
 on: [pull_request]
@@ -28,10 +28,10 @@ jobs:
       - name: Install Packages
         run: npm install
       - name: Check Lint
-        run: npm run lint
+        run: npx eslint '*/**/*.{js,ts,tsx}'
   
   deploy_branch_preview:
-    name: Deploy Branch Preview
+    name: Deploy Branch Preview (App)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
