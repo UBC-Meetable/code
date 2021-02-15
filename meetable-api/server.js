@@ -36,7 +36,7 @@ app.use("/api/groups", require("./routes/groups"));
 app.use("/api/media", require("./routes/media"));
 app.use("/api/forms", require("./routes/forms"));
 app.use("/api/chat", require("./routes/chat"));
-
+app.use("/api/status", require("./routes/status"));
 const connectDB = async () => {
   try {
     await mongoose.connect(
