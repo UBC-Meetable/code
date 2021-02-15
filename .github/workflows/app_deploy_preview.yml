@@ -28,7 +28,7 @@ jobs:
       - name: Install Packages
         run: npm install
       - name: Check Lint
-        run: npx eslint '*/**/*.{js,ts,tsx}'
+        run: npm run lint
   
   deploy_branch_preview:
     name: Deploy Branch Preview
