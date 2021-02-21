@@ -1,10 +1,9 @@
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Button, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Navigation from "../navigation";
 
 const EditCourseScreen = () => {
   const [courses, setCourses] = useState([] as string[]);
@@ -30,9 +29,7 @@ const EditCourseScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
       <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          Course Code
-        </Text>
+        <Text style={styles.textStyle}>Course Code</Text>
         <Input
           style={styles.inputStyle}
           placeholder="COMM 101"
@@ -43,9 +40,7 @@ const EditCourseScreen = () => {
         />
       </Layout>
       <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          Section
-        </Text>
+        <Text style={styles.textStyle}>Section</Text>
         <Input
           style={styles.inputStyle}
           placeholder="235"
@@ -73,9 +68,7 @@ const EditCourseScreen = () => {
       <ScrollView contentContainerStyle={styles.selectionsContainer}>
         {courses.map((course, index) => (
           <Layout key={index} style={styles.courseContainer}>
-            <Text style={styles.courseTextStyle}>
-              {course}
-            </Text>
+            <Text style={styles.courseTextStyle}>{course}</Text>
             <Button
               appearance="ghost"
               onPress={() => {

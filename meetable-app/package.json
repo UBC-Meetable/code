@@ -32,13 +32,13 @@
     "@unimodules/react-native-adapter": "~5.7.0",
     "expo": "^40.0.0",
     "expo-asset": "~8.2.1",
-    "expo-auth-session": "~3.0.0",
+    "expo-auth-session": "^3.1.0",
     "expo-blur": "~8.2.2",
     "expo-constants": "~9.3.3",
     "expo-device": "~2.4.0",
     "expo-font": "~8.4.0",
-    "expo-linking": "~2.0.0",
-    "expo-notifications": "~0.8.2",
+    "expo-linking": "^2.1.1",
+    "expo-notifications": "^0.9.0",
     "expo-random": "~10.0.0",
     "expo-secure-store": "~9.3.0",
     "expo-splash-screen": "~0.8.1",
@@ -62,7 +62,7 @@
     "react-native-svg": "12.1.0",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "^0.15.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

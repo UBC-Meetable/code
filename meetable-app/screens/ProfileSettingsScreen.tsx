@@ -1,16 +1,19 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  Button, Layout, Text,
-} from "@ui-kitten/components";
+import { Button, Layout, Text } from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
+import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootStackParamList } from "../types";
 import Auth from "../utils/Auth";
 
-const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
+const ProfileSettingsScreen = ({
+  navigation,
+}: {
+  navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">;
+}) => {
   const handleLogout = async () => {
     await Auth.logout();
     await SecureStore.deleteItemAsync("user");
@@ -20,14 +23,43 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
     });
   };
 
+  function setEmailPass() {
+    alert("TODO: Change email and password functionality");
+  }
+
+  function viewTOS() {
+    alert("TODO: Create and show TOS");
+  }
+
   return (
     <SafeAreaView style={styles.root}>
-      <Layout style={stylesTwo.container} />
-      <ScrollView contentContainerStyle={styles.selectionsContainer} />
-      <Button
-        style={styles.button}
-        onPress={handleLogout}
-      >
+      <Layout style={stylesTwo.container}>
+        <Layout style={styles.selectionsContainer}>
+          <Text onPress={() => setEmailPass()} style={styles.optionTextStyle}>
+            {" "}
+            Change Email & Password
+          </Text>
+          <Icon
+            onPress={() => setEmailPass()}
+            name="chevron-forward"
+            size={30}
+            style={{ marginRight: 100, marginTop: 5 }}
+          />
+        </Layout>
+        <Layout style={styles.selectionsContainer}>
+          <Text onPress={() => viewTOS()} style={styles.optionTextStyle}>
+            {" "}
+            Terms of Service
+          </Text>
+          <Icon
+            onPress={() => viewTOS()}
+            name="chevron-forward"
+            size={30}
+            style={{ marginRight: 68, marginTop: 5 }}
+          />
+        </Layout>
+      </Layout>
+      <Button style={styles.button} onPress={handleLogout}>
         {(evaProps: any) => (
           <Text
             {...evaProps}
@@ -60,7 +92,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   button: {
-    marginTop: 10,
+    marginTop: 200,
     marginBottom: 30,
     width: "75%",
     borderRadius: 100,
@@ -101,15 +133,12 @@ const styles = StyleSheet.create({
   },
   selectionsContainer: {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
-    width: "75%",
+    width: "100%",
     backgroundColor: "#FFF8F3",
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
+    marginLeft: 20,
+    marginRight: 20,
   },
   courseContainer: {
     display: "flex",
@@ -134,13 +163,11 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
   },
-  courseTextStyle: {
+  optionTextStyle: {
     fontFamily: "Poppins_400Regular",
-    fontSize: 15,
+    fontSize: 18,
     marginHorizontal: 20,
     marginVertical: 10,
-    marginLeft: 30,
-    marginRight: 80,
   },
   deleteButtonText: {
     fontSize: 20,
@@ -157,6 +184,8 @@ const styles = StyleSheet.create({
 
 const stylesTwo = StyleSheet.create({
   container: {
+    display: "flex",
+    justifyContent: "flex-start",
     width: "100%",
     marginTop: 10,
     marginLeft: 10,

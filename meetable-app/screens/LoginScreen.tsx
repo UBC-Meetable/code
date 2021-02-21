@@ -1,10 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  Button,
-  Card,
-  Layout,
-  Text,
-} from "@ui-kitten/components";
+import { Button, Card, Layout, Text } from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
 import { StyleSheet } from "react-native";
