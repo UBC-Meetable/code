@@ -17,8 +17,8 @@
     "start": "node server.js"
   },
   "jest": {
-    "verbose": true
-
+    "verbose": true,
+    "testEnvironment": "node"
   },
   "repository": {
     "type": "git",
