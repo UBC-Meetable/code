@@ -76,15 +76,23 @@ router.put("/byid", async (req, res) => {
  */
 router.post("/", async (req, res) => {
   try {
-    const q = new QuizInstance({
-      uid: req.body.uid,
-      responses: req.body.responses,
+    const responses = new Map();
+    req.body.responses.forEach((response) => {
+      responses.set(response.title, response.response);
     });
-    let user = await User.findOne({ _id: req.body.uid });
+    console.log(req.body.uid);
+    const user = await User.findOne({ authid: req.body.uid });
+    const q = new QuizInstance({
+      uid: user._id,
+      responses,
+    });
+    console.log(q);
+    console.log(user.name);
     console.log(user.quizInstances);
     user.quizInstances.push(q._id);
     user.save().catch((err) => { res.status(500).send(err); });
     const quiz = await q.save();
+    console.log("success");
     res.status(200).send({
       success: true,
       quizInstance: quiz,

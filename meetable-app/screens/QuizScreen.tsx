@@ -1,6 +1,6 @@
 /* eslint-disable no-array-constructor */
 /* eslint-disable no-param-reassign */
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet, Text, View,
   Image,
@@ -8,28 +8,29 @@ import {
   Dimensions,
 } from "react-native";
 import { Card, Icon } from "react-native-elements";
+import { Button } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 import Swipe from "../components/Swipe";
 import questions from "../data/data";
 import { QuestionType } from "../types";
 import BubbleBackground from "../assets/images/auth0-bubble.svg";
+import sampleData from "../data/sampleQuiz.json";
 
 const window = Dimensions.get("window");
-class QuizScreen extends Component {
-  quizState = {
-    id: null,
-    responses: Array<QuestionType>(),
+
+const DEVSKIP = true;
+const QuizScreen = () => {
+  const [responses, setResponses] = useState(DEVSKIP ? sampleData.responses : [] as QuestionType[]);
+  const navigation = useNavigation();
+
+  const handleResponse = (question: QuestionType, response: string) => {
+    question.response = response;
+    setResponses([...responses, question]);
   };
 
-  handleResponse = (question: QuestionType, response: string) => {
-    question.response = response;
-    this.quizState.responses.push(question);
-  }
+  const handleButtonPress = () => {};
 
-  handleButtonPress = () => {
-
-  }
-
-  renderCards= (question: QuestionType) => (
+  const renderCards = (question: QuestionType) => (
     <View>
       <View style={styles.card}>
         <Text style={styles.questionTitle}>{question.title}</Text>
@@ -45,7 +46,7 @@ class QuizScreen extends Component {
             type="material-community"
             color="#FDD0A9"
             raised
-            onPress={this.handleButtonPress}
+            onPress={handleButtonPress}
             size={30}
           />
           <Icon
@@ -53,7 +54,7 @@ class QuizScreen extends Component {
             type="antdesign"
             color="#F5A159"
             raised
-            onPress={this.handleButtonPress}
+            onPress={handleButtonPress}
             size={40}
           />
           <Icon
@@ -61,7 +62,7 @@ class QuizScreen extends Component {
             type="antdesign"
             color="#7ED1EF"
             raised
-            onPress={this.handleButtonPress}
+            onPress={handleButtonPress}
             size={40}
           />
           <Icon
@@ -69,7 +70,7 @@ class QuizScreen extends Component {
             type="antdesign"
             color="#FF8D8D"
             raised
-            onPress={this.handleButtonPress}
+            onPress={handleButtonPress}
             size={30}
           />
         </View>
@@ -77,31 +78,38 @@ class QuizScreen extends Component {
     </View>
   );
 
-  renderNoMoreCards = () => (
+  const renderNoMoreCards = () => (
     <Card>
       <Text>No more cards to render. Call move to auth0 screen fn</Text>
+      <Button onPress={() => {
+        navigation.navigate("Signup", { responses });
+      }}
+      >
+        {" "}
+        Next
+
+      </Button>
     </Card>
   );
 
-  render() {
-    return (
-      <SafeAreaView style={styles.container}>
-        <BubbleBackground
-          width={window.width}
-          height={window.height}
-          style={{ position: "absolute" }}
-        />
-        <Swipe
-          onSwipe={this.handleResponse}
-          data={questions}
-          keyProp="id"
-          renderCard={this.renderCards}
-          renderNoMoreCards={this.renderNoMoreCards}
-        />
-      </SafeAreaView>
-    );
-  }
-}
+  return (
+    <SafeAreaView style={styles.container}>
+      <BubbleBackground
+        width={window.width}
+        height={window.height}
+        style={{ position: "absolute" }}
+      />
+      <Swipe
+        onSwipe={handleResponse}
+        data={questions}
+        keyProp="id"
+        renderCard={renderCards}
+        renderNoMoreCards={renderNoMoreCards}
+        devSkip={DEVSKIP}
+      />
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

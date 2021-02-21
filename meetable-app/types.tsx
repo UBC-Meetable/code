@@ -14,7 +14,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Tutorial: undefined;
   Login: undefined;
-  Signup: undefined;
+  Signup: {responses: Map<string, string>};
   Quiz: undefined;
   Group: undefined;
   UniScreen: undefined;

@@ -5,6 +5,7 @@ import {
   StyleSheet, PanResponderInstance,
   View, PanResponder, Animated, Dimensions,
 } from "react-native";
+import { Button } from "react-native-elements";
 
 import { QuestionType } from "../types";
 
@@ -18,6 +19,7 @@ type SwipeProps = {
     keyProp: string,
     renderCard: Function,
     renderNoMoreCards: Function,
+    devSkip: Boolean,
 }
 type SwipeState = {
     position: any,
@@ -96,6 +98,9 @@ class Swipe extends Component<SwipeProps, SwipeState> {
       if (this.state.index >= this.props.data.length) {
         return this.props.renderNoMoreCards();
       }
+      if (this.props.devSkip) {
+        return this.props.renderNoMoreCards();
+      }
 
       return this.props.data.map((item, i) => {
         if (i < this.state.index) { return null; }
@@ -108,6 +113,7 @@ class Swipe extends Component<SwipeProps, SwipeState> {
               {...this.state.panResponder.panHandlers}
             >
               {this.props.renderCard(item)}
+              ``
             </Animated.View>
           );
         }
@@ -124,7 +130,11 @@ class Swipe extends Component<SwipeProps, SwipeState> {
     };
 
     render() {
-      return <View>{this.renderCards()}</View>;
+      return (
+        <View>
+          {this.renderCards()}
+        </View>
+      );
     }
 }
 
