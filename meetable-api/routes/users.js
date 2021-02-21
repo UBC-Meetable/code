@@ -173,7 +173,7 @@ router.put("/updateprofile", async (req, res) => {
     const newAttributes = req.body.newAttributes;
     // const { newAttributes } = req.body.newAttributes; results in undefined
     // why??
-    let user = await User.findOne({ _id: req.body.uid });
+    const user = await User.findOne({ _id: req.body.uid });
     console.log(newAttributes);
     for (const attr in newAttributes) {
       console.log(attr);
@@ -225,7 +225,7 @@ router.put("/courseGroup", async (req, res) => {
   const { uid } = req.body;
   const user = await User.findOne({ _id: uid }).populate("courseGroups");
   for (const course of user.courses) {
-    let grouped = user.courseGroups.some((cg) => cg.courseCode === course);
+    const grouped = user.courseGroups.some((cg) => cg.courseCode === course);
     if (!grouped) {
       let newCourseGroup = await CourseGroup.findOne({ courseCode: course, school: user.school });
       if (newCourseGroup == null) {
@@ -314,11 +314,11 @@ router.put("/group", async (req, res) => {
       // find most compatible user out of all users in non-full groups
       let mostCompatibleUser = null;
       let mostCompatibleUserResponses = null;
-      for (let nonFullGroup of nonFullGroups) {
+      for (const nonFullGroup of nonFullGroups) {
         const tempGroup = nonFullGroup.members;
-        for (let candidate of tempGroup) {
+        for (const candidate of tempGroup) {
           try {
-            let candidateResponses = await QuizInstance.findOne({ uid: candidate._id });
+            const candidateResponses = await QuizInstance.findOne({ uid: candidate._id });
             if (moreCompatible(quizInstance, candidateResponses, mostCompatibleUserResponses)) {
               mostCompatibleUser = candidate;
               mostCompatibleUserResponses = await QuizInstance.findOne({
