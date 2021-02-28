@@ -20,7 +20,7 @@ const { User, UserClass } = require("../models/User");
 const Group = require("../models/Group");
 const CourseGroup = require("../models/CourseGroup");
 const QuizInstance = require("../models/QuizInstance");
-// const major = require("./major");
+// const createUser = require("../controllers/users");
 
 /**
  * @api {post} /users/ Post User
@@ -35,7 +35,9 @@ const QuizInstance = require("../models/QuizInstance");
  *           The specified attributes are invalid for the specified reasons.
  * @apiError (400) {String} UserExists The posted user already exists.
  */
-router.post("/", async (req, res) => {
+router.post("/", createUser);
+
+async function createUser(req, res) {
   try {
     console.log(req.body);
     const userInfo = {};
@@ -73,7 +75,6 @@ router.post("/", async (req, res) => {
     }
     console.log(user);
     await user.save();
-
     res.status(200).send({
       msg: "Meetable user exists additional steps required",
       id: user._id,
@@ -82,7 +83,7 @@ router.post("/", async (req, res) => {
     console.log(err);
     res.status(500).send(JSON.stringify(err));
   }
-});
+}
 
 /**
  * @api {get} /users/ Get Users
@@ -167,7 +168,9 @@ router.get("/getgroupsbyuserid/:uid", async (req, res) => {
  *  }
  * @apiError (500) {Object} ValidationError Specified attributes invalid for specified reasons.
  */
-router.put("/updateprofile", async (req, res) => {
+router.put("/updateprofile", updateProfile);
+
+async function updateProfile(req, res) {
   console.log(req.body);
   try {
     const newAttributes = req.body.newAttributes;
@@ -194,7 +197,7 @@ router.put("/updateprofile", async (req, res) => {
     console.error(err.message);
     res.status(500).send(err);
   }
-});
+}
 
 /**
  * @api {get} /users/courseGroup/ get user's course groups
@@ -409,6 +412,8 @@ module.exports = {
   router,
   constructUser,
   moreCompatible,
+  createUser,
+  updateProfile,
 };
 
 // module.exports = router;

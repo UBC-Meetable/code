@@ -3,11 +3,17 @@
 
 /* eslint-env jest */
 const mongoose = require("mongoose");
-const { constructUser, moreCompatible } = require("../routes/users");
+const { moreCompatible, createUser, updateProfile } = require("../routes/users");
 const { User, UserClass } = require("../models/User");
+
 const testCluster = "mongodb+srv://admin:Csi3i2h9cStvsRb@meetable-test.jwya1.mongodb.net/test?authSource=admin&replicaSet=atlas-jejadc-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
 
 let db;
+let res = {
+  end() {},
+  status(s) { this.statusCode = s; return this; },
+  send() {},
+};
 
 beforeAll(async () => {
   // database access test would time out with default 5000
@@ -31,15 +37,83 @@ beforeAll(async () => {
   });
 
 afterAll(async () => {
+  await User.collection.drop();
   await db.disconnect();
 });
 
-test("database access", () => {
-  return User.find().then((data) => {
-    expect(data).toBeTruthy();
+test("database access", async () => {
+  const attributes = {
+    name: "...",
+    authid: "1",
+  };
+  let userModel = new User(attributes);
+  await userModel.save();
+  return User.find({ name: "..." }).then((data) => {
+    expect(data.length).toBe(1);
   });
 });
 
+test("create user exists", async () => {
+  const attributes = {
+    name: "createUserUserExists",
+    authid: "createUserUserExists",
+  };
+  await createUser({ body: attributes }, res);
+  await createUser({ body: attributes }, res);
+  const data = await User.find({ authid: "createUserUserExists" });
+  expect(data.length).toBe(1);
+});
+
+test("create user not exists", async () => {
+  const attributes = {
+    name: "createUserNotExists",
+    authid: "createUserNotExists",
+  };
+  const attributes1 = {
+    name: "createUserNotExists",
+    authid: "createUserNotExists1",
+  };
+  await createUser({ body: attributes }, res);
+  await createUser({ body: attributes1 }, res);
+  const data = await User.find({ name: "createUserNotExists" });
+  expect(data.length).toBe(2);
+});
+
+test("create user has expected attributes", async () => {
+  const attributes = {
+    name: "createUserExpectedAttr",
+    authid: "createUserExpectedAttr",
+    email: "awefdf@awefwef.com",
+    avatar: "wefawef.com/wefwfe.png",
+    instagram: "wefwef",
+  };
+  await createUser({ body: attributes }, res);
+  const data = await User.findOne({ name: "createUserExpectedAttr" });
+  expect(data.name).toBe(attributes.name);
+  expect(data.authid).toBe(attributes.authid);
+  expect(data.email).toBe(attributes.email);
+  expect(data.avatar).toBe(attributes.avatar);
+  expect(data.instagram).toBe(attributes.instagram);
+});
+
+test("update profile violates schema", async () => {
+  // max length of name
+  const a = {
+    name: "update",
+    authid: "update",
+  };
+  const req = {
+    body: {
+      newAttributes: {
+        name: "01234567890123456789012345678901234567890123456789",
+      },
+    },
+  };
+  await createUser({ body: a }, res);
+  await updateProfile()
+});
+
+/*
 test("creates new user with attributes", () => {
     // const expected = new User({
     //     name: "...",
@@ -54,6 +128,7 @@ test("creates new user with attributes", () => {
     // seems that object comparison must use toEqual, not toBe
     expect(constructUser(attributes)).toEqual(expected);
   });
+  */
 
 test("moreCompatible", () => {
     let qi = {};
