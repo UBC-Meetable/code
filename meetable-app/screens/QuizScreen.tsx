@@ -5,6 +5,7 @@ import {
   StyleSheet, Text,
   SafeAreaView,
   Dimensions,
+  Alert,
 } from "react-native";
 import { Card } from "react-native-elements";
 import Swipe from "../components/Swipe";
@@ -27,8 +28,29 @@ class QuizScreen extends Component {
   renderNoMoreCards = () => (
     <Card>
       <Text>No more cards to render. Call move to auth0 screen fn</Text>
+      <Text onPress={this.showReportModal}>Test report modal</Text>
     </Card>
   );
+
+  // Android only supports 3 options. Replace with custom popup
+  showReportModal = () => {
+    Alert.alert(
+      "Report User",
+      "",
+      [
+        {
+          text: "Spam",
+          onPress: () => console.log("Spam"),
+        },
+        {
+          text: "Inappropriate language",
+          onPress: () => console.log("inappropriate language"),
+        },
+        { text: "Other", onPress: () => console.log("other") },
+      ],
+      { cancelable: true },
+    );
+  }
 
   render() {
     return (
