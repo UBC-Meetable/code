@@ -3,20 +3,26 @@
 import React, { Component } from "react";
 import {
   StyleSheet, PanResponderInstance,
-  View, PanResponder, Animated, Dimensions,
+  View, PanResponder, Animated, Dimensions, Text, Image,
 } from "react-native";
-
+import { Icon } from "react-native-elements";
 import { QuestionType } from "../types";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
+const ACTIONS = {
+  LIKE: "like",
+  DISLIKE: "dislike",
+  PREVIOUS: "previous",
+  SKIP: "skip",
+  SUPERLIKE: "superlike",
+};
 type SwipeProps = {
     // eslint-disable-next-line no-unused-vars
     onSwipe: (question: QuestionType, response: string)=>void,
     data: QuestionType[],
     keyProp: string,
-    renderCard: Function,
     renderNoMoreCards: Function,
 }
 type SwipeState = {
@@ -54,13 +60,22 @@ class Swipe extends Component<SwipeProps, SwipeState> {
     };
   }
 
-  onSwipeComplete(direction: string) {
+  // handle swipe/button press actions
+  handleAction(response: string) {
     const { onSwipe, data } = this.props;
     const item = data[this.state.index];
-    // eslint-disable-next-line no-unused-expressions
-    direction === "right" ? onSwipe(item, "liked") : onSwipe(item, "disliked");
+    const currIndex = this.state.index;
     this.state.position.setValue({ x: 0, y: 0 });
-    this.setState({ index: this.state.index + 1 });
+    if (response === ACTIONS.PREVIOUS) {
+      this.setState({ index: currIndex - 1 });
+      return;
+    }
+    if (response === ACTIONS.SKIP) {
+      this.setState({ index: currIndex + 1 });
+      return;
+    }
+    onSwipe(item, response);
+    this.setState({ index: currIndex + 1 });
   }
 
   getCardStyle() {
@@ -82,7 +97,7 @@ class Swipe extends Component<SwipeProps, SwipeState> {
       toValue: { x, y: 0 },
       useNativeDriver: false,
       duration: SWIPE_OUT_DURATION,
-    }).start(() => this.onSwipeComplete(direction));
+    }).start(() => this.handleAction(direction === "right" ? ACTIONS.LIKE : ACTIONS.DISLIKE));
   }
 
   resetPosition() {
@@ -91,6 +106,55 @@ class Swipe extends Component<SwipeProps, SwipeState> {
       useNativeDriver: false,
     }).start();
   }
+
+  renderCard= (question: QuestionType) => (
+    <View>
+      <View style={styles.card}>
+        <Text style={styles.questionTitle}>{question.title}</Text>
+        <View style={styles.questionView}>
+          <Image
+            source={question.img}
+            style={{ width: "100%", height: "100%" }}
+          />
+        </View>
+        <View style={styles.buttonsContainer}>
+          <Icon
+            name="undo-variant"
+            type="material-community"
+            color="#FDD0A9"
+            raised
+            onPress={() => this.handleAction(ACTIONS.PREVIOUS)}
+            size={30}
+          />
+          <Icon
+            name="dislike1"
+            type="antdesign"
+            color="#F5A159"
+            raised
+            onPress={() => this.handleAction(ACTIONS.DISLIKE)}
+            size={40}
+          />
+          <Icon
+            name="like1"
+            type="antdesign"
+            color="#7ED1EF"
+            raised
+            onPress={() => this.handleAction(ACTIONS.LIKE)}
+            size={40}
+          />
+          <Icon
+            name="heart"
+            type="antdesign"
+            color="#FF8D8D"
+            raised
+            onPress={() => this.handleAction(ACTIONS.SUPERLIKE)}
+            size={30}
+          />
+        </View>
+        <Text style={styles.skip} onPress={() => this.handleAction(ACTIONS.SKIP)}>Skip</Text>
+      </View>
+    </View>
+  );
 
     renderCards = () => {
       if (this.state.index >= this.props.data.length) {
@@ -107,7 +171,7 @@ class Swipe extends Component<SwipeProps, SwipeState> {
               style={[this.getCardStyle(), styles.cardStyle]}
               {...this.state.panResponder.panHandlers}
             >
-              {this.props.renderCard(item)}
+              {this.renderCard(item)}
             </Animated.View>
           );
         }
@@ -117,7 +181,7 @@ class Swipe extends Component<SwipeProps, SwipeState> {
             key={item.id}
             style={[styles.cardStyle]}
           >
-            {this.props.renderCard(item)}
+            {this.renderCard(item)}
           </Animated.View>
         );
       }).reverse();
@@ -129,9 +193,55 @@ class Swipe extends Component<SwipeProps, SwipeState> {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#FFF8F3",
+  },
   cardStyle: {
     position: "absolute",
     width: SCREEN_WIDTH,
+  },
+  card: {
+    backgroundColor: "#FFF8F3",
+    width: "90%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "10%",
+    height: "140%",
+    borderRadius: 30,
+  },
+  questionView: {
+    alignContent: "center",
+    backgroundColor: "#F9DAC4",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  questionTitle: {
+    color: "#FBBA82",
+    backgroundColor: "#FFF8F3",
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 30,
+    marginBottom: 30,
+  },
+  buttonsContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: -20,
+  },
+  buttonContainer: {
+    flex: 1,
+  },
+  skip: {
+    width: "08%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: 20,
   },
 });
 
