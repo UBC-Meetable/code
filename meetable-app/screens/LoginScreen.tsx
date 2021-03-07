@@ -1,8 +1,10 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Button, Card, Layout, Text } from "@ui-kitten/components";
+import {
+  Button, Layout, Text,
+} from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
-import { StyleSheet, ImageBackground, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import ENV from "../config/env";
 import getSettings from "../config/GetSettings";
 import { RootStackParamList, User } from "../types";
@@ -72,14 +74,17 @@ const LoginScreen = ({
             </Text>
           )}
         </Button>
-        <Text
-          style={{ ...styles.buttonText }}
-          onPress={() => handleLogin({ screenHint: "login" })}
-        >
-          Log In
+        <Text style={{ ...styles.buttonText }}>
+          Already have an account?
+          {" "}
+          <Text
+            style={{ ...styles.buttonText, color: "#02A3F4" }}
+            onPress={() => handleLogin({ screenHint: "login" })}
+          >
+            Log in
+          </Text>
         </Text>
       </Layout>
-      {/* </ImageBackground> */}
     </Layout>
   );
 };
