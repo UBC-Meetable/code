@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable arrow-body-style */
 /* eslint-disable indent */
 
@@ -36,8 +37,15 @@ beforeAll(async () => {
     }
   });
 
+afterEach(async () => {
+  const result = await User.find();
+  if (result.length !== 0) {
+    await User.collection.drop();
+  }
+});
+
 afterAll(async () => {
-  await User.collection.drop();
+  // await User.collection.drop();
   await db.disconnect();
 });
 
@@ -104,13 +112,47 @@ test("update profile violates schema", async () => {
   };
   const req = {
     body: {
+      uid: "...",
       newAttributes: {
         name: "01234567890123456789012345678901234567890123456789",
       },
     },
   };
   await createUser({ body: a }, res);
-  await updateProfile()
+  let user = await User.findOne({ name: "update" });
+  req.body.uid = user._id;
+  await updateProfile(req, res);
+  user = await User.findOne({ name: "update" });
+  expect(user.name).toBe("update");
+});
+
+test("update profile multiple", async () => {
+  const a = {
+    name: "name",
+    authid: "authid",
+    instagram: "instagram",
+    bio: "bio",
+  };
+  const req = {
+    body: {
+      uid: "...",
+      newAttributes: {
+        name: "updated",
+        authid: "updated",
+        instagram: "updated",
+        bio: "updated",
+      },
+    },
+  };
+  await createUser({ body: a }, res);
+  let user = await User.findOne({ name: "name" });
+  req.body.uid = user._id;
+  await updateProfile(req, res);
+  user = await User.findOne({ name: "name" });
+  expect(user.name).toBe("updated");
+  expect(user.authid).toBe("updated");
+  expect(user.instagram).toBe("updated");
+  expect(user.bio).toBe("updated");
 });
 
 /*

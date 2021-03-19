@@ -188,7 +188,7 @@ async function updateProfile(req, res) {
         res.status(200).send({ msg: "Success", user });
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
         res.status(500).send(err);
       });
     // const user = await User.findOneAndUpdate({ authid: uid }, newUser, { new: true });
