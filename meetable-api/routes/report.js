@@ -29,7 +29,6 @@ router.post("/user", async (req, res) => {
   });
 });
 
-
 /**
 * @api {post} /report/message report a message
 * @apiName ReportMessage
@@ -55,3 +54,5 @@ router.post("/message", async (req, res) => {
     res.status(200).send(report);
   });
 });
+
+module.exports = router;
