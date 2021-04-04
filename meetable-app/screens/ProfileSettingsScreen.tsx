@@ -3,7 +3,7 @@ import { Button, Layout, Text } from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { RootStackParamList } from "../types";
@@ -27,9 +27,24 @@ const ProfileSettingsScreen = ({
     alert("TODO: Change email and password functionality");
   }
 
-  function viewTOS() {
-    alert("TODO: Create and show TOS");
-  }
+  const viewTOS = () => {
+    Alert.alert(
+      "Terms of service",
+      "lorem ipsum (actual TOS to go here)",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel pressed"),
+          style: "cancel",
+        },
+        {
+          text: "I agree",
+          onPress: () => console.log("Agree pressed"),
+        },
+      ],
+      { cancelable: false },
+    );
+  };
 
   return (
     <SafeAreaView style={styles.root}>
