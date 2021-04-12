@@ -1,0 +1,14 @@
+{
+    "CreateAPIKey": 0,
+    "AppSyncApiName": "meetable",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authmeetablea02db50ea02db50e",
+            "Outputs.UserPoolId"
+        ]
+    },
+    "S3DeploymentBucket": "amplify-meetable-dev-134616-deployment",
+    "S3DeploymentRootKey": "amplify-appsync-files/4297a48a6b12b5f06e49783df1f61a05d5d03312"
+}

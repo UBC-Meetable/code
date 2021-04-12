@@ -1,0 +1,6 @@
+type User @model @auth(rules: [{allow: owner}]) {
+  email: String!
+  firstName: String
+  lastName: String
+  profilePicture: String
+}
