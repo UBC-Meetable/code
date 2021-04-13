@@ -1,6 +1,8 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Button, Input, Layout } from "@ui-kitten/components";
+import {
+  Button, Input, Layout, Text,
+} from "@ui-kitten/components";
 import * as Device from "expo-device";
 import { getExpoPushTokenAsync, requestPermissionsAsync } from "expo-notifications";
 import * as SecureStore from "expo-secure-store";
@@ -9,17 +11,24 @@ import {
   Image, KeyboardAvoidingView, StyleSheet, TextInput,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import noAvatar from "../assets/images/noavatar.png";
-import { Text } from "../components/Themed";
-import ENV from "../config/env";
-import { RootStackParamList, User } from "../types";
-import { UserContext } from "../utils/UserContext";
+import noAvatar from "../../assets/images/noavatar.png";
+import updateUserProfile from "../../calls/updateUserProfile";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import { RootStackParamList, User } from "../../types";
+import { UserContext } from "../../utils/UserContext";
 
 const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
-  const { user, setUser } = React.useContext(UserContext);
-
-  const [name, setName] = React.useState(user.name);
+  // const { user, setUser } = React.useContext(UserContext);
+  const user = useAuthenticatedUser();
+  const [name, setName] = React.useState("");
   const [bio, setBio] = React.useState("");
+
+  const handleFinish = async () => {
+    const [firstName, ...lastName] = name.trim().split(" ");
+    await updateUserProfile({
+      email: user.attributes.email, firstName, lastName: lastName.join(" "), bio,
+    });
+  };
 
   return (
 
@@ -50,18 +59,10 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
             zIndex: 1000,
           }}
         />
-        {user.picture ? (
-          <Image
-            source={{ width: 125, height: 125, uri: user.picture }}
-            style={{ borderRadius: 100 }}
-          />
-        )
-          : (
-            <Image
-              source={noAvatar}
-              style={{ borderRadius: 100, height: 125, width: 125 }}
-            />
-          )}
+        <Image
+          source={noAvatar}
+          style={{ borderRadius: 100, height: 125, width: 125 }}
+        />
       </Layout>
 
       <Layout

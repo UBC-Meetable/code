@@ -1,27 +1,24 @@
 /* eslint-disable no-array-constructor */
 /* eslint-disable no-param-reassign */
-import React, { Component, useState } from "react";
+import { Layout } from "@ui-kitten/components";
+import React, { useState } from "react";
 import {
-  StyleSheet, Text,
-  SafeAreaView,
-  Dimensions,
+  Dimensions, StyleSheet,
 } from "react-native";
-import { Card, Icon } from "react-native-elements";
+import { Card } from "react-native-elements";
 import { Button } from "react-native-paper";
-import { useNavigation } from "@react-navigation/native";
-import Swipe from "../components/Swipe";
-import questions from "../data/data";
-import { QuestionType } from "../types";
-import BubbleBackground from "../assets/images/auth0-bubble.svg";
-import sampleData from "../data/sampleQuiz.json";
-import { UserContext } from "../utils/UserContext";
+import BubbleBackground from "../../assets/images/auth0-bubble.svg";
+import rootStyles from "../../components/styles/rootStyles";
+import Swipe from "../../components/Swipe";
+import questions from "../../data/data";
+import sampleData from "../../data/sampleQuiz.json";
+import { QuestionType } from "../../types";
 
 const window = Dimensions.get("window");
 
 const DEVSKIP = true;
 const QuizScreen = ({ onFinish }: {onFinish: () => void}) => {
   const [responses, setResponses] = useState(DEVSKIP ? sampleData.responses : [] as QuestionType[]);
-  const navigation = useNavigation();
   const handleResponse = (question: QuestionType, response: string) => {
     question.response = response;
     setResponses([...responses, question]);
@@ -41,7 +38,7 @@ const QuizScreen = ({ onFinish }: {onFinish: () => void}) => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Layout style={rootStyles}>
       <BubbleBackground
         width={window.width}
         height={window.height}
@@ -54,7 +51,7 @@ const QuizScreen = ({ onFinish }: {onFinish: () => void}) => {
         renderNoMoreCards={renderNoMoreCards}
         devSkip={DEVSKIP}
       />
-    </SafeAreaView>
+    </Layout>
   );
 };
 

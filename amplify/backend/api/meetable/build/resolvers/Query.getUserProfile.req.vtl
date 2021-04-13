@@ -1,3 +1,8 @@
+## [Start] Set the primary @key. **
+#set( $modelObjectKey = {
+  "email": $util.dynamodb.toDynamoDB($ctx.args.email)
+} )
+## [End] Set the primary @key. **
 {
   "version": "2018-05-29",
   "operation": "GetItem",

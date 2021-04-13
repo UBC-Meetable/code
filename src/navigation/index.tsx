@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { Auth } from "@aws-amplify/auth";
 import * as eva from "@eva-design/eva";
 import {
   Poppins_400Regular, Poppins_500Medium,
@@ -14,28 +15,25 @@ import {
   ApplicationProvider as UiProvider, Layout, Spinner, Text,
 } from "@ui-kitten/components";
 import Amplify from "aws-amplify";
-import * as SecureStore from "expo-secure-store";
+import { withAuthenticator } from "aws-amplify-react-native";
 import * as React from "react";
 import { ColorSchemeName, Dimensions, useColorScheme } from "react-native";
-import { withAuthenticator } from "aws-amplify-react-native";
-import { Auth } from "@aws-amplify/auth";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
 import ENV from "../config/env";
+import LoginFlowController from "../screens/Auth/LoginFlowController";
 import EditCourseScreen from "../screens/EditCoursesScreen";
 import GroupScreen from "../screens/GroupScreen";
-import LoginFlowController from "../screens/LoginFlowController";
-import NewProfileScreen from "../screens/NewProfileScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
-import QuizScreen from "../screens/QuizScreen";
-import SignupScreen from "../screens/SignupScreen";
-import TutorialScreen from "../screens/TutorialScreen";
-import UniScreen from "../screens/UniScreen";
-import { RootStackParamList, SignUpParamList, User } from "../types";
-import UserContextProvider, { UserContext } from "../utils/UserContext";
+import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
+import { UserContext } from "../utils/UserContext";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
+import fetchUserProfile from "../calls/fetchUserProfile";
+import createUserProfile from "../calls/createUserProfile";
+import { UserState } from "../API";
+import SignUpStackNavigator from "./SignUpStackNavigator";
 
 Amplify.configure(awsconfig);
 const window = Dimensions.get("window");
@@ -51,14 +49,12 @@ export default function Navigation({
   return (
     <>
       <UiProvider {...eva} theme={dark ? eva.light : eva.light}>
-        <UserContextProvider>
-          <NavigationContainer
-            linking={LinkingConfiguration}
-            theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
-          >
-            <App />
-          </NavigationContainer>
-        </UserContextProvider>
+        <NavigationContainer
+          linking={LinkingConfiguration}
+          theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
+        >
+          <App />
+        </NavigationContainer>
       </UiProvider>
     </>
   );
@@ -75,9 +71,7 @@ const App = () => {
       <Spinner />
     );
   }
-  return (
-    <AuthorizedApp />
-  );
+  return <AuthenticatedApp />;
 };
 
 // A root stack navigator is often used for displaying modals on top of all other content
@@ -87,17 +81,49 @@ const Stack = createStackNavigator<RootStackParamList>();
 type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" | "EditCourses" | "UniScreen" | "NewProfileScreen" | "ProfileSettings"
 
 const AuthorizedApp = () => {
+  const [loading, setLoading] = React.useState(true);
+  const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
   const { user, setUser } = React.useContext(UserContext);
 
   React.useEffect(() => {
     const f = async () => {
-      const authUser = await Auth.currentAuthenticatedUser();
-      console.log(authUser);
+      const authUser:CognitoUser = await Auth.currentAuthenticatedUser();
+      console.log(authUser.attributes.email);
+      try {
+        let userProfile = (await fetchUserProfile(authUser.attributes.email)).data?.getUserProfile;
+        if (!userProfile) {
+          userProfile = (await createUserProfile(authUser.attributes.email))
+            .data?.createUserProfile;
+        }
+        if (!userProfile) throw new Error("Error Creating User Profile");
+        const { userState: fetchedUserState } = userProfile;
+        if (fetchedUserState) {
+          setUserState(fetchedUserState);
+        }
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
     };
     f();
   }, []);
 
+  if (loading) return <Spinner />;
+  if (userState !== UserState.DONE) {
+    let initRoute: keyof SignUpParamList;
+    console.log(userState);
+
+    if (userState === UserState.SIGNED_UP) {
+      initRoute = "UniScreen";
+    } else if (userState === UserState.UNI_SELECTED) {
+      initRoute = "NewProfileScreen";
+    } else {
+      initRoute = "EditCourses";
+    }
+    return <SignUpStackNavigator initRoute={initRoute} />;
+  }
   const initRoute = ENV.SKIP_LOGIN ? "Tabs" : `${user.name ? "Tabs" : "Login"}` as RootNames;
+
   return (
     <Stack.Navigator
       screenOptions={{
@@ -144,50 +170,6 @@ const AuthorizedApp = () => {
             height: 170,
           },
         } as StackNavigationOptions)}
-      />
-      <Stack.Screen name="Tutorial" component={TutorialScreen} />
-      <Stack.Screen name="Quiz" component={QuizScreen} />
-      <Stack.Screen name="Signup">
-        {(props) => <SignupScreen setUser={setUser} {...props} />}
-      </Stack.Screen>
-      <Stack.Screen name="Login" component={LoginFlowController} />
-      <Stack.Screen name="UniScreen" component={UniScreen} />
-      <Stack.Screen
-        name="NewProfileScreen"
-        options={({
-          navigation,
-        }: {
-          navigation: StackNavigationProp<
-            RootStackParamList,
-            "NewProfileScreen"
-          >;
-        }) => ({
-          cardStyle: {
-            backgroundColor: "#FEEDDE",
-          },
-          headerShown: true,
-          headerTitle: "",
-          headerLeft: () => (
-            <ChatBackButton navigation={navigation} label="" />
-          ),
-          headerBackground: (props) => (
-            <Layout
-              {...props}
-              style={{
-                backgroundColor: "#FFF8F3",
-              }}
-            >
-              <BubbleHeader width={window.width} height={170} />
-            </Layout>
-          ),
-          headerLeftContainerStyle: {
-            marginLeft: 10,
-          },
-          headerStyle: {
-            height: 170,
-          },
-        } as StackNavigationOptions)}
-        component={NewProfileScreen}
       />
       <Stack.Screen
         name="EditCourses"
@@ -274,6 +256,7 @@ const AuthenticatedApp = withAuthenticator(AuthorizedApp, {
     hiddenDefaults: ["phone_number"],
   },
   authenticatorComponents: [
+    <LoginFlowController />,
   ],
 });
 
@@ -305,12 +288,4 @@ const ChatBackButton = ({
       {label}
     </Text>
   </Layout>
-);
-
-const SignUpStack = createStackNavigator<SignUpParamList>();
-
-const SignUpNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Tutorial" component={TutorialScreen} />
-  </Stack.Navigator>
 );

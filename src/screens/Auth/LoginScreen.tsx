@@ -1,8 +1,8 @@
 import { Button, Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import LoginPage from "../assets/images/login-background.svg";
-import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
+import LoginPage from "../../assets/images/login-background.svg";
+import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 
 const window = Dimensions.get("window");
 
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "flex-end",
     alignItems: "center",
-    backgroundColor: "#fff8f3",
+    backgroundColor: "#0000",
   },
   image: {
     width: "75%",

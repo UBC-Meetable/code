@@ -13,23 +13,31 @@ import {
   Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import BubbleBackground from "../assets/images/tutorial-bubble.svg";
-import { RootStackParamList } from "../types";
-import { UserContext } from "../utils/UserContext";
+import { UserState } from "../../API";
+import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
+import updateUserProfile from "../../calls/updateUserProfile";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import { RootStackParamList } from "../../types";
+import { UserContext } from "../../utils/UserContext";
 // import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 
 const window = Dimensions.get("window");
 
 const UniScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "UniScreen"> }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
-  const { user, setUser } = React.useContext(UserContext);
   const [major, setMajor] = useState("");
   const universities = ["The University of British Columbia", "The University of Toronto", "Simon Fraser University", "Queen's University"];
   const university = universities[selectedIndex.row];
-
-  const onSubmit = () => {
-    setUser({ ...user, major, university });
-    navigation.navigate("NewProfileScreen");
+  const user = useAuthenticatedUser();
+  const onSubmit = async () => {
+    const res = await updateUserProfile({
+      email: user.attributes.email, major, university, userState: UserState.UNI_SELECTED,
+    });
+    console.log(res);
+    if (res.data) {
+      navigation.navigate("NewProfileScreen");
+    }
+    // TODO Error handling
   };
 
   return (

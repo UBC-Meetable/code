@@ -5,18 +5,19 @@ import {
 import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
 import { StyleSheet, Dimensions } from "react-native";
-import ENV from "../config/env";
-import getSettings from "../config/GetSettings";
-import { RootStackParamList, User } from "../types";
-import Auth from "../utils/Auth";
-import LoginPage from "../assets/images/login-background.svg";
-import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
+import ENV from "../../config/env";
+import getSettings from "../../config/GetSettings";
+import { RootStackParamList, User } from "../../types";
+import Auth from "../../utils/Auth";
+import LoginPage from "../../assets/images/login-background.svg";
+import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import LoginScreen from "./LoginScreen";
 import TutorialScreen from "./TutorialScreen";
 import QuizScreen from "./QuizScreen";
 import SignupScreen from "./SignupScreen";
 import SignUpFormScreen from "./SignUpFormScreen";
-import ConfirmEmailScreen from "./ConfirmEmailScreen";
+import ConfirmEmailScreen from "../ConfirmEmailScreen";
+import LoginFormScreen from "./LoginFormScreen";
 
 const window = Dimensions.get("window");
 
@@ -39,7 +40,7 @@ enum AuthState {
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
   const [authState, setAuthState] = useState<AuthState>(
-    AuthState.SIGN_UP,
+    AuthState.LANDING_SCREEN,
   );
 
   switch (authState) {
@@ -80,14 +81,16 @@ const LoginFlowController = () => {
         onLogIn={() => setAuthState(AuthState.LOGIN)}
       />
     );
-    // case AuthState.LOGIN:
-    // return <LoginScreen />;
+  case AuthState.LOGIN:
+    return <LoginFormScreen onSignUp={() => setAuthState(AuthState.TUTORIAL)} />;
   default:
     return (
       <LoginScreen
-        onLogIn={() => console.log("login")}
+        onLogIn={() => {
+          setAuthState(AuthState.LOGIN);
+        }}
         onSignUp={() => {
-          console.log("Sign Up");
+          setAuthState(AuthState.TUTORIAL);
         }}
       />
     );

@@ -1,12 +1,21 @@
-type User {
-  id: ID!
+type UserProfile {
   email: String!
   firstName: String
   lastName: String
   profilePicture: String
+  bio: String
+  userState: UserState
+  university: String
+  major: String
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
+}
+
+enum UserState {
+  SIGNED_UP
+  UNI_SELECTED
+  DONE
 }
 
 enum ModelSortDirection {
@@ -14,8 +23,8 @@ enum ModelSortDirection {
   DESC
 }
 
-type ModelUserConnection {
-  items: [User]
+type ModelUserProfileConnection {
+  items: [UserProfile]
   nextToken: String
 }
 
@@ -92,14 +101,23 @@ input ModelSizeInput {
   between: [Int]
 }
 
-input ModelUserFilterInput {
+input ModelUserStateInput {
+  eq: UserState
+  ne: UserState
+}
+
+input ModelUserProfileFilterInput {
   email: ModelStringInput
   firstName: ModelStringInput
   lastName: ModelStringInput
   profilePicture: ModelStringInput
-  and: [ModelUserFilterInput]
-  or: [ModelUserFilterInput]
-  not: ModelUserFilterInput
+  bio: ModelStringInput
+  userState: ModelUserStateInput
+  university: ModelStringInput
+  major: ModelStringInput
+  and: [ModelUserProfileFilterInput]
+  or: [ModelUserProfileFilterInput]
+  not: ModelUserProfileFilterInput
 }
 
 enum ModelAttributeTypes {
@@ -116,47 +134,57 @@ enum ModelAttributeTypes {
 }
 
 type Query {
-  getUser(id: ID!): User
-  listUsers(filter: ModelUserFilterInput, limit: Int, nextToken: String): ModelUserConnection
+  getUserProfile(email: String!): UserProfile
+  listUserProfiles(email: String, filter: ModelUserProfileFilterInput, limit: Int, nextToken: String, sortDirection: ModelSortDirection): ModelUserProfileConnection
 }
 
-input CreateUserInput {
-  id: ID
+input CreateUserProfileInput {
   email: String!
   firstName: String
   lastName: String
   profilePicture: String
+  bio: String
+  userState: UserState
+  university: String
+  major: String
 }
 
-input UpdateUserInput {
-  email: String
+input UpdateUserProfileInput {
+  email: String!
   firstName: String
   lastName: String
   profilePicture: String
+  bio: String
+  userState: UserState
+  university: String
+  major: String
 }
 
-input DeleteUserInput {
-  id: ID
+input DeleteUserProfileInput {
+  email: String!
 }
 
 type Mutation {
-  createUser(input: CreateUserInput!, condition: ModelUserConditionInput): User
-  updateUser(input: UpdateUserInput!, condition: ModelUserConditionInput): User
-  deleteUser(input: DeleteUserInput!, condition: ModelUserConditionInput): User
+  createUserProfile(input: CreateUserProfileInput!, condition: ModelUserProfileConditionInput): UserProfile
+  updateUserProfile(input: UpdateUserProfileInput!, condition: ModelUserProfileConditionInput): UserProfile
+  deleteUserProfile(input: DeleteUserProfileInput!, condition: ModelUserProfileConditionInput): UserProfile
 }
 
-input ModelUserConditionInput {
-  email: ModelStringInput
+input ModelUserProfileConditionInput {
   firstName: ModelStringInput
   lastName: ModelStringInput
   profilePicture: ModelStringInput
-  and: [ModelUserConditionInput]
-  or: [ModelUserConditionInput]
-  not: ModelUserConditionInput
+  bio: ModelStringInput
+  userState: ModelUserStateInput
+  university: ModelStringInput
+  major: ModelStringInput
+  and: [ModelUserProfileConditionInput]
+  or: [ModelUserProfileConditionInput]
+  not: ModelUserProfileConditionInput
 }
 
 type Subscription {
-  onCreateUser(owner: String!): User @aws_subscribe(mutations: ["createUser"])
-  onUpdateUser(owner: String!): User @aws_subscribe(mutations: ["updateUser"])
-  onDeleteUser(owner: String!): User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateUserProfile(owner: String!): UserProfile @aws_subscribe(mutations: ["createUserProfile"])
+  onUpdateUserProfile(owner: String!): UserProfile @aws_subscribe(mutations: ["updateUserProfile"])
+  onDeleteUserProfile(owner: String!): UserProfile @aws_subscribe(mutations: ["deleteUserProfile"])
 }

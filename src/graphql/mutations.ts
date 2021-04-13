@@ -2,51 +2,60 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
+export const createUserProfile = /* GraphQL */ `
+  mutation CreateUserProfile(
+    $input: CreateUserProfileInput!
+    $condition: ModelUserProfileConditionInput
   ) {
-    createUser(input: $input, condition: $condition) {
-      id
+    createUserProfile(input: $input, condition: $condition) {
       email
       firstName
       lastName
       profilePicture
+      bio
+      userState
+      university
+      major
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
+export const updateUserProfile = /* GraphQL */ `
+  mutation UpdateUserProfile(
+    $input: UpdateUserProfileInput!
+    $condition: ModelUserProfileConditionInput
   ) {
-    updateUser(input: $input, condition: $condition) {
-      id
+    updateUserProfile(input: $input, condition: $condition) {
       email
       firstName
       lastName
       profilePicture
+      bio
+      userState
+      university
+      major
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
+export const deleteUserProfile = /* GraphQL */ `
+  mutation DeleteUserProfile(
+    $input: DeleteUserProfileInput!
+    $condition: ModelUserProfileConditionInput
   ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
+    deleteUserProfile(input: $input, condition: $condition) {
       email
       firstName
       lastName
       profilePicture
+      bio
+      userState
+      university
+      major
       createdAt
       updatedAt
       owner

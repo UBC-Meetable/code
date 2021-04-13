@@ -144,7 +144,7 @@
             ]
           },
           "S3DeploymentBucket": "amplify-meetable-dev-134616-deployment",
-          "S3DeploymentRootKey": "amplify-appsync-files/4297a48a6b12b5f06e49783df1f61a05d5d03312",
+          "S3DeploymentRootKey": "amplify-appsync-files/6ba0a41c5734ad753080fcdb1ffd68f126a70b57",
           "env": "dev"
         }
       }
@@ -212,7 +212,7 @@
           }
         },
         "Handler": "index.handler",
-        "Runtime": "nodejs10.x",
+        "Runtime": "nodejs12.x",
         "Timeout": "300",
         "Role": {
           "Fn::GetAtt": [

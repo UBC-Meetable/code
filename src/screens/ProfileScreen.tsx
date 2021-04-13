@@ -14,7 +14,7 @@ import noAvatar from "../assets/images/noavatar.png";
 import { Text } from "../components/Themed";
 import { createUser } from "../graphql/mutations";
 import { UserContext } from "../utils/UserContext";
-import { styles as profileStyles } from "./NewProfileScreen";
+import { styles as profileStyles } from "./Auth/NewProfileScreen";
 
 const SocialMediaButton = (props: { name: string }) => (
   <TouchableOpacity style={styles.socialButton}>

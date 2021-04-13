@@ -2,33 +2,47 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
+export const getUserProfile = /* GraphQL */ `
+  query GetUserProfile($email: String!) {
+    getUserProfile(email: $email) {
       email
       firstName
       lastName
       profilePicture
+      bio
+      userState
+      university
+      major
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
+export const listUserProfiles = /* GraphQL */ `
+  query ListUserProfiles(
+    $email: String
+    $filter: ModelUserProfileFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUserProfiles(
+      email: $email
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
         email
         firstName
         lastName
         profilePicture
+        bio
+        userState
+        university
+        major
         createdAt
         updatedAt
         owner

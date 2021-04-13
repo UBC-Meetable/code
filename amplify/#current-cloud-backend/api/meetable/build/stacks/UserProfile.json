@@ -86,7 +86,7 @@
         }
     },
     "Resources": {
-        "UserTable": {
+        "UserProfileTable": {
             "Type": "AWS::DynamoDB::Table",
             "Properties": {
                 "TableName": {
@@ -96,7 +96,7 @@
                             "Fn::Join": [
                                 "-",
                                 [
-                                    "User",
+                                    "UserProfile",
                                     {
                                         "Ref": "GetAttGraphQLAPIApiId"
                                     },
@@ -110,7 +110,7 @@
                             "Fn::Join": [
                                 "-",
                                 [
-                                    "User",
+                                    "UserProfile",
                                     {
                                         "Ref": "GetAttGraphQLAPIApiId"
                                     }
@@ -121,13 +121,13 @@
                 },
                 "KeySchema": [
                     {
-                        "AttributeName": "id",
+                        "AttributeName": "email",
                         "KeyType": "HASH"
                     }
                 ],
                 "AttributeDefinitions": [
                     {
-                        "AttributeName": "id",
+                        "AttributeName": "email",
                         "AttributeType": "S"
                     }
                 ],
@@ -182,7 +182,7 @@
             },
             "DeletionPolicy": "Delete"
         },
-        "UserIAMRole": {
+        "UserProfileIAMRole": {
             "Type": "AWS::IAM::Role",
             "Properties": {
                 "RoleName": {
@@ -192,7 +192,7 @@
                             "Fn::Join": [
                                 "-",
                                 [
-                                    "Usercb3b2b",
+                                    "UserProfileb200d2",
                                     "role",
                                     {
                                         "Ref": "GetAttGraphQLAPIApiId"
@@ -207,7 +207,7 @@
                             "Fn::Join": [
                                 "-",
                                 [
-                                    "User64da07",
+                                    "UserProfile1fffad",
                                     "role",
                                     {
                                         "Ref": "GetAttGraphQLAPIApiId"
@@ -259,7 +259,7 @@
                                                                 "Fn::Join": [
                                                                     "-",
                                                                     [
-                                                                        "User",
+                                                                        "UserProfile",
                                                                         {
                                                                             "Ref": "GetAttGraphQLAPIApiId"
                                                                         },
@@ -273,7 +273,7 @@
                                                                 "Fn::Join": [
                                                                     "-",
                                                                     [
-                                                                        "User",
+                                                                        "UserProfile",
                                                                         {
                                                                             "Ref": "GetAttGraphQLAPIApiId"
                                                                         }
@@ -296,7 +296,7 @@
                                                                 "Fn::Join": [
                                                                     "-",
                                                                     [
-                                                                        "User",
+                                                                        "UserProfile",
                                                                         {
                                                                             "Ref": "GetAttGraphQLAPIApiId"
                                                                         },
@@ -310,7 +310,7 @@
                                                                 "Fn::Join": [
                                                                     "-",
                                                                     [
-                                                                        "User",
+                                                                        "UserProfile",
                                                                         {
                                                                             "Ref": "GetAttGraphQLAPIApiId"
                                                                         }
@@ -330,17 +330,17 @@
                 ]
             }
         },
-        "UserDataSource": {
+        "UserProfileDataSource": {
             "Type": "AWS::AppSync::DataSource",
             "Properties": {
                 "ApiId": {
                     "Ref": "GetAttGraphQLAPIApiId"
                 },
-                "Name": "UserTable",
+                "Name": "UserProfileTable",
                 "Type": "AMAZON_DYNAMODB",
                 "ServiceRoleArn": {
                     "Fn::GetAtt": [
-                        "UserIAMRole",
+                        "UserProfileIAMRole",
                         "Arn"
                     ]
                 },
@@ -355,7 +355,7 @@
                                 "Fn::Join": [
                                     "-",
                                     [
-                                        "User",
+                                        "UserProfile",
                                         {
                                             "Ref": "GetAttGraphQLAPIApiId"
                                         },
@@ -369,7 +369,7 @@
                                 "Fn::Join": [
                                     "-",
                                     [
-                                        "User",
+                                        "UserProfile",
                                         {
                                             "Ref": "GetAttGraphQLAPIApiId"
                                         }
@@ -381,10 +381,10 @@
                 }
             },
             "DependsOn": [
-                "UserIAMRole"
+                "UserProfileIAMRole"
             ]
         },
-        "GetUserResolver": {
+        "GetUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
@@ -392,11 +392,11 @@
                 },
                 "DataSourceName": {
                     "Fn::GetAtt": [
-                        "UserDataSource",
+                        "UserProfileDataSource",
                         "Name"
                     ]
                 },
-                "FieldName": "getUser",
+                "FieldName": "getUserProfile",
                 "TypeName": "Query",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -413,7 +413,7 @@
                                     ".",
                                     [
                                         "Query",
-                                        "getUser",
+                                        "getUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -437,7 +437,7 @@
                                     ".",
                                     [
                                         "Query",
-                                        "getUser",
+                                        "getUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -448,7 +448,7 @@
                 }
             }
         },
-        "ListUserResolver": {
+        "ListUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
@@ -456,11 +456,11 @@
                 },
                 "DataSourceName": {
                     "Fn::GetAtt": [
-                        "UserDataSource",
+                        "UserProfileDataSource",
                         "Name"
                     ]
                 },
-                "FieldName": "listUsers",
+                "FieldName": "listUserProfiles",
                 "TypeName": "Query",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -477,7 +477,7 @@
                                     ".",
                                     [
                                         "Query",
-                                        "listUsers",
+                                        "listUserProfiles",
                                         "req",
                                         "vtl"
                                     ]
@@ -501,7 +501,7 @@
                                     ".",
                                     [
                                         "Query",
-                                        "listUsers",
+                                        "listUserProfiles",
                                         "res",
                                         "vtl"
                                     ]
@@ -512,7 +512,7 @@
                 }
             }
         },
-        "CreateUserResolver": {
+        "CreateUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
@@ -520,11 +520,11 @@
                 },
                 "DataSourceName": {
                     "Fn::GetAtt": [
-                        "UserDataSource",
+                        "UserProfileDataSource",
                         "Name"
                     ]
                 },
-                "FieldName": "createUser",
+                "FieldName": "createUserProfile",
                 "TypeName": "Mutation",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -541,7 +541,7 @@
                                     ".",
                                     [
                                         "Mutation",
-                                        "createUser",
+                                        "createUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -565,7 +565,7 @@
                                     ".",
                                     [
                                         "Mutation",
-                                        "createUser",
+                                        "createUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -576,7 +576,7 @@
                 }
             }
         },
-        "UpdateUserResolver": {
+        "UpdateUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
@@ -584,11 +584,11 @@
                 },
                 "DataSourceName": {
                     "Fn::GetAtt": [
-                        "UserDataSource",
+                        "UserProfileDataSource",
                         "Name"
                     ]
                 },
-                "FieldName": "updateUser",
+                "FieldName": "updateUserProfile",
                 "TypeName": "Mutation",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -605,7 +605,7 @@
                                     ".",
                                     [
                                         "Mutation",
-                                        "updateUser",
+                                        "updateUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -629,7 +629,7 @@
                                     ".",
                                     [
                                         "Mutation",
-                                        "updateUser",
+                                        "updateUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -640,7 +640,7 @@
                 }
             }
         },
-        "DeleteUserResolver": {
+        "DeleteUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
@@ -648,11 +648,11 @@
                 },
                 "DataSourceName": {
                     "Fn::GetAtt": [
-                        "UserDataSource",
+                        "UserProfileDataSource",
                         "Name"
                     ]
                 },
-                "FieldName": "deleteUser",
+                "FieldName": "deleteUserProfile",
                 "TypeName": "Mutation",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -669,7 +669,7 @@
                                     ".",
                                     [
                                         "Mutation",
-                                        "deleteUser",
+                                        "deleteUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -693,7 +693,7 @@
                                     ".",
                                     [
                                         "Mutation",
-                                        "deleteUser",
+                                        "deleteUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -704,14 +704,14 @@
                 }
             }
         },
-        "SubscriptiononCreateUserResolver": {
+        "SubscriptiononCreateUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
                     "Ref": "GetAttGraphQLAPIApiId"
                 },
                 "DataSourceName": "NONE",
-                "FieldName": "onCreateUser",
+                "FieldName": "onCreateUserProfile",
                 "TypeName": "Subscription",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -728,7 +728,7 @@
                                     ".",
                                     [
                                         "Subscription",
-                                        "onCreateUser",
+                                        "onCreateUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -752,7 +752,7 @@
                                     ".",
                                     [
                                         "Subscription",
-                                        "onCreateUser",
+                                        "onCreateUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -763,14 +763,14 @@
                 }
             }
         },
-        "SubscriptiononUpdateUserResolver": {
+        "SubscriptiononUpdateUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
                     "Ref": "GetAttGraphQLAPIApiId"
                 },
                 "DataSourceName": "NONE",
-                "FieldName": "onUpdateUser",
+                "FieldName": "onUpdateUserProfile",
                 "TypeName": "Subscription",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -787,7 +787,7 @@
                                     ".",
                                     [
                                         "Subscription",
-                                        "onUpdateUser",
+                                        "onUpdateUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -811,7 +811,7 @@
                                     ".",
                                     [
                                         "Subscription",
-                                        "onUpdateUser",
+                                        "onUpdateUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -822,14 +822,14 @@
                 }
             }
         },
-        "SubscriptiononDeleteUserResolver": {
+        "SubscriptiononDeleteUserProfileResolver": {
             "Type": "AWS::AppSync::Resolver",
             "Properties": {
                 "ApiId": {
                     "Ref": "GetAttGraphQLAPIApiId"
                 },
                 "DataSourceName": "NONE",
-                "FieldName": "onDeleteUser",
+                "FieldName": "onDeleteUserProfile",
                 "TypeName": "Subscription",
                 "RequestMappingTemplateS3Location": {
                     "Fn::Sub": [
@@ -846,7 +846,7 @@
                                     ".",
                                     [
                                         "Subscription",
-                                        "onDeleteUser",
+                                        "onDeleteUserProfile",
                                         "req",
                                         "vtl"
                                     ]
@@ -870,7 +870,7 @@
                                     ".",
                                     [
                                         "Subscription",
-                                        "onDeleteUser",
+                                        "onDeleteUserProfile",
                                         "res",
                                         "vtl"
                                     ]
@@ -883,11 +883,11 @@
         }
     },
     "Outputs": {
-        "GetAttUserTableStreamArn": {
+        "GetAttUserProfileTableStreamArn": {
             "Description": "Your DynamoDB table StreamArn.",
             "Value": {
                 "Fn::GetAtt": [
-                    "UserTable",
+                    "UserProfileTable",
                     "StreamArn"
                 ]
             },
@@ -900,18 +900,18 @@
                                 "Ref": "AppSyncApiId"
                             },
                             "GetAtt",
-                            "UserTable",
+                            "UserProfileTable",
                             "StreamArn"
                         ]
                     ]
                 }
             }
         },
-        "GetAttUserDataSourceName": {
+        "GetAttUserProfileDataSourceName": {
             "Description": "Your model DataSource name.",
             "Value": {
                 "Fn::GetAtt": [
-                    "UserDataSource",
+                    "UserProfileDataSource",
                     "Name"
                 ]
             },
@@ -924,17 +924,17 @@
                                 "Ref": "AppSyncApiId"
                             },
                             "GetAtt",
-                            "UserDataSource",
+                            "UserProfileDataSource",
                             "Name"
                         ]
                     ]
                 }
             }
         },
-        "GetAttUserTableName": {
+        "GetAttUserProfileTableName": {
             "Description": "Your DynamoDB table name.",
             "Value": {
-                "Ref": "UserTable"
+                "Ref": "UserProfileTable"
             },
             "Export": {
                 "Name": {
@@ -945,7 +945,7 @@
                                 "Ref": "AppSyncApiId"
                             },
                             "GetAtt",
-                            "UserTable",
+                            "UserProfileTable",
                             "Name"
                         ]
                     ]

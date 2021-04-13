@@ -5,12 +5,13 @@ import {
 import React, { createRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import BubbleBackground from "../assets/images/tutorial-bubble.svg";
-import End from "../components/tutorial_slides/End";
-import Intro from "../components/tutorial_slides/Intro";
-import Middle from "../components/tutorial_slides/Middle";
-import MeetableCarousel from "../navigation/MeetableCarousel";
-import { RootStackParamList } from "../types";
+import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
+import rootStyles from "../../components/styles/rootStyles";
+import End from "../../components/tutorial_slides/End";
+import Intro from "../../components/tutorial_slides/Intro";
+import Middle from "../../components/tutorial_slides/Middle";
+import MeetableCarousel from "../../navigation/MeetableCarousel";
+import { RootStackParamList } from "../../types";
 
 const window = Dimensions.get("window");
 
@@ -24,7 +25,7 @@ const TutorialScreen = ({ onContinue }: TutorialProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const carouselRef = createRef<Carousel<any>>();
   return (
-    <Layout style={styles.root}>
+    <Layout style={rootStyles}>
       <BubbleBackground
         width={window.width}
         height={window.height}
@@ -83,14 +84,6 @@ const TutorialScreen = ({ onContinue }: TutorialProps) => {
 const styles = StyleSheet.create({
   title: {
     color: "#FBBA82",
-  },
-  root: {
-    flex: 1,
-    display: "flex",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0000",
   },
   card: {
     width: "100%",

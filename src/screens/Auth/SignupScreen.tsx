@@ -1,23 +1,16 @@
-import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
-import * as SecureStore from "expo-secure-store";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
-import Auth0Flair from "../assets/images/auth0-flair.svg";
-import { TutorialStyles } from "../components/styles";
-import ENV from "../config/env";
-import getSettings from "../config/GetSettings";
-import { RootStackParamList, User } from "../types";
-import Auth from "../utils/Auth";
+import Auth0BubbleBackground from "../../assets/images/auth0-bubble.svg";
+import Auth0Flair from "../../assets/images/auth0-flair.svg";
+import { TutorialStyles } from "../../components/styles";
 
 const window = Dimensions.get("window");
 
-const SignupScreen = ({ onContinue }: {onContinue: () => void}) => (
-  <SafeAreaView style={styles.root}>
+const SignupScreen = ({ onContinue }: { onContinue: () => void }) => (
+  <Layout style={styles.root}>
     <Auth0BubbleBackground
       style={{ position: "absolute", top: 0 }}
       width={window.width}
@@ -34,11 +27,10 @@ const SignupScreen = ({ onContinue }: {onContinue: () => void}) => (
     </Layout>
 
     <Layout style={styles.buttonContainer}>
-      <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>In the meantime...</Text>
-      <Button
-        style={styles.button}
-        onPress={() => onContinue()}
-      >
+      <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
+        In the meantime...
+      </Text>
+      <Button style={styles.button} onPress={() => onContinue()}>
         {(evaProps: any) => (
           <Text
             {...evaProps}
@@ -49,7 +41,7 @@ const SignupScreen = ({ onContinue }: {onContinue: () => void}) => (
         )}
       </Button>
     </Layout>
-  </SafeAreaView>
+  </Layout>
 );
 
 const styles = StyleSheet.create({
@@ -57,8 +49,10 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     height: "100%",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#0000",
+    width: "80%",
   },
   image: {
     width: "75%",

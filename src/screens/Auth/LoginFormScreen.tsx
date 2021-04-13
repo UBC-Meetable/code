@@ -5,17 +5,17 @@ import {
 import React, { useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
-import Colors from "../constants/Colors";
+import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
+import rootStyles from "../../components/styles/rootStyles";
+import Colors from "../../constants/Colors";
 
 const window = Dimensions.get("window");
 
-type SignUpFormScreenProps = {
-    onLogIn: () => void,
-    onCreate: (email: string) => void,
-}
+type LoginFormScreenProps = {
+  onSignUp: () => void;
+};
 
-const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
+const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,14 +25,6 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const confirmForm = () => {
     setError(() => []);
     let flag = true;
-    if (password !== confirmPassword) {
-      setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
-      flag = false;
-    }
-    if (email !== confirmEmail) {
-      setError((prevErrors) => [...prevErrors, "Emails do not match"]);
-      flag = false;
-    }
     if (!email) {
       setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
@@ -43,16 +35,15 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
     }
     return flag;
   };
-  const createProfile = async () => {
+  const login = async () => {
     setError([]);
     if (!confirmForm()) return;
     try {
-      const user = await Auth.signUp({
+      const user = await Auth.signIn({
         username: email,
         password,
       });
       console.log(user);
-      onCreate(email);
     } catch (e) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
@@ -60,7 +51,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.root}>
+    <Layout style={rootStyles}>
       <LoginPageBubbleTop
         style={{ position: "absolute", top: 0 }}
         width={window.width}
@@ -75,26 +66,12 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             keyboardType="email-address"
             autoCompleteType="email"
           />
-          <Input
-            value={confirmEmail}
-            placeholder="Confirm Email"
-            onChangeText={(e) => setConfirmEmail(e.toLowerCase())}
-            keyboardType="email-address"
-            autoCompleteType="email"
-          />
         </Layout>
         <Layout style={styles.emailContainer}>
           <Input
             value={password}
             placeholder="Your Password"
             onChangeText={(e) => setPassword(e)}
-            secureTextEntry
-            autoCompleteType="password"
-          />
-          <Input
-            value={confirmPassword}
-            placeholder="Confirm Password"
-            onChangeText={(e) => setConfirmPassword(e)}
             secureTextEntry
             autoCompleteType="password"
           />
@@ -110,7 +87,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       <Button
         style={styles.button}
         onPress={() => {
-          createProfile();
+          login();
         }}
       >
         {(evaProps: any) => (
@@ -118,33 +95,25 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             {...evaProps}
             style={{ ...evaProps.style, ...styles.buttonText }}
           >
-            Create Profile
+            Log In
           </Text>
         )}
       </Button>
       <Text style={{ ...styles.loginText }}>
-        Already have an account?
+        Don't have an account?
         {" "}
         <Text
           style={{ ...styles.loginText, color: "#02A3F4" }}
-          onPress={() => onLogIn()}
+          onPress={() => onSignUp()}
         >
-          Log in
+          Sign Up
         </Text>
       </Text>
-    </SafeAreaView>
+    </Layout>
   );
 };
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    display: "flex",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff8f3",
-  },
   button: {
     marginBottom: 20,
     width: "90%",
@@ -176,4 +145,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpFormScreen;
+export default LoginFormScreen;

@@ -1,5 +1,4 @@
 ## [Start] Set default values. **
-$util.qr($context.args.input.put("id", $util.defaultIfNull($ctx.args.input.id, $util.autoId())))
 #set( $createdAt = $util.time.nowISO8601() )
 ## Automatically set the createdAt timestamp. **
 $util.qr($context.args.input.put("createdAt", $util.defaultIfNull($ctx.args.input.createdAt, $createdAt)))
@@ -51,8 +50,14 @@ $util.qr($context.args.input.put("updatedAt", $util.defaultIfNull($ctx.args.inpu
 #end
 ## [End] Check authMode and execute owner/group checks **
 
+## [Start] Set the primary @key. **
+#set( $modelObjectKey = {
+  "email": $util.dynamodb.toDynamoDB($ctx.args.input.email)
+} )
+## [End] Set the primary @key. **
+
 ## [Start] Prepare DynamoDB PutItem Request. **
-$util.qr($context.args.input.put("__typename", "User"))
+$util.qr($context.args.input.put("__typename", "UserProfile"))
 #set( $condition = {
   "expression": "attribute_not_exists(#id)",
   "expressionNames": {
