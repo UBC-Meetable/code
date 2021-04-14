@@ -1,6 +1,6 @@
 projects:
   meetable:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/meetable/build/schema.graphql
     includes:
       - src/graphql/**/*.ts
     excludes:

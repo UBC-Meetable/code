@@ -105,3 +105,6 @@ dist
 
 
 .vscode/
+
+amplify/mock-data
+src/aws-exports.js

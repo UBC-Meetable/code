@@ -1,3 +1,4 @@
+import Auth from "@aws-amplify/auth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button,
