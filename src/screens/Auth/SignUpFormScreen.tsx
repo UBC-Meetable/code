@@ -4,9 +4,7 @@ import {
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
-import createUserProfile from "../../calls/createUserProfile";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
 
@@ -68,7 +66,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         width={window.width}
         height={window.height}
       />
-      <KeyboardAvoidingView behavior="position" style={styles.formContainer}>
+      <KeyboardAvoidingView behavior="padding" style={styles.formContainer} collapsable>
         <Layout style={styles.emailContainer}>
           <Input
             value={email}

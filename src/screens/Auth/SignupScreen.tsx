@@ -6,11 +6,12 @@ import { Dimensions, StyleSheet } from "react-native";
 import Auth0BubbleBackground from "../../assets/images/auth0-bubble.svg";
 import Auth0Flair from "../../assets/images/auth0-flair.svg";
 import { TutorialStyles } from "../../components/styles";
+import rootStyles from "../../components/styles/rootStyles";
 
 const window = Dimensions.get("window");
 
 const SignupScreen = ({ onContinue }: { onContinue: () => void }) => (
-  <Layout style={styles.root}>
+  <Layout style={rootStyles}>
     <Auth0BubbleBackground
       style={{ position: "absolute", top: 0 }}
       width={window.width}
@@ -19,7 +20,7 @@ const SignupScreen = ({ onContinue }: { onContinue: () => void }) => (
 
     <Layout style={styles.mainContainer}>
       <Text style={TutorialStyles.title}>Hang Tight!</Text>
-      <Text style={[TutorialStyles.body, styles.body]}>
+      <Text style={[styles.body]}>
         We are analyzing your responses and will put you in a friend group
         shortly.
       </Text>
@@ -47,8 +48,6 @@ const SignupScreen = ({ onContinue }: { onContinue: () => void }) => (
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    display: "flex",
-    height: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#0000",
@@ -101,6 +100,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
     marginBottom: 20,
+    fontSize: 16,
+    fontFamily: "Poppins_400Regular",
   },
 });
 

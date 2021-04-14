@@ -6,10 +6,14 @@ const useAuthenticatedUser = () => {
   const [user, setUser] = useState<CognitoUser | undefined>();
   useEffect(() => {
     const f = async () => {
-      const u = await Auth.currentAuthenticatedUser();
-      setUser(u);
+      try {
+        const u = await Auth.currentAuthenticatedUser();
+        setUser(u);
+      } catch (e) {
+        setUser(undefined);
+      }
     };
-    f();
+    if (!user) { f(); }
   }, []);
   return user as CognitoUser;
 };

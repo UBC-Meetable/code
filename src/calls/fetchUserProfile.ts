@@ -1,9 +1,10 @@
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import { getUserProfile } from "../graphql/queries";
-import { GetUserProfileQuery, UserProfile } from "../API";
+import { GetUserProfileQuery, GetUserProfileQueryVariables, UserProfile } from "../API";
 
-const fetchUserProfile = (email:string):Promise<GraphQLResult<GetUserProfileQuery>> => API.graphql({
+const fetchUserProfile = ({ email }: GetUserProfileQueryVariables):
+Promise<GraphQLResult<GetUserProfileQuery>> => API.graphql({
   query: getUserProfile,
   variables: {
     email,

@@ -17,8 +17,7 @@ import { UserState } from "../../API";
 import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
 import updateUserProfile from "../../calls/updateUserProfile";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { RootStackParamList, SignUpParamList } from "../../types";
-import { UserContext } from "../../utils/UserContext";
+import { SignUpParamList } from "../../types";
 // import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 
 const window = Dimensions.get("window");

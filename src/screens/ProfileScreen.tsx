@@ -1,40 +1,67 @@
-import { API, graphqlOperation } from "@aws-amplify/api";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
-import { Input, Layout } from "@ui-kitten/components";
-import * as SecureStore from "expo-secure-store";
+import { Input, Layout, Text } from "@ui-kitten/components";
 import * as React from "react";
 import {
-  Image, KeyboardAvoidingView, StyleSheet, TextInput, TouchableOpacity,
+  Image, KeyboardAvoidingView, StyleSheet, TextInput,
 } from "react-native";
-import { Button } from "react-native-elements";
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
-import { Text } from "../components/Themed";
-import { createUserProfile } from "../graphql/mutations";
-import { UserContext } from "../utils/UserContext";
+import fetchUserProfile from "../calls/fetchUserProfile";
+import updateUserProfile from "../calls/updateUserProfile";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import { UserProfile } from "../types";
 import { styles as profileStyles } from "./Auth/NewProfileScreen";
 
-const SocialMediaButton = (props: { name: string }) => (
-  <TouchableOpacity style={styles.socialButton}>
-    <FontAwesome5 size={50} color="#FBBA82" {...props} />
-  </TouchableOpacity>
-);
+/** TODO: Cache user profile so we don't need to fetch so often. */
 
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
 
-  const { user, setUser } = React.useContext(UserContext);
-  const [bio, setBio] = React.useState(user.bio);
-  const [name, setName] = React.useState(user.name);
+  const user = useAuthenticatedUser();
+  const [bio, setBio] = React.useState("");
+  const [name, setName] = React.useState("");
   const [bioFocused, setBioFocused] = React.useState(false);
-
+  const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
+  const [localProfile, setLocalProfile] = React.useState<UserProfile>();
   const updateProfile = async () => {
-    await API.graphql(graphqlOperation(createUserProfile, { input: { firstName: name, email: "ch3p51@gmail.com" } }));
+    const [firstName, ...lastName] = name.trim().split(" ");
+    const updatedProfile = {
+      email: user.attributes.email,
+      bio,
+      firstName,
+      lastName: lastName.join(""),
+    };
+    const same = compareProfiles(fetchedProfile, { ...localProfile, ...updatedProfile });
+
+    if (!same) {
+      updateUserProfile(updatedProfile);
+    }
   };
+
+  const compareProfiles = (a: any, b: any) => Object.entries(a).sort().toString()
+  === Object.entries(b).sort().toString();
+
+  React.useEffect(() => {
+    const f = async () => {
+      const res = await fetchUserProfile({ email: user.attributes.email });
+
+      if (res.data) {
+        const profile = res.data.getUserProfile as UserProfile;
+        setName(`${profile?.firstName} ${profile?.lastName}`);
+        setBio(profile?.bio || "");
+        setFetchedProfile(profile);
+        setLocalProfile(profile);
+      }
+    };
+    if (user) f();
+  }, [user]);
   return (
-    <ScrollView contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}>
+    <ScrollView
+      contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}
+      bounces={false}
+    >
 
       <Layout
         style={{ backgroundColor: "#0000", position: "relative" }}
@@ -57,18 +84,10 @@ const ProfileScreen = () => {
             zIndex: 1000,
           }}
         />
-        {user.picture ? (
-          <Image
-            source={{ width: 125, height: 125, uri: user.picture }}
-            style={{ borderRadius: 100 }}
-          />
-        )
-          : (
-            <Image
-              source={noAvatar}
-              style={{ borderRadius: 100, height: 125, width: 125 }}
-            />
-          )}
+        <Image
+          source={noAvatar}
+          style={{ borderRadius: 100, height: 125, width: 125 }}
+        />
       </Layout>
 
       <Layout
@@ -80,14 +99,10 @@ const ProfileScreen = () => {
           onChangeText={(e) => setName(e)}
           style={profileStyles.inputStyle}
           textStyle={profileStyles.inputTextStyle}
+          onSubmitEditing={() => updateProfile()}
+          onBlur={() => updateProfile()}
         />
       </Layout>
-      {/* <Layout style={styles.socialLayout}>
-        <SocialMediaButton name="twitter-square" />
-        <SocialMediaButton name="facebook-square" />
-        <SocialMediaButton name="instagram" />
-        <SocialMediaButton name="snapchat-square" />
-      </Layout> */}
 
       <KeyboardAvoidingView
         enabled={bioFocused}
@@ -103,25 +118,24 @@ const ProfileScreen = () => {
           }}
           onBlur={() => {
             setBioFocused(false);
+            updateProfile();
           }}
           onSubmitEditing={() => {
             setBioFocused(false);
+            updateProfile();
           }}
           placeholder="Write a short bio about yourself..."
           multiline
-          scrollEnabled={false}
+          scrollEnabled
           numberOfLines={1}
           maxLength={175}
           style={styles.bioInput}
           value={bio}
           onChangeText={(e) => {
-            if (e.endsWith("\n")) {
-              console.log("enter");
-            } else { setBio(e); }
+            setBio(e);
           }}
         />
       </KeyboardAvoidingView>
-      <Button title="Create Profile" onPress={() => updateProfile()} />
     </ScrollView>
   );
 };

@@ -8,7 +8,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
-import { Course as CourseAPIType } from "./API";
+import { Course as CourseAPIType, UserProfile as UserProfileAPIType } from "./API";
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -125,3 +125,4 @@ export type CognitoUser = {
 };
 
 export type Course = Omit<CourseAPIType, "__typename">;
+export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "__typename" | "createdAt" | "owner" | "updatedAt">;

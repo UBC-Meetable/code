@@ -19,7 +19,9 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       tabBar={(props) => <MyTabBar {...props} />}
       initialRouteName="Course Groups"
-      tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+      tabBarOptions={{
+        activeTintColor: Colors[colorScheme].tint,
+      }}
     >
       <BottomTab.Screen
         name="Course Groups"

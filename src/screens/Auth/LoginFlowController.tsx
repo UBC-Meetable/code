@@ -1,29 +1,11 @@
-import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  Button, Layout, Text,
-} from "@ui-kitten/components";
-import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
-import { StyleSheet, Dimensions } from "react-native";
-import ENV from "../../config/env";
-import getSettings from "../../config/GetSettings";
-import { RootStackParamList, User } from "../../types";
-import Auth from "../../utils/Auth";
-import LoginPage from "../../assets/images/login-background.svg";
-import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
-import LoginScreen from "./LoginScreen";
-import TutorialScreen from "./TutorialScreen";
-import QuizScreen from "./QuizScreen";
-import SignupScreen from "./SignupScreen";
-import SignUpFormScreen from "./SignUpFormScreen";
 import ConfirmEmailScreen from "../ConfirmEmailScreen";
 import LoginFormScreen from "./LoginFormScreen";
-
-const window = Dimensions.get("window");
-
-const {
-  auth0: { passwordlessClient },
-} = getSettings();
+import LoginScreen from "./LoginScreen";
+import QuizScreen from "./QuizScreen";
+import SignUpFormScreen from "./SignUpFormScreen";
+import SignupScreen from "./SignupScreen";
+import TutorialScreen from "./TutorialScreen";
 
 // eslint-disable-next-line no-shadow
 enum AuthState {

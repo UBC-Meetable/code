@@ -2,16 +2,19 @@ import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Course } from "../types";
+import { CourseInput, UserState } from "../../API";
+import updateUserProfile from "../../calls/updateUserProfile";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import { Course } from "../../types";
 
-const EditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
+const NewEditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
   const [courses, setCourses] = useState(new Set<string>());
   const [code, setCode] = useState("");
   const [section, setSection] = useState("");
-
+  const user = useAuthenticatedUser();
   function addCourse() {
     if (!code || !section) return;
     const newCourse: Course = { code, section };
@@ -24,12 +27,22 @@ const EditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
     setCourses((prev) => new Set(Array.from(prev.values()).filter((x) => x !== name)));
   }
 
-  function onSave() {
-    const courseArr = Array.from(courses).map((courseString) => JSON.parse(courseString) as Course);
-    console.log(courseArr);
-
-    onFinish();
-  }
+  const onSave = async () => {
+    if (!courses.size) {
+      onFinish();
+      return;
+    }
+    const courseArr = Array.from(courses)
+      .map((courseString) => JSON.parse(courseString) as CourseInput);
+    const res = await updateUserProfile({
+      email: user.attributes.email,
+      courses: courseArr,
+      userState: UserState.DONE,
+    });
+    if (res.data) {
+      onFinish();
+    }
+  };
 
   return (
     <SafeAreaView style={styles.root}>
@@ -106,7 +119,7 @@ const EditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
             {...evaProps}
             style={{ ...evaProps.style, ...styles.buttonText }}
           >
-            Save and Continue
+            {courses.size > 0 ? "Save and Continue" : "Add Later"}
           </Text>
         )}
       </Button>
@@ -239,4 +252,4 @@ const stylesTwo = StyleSheet.create({
   },
 });
 
-export default EditCourseScreen;
+export default NewEditCourseScreen;

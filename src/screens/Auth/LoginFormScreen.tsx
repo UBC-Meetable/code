@@ -4,7 +4,6 @@ import {
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";

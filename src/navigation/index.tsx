@@ -18,27 +18,29 @@ import Amplify from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as React from "react";
 import { ColorSchemeName, Dimensions, useColorScheme } from "react-native";
+import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
-import ENV from "../config/env";
+import createUserProfile from "../calls/createUserProfile";
+import fetchUserProfile from "../calls/fetchUserProfile";
+import ChatBackButton from "../components/ChatBackButton";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
-import EditCourseScreen from "../screens/EditCoursesScreen";
+import EditCourseScreen from "../screens/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
-import { UserContext } from "../utils/UserContext";
 import BottomTabNavigator from "./BottomTabNavigator";
-import LinkingConfiguration from "./LinkingConfiguration";
-import fetchUserProfile from "../calls/fetchUserProfile";
-import createUserProfile from "../calls/createUserProfile";
-import { UserState } from "../API";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 
-Amplify.configure(awsconfig);
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
 const window = Dimensions.get("window");
-// If you are not familiar with React Navigation, we recommend going through the
-// "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 
 export default function Navigation({
   colorScheme,
@@ -50,7 +52,6 @@ export default function Navigation({
     <>
       <UiProvider {...eva} theme={dark ? eva.light : eva.light}>
         <NavigationContainer
-          linking={LinkingConfiguration}
           theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
         >
           <App />
@@ -78,22 +79,22 @@ const App = () => {
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-type RootNames = "Tutorial" | "Login" | "Tabs" | "NotFound" | "Quiz" | "Signup" | "EditCourses" | "UniScreen" | "NewProfileScreen" | "ProfileSettings"
-
 const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
-  const { user, setUser } = React.useContext(UserContext);
-
+  const user = useAuthenticatedUser();
+  const handleFinish = () => {
+    setUserState(UserState.DONE);
+  };
   React.useEffect(() => {
-    const f = async () => {
-      const authUser:CognitoUser = await Auth.currentAuthenticatedUser();
-      console.log(authUser.attributes.email);
+    const f = async (loggedInUser: CognitoUser) => {
+      if (!loggedInUser) return;
       try {
-        let userProfile = (await fetchUserProfile(authUser.attributes.email)).data?.getUserProfile;
+        let userProfile = (await fetchUserProfile({ email: loggedInUser.attributes.email }))
+          .data?.getUserProfile;
         if (!userProfile) {
-          userProfile = (await createUserProfile(authUser.attributes.email))
-            .data?.createUserProfile;
+          userProfile = (await createUserProfile(loggedInUser.attributes.email)).data
+            ?.createUserProfile;
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
         const { userState: fetchedUserState } = userProfile;
@@ -105,8 +106,9 @@ const AuthorizedApp = () => {
         console.log(e);
       }
     };
-    f();
-  }, []);
+
+    if (user) { f(user); }
+  }, [user]);
 
   if (loading) return <Spinner />;
   if (userState !== UserState.DONE) {
@@ -120,9 +122,8 @@ const AuthorizedApp = () => {
     } else {
       initRoute = "EditCourses";
     }
-    return <SignUpStackNavigator initRoute={initRoute} />;
+    return <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />;
   }
-  const initRoute = ENV.SKIP_LOGIN ? "Tabs" : `${user.name ? "Tabs" : "Login"}` as RootNames;
 
   return (
     <Stack.Navigator
@@ -130,7 +131,7 @@ const AuthorizedApp = () => {
         headerShown: false,
         cardStyle: { backgroundColor: "#FEEDDE" },
       }}
-      initialRouteName={initRoute}
+      initialRouteName="Tabs"
     >
       <Stack.Screen
         name="Tabs"
@@ -259,33 +260,3 @@ const AuthenticatedApp = withAuthenticator(AuthorizedApp, {
     <LoginFlowController />,
   ],
 });
-
-const ChatBackButton = ({
-  navigation,
-  label,
-  showBack = true,
-}: {
-  navigation: StackNavigationProp<RootStackParamList, RootNames | "Group">,
-  label: string,
-  showBack?: boolean
-}) => (
-  <Layout style={{ padding: 10, backgroundColor: "#0000" }}>
-    {showBack && (
-      <HeaderBackButton
-        onPress={() => navigation.goBack()}
-        tintColor="#000"
-        labelVisible={false}
-      />
-    )}
-    <Text
-      style={{
-        fontFamily: "Poppins_600SemiBold",
-        fontSize: 24,
-        marginLeft: 10,
-        marginTop: 10,
-      }}
-    >
-      {label}
-    </Text>
-  </Layout>
-);

@@ -1,5 +1,4 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button, Input, Layout, Text,
@@ -13,7 +12,7 @@ import { UserState } from "../../API";
 import noAvatar from "../../assets/images/noavatar.png";
 import updateUserProfile from "../../calls/updateUserProfile";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { RootStackParamList, SignUpParamList } from "../../types";
+import { SignUpParamList } from "../../types";
 
 const NewProfileScreen = ({
   navigation,
@@ -186,7 +185,6 @@ const styles = StyleSheet.create({
   },
   bioBubble: {
     height: "100%",
-    borderWidth: 1,
     maxHeight: 300,
     flex: 1,
     padding: 10,
