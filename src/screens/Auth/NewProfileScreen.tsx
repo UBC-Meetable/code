@@ -1,23 +1,25 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import * as Device from "expo-device";
-import { getExpoPushTokenAsync, requestPermissionsAsync } from "expo-notifications";
-import * as SecureStore from "expo-secure-store";
 import * as React from "react";
 import {
   Image, KeyboardAvoidingView, StyleSheet, TextInput,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { UserState } from "../../API";
 import noAvatar from "../../assets/images/noavatar.png";
 import updateUserProfile from "../../calls/updateUserProfile";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { RootStackParamList, User } from "../../types";
-import { UserContext } from "../../utils/UserContext";
+import { RootStackParamList, SignUpParamList } from "../../types";
 
-const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "NewProfileScreen"> }) => {
+const NewProfileScreen = ({
+  navigation,
+}: {
+  navigation: StackNavigationProp<SignUpParamList, "NewProfileScreen">;
+}) => {
   // const { user, setUser } = React.useContext(UserContext);
   const user = useAuthenticatedUser();
   const [name, setName] = React.useState("");
@@ -25,22 +27,29 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
 
   const handleFinish = async () => {
     const [firstName, ...lastName] = name.trim().split(" ");
-    await updateUserProfile({
-      email: user.attributes.email, firstName, lastName: lastName.join(" "), bio,
-    });
+    if (firstName.length && bio.length) {
+      const res = await updateUserProfile({
+        email: user.attributes.email,
+        firstName,
+        lastName: lastName.join(" "),
+        bio,
+        userState: UserState.PROFILE_CREATED,
+      });
+
+      if (res.data) {
+        navigation.navigate("EditCourses");
+      }
+    }
   };
 
   return (
-
     <ScrollView
       overScrollMode="never"
       bounces={false}
       contentContainerStyle={{ ...styles.container, flex: 0, height: "100%" }}
       keyboardShouldPersistTaps="handled"
     >
-      <Layout
-        style={{ backgroundColor: "#0000", position: "relative" }}
-      >
+      <Layout style={{ backgroundColor: "#0000", position: "relative" }}>
         <MaterialCommunityIcons
           name="pencil"
           size={30}
@@ -65,10 +74,9 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
         />
       </Layout>
 
-      <Layout
-        style={styles.nameContainer}
-      >
+      <Layout style={styles.nameContainer}>
         <Input
+          placeholder="Your Name"
           value={name}
           onChangeText={(e) => setName(e)}
           style={styles.inputStyle}
@@ -81,9 +89,7 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
         keyboardVerticalOffset={175}
         contentContainerStyle={styles.bioBubble}
         style={styles.keyboardHider}
-
       >
-
         <Text style={styles.bigBioHead}>Bio</Text>
         <TextInput
           placeholder="Write a short bio about yourself..."
@@ -93,12 +99,12 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
           value={bio}
           onChangeText={(e) => setBio(e)}
         />
-
       </KeyboardAvoidingView>
 
       <Button
         style={styles.button}
         onPress={() => {
+          handleFinish();
         }}
       >
         {(evaProps: any) => (
@@ -110,7 +116,6 @@ const NewProfileScreen = ({ navigation }: { navigation: StackNavigationProp<Root
           </Text>
         )}
       </Button>
-
     </ScrollView>
   );
 };

@@ -17,13 +17,13 @@ import { UserState } from "../../API";
 import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
 import updateUserProfile from "../../calls/updateUserProfile";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { RootStackParamList } from "../../types";
+import { RootStackParamList, SignUpParamList } from "../../types";
 import { UserContext } from "../../utils/UserContext";
 // import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 
 const window = Dimensions.get("window");
 
-const UniScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "UniScreen"> }) => {
+const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParamList, "UniScreen"> }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
   const [major, setMajor] = useState("");
   const universities = ["The University of British Columbia", "The University of Toronto", "Simon Fraser University", "Queen's University"];

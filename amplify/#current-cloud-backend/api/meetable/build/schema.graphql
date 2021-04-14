@@ -7,6 +7,7 @@ type UserProfile {
   userState: UserState
   university: String
   major: String
+  courses: [Course!]
   createdAt: AWSDateTime!
   updatedAt: AWSDateTime!
   owner: String
@@ -15,7 +16,18 @@ type UserProfile {
 enum UserState {
   SIGNED_UP
   UNI_SELECTED
+  PROFILE_CREATED
   DONE
+}
+
+type Course {
+  code: String!
+  section: String!
+}
+
+input CourseInput {
+  code: String!
+  section: String!
 }
 
 enum ModelSortDirection {
@@ -147,6 +159,7 @@ input CreateUserProfileInput {
   userState: UserState
   university: String
   major: String
+  courses: [CourseInput!]
 }
 
 input UpdateUserProfileInput {
@@ -158,6 +171,7 @@ input UpdateUserProfileInput {
   userState: UserState
   university: String
   major: String
+  courses: [CourseInput!]
 }
 
 input DeleteUserProfileInput {

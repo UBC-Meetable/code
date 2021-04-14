@@ -13,6 +13,10 @@ export const getUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner
@@ -43,6 +47,10 @@ export const listUserProfiles = /* GraphQL */ `
         userState
         university
         major
+        courses {
+          code
+          section
+        }
         createdAt
         updatedAt
         owner

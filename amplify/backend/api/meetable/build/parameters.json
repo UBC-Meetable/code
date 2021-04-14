@@ -10,5 +10,5 @@
         ]
     },
     "S3DeploymentBucket": "amplify-meetable-dev-134616-deployment",
-    "S3DeploymentRootKey": "amplify-appsync-files/6ba0a41c5734ad753080fcdb1ffd68f126a70b57"
+    "S3DeploymentRootKey": "amplify-appsync-files/603ff19126f87b9eada4d78e61afc830cc7efba5"
 }

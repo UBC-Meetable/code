@@ -8,6 +8,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
+import { Course as CourseAPIType } from "./API";
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -122,3 +123,5 @@ export type CognitoUser = {
   userDataKey: string;
   username: string;
 };
+
+export type Course = Omit<CourseAPIType, "__typename">;

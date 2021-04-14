@@ -11,14 +11,21 @@ export type CreateUserProfileInput = {
   userState?: UserState | null,
   university?: string | null,
   major?: string | null,
+  courses?: Array< CourseInput > | null,
 };
 
 export enum UserState {
   SIGNED_UP = "SIGNED_UP",
   UNI_SELECTED = "UNI_SELECTED",
+  PROFILE_CREATED = "PROFILE_CREATED",
   DONE = "DONE",
 }
 
+
+export type CourseInput = {
+  code: string,
+  section: string,
+};
 
 export type ModelUserProfileConditionInput = {
   firstName?: ModelStringInput | null,
@@ -88,9 +95,16 @@ export type UserProfile = {
   userState?: UserState | null,
   university?: string | null,
   major?: string | null,
+  courses?:  Array<Course > | null,
   createdAt?: string,
   updatedAt?: string,
   owner?: string | null,
+};
+
+export type Course = {
+  __typename: "Course",
+  code?: string,
+  section?: string,
 };
 
 export type UpdateUserProfileInput = {
@@ -102,6 +116,7 @@ export type UpdateUserProfileInput = {
   userState?: UserState | null,
   university?: string | null,
   major?: string | null,
+  courses?: Array< CourseInput > | null,
 };
 
 export type DeleteUserProfileInput = {
@@ -150,6 +165,11 @@ export type CreateUserProfileMutation = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -172,6 +192,11 @@ export type UpdateUserProfileMutation = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -194,6 +219,11 @@ export type DeleteUserProfileMutation = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -215,6 +245,11 @@ export type GetUserProfileQuery = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -242,6 +277,11 @@ export type ListUserProfilesQuery = {
       userState?: UserState | null,
       university?: string | null,
       major?: string | null,
+      courses?:  Array< {
+        __typename: "Course",
+        code: string,
+        section: string,
+      } > | null,
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
@@ -265,6 +305,11 @@ export type OnCreateUserProfileSubscription = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -286,6 +331,11 @@ export type OnUpdateUserProfileSubscription = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -307,6 +357,11 @@ export type OnDeleteUserProfileSubscription = {
     userState?: UserState | null,
     university?: string | null,
     major?: string | null,
+    courses?:  Array< {
+      __typename: "Course",
+      code: string,
+      section: string,
+    } > | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,

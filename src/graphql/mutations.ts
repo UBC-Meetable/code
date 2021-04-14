@@ -16,6 +16,10 @@ export const createUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner
@@ -36,6 +40,10 @@ export const updateUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner
@@ -56,6 +64,10 @@ export const deleteUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner

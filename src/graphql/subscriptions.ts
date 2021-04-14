@@ -13,6 +13,10 @@ export const onCreateUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner
@@ -30,6 +34,10 @@ export const onUpdateUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner
@@ -47,6 +55,10 @@ export const onDeleteUserProfile = /* GraphQL */ `
       userState
       university
       major
+      courses {
+        code
+        section
+      }
       createdAt
       updatedAt
       owner

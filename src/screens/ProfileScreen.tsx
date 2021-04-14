@@ -12,7 +12,7 @@ import { Button } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
 import { Text } from "../components/Themed";
-import { createUser } from "../graphql/mutations";
+import { createUserProfile } from "../graphql/mutations";
 import { UserContext } from "../utils/UserContext";
 import { styles as profileStyles } from "./Auth/NewProfileScreen";
 
@@ -31,7 +31,7 @@ const ProfileScreen = () => {
   const [bioFocused, setBioFocused] = React.useState(false);
 
   const updateProfile = async () => {
-    await API.graphql(graphqlOperation(createUser, { input: { firstName: name, email: "ch3p51@gmail.com" } }));
+    await API.graphql(graphqlOperation(createUserProfile, { input: { firstName: name, email: "ch3p51@gmail.com" } }));
   };
   return (
     <ScrollView contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}>

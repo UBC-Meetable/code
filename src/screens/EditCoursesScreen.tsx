@@ -5,34 +5,36 @@ import React, { useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Course } from "../types";
 
-const EditCourseScreen = () => {
-  const [courses, setCourses] = useState([] as string[]);
+const EditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
+  const [courses, setCourses] = useState(new Set<string>());
   const [code, setCode] = useState("");
   const [section, setSection] = useState("");
-  const courseName = "";
-  const window = Dimensions.get("window");
 
   function addCourse() {
-    const newCourse = `${code} ${section}`;
-    setCourses([...courses, newCourse]);
-    alert("Course Added");
+    if (!code || !section) return;
+    const newCourse: Course = { code, section };
+    setCode("");
+    setSection("");
+    setCourses(new Set(courses.add(JSON.stringify(newCourse))));
   }
 
   function deleteCourse(name: String) {
-    setCourses(courses.filter((course) => course !== name));
+    setCourses((prev) => new Set(Array.from(prev.values()).filter((x) => x !== name)));
   }
 
   function onSave() {
-    alert("Changes saved!");
+    const courseArr = Array.from(courses).map((courseString) => JSON.parse(courseString) as Course);
+    console.log(courseArr);
+
+    onFinish();
   }
 
   return (
     <SafeAreaView style={styles.root}>
       <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          Course Code
-        </Text>
+        <Text style={styles.textStyle}>Course Code</Text>
         <Input
           style={styles.inputStyle}
           placeholder="COMM 101"
@@ -43,9 +45,7 @@ const EditCourseScreen = () => {
         />
       </Layout>
       <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          Section
-        </Text>
+        <Text style={styles.textStyle}>Section</Text>
         <Input
           style={styles.inputStyle}
           placeholder="235"
@@ -71,28 +71,29 @@ const EditCourseScreen = () => {
         )}
       </Button>
       <ScrollView contentContainerStyle={styles.selectionsContainer}>
-        {courses.map((course, index) => (
-          <Layout key={index} style={styles.courseContainer}>
-            <Text style={styles.courseTextStyle}>
-              {course}
-            </Text>
-            <Button
-              appearance="ghost"
-              onPress={() => {
-                deleteCourse(course);
-              }}
-            >
-              {(evaProps: any) => (
-                <Text
-                  {...evaProps}
-                  style={{ ...evaProps.style, ...styles.deleteButtonText }}
-                >
-                  X
-                </Text>
-              )}
-            </Button>
-          </Layout>
-        ))}
+        {Array.from(courses.values()).map((course, index) => {
+          const courseObj = JSON.parse(course) as Course;
+          return (
+            <Layout key={index} style={styles.courseContainer}>
+              <Text style={styles.courseTextStyle}>{`${courseObj.code} ${courseObj.section}`}</Text>
+              <Button
+                appearance="ghost"
+                onPress={() => {
+                  deleteCourse(course);
+                }}
+              >
+                {(evaProps: any) => (
+                  <Text
+                    {...evaProps}
+                    style={{ ...evaProps.style, ...styles.deleteButtonText }}
+                  >
+                    X
+                  </Text>
+                )}
+              </Button>
+            </Layout>
+          );
+        })}
       </ScrollView>
       <Button
         style={styles.button}
@@ -105,7 +106,7 @@ const EditCourseScreen = () => {
             {...evaProps}
             style={{ ...evaProps.style, ...styles.buttonText }}
           >
-            Save Changes
+            Save and Continue
           </Text>
         )}
       </Button>

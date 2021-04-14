@@ -22,7 +22,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-meetable-dev-134616-deployment/amplify-cfn-templates/auth/meetablea02db50ea02db50e-cloudformation-template.yml",
         "logicalId": "authmeetablea02db50ea02db50e"
       },
-      "lastPushTimeStamp": "2021-04-13T00:15:20.030Z",
+      "lastPushTimeStamp": "2021-04-13T23:37:38.879Z",
       "output": {
         "CreatedSNSRole": "arn:aws:iam::609336482033:role/snsa02db50e134616-dev",
         "UserPoolId": "us-east-1_35HLkYBt4",
@@ -56,8 +56,8 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-meetable-dev-134616-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apimeetable"
       },
-      "lastPushTimeStamp": "2021-04-13T00:15:22.405Z",
-      "lastPushDirHash": "cmhBEN8B1o+CD8vjMRGEcPNNtso="
+      "lastPushTimeStamp": "2021-04-13T23:37:41.384Z",
+      "lastPushDirHash": "vgHnOR+O0Pqq9ZoGWWBwKetJc54="
     }
   }
 }
