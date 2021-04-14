@@ -26,7 +26,7 @@ const SignUpStackNavigator = ({
       {(props) => <NewProfileScreen {...props} />}
     </SignUpStack.Screen>
     <SignUpStack.Screen
-      name="EditCourses"
+      name="NewEditCourses"
       options={{ headerShown: false }}
     >
       {(props) => (

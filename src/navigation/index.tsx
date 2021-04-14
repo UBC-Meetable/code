@@ -120,7 +120,7 @@ const AuthorizedApp = () => {
     } else if (userState === UserState.UNI_SELECTED) {
       initRoute = "NewProfileScreen";
     } else {
-      initRoute = "EditCourses";
+      initRoute = "NewEditCourses";
     }
     return <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />;
   }

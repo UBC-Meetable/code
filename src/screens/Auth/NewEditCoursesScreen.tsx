@@ -29,7 +29,13 @@ const NewEditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
 
   const onSave = async () => {
     if (!courses.size) {
-      onFinish();
+      const res = await updateUserProfile({
+        email: user.attributes.email,
+        userState: UserState.DONE,
+      });
+      if (res.data) {
+        onFinish();
+      }
       return;
     }
     const courseArr = Array.from(courses)

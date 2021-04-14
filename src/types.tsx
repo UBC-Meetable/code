@@ -99,7 +99,7 @@ export type QuestionType= {
 export type SignUpParamList = {
   UniScreen: undefined;
   NewProfileScreen: undefined;
-  EditCourses: undefined;
+  NewEditCourses: undefined;
 };
 
 export type CognitoUser = {
