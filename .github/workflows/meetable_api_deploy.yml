@@ -23,5 +23,5 @@ jobs:
             ${{ runner.os }}-
       - name: Install Packages
         run: npm install
-      - name: Run tests
-        run: npm run test
+      # - name: Run tests
+      #   run: npm run test
