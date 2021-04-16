@@ -3,11 +3,13 @@ import {
   List, Layout,
 } from "@ui-kitten/components";
 import {
+  RefreshControl,
   StyleSheet, Text, TouchableOpacity,
 } from "react-native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
+import { debounce, throttle } from "lodash";
 import { CourseGroup, GroupStackParamList } from "../types";
 import fetchUserCourses from "../calls/fetchUserCourses";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
@@ -34,18 +36,24 @@ const CourseGroups = ({
 
   const headerHeight = useHeaderHeight();
 
+  const getCourses = debounce(async () => {
+    setLoading(() => false);
+    try {
+      const fetchedGroups = await fetchUserCourses({ email: user.attributes.email });
+      setGroups(() => fetchedGroups);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+      console.log("done");
+    }
+  }, 10000);
+
   React.useEffect(() => {
-    const f = async () => {
-      try {
-        const fetchedGroups = await fetchUserCourses({ email: user.attributes.email });
-        setGroups(() => fetchedGroups);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    if (user) f();
+    if (user) {
+      getCourses();
+      getCourses.flush();
+    }
   }, [user]);
 
   const renderItem = ({ item }:{item: CourseGroup}) => (
@@ -54,7 +62,17 @@ const CourseGroups = ({
 
   return (
     <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
-      <List bounces={false} style={[styles.card]} data={groups} renderItem={renderItem} />
+      <List
+        refreshControl={(
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={getCourses}
+          />
+        )}
+        style={[styles.card]}
+        data={groups}
+        renderItem={renderItem}
+      />
     </Layout>
   );
 };

@@ -9,7 +9,7 @@ import { CourseInput } from "../API";
 import fetchUserCourses from "../calls/fetchUserCourses";
 import updateUserProfile from "../calls/updateUserProfile";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import { Course } from "../types";
+import { Course, CourseGroup } from "../types";
 
 /** TODO: Cache user courses so we don't need to fetch so often. */
 const EditCourseScreen = () => {
@@ -20,13 +20,11 @@ const EditCourseScreen = () => {
 
   useEffect(() => {
     const f = async () => {
-      const profile = await fetchUserCourses({ email: user.attributes.email });
-      if (profile.data) {
-        const courseStringSet = new Set<string>();
-        profile.data.getUserProfile?.courses
-          ?.forEach((course:Course) => courseStringSet.add(JSON.stringify(course)));
-        setCourses(courseStringSet);
-      }
+      const fetchedCourses = await fetchUserCourses({ email: user.attributes.email });
+      const courseStringSet = new Set<string>();
+      fetchedCourses.forEach((courseGroup:CourseGroup) => courseStringSet
+        .add(JSON.stringify(courseGroup.course)));
+      setCourses(courseStringSet);
     };
 
     if (user) f();
