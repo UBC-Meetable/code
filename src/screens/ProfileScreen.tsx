@@ -8,6 +8,7 @@ import {
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
+import fetchUserCourses from "../calls/fetchUserCourses";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
@@ -46,7 +47,6 @@ const ProfileScreen = () => {
   React.useEffect(() => {
     const f = async () => {
       const res = await fetchUserProfile({ email: user.attributes.email });
-
       if (res.data) {
         const profile = res.data.getUserProfile as UserProfile;
         setName(`${profile?.firstName} ${profile?.lastName}`);

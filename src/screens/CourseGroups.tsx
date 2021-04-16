@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   List, Layout,
 } from "@ui-kitten/components";
@@ -8,13 +8,20 @@ import {
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Avatar, Chip } from "react-native-paper";
 import { CommonActions } from "@react-navigation/native";
-import { GroupStackParamList } from "../types";
+import { CourseGroup, GroupStackParamList } from "../types";
+import fetchUserCourses from "../calls/fetchUserCourses";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import CourseGroupBubble from "../components/CourseGroupBubble";
 
 const CourseGroups = ({
   navigation,
 }: {
   navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
 }) => {
+  const user = useAuthenticatedUser();
+  const [loading, setLoading] = useState(true);
+  const [groups, setGroups] = useState<CourseGroup[] | undefined>();
+
   const joinGroup = (groupId: string, groupName: string) => {
     navigation.dispatch(
       CommonActions.navigate("Group", {
@@ -26,60 +33,28 @@ const CourseGroups = ({
   };
 
   const headerHeight = useHeaderHeight();
-  const groups = [
-    ["BUCS", "1"],
-    ["group 2", "2"],
-    ["group 3", "3"],
-    ["group 4", "4"],
-    ["group 5", "5"],
-    ["group 6", "6"],
-    ["group 7", "7"],
-    ["group 8", "8"],
-    ["group 9", "9"],
-    ["group 10", "10"],
-    ["group 11", "11"],
-    ["group 12", "12"],
-    ["group 13", "13"],
-    ["group 14", "14"],
-    ["group 15", "15"],
-  ];
 
-  const renderItem = ({ item }:{item: string[]}) => {
-    const [name, id] = item;
-    return (
-      <TouchableOpacity style={styles.bubble} onPress={() => joinGroup(id, name)}>
-        <Text style={styles.bubbleText}>
-          ECON 101
-        </Text>
+  React.useEffect(() => {
+    const f = async () => {
+      try {
+        const fetchedGroups = await fetchUserCourses({ email: user.attributes.email });
+        setGroups(() => fetchedGroups);
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (user) f();
+  }, [user]);
 
-        {/* <View style={styles.sectionBubble}>
-          <Text style={styles.sectionBubbleText}>201</Text>
-        </View> */}
-
-        <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
-          100
-        </Chip>
-
-        <Text style={styles.bubbleTextDesc}>
-          lorem ipsum lorem ipsum lorem ipsum
-          {"\n"}
-          hi hi hi hi ih ih lorem ipsum lorem ipsum
-        </Text>
-
-        <Layout style={styles.facePileBubble}>
-          <Avatar.Icon size={38} style={styles.backPile} icon="folder" />
-          <Avatar.Text size={38} style={styles.secondBackPile} label="TF" />
-          <Avatar.Icon size={38} style={styles.secondPile} icon="folder" />
-          <Avatar.Text size={38} style={styles.frontPile} label="DS" />
-        </Layout>
-
-      </TouchableOpacity>
-    );
-  };
+  const renderItem = ({ item }:{item: CourseGroup}) => (
+    <CourseGroupBubble courseGroup={item} joinGroup={joinGroup} />
+  );
 
   return (
     <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
-      <List style={[styles.card]} data={groups} renderItem={renderItem} />
+      <List bounces={false} style={[styles.card]} data={groups} renderItem={renderItem} />
     </Layout>
   );
 };
@@ -166,7 +141,7 @@ const styles = StyleSheet.create({
     left: "30%",
   },
   card: {
-    // maxHeight: "100%",
+    height: "100%",
     overflow: "scroll",
     backgroundColor: "#0000",
   },

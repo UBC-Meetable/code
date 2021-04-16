@@ -1,4 +1,4 @@
-type UserProfile @model @auth(rules: [{ allow: owner }]) @key(fields: ["email"]) {
+type UserProfile @model @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) @key(fields: ["email"]) {
   email: String!
   firstName: String
   lastName: String
@@ -8,7 +8,27 @@ type UserProfile @model @auth(rules: [{ allow: owner }]) @key(fields: ["email"])
   university: String
   major: String
   courses: [Course!]
+  courseGroups: [CourseGroupMember] @connection(keyName: "byUser", fields: ["email"])
 }
+
+type CourseGroup @model @key(fields: ["courseID"]) @auth(rules: [{allow: owner, operations: [create]}]){
+  users: [CourseGroupMember!] @connection(keyName: "byCourseGroup", fields: ["courseID"])
+  title: String
+  course: Course!
+  courseID: String!
+}
+
+type CourseGroupMember
+  @model(queries: null)
+  @key(name: "byCourseGroup", fields: ["groupID", "email"])
+  @key(name: "byUser", fields: ["email", "groupID"]) {
+  id: ID!
+  groupID: String!
+  email: String!
+  courseGroup: CourseGroup! @connection(fields: ["groupID"])
+  user: UserProfile! @connection(fields: ["email"])
+}
+
 
 enum UserState {
   SIGNED_UP
@@ -21,3 +41,4 @@ type Course {
   code: String!
   section: String!
 }
+
