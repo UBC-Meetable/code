@@ -36,8 +36,8 @@ const CourseGroups = ({
 
   const headerHeight = useHeaderHeight();
 
-  const getCourses = debounce(async () => {
-    setLoading(() => false);
+  const getCourses = throttle(async () => {
+    setLoading(() => true);
     try {
       const fetchedGroups = await fetchUserCourses({ email: user.attributes.email });
       setGroups(() => fetchedGroups);

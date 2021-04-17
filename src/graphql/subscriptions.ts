@@ -170,6 +170,201 @@ export const onDeleteCourseGroup = /* GraphQL */ `
     }
   }
 `;
+export const onCreateGroupChat = /* GraphQL */ `
+  subscription OnCreateGroupChat {
+    onCreateGroupChat {
+      groupChatID
+      users {
+        items {
+          id
+          groupID
+          email
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          groupChatID
+          email
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateGroupChat = /* GraphQL */ `
+  subscription OnUpdateGroupChat {
+    onUpdateGroupChat {
+      groupChatID
+      users {
+        items {
+          id
+          groupID
+          email
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          groupChatID
+          email
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteGroupChat = /* GraphQL */ `
+  subscription OnDeleteGroupChat {
+    onDeleteGroupChat {
+      groupChatID
+      users {
+        items {
+          id
+          groupID
+          email
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          groupChatID
+          email
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateChatMessage = /* GraphQL */ `
+  subscription OnCreateChatMessage {
+    onCreateChatMessage {
+      id
+      groupChatID
+      email
+      author {
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      body
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateChatMessage = /* GraphQL */ `
+  subscription OnUpdateChatMessage {
+    onUpdateChatMessage {
+      id
+      groupChatID
+      email
+      author {
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      body
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteChatMessage = /* GraphQL */ `
+  subscription OnDeleteChatMessage {
+    onDeleteChatMessage {
+      id
+      groupChatID
+      email
+      author {
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      body
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
 export const onCreateCourseGroupMember = /* GraphQL */ `
   subscription OnCreateCourseGroupMember {
     onCreateCourseGroupMember {
@@ -276,6 +471,135 @@ export const onDeleteCourseGroupMember = /* GraphQL */ `
           section
         }
         courseID
+        createdAt
+        updatedAt
+        owner
+      }
+      user {
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateGroupChatMember = /* GraphQL */ `
+  subscription OnCreateGroupChatMember {
+    onCreateGroupChatMember {
+      id
+      groupID
+      email
+      groupChat {
+        groupChatID
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      user {
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateGroupChatMember = /* GraphQL */ `
+  subscription OnUpdateGroupChatMember {
+    onUpdateGroupChatMember {
+      id
+      groupID
+      email
+      groupChat {
+        groupChatID
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      user {
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteGroupChatMember = /* GraphQL */ `
+  subscription OnDeleteGroupChatMember {
+    onDeleteGroupChatMember {
+      id
+      groupID
+      email
+      groupChat {
+        groupChatID
+        users {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
         owner

@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "meetablea02db50ea02db50e": {}
+      },
+      "function": {
+        "AdminQueries00077ef8": {
+          "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
+          "s3Key": "amplify-builds/AdminQueries00077ef8-486d2f7139454c66754b-build.zip"
+        }
       }
     }
   }

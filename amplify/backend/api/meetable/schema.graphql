@@ -1,3 +1,5 @@
+
+# [MODELS]
 type UserProfile @model @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) @key(fields: ["email"]) {
   email: String!
   firstName: String
@@ -18,6 +20,32 @@ type CourseGroup @model @key(fields: ["courseID"]) @auth(rules: [{allow: owner, 
   courseID: String!
 }
 
+type GroupChat 
+  @model 
+  @key(fields: ["groupChatID"])
+  @auth(rules: [{allow: owner, operations: [create]}]) {
+  groupChatID: String!
+  users: [GroupChatMember!] @connection(keyName: "byGroupChat", fields: ["groupChatID"])
+  messages: [ChatMessage!] @connection(keyName: "byGroupChatID", fields: ["groupChatID"])
+}
+
+type ChatMessage 
+  @key(name: "byGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByGroupChatID")
+  @model
+  @auth(rules: [{allow: owner, operations: [create]}]) {
+    id: String!
+    groupChatID: String!
+    email: String!
+    author: UserProfile! @connection(fields: ["email"])
+    body: String!
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+  }
+
+# [CONNECTIONS]
+
+# [1 UserProfiles: Many CourseGroups]
+# Represents a connection between a UserProfile and a CourseGroup
 type CourseGroupMember
   @model(queries: null)
   @key(name: "byCourseGroup", fields: ["groupID", "email"])
@@ -29,7 +57,20 @@ type CourseGroupMember
   user: UserProfile! @connection(fields: ["email"])
 }
 
+# [Many UserProfiles: 1 GroupChat]
+# Represents a connection between a UserProfile and a GroupChat
+type GroupChatMember
+  @model(queries: null)
+  @key(name: "byGroupChat", fields: ["groupID", "email"])
+  @key(name: "byUser", fields: ["email", "groupID"]) {
+  id: ID!
+  groupID: String!
+  email: String!
+  groupChat: GroupChat! @connection(fields: ["groupID"])
+  user: UserProfile! @connection(fields: ["email"])
+}
 
+# [PRIVATE HELPER TYPES]
 enum UserState {
   SIGNED_UP
   UNI_SELECTED
@@ -41,4 +82,5 @@ type Course {
   code: String!
   section: String!
 }
+
 
