@@ -31,7 +31,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
   const user = useAuthenticatedUser();
   const onSubmit = async () => {
     const res = await updateUserProfile({
-      email: user.attributes.email, major, university, userState: UserState.UNI_SELECTED,
+      id: user.attributes.sub, major, university, userState: UserState.UNI_SELECTED,
     });
     console.log(res);
     if (res.data) {

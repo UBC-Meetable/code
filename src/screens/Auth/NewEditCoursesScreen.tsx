@@ -30,7 +30,7 @@ const NewEditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
   const onSave = async () => {
     if (!courses.size) {
       const res = await updateUserProfile({
-        email: user.attributes.email,
+        id: user.attributes.sub,
         userState: UserState.DONE,
       });
       if (res.data) {
@@ -41,7 +41,7 @@ const NewEditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
     const courseArr = Array.from(courses)
       .map((courseString) => JSON.parse(courseString) as CourseInput);
     const res = await updateUserProfile({
-      email: user.attributes.email,
+      id: user.attributes.sub,
       courses: courseArr,
       userState: UserState.DONE,
     });

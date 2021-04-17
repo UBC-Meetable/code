@@ -28,7 +28,7 @@ const NewProfileScreen = ({
     const [firstName, ...lastName] = name.trim().split(" ");
     if (firstName.length && bio.length) {
       const res = await updateUserProfile({
-        email: user.attributes.email,
+        id: user.attributes.sub,
         firstName,
         lastName: lastName.join(" "),
         bio,
@@ -36,7 +36,7 @@ const NewProfileScreen = ({
       });
 
       if (res.data) {
-        navigation.navigate("EditCourses");
+        navigation.navigate("NewEditCourses");
       }
     }
   };

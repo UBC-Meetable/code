@@ -2,9 +2,10 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateUserProfile = /* GraphQL */ `
-  subscription OnCreateUserProfile {
-    onCreateUserProfile {
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
       email
       firstName
       lastName
@@ -21,7 +22,7 @@ export const onCreateUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -33,9 +34,10 @@ export const onCreateUserProfile = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateUserProfile = /* GraphQL */ `
-  subscription OnUpdateUserProfile {
-    onUpdateUserProfile {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
+      id
       email
       firstName
       lastName
@@ -52,7 +54,7 @@ export const onUpdateUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -64,9 +66,10 @@ export const onUpdateUserProfile = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteUserProfile = /* GraphQL */ `
-  subscription OnDeleteUserProfile {
-    onDeleteUserProfile {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
+      id
       email
       firstName
       lastName
@@ -83,7 +86,7 @@ export const onDeleteUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -102,7 +105,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -113,7 +116,19 @@ export const onCreateCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
+      groupID
+      messages {
+        items {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -127,7 +142,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -138,7 +153,19 @@ export const onUpdateCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
+      groupID
+      messages {
+        items {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -152,7 +179,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -163,96 +190,12 @@ export const onDeleteCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onCreateGroupChat = /* GraphQL */ `
-  subscription OnCreateGroupChat {
-    onCreateGroupChat {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      groupID
       messages {
         items {
           id
           groupChatID
-          email
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onUpdateGroupChat = /* GraphQL */ `
-  subscription OnUpdateGroupChat {
-    onUpdateGroupChat {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          groupChatID
-          email
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const onDeleteGroupChat = /* GraphQL */ `
-  subscription OnDeleteGroupChat {
-    onDeleteGroupChat {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          groupChatID
-          email
+          userID
           body
           createdAt
           updatedAt
@@ -271,8 +214,9 @@ export const onCreateChatMessage = /* GraphQL */ `
     onCreateChatMessage {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -304,8 +248,9 @@ export const onUpdateChatMessage = /* GraphQL */ `
     onUpdateChatMessage {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -337,8 +282,9 @@ export const onDeleteChatMessage = /* GraphQL */ `
     onDeleteChatMessage {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -365,12 +311,12 @@ export const onDeleteChatMessage = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCourseGroupMember = /* GraphQL */ `
-  subscription OnCreateCourseGroupMember {
-    onCreateCourseGroupMember {
+export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
+  subscription OnCreateCourseGroupConnectionModel {
+    onCreateCourseGroupConnectionModel {
       id
       groupID
-      email
+      userID
       courseGroup {
         users {
           nextToken
@@ -380,12 +326,16 @@ export const onCreateCourseGroupMember = /* GraphQL */ `
           code
           section
         }
-        courseID
+        groupID
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
       }
       user {
+        id
         email
         firstName
         lastName
@@ -410,12 +360,12 @@ export const onCreateCourseGroupMember = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateCourseGroupMember = /* GraphQL */ `
-  subscription OnUpdateCourseGroupMember {
-    onUpdateCourseGroupMember {
+export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
+  subscription OnUpdateCourseGroupConnectionModel {
+    onUpdateCourseGroupConnectionModel {
       id
       groupID
-      email
+      userID
       courseGroup {
         users {
           nextToken
@@ -425,12 +375,16 @@ export const onUpdateCourseGroupMember = /* GraphQL */ `
           code
           section
         }
-        courseID
+        groupID
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
       }
       user {
+        id
         email
         firstName
         lastName
@@ -455,12 +409,12 @@ export const onUpdateCourseGroupMember = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteCourseGroupMember = /* GraphQL */ `
-  subscription OnDeleteCourseGroupMember {
-    onDeleteCourseGroupMember {
+export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
+  subscription OnDeleteCourseGroupConnectionModel {
+    onDeleteCourseGroupConnectionModel {
       id
       groupID
-      email
+      userID
       courseGroup {
         users {
           nextToken
@@ -470,47 +424,7 @@ export const onDeleteCourseGroupMember = /* GraphQL */ `
           code
           section
         }
-        courseID
-        createdAt
-        updatedAt
-        owner
-      }
-      user {
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateGroupChatMember = /* GraphQL */ `
-  subscription OnCreateGroupChatMember {
-    onCreateGroupChatMember {
-      id
-      groupID
-      email
-      groupChat {
-        groupChatID
-        users {
-          nextToken
-        }
+        groupID
         messages {
           nextToken
         }
@@ -519,92 +433,7 @@ export const onCreateGroupChatMember = /* GraphQL */ `
         owner
       }
       user {
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateGroupChatMember = /* GraphQL */ `
-  subscription OnUpdateGroupChatMember {
-    onUpdateGroupChatMember {
-      id
-      groupID
-      email
-      groupChat {
-        groupChatID
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      user {
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteGroupChatMember = /* GraphQL */ `
-  subscription OnDeleteGroupChatMember {
-    onDeleteGroupChatMember {
-      id
-      groupID
-      email
-      groupChat {
-        groupChatID
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      user {
+        id
         email
         firstName
         lastName

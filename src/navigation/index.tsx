@@ -90,11 +90,12 @@ const AuthorizedApp = () => {
     const f = async (loggedInUser: CognitoUser) => {
       if (!loggedInUser) return;
       try {
-        let userProfile = (await fetchUserProfile({ email: loggedInUser.attributes.email }))
-          .data?.getUserProfile;
+        const { email, sub: id } = loggedInUser.attributes;
+        let userProfile = (await fetchUserProfile({ id }))
+          .data?.getUser;
         if (!userProfile) {
-          userProfile = (await createUserProfile(loggedInUser.attributes.email)).data
-            ?.createUserProfile;
+          userProfile = (await createUserProfile({ email, id })).data
+            ?.createUser;
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
         const { userState: fetchedUserState } = userProfile;

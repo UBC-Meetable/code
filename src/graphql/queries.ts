@@ -2,9 +2,10 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUserProfile = /* GraphQL */ `
-  query GetUserProfile($email: String!) {
-    getUserProfile(email: $email) {
+export const getUser = /* GraphQL */ `
+  query GetUser($id: String!) {
+    getUser(id: $id) {
+      id
       email
       firstName
       lastName
@@ -21,7 +22,7 @@ export const getUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -33,22 +34,23 @@ export const getUserProfile = /* GraphQL */ `
     }
   }
 `;
-export const listUserProfiles = /* GraphQL */ `
-  query ListUserProfiles(
-    $email: String
-    $filter: ModelUserProfileFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $id: String
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listUserProfiles(
-      email: $email
+    listUsers(
+      id: $id
       filter: $filter
       limit: $limit
       nextToken: $nextToken
       sortDirection: $sortDirection
     ) {
       items {
+        id
         email
         firstName
         lastName
@@ -73,13 +75,13 @@ export const listUserProfiles = /* GraphQL */ `
   }
 `;
 export const getCourseGroup = /* GraphQL */ `
-  query GetCourseGroup($courseID: String!) {
-    getCourseGroup(courseID: $courseID) {
+  query GetCourseGroup($groupID: String!) {
+    getCourseGroup(groupID: $groupID) {
       users {
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -90,7 +92,19 @@ export const getCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
+      groupID
+      messages {
+        items {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -99,14 +113,14 @@ export const getCourseGroup = /* GraphQL */ `
 `;
 export const listCourseGroups = /* GraphQL */ `
   query ListCourseGroups(
-    $courseID: String
+    $groupID: String
     $filter: ModelCourseGroupFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listCourseGroups(
-      courseID: $courseID
+      groupID: $groupID
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -121,67 +135,7 @@ export const listCourseGroups = /* GraphQL */ `
           code
           section
         }
-        courseID
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
-export const getGroupChat = /* GraphQL */ `
-  query GetGroupChat($groupChatID: String!) {
-    getGroupChat(groupChatID: $groupChatID) {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          groupChatID
-          email
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listGroupChats = /* GraphQL */ `
-  query ListGroupChats(
-    $groupChatID: String
-    $filter: ModelGroupChatFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listGroupChats(
-      groupChatID: $groupChatID
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        groupChatID
-        users {
-          nextToken
-        }
+        groupID
         messages {
           nextToken
         }
@@ -198,8 +152,9 @@ export const getChatMessage = /* GraphQL */ `
     getChatMessage(id: $id) {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -236,8 +191,9 @@ export const listChatMessages = /* GraphQL */ `
       items {
         id
         groupChatID
-        email
+        userID
         author {
+          id
           email
           firstName
           lastName
@@ -259,8 +215,8 @@ export const listChatMessages = /* GraphQL */ `
     }
   }
 `;
-export const messagesByGroupChatId = /* GraphQL */ `
-  query MessagesByGroupChatId(
+export const messagesByCourseGroupChatId = /* GraphQL */ `
+  query MessagesByCourseGroupChatId(
     $groupChatID: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -268,7 +224,7 @@ export const messagesByGroupChatId = /* GraphQL */ `
     $limit: Int
     $nextToken: String
   ) {
-    messagesByGroupChatID(
+    messagesByCourseGroupChatID(
       groupChatID: $groupChatID
       createdAt: $createdAt
       sortDirection: $sortDirection
@@ -279,8 +235,9 @@ export const messagesByGroupChatId = /* GraphQL */ `
       items {
         id
         groupChatID
-        email
+        userID
         author {
+          id
           email
           firstName
           lastName

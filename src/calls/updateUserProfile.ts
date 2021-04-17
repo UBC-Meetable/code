@@ -1,16 +1,16 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import { UpdateUserProfileInput, UpdateUserProfileMutation, UserState } from "../API";
-import { updateUserProfile as query } from "../graphql/mutations";
+import { UpdateUserInput, UpdateUserMutation } from "../API";
+import { updateUser as query } from "../graphql/mutations";
 
-const updateUserProfile = (input: UpdateUserProfileInput):
-Promise<GraphQLResult<UpdateUserProfileMutation>> => API.graphql({
+const updateUserProfile = (input: UpdateUserInput):
+Promise<GraphQLResult<UpdateUserMutation>> => API.graphql({
   query,
   variables: {
     input: {
       ...input,
     },
   },
-}) as Promise<GraphQLResult<UpdateUserProfileMutation>>;
+}) as Promise<GraphQLResult<UpdateUserMutation>>;
 
 export default updateUserProfile;

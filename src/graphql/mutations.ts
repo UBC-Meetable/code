@@ -2,12 +2,13 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createUserProfile = /* GraphQL */ `
-  mutation CreateUserProfile(
-    $input: CreateUserProfileInput!
-    $condition: ModelUserProfileConditionInput
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createUserProfile(input: $input, condition: $condition) {
+    createUser(input: $input, condition: $condition) {
+      id
       email
       firstName
       lastName
@@ -24,7 +25,7 @@ export const createUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -36,12 +37,13 @@ export const createUserProfile = /* GraphQL */ `
     }
   }
 `;
-export const updateUserProfile = /* GraphQL */ `
-  mutation UpdateUserProfile(
-    $input: UpdateUserProfileInput!
-    $condition: ModelUserProfileConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateUserProfile(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
+      id
       email
       firstName
       lastName
@@ -58,7 +60,7 @@ export const updateUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -70,12 +72,13 @@ export const updateUserProfile = /* GraphQL */ `
     }
   }
 `;
-export const deleteUserProfile = /* GraphQL */ `
-  mutation DeleteUserProfile(
-    $input: DeleteUserProfileInput!
-    $condition: ModelUserProfileConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    deleteUserProfile(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
+      id
       email
       firstName
       lastName
@@ -92,7 +95,7 @@ export const deleteUserProfile = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -114,7 +117,7 @@ export const createCourseGroup = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -125,7 +128,19 @@ export const createCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
+      groupID
+      messages {
+        items {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -142,7 +157,7 @@ export const updateCourseGroup = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -153,7 +168,19 @@ export const updateCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
+      groupID
+      messages {
+        items {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -170,7 +197,7 @@ export const deleteCourseGroup = /* GraphQL */ `
         items {
           id
           groupID
-          email
+          userID
           createdAt
           updatedAt
         }
@@ -181,105 +208,12 @@ export const deleteCourseGroup = /* GraphQL */ `
         code
         section
       }
-      courseID
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const createGroupChat = /* GraphQL */ `
-  mutation CreateGroupChat(
-    $input: CreateGroupChatInput!
-    $condition: ModelGroupChatConditionInput
-  ) {
-    createGroupChat(input: $input, condition: $condition) {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      groupID
       messages {
         items {
           id
           groupChatID
-          email
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const updateGroupChat = /* GraphQL */ `
-  mutation UpdateGroupChat(
-    $input: UpdateGroupChatInput!
-    $condition: ModelGroupChatConditionInput
-  ) {
-    updateGroupChat(input: $input, condition: $condition) {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          groupChatID
-          email
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const deleteGroupChat = /* GraphQL */ `
-  mutation DeleteGroupChat(
-    $input: DeleteGroupChatInput!
-    $condition: ModelGroupChatConditionInput
-  ) {
-    deleteGroupChat(input: $input, condition: $condition) {
-      groupChatID
-      users {
-        items {
-          id
-          groupID
-          email
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          groupChatID
-          email
+          userID
           body
           createdAt
           updatedAt
@@ -301,8 +235,9 @@ export const createChatMessage = /* GraphQL */ `
     createChatMessage(input: $input, condition: $condition) {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -337,8 +272,9 @@ export const updateChatMessage = /* GraphQL */ `
     updateChatMessage(input: $input, condition: $condition) {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -373,8 +309,9 @@ export const deleteChatMessage = /* GraphQL */ `
     deleteChatMessage(input: $input, condition: $condition) {
       id
       groupChatID
-      email
+      userID
       author {
+        id
         email
         firstName
         lastName
@@ -401,15 +338,15 @@ export const deleteChatMessage = /* GraphQL */ `
     }
   }
 `;
-export const createCourseGroupMember = /* GraphQL */ `
-  mutation CreateCourseGroupMember(
-    $input: CreateCourseGroupMemberInput!
-    $condition: ModelCourseGroupMemberConditionInput
+export const createCourseGroupConnectionModel = /* GraphQL */ `
+  mutation CreateCourseGroupConnectionModel(
+    $input: CreateCourseGroupConnectionModelInput!
+    $condition: ModelCourseGroupConnectionModelConditionInput
   ) {
-    createCourseGroupMember(input: $input, condition: $condition) {
+    createCourseGroupConnectionModel(input: $input, condition: $condition) {
       id
       groupID
-      email
+      userID
       courseGroup {
         users {
           nextToken
@@ -419,12 +356,16 @@ export const createCourseGroupMember = /* GraphQL */ `
           code
           section
         }
-        courseID
+        groupID
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
       }
       user {
+        id
         email
         firstName
         lastName
@@ -449,15 +390,15 @@ export const createCourseGroupMember = /* GraphQL */ `
     }
   }
 `;
-export const updateCourseGroupMember = /* GraphQL */ `
-  mutation UpdateCourseGroupMember(
-    $input: UpdateCourseGroupMemberInput!
-    $condition: ModelCourseGroupMemberConditionInput
+export const updateCourseGroupConnectionModel = /* GraphQL */ `
+  mutation UpdateCourseGroupConnectionModel(
+    $input: UpdateCourseGroupConnectionModelInput!
+    $condition: ModelCourseGroupConnectionModelConditionInput
   ) {
-    updateCourseGroupMember(input: $input, condition: $condition) {
+    updateCourseGroupConnectionModel(input: $input, condition: $condition) {
       id
       groupID
-      email
+      userID
       courseGroup {
         users {
           nextToken
@@ -467,12 +408,16 @@ export const updateCourseGroupMember = /* GraphQL */ `
           code
           section
         }
-        courseID
+        groupID
+        messages {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
       }
       user {
+        id
         email
         firstName
         lastName
@@ -497,15 +442,15 @@ export const updateCourseGroupMember = /* GraphQL */ `
     }
   }
 `;
-export const deleteCourseGroupMember = /* GraphQL */ `
-  mutation DeleteCourseGroupMember(
-    $input: DeleteCourseGroupMemberInput!
-    $condition: ModelCourseGroupMemberConditionInput
+export const deleteCourseGroupConnectionModel = /* GraphQL */ `
+  mutation DeleteCourseGroupConnectionModel(
+    $input: DeleteCourseGroupConnectionModelInput!
+    $condition: ModelCourseGroupConnectionModelConditionInput
   ) {
-    deleteCourseGroupMember(input: $input, condition: $condition) {
+    deleteCourseGroupConnectionModel(input: $input, condition: $condition) {
       id
       groupID
-      email
+      userID
       courseGroup {
         users {
           nextToken
@@ -515,50 +460,7 @@ export const deleteCourseGroupMember = /* GraphQL */ `
           code
           section
         }
-        courseID
-        createdAt
-        updatedAt
-        owner
-      }
-      user {
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createGroupChatMember = /* GraphQL */ `
-  mutation CreateGroupChatMember(
-    $input: CreateGroupChatMemberInput!
-    $condition: ModelGroupChatMemberConditionInput
-  ) {
-    createGroupChatMember(input: $input, condition: $condition) {
-      id
-      groupID
-      email
-      groupChat {
-        groupChatID
-        users {
-          nextToken
-        }
+        groupID
         messages {
           nextToken
         }
@@ -567,98 +469,7 @@ export const createGroupChatMember = /* GraphQL */ `
         owner
       }
       user {
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateGroupChatMember = /* GraphQL */ `
-  mutation UpdateGroupChatMember(
-    $input: UpdateGroupChatMemberInput!
-    $condition: ModelGroupChatMemberConditionInput
-  ) {
-    updateGroupChatMember(input: $input, condition: $condition) {
-      id
-      groupID
-      email
-      groupChat {
-        groupChatID
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      user {
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteGroupChatMember = /* GraphQL */ `
-  mutation DeleteGroupChatMember(
-    $input: DeleteGroupChatMemberInput!
-    $condition: ModelGroupChatMemberConditionInput
-  ) {
-    deleteGroupChatMember(input: $input, condition: $condition) {
-      id
-      groupID
-      email
-      groupChat {
-        groupChatID
-        users {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      user {
+        id
         email
         firstName
         lastName

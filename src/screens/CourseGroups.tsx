@@ -39,7 +39,7 @@ const CourseGroups = ({
   const getCourses = throttle(async () => {
     setLoading(() => true);
     try {
-      const fetchedGroups = await fetchUserCourses({ email: user.attributes.email });
+      const fetchedGroups = await fetchUserCourses({ id: user.attributes.sub });
       setGroups(() => fetchedGroups);
     } catch (e) {
       console.error(e);
