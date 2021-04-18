@@ -8,7 +8,11 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native";
-import { Course as CourseAPIType, UserProfile as UserProfileAPIType, CourseGroup as CourseGroupAPIType } from "./API";
+import {
+  Course as CourseAPIType,
+  User as UserProfileAPIType,
+  CourseGroup as CourseGroupAPIType, ChatMessage as ChatMessageAPIType,
+} from "./API";
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -40,8 +44,7 @@ export type GroupStackParamList = {
   CourseGroups: undefined;
   FriendGroups: undefined;
   GroupScreen: {
-    groupName: string;
-    groupId: string;
+    courseGroup: CourseGroup;
   };
   ProfileScreen: undefined;
 };
@@ -79,14 +82,8 @@ export type ButtonProps = {
   onPress?: (event:GestureResponderEvent) => void;
 };
 
-export type MessageType = {
-  author: string,
-  message: string,
-  date: Date
-}
-
 export type MessageProps = {
-  message: MessageType;
+  message: any;
 };
 
 export type QuestionType= {
@@ -127,3 +124,4 @@ export type CognitoUser = {
 export type Course = Omit<CourseAPIType, "__typename">;
 export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "__typename" | "createdAt" | "owner" | "updatedAt">;
 export type CourseGroup = Omit<CourseGroupAPIType, "__typename" | "createdAt" | "owner" >;
+export type ChatMessage = Omit<ChatMessageAPIType, "__typename" | "owner" | "userID" | "id" | "updatedAt">;

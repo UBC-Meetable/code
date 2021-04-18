@@ -5,26 +5,37 @@ export const getUserCourses = /* GraphQL */ `
   query GetUserCourses($id: String!) {
     getUser(id: $id) {
         courseGroups {
+      items {
+        courseGroup {
+        updatedAt
+          groupID
+          title
+          messages {
             items {
-                courseGroup {
-                    course {
-                        code
-                        section
-                    }
-                    courseID
-                    title
-                    users {
-                        items {
-                            user {
-                                firstName
-                                lastName
-                                profilePicture
-                            }
-                        }
-                    }
-                }
+              body
+              groupChatID
+              createdAt
+              author {
+                firstName
+                lastName
+              }
             }
+          }
+          users {
+            items {
+              user {
+                firstName
+                lastName
+              }
+            }
+          }
+          course {
+            code
+            section
+          }
         }
+      }
+    }
     }
   }
 `;

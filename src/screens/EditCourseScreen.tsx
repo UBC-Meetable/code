@@ -20,7 +20,7 @@ const EditCourseScreen = () => {
 
   useEffect(() => {
     const f = async () => {
-      const fetchedCourses = await fetchUserCourses({ email: user.attributes.email });
+      const fetchedCourses = await fetchUserCourses({ id: user.attributes.sub });
       const courseStringSet = new Set<string>();
       fetchedCourses.forEach((courseGroup:CourseGroup) => courseStringSet
         .add(JSON.stringify(courseGroup.course)));
@@ -53,7 +53,7 @@ const EditCourseScreen = () => {
       (courseString) => JSON.parse(courseString) as CourseInput,
     );
     const res = await updateUserProfile({
-      email: user.attributes.email,
+      id: user.attributes.sub,
       courses: courseArr,
     });
     if (res.data) {
@@ -114,7 +114,7 @@ const EditCourseScreen = () => {
               <Button
                 appearance="ghost"
                 onPress={() => {
-                  deleteCourse(course);
+                  // deleteCourse(course);
                 }}
               >
                 {(evaProps: any) => (

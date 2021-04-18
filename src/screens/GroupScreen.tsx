@@ -5,7 +5,7 @@ import {
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat";
-import { RootStackParamList } from "../types";
+import { CourseGroup, RootStackParamList } from "../types";
 
 const GroupScreen = ({
   navigation,
@@ -15,13 +15,14 @@ const GroupScreen = ({
   route: any;
 }) => {
   useEffect(() => {
-    const { groupName } = route.params;
-    navigation.setOptions({ headerBackTitle: groupName });
+    const { courseGroup }: {courseGroup: CourseGroup} = route.params;
+
+    navigation.setOptions({ headerBackTitle: courseGroup.title || courseGroup.groupID });
   }, []);
 
   return (
     <Layout style={styles.root}>
-      <Chat />
+      <Chat {...route.params} />
     </Layout>
   );
 };

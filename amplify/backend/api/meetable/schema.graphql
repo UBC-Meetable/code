@@ -35,7 +35,6 @@ type ChatMessage
   @model
   @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
   @auth(rules: [{allow: owner, operations: [create]}]) {
-    id: String!
     groupChatID: String!
     userID: String!
     author: User! @connection(fields: ["userID"])

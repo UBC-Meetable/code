@@ -6,22 +6,24 @@ import { CourseGroup } from "../types";
 
 type CourseGroupBubbleProps = {
     courseGroup: CourseGroup,
-    joinGroup: (courseID: string, title: string) => void;
+    joinGroup: (courseGroup: CourseGroup) => void;
 }
 
 const CourseGroupBubble = ({
   courseGroup, joinGroup,
 }: CourseGroupBubbleProps) => {
   const {
-    courseID, users, course, title = courseID,
+    groupID, users, course, title = groupID,
   } = courseGroup;
-  if (!courseID || !users || !course || !title) return null;
+  // console.log(courseGroup);
+
+  if (!groupID || !users || !course || !title) return null;
   return (
-    <TouchableOpacity style={styles.bubble} onPress={() => joinGroup(courseID, title)}>
+    <TouchableOpacity style={styles.bubble} onPress={() => joinGroup(courseGroup)}>
       <Layout style={styles.topContainer}>
         <Layout style={styles.textContainer}>
           <Text style={styles.bubbleText}>
-            {title || courseID}
+            {title || groupID}
           </Text>
         </Layout>
         <Layout style={styles.sectionContainer}>

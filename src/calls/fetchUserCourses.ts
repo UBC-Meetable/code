@@ -1,21 +1,20 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { GetUserQuery, GetUserQueryVariables } from "../API";
-import { getUser } from "../graphql/queries";
+import { getUserCourses } from "../graphql/customQueries";
 import { CourseGroup } from "../types";
 
 const fetchUserCourses = async ({ id }: GetUserQueryVariables) => {
   const res = await API.graphql({
-    query: getUser,
+    query: getUserCourses,
     variables: {
       id,
     },
-  }) as GraphQLResult<GetUserQuery>;
-
+  }) as GraphQLResult<any>;
   const fetchedGroups = res.data?.getUser?.courseGroups?.items
-    ?.map((group: any) => group.courseGroup) as CourseGroup[];
+    .map((group:any) => group.courseGroup);
 
-  return fetchedGroups;
+  return fetchedGroups as CourseGroup[];
 };
 
 export default fetchUserCourses;

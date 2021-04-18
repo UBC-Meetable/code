@@ -1,3 +1,5 @@
+import { CommonActions, useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout } from "@ui-kitten/components";
 import React, {
   useEffect, useRef, useState,
@@ -7,7 +9,7 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { MessageType } from "../types";
+import { ChatMessage, CourseGroup, GroupStackParamList } from "../types";
 import OtherMessage from "./OtherMessage";
 import SelfMessage from "./SelfMessage";
 
@@ -40,24 +42,25 @@ const SendIcon = ({ onPress }: {onPress?: Function}) => (
   </Layout>
 );
 
-const Chat = () => {
+const Chat = ({ courseGroup }: {courseGroup: CourseGroup}) => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
   const [messages, setMessages] = useState(
-   [] as MessageType[],
+    (courseGroup.messages?.items || []) as ChatMessage[],
   );
+
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
+    console.log(courseGroup);
   }, []);
 
   const sendMessage = () => {
     console.log(message);
 
     const newMessage = {
-      author: "asdf",
-      message,
-      date: new Date(Date.now()),
-    } as MessageType;
+      groupChatID: courseGroup.groupID,
+      body: message,
+    } as ChatMessage;
 
     setMessages([...messages, newMessage]);
     setMessage("");
@@ -80,18 +83,18 @@ const Chat = () => {
               return (
                 <SelfMessage
                   key={index}
-                  date={m.date}
+                  // date={m.date}
                   author={m.author}
-                  message={m.message}
+                  message={m.body}
                 />
               );
             }
             return (
               <OtherMessage
                 key={index}
-                message={m.message}
+                message={m.body}
                 author={m.author}
-                date={m.date}
+                // date={m.date}
               />
             );
           })}

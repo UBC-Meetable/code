@@ -1,19 +1,16 @@
+import { CommonActions } from "@react-navigation/native";
+import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
+import { Layout, List } from "@ui-kitten/components";
+import { throttle } from "lodash";
 import React, { useState } from "react";
 import {
-  List, Layout,
-} from "@ui-kitten/components";
-import {
   RefreshControl,
-  StyleSheet, Text, TouchableOpacity,
+  StyleSheet,
 } from "react-native";
-import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
-import { Avatar, Chip } from "react-native-paper";
-import { CommonActions } from "@react-navigation/native";
-import { debounce, throttle } from "lodash";
-import { CourseGroup, GroupStackParamList } from "../types";
 import fetchUserCourses from "../calls/fetchUserCourses";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import CourseGroupBubble from "../components/CourseGroupBubble";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import { CourseGroup, GroupStackParamList } from "../types";
 
 const CourseGroups = ({
   navigation,
@@ -24,12 +21,11 @@ const CourseGroups = ({
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState<CourseGroup[] | undefined>();
 
-  const joinGroup = (groupId: string, groupName: string) => {
+  const joinGroup = (courseGroup: CourseGroup) => {
     navigation.dispatch(
       CommonActions.navigate("Group", {
         screen: "GroupScreen",
-        groupId,
-        groupName,
+        courseGroup,
       }),
     );
   };

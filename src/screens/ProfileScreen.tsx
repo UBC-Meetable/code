@@ -8,7 +8,6 @@ import {
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
-import fetchUserCourses from "../calls/fetchUserCourses";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
@@ -30,6 +29,7 @@ const ProfileScreen = () => {
     const [firstName, ...lastName] = name.trim().split(" ");
     const updatedProfile = {
       email: user.attributes.email,
+      id: user.attributes.sub,
       bio,
       firstName,
       lastName: lastName.join(""),
@@ -37,6 +37,8 @@ const ProfileScreen = () => {
     const same = compareProfiles(fetchedProfile, { ...localProfile, ...updatedProfile });
 
     if (!same) {
+      console.log("updating Profile");
+
       updateUserProfile(updatedProfile);
     }
   };
@@ -46,9 +48,9 @@ const ProfileScreen = () => {
 
   React.useEffect(() => {
     const f = async () => {
-      const res = await fetchUserProfile({ email: user.attributes.email });
+      const res = await fetchUserProfile({ id: user.attributes.sub });
       if (res.data) {
-        const profile = res.data.getUserProfile as UserProfile;
+        const profile = res.data.getUser as UserProfile;
         setName(`${profile?.firstName} ${profile?.lastName}`);
         setBio(profile?.bio || "");
         setFetchedProfile(profile);
@@ -150,7 +152,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: "bold",
-    // marginTop: -20,
     textAlign: "center",
   },
   nameContainer: {
