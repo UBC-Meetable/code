@@ -18,6 +18,7 @@ export const getUserCourses = /* GraphQL */ `
               author {
                 firstName
                 lastName
+                id
               }
             }
           }

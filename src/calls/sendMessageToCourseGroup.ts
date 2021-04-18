@@ -1,15 +1,10 @@
-import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import {
   CreateChatMessageInput,
-  CreateChatMessageMutationVariables,
-  GetCourseGroupQuery, GetCourseGroupQueryVariables, GetUserQuery, GetUserQueryVariables,
 } from "../API";
 import { createChatMessage } from "../graphql/mutations";
-import { ChatMessage } from "../types";
-import fetchCourseGroup from "./fetchCourseGroup";
 
-type SendMessageToCourseGroupInput = {groupID: string, body: string, userID: string}
+type SendMessageToCourseGroupInput = {groupID?: string, body?: string, userID?: string}
 
 const sendMessageToCourseGroup = async ({
   groupID,

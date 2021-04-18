@@ -1,13 +1,13 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { MessageType } from "../types";
+import { ChatMessage } from "../types";
 import styles from "./styles/MessageStyles";
 
-const SelfMessage = ({ message }:MessageType) => (
+const SelfMessage = ({ message }:{message: ChatMessage}) => (
   <Layout style={[styles.messageContainer, selfStyles.messageContainer]}>
     <Layout style={[styles.bubble, selfStyles.bubble]}>
-      <Text style={[styles.message, selfStyles.message]}>{message}</Text>
+      <Text style={[styles.message, selfStyles.message]}>{message.body}</Text>
     </Layout>
   </Layout>
 );

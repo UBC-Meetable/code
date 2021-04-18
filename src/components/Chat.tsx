@@ -1,6 +1,4 @@
-import { CommonActions, useNavigation } from "@react-navigation/core";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout } from "@ui-kitten/components";
+import { Layout, Spinner } from "@ui-kitten/components";
 import React, {
   useEffect, useRef, useState,
 } from "react";
@@ -9,7 +7,9 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { ChatMessage, CourseGroup, GroupStackParamList } from "../types";
+import sendMessageToCourseGroup from "../calls/sendMessageToCourseGroup";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import { ChatMessage, CourseGroup } from "../types";
 import OtherMessage from "./OtherMessage";
 import SelfMessage from "./SelfMessage";
 
@@ -42,29 +42,35 @@ const SendIcon = ({ onPress }: {onPress?: Function}) => (
   </Layout>
 );
 
-const Chat = ({ courseGroup }: {courseGroup: CourseGroup}) => {
+const Chat = ({ courseGroup, groupMessages }:
+  {courseGroup: CourseGroup, groupMessages: ChatMessage[]}) => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
+  const user = useAuthenticatedUser();
   const [messages, setMessages] = useState(
-    (courseGroup.messages?.items || []) as ChatMessage[],
+    (groupMessages || []) as ChatMessage[],
   );
 
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
-    console.log(courseGroup);
   }, []);
 
   const sendMessage = () => {
-    console.log(message);
+    const { groupID } = courseGroup;
 
-    const newMessage = {
-      groupChatID: courseGroup.groupID,
-      body: message,
-    } as ChatMessage;
+    sendMessageToCourseGroup({ groupID, body: message, userID: user.attributes.sub });
+    // const newMessage = {
+    //   groupChatID: courseGroup.groupID,
+    //   body: message,
+    // } as ChatMessage;
 
-    setMessages([...messages, newMessage]);
+    // setMessages([...messages, newMessage]);
     setMessage("");
   };
+
+  if (!user) {
+    return <Spinner />;
+  }
 
   return (
     <KeyboardAvoidingView style={styles.chat} behavior="padding" keyboardVerticalOffset={100}>
@@ -79,22 +85,19 @@ const Chat = ({ courseGroup }: {courseGroup: CourseGroup}) => {
         >
           {messages.map((m, index) => {
             // todo: if author is me, do this, else do other one
-            if (index % 3 === 0) {
+
+            if (m?.author?.id === user.attributes.sub) {
               return (
                 <SelfMessage
                   key={index}
-                  // date={m.date}
-                  author={m.author}
-                  message={m.body}
+                  message={m}
                 />
               );
             }
             return (
               <OtherMessage
                 key={index}
-                message={m.body}
-                author={m.author}
-                // date={m.date}
+                message={m}
               />
             );
           })}

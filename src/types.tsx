@@ -45,6 +45,7 @@ export type GroupStackParamList = {
   FriendGroups: undefined;
   GroupScreen: {
     courseGroup: CourseGroup;
+    groupMessages: ChatMessage[];
   };
   ProfileScreen: undefined;
 };
@@ -120,6 +121,10 @@ export type CognitoUser = {
   userDataKey: string;
   username: string;
 };
+
+export type MessageMap = {
+  [id: string]: ChatMessage[]
+}
 
 export type Course = Omit<CourseAPIType, "__typename">;
 export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "__typename" | "createdAt" | "owner" | "updatedAt">;

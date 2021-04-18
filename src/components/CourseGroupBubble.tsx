@@ -2,11 +2,12 @@ import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
-import { CourseGroup } from "../types";
+import { ChatMessage, CourseGroup, MessageMap } from "../types";
 
 type CourseGroupBubbleProps = {
     courseGroup: CourseGroup,
-    joinGroup: (courseGroup: CourseGroup) => void;
+    messages: ChatMessage[],
+    joinGroup: () => void;
 }
 
 const CourseGroupBubble = ({
@@ -19,7 +20,7 @@ const CourseGroupBubble = ({
 
   if (!groupID || !users || !course || !title) return null;
   return (
-    <TouchableOpacity style={styles.bubble} onPress={() => joinGroup(courseGroup)}>
+    <TouchableOpacity style={styles.bubble} onPress={() => joinGroup()}>
       <Layout style={styles.topContainer}>
         <Layout style={styles.textContainer}>
           <Text style={styles.bubbleText}>

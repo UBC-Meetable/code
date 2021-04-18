@@ -3,14 +3,14 @@ import { Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
-import { MessageType } from "../types";
+import { ChatMessage } from "../types";
 import styles from "./styles/MessageStyles";
 
-const OtherMessage = ({ message, author } : MessageType) => (
+const OtherMessage = ({ message } : {message: ChatMessage}) => (
   <Layout style={otherStyles.messageContainer}>
     <Layout style={otherStyles.messageAndAuthor}>
       <Layout style={otherStyles.nameContainer}>
-        <Text style={otherStyles.name}>{author}</Text>
+        <Text style={otherStyles.name}>{`${message.author?.firstName} ${message.author?.lastName}`}</Text>
       </Layout>
 
       <Layout style={otherStyles.imageContainer}>
@@ -26,7 +26,7 @@ const OtherMessage = ({ message, author } : MessageType) => (
           />
         </TouchableOpacity>
         <Layout style={styles.bubble}>
-          <Text style={[styles.message, otherStyles.message]}>{message}</Text>
+          <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>
         </Layout>
       </Layout>
     </Layout>
