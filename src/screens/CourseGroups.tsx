@@ -49,7 +49,8 @@ const CourseGroups = ({
       fetchedGroups.forEach((group) => {
         messageMap[group.groupID as string] = group.messages?.items as ChatMessage[];
       });
-      setMessages(messageMap);
+      setMessages(() => messageMap);
+      console.log(messageMap);
     } catch (e) {
       console.error(e);
     } finally {
@@ -60,10 +61,13 @@ const CourseGroups = ({
 
   const handleNewMessage = (newMessage: ChatMessage) => {
     const groupID = newMessage.groupChatID as string;
-    const groupMessages = (messages as MessageMap)[groupID];
+    if (!messages || !messages[groupID]) return;
+    const newGroupMessages = messages[groupID];
+    newGroupMessages.push(newMessage);
+
     setMessages((prevMessages) => ({
       ...prevMessages,
-      [groupID]: [...groupMessages, newMessage],
+      [groupID]: newGroupMessages,
     }));
   };
 
@@ -78,17 +82,20 @@ const CourseGroups = ({
     let res:any;
     if (!groups) return;
     const f = async () => {
-      res = await groupChatSubscription((message) => handleNewMessage(message));
-      console.log(res);
+      res = await groupChatSubscription((message) => {
+        handleNewMessage(message);
+      });
     };
     f();
 
     // eslint-disable-next-line consistent-return
     return () => {
-      res.unsubscribe();
-      console.log("unsubscibed");
+      if (typeof res?.unsubscribe === "function") {
+        res.unsubscribe();
+        console.log("unsubscibed");
+      }
     };
-  }, [groups]);
+  }, [groups, messages]);
 
   const renderItem = ({ item }:{item: CourseGroup}) => {
     if (!messages) return <Spinner />;

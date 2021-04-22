@@ -47,13 +47,16 @@ const Chat = ({ courseGroup, groupMessages }:
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
   const user = useAuthenticatedUser();
-  const [messages, setMessages] = useState(
-    (groupMessages || []) as ChatMessage[],
-  );
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     scrollRef.current?.scrollToEnd({ animated: false });
   }, []);
+
+  useEffect(() => {
+    console.log("groupmessages updated");
+    setRerender(!rerender);
+  }, [groupMessages]);
 
   const sendMessage = () => {
     const { groupID } = courseGroup;
@@ -83,7 +86,7 @@ const Chat = ({ courseGroup, groupMessages }:
             display: "flex",
           }}
         >
-          {messages.map((m, index) => {
+          {groupMessages.map((m, index) => {
             // todo: if author is me, do this, else do other one
 
             if (m?.author?.id === user.attributes.sub) {
