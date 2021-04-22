@@ -1,0 +1,72 @@
+
+# [MODELS]
+type User
+  @model 
+  @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
+  @key(fields: ["id"]) {
+  id: String!
+  email: String!
+  firstName: String
+  lastName: String
+  profilePicture: String
+  bio: String
+  userState: UserState
+  university: String
+  major: String
+  courses: [Course!]
+  courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type CourseGroup
+    @model 
+    @key(fields: ["groupID"]) 
+    @auth(rules: [{allow: owner, operations: [create]}]){
+  users: [CourseGroupConnectionModel!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
+  title: String
+  course: Course!
+  groupID: String!
+  messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
+}
+
+# [CONNECTIONS]
+
+#[Many ChatMessages: Many Users]
+type ChatMessage
+  @model
+  @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
+  @auth(rules: [{allow: owner, operations: [create]}]) {
+    groupChatID: String!
+    userID: String!
+    author: User! @connection(fields: ["userID"])
+    body: String!
+    createdAt: AWSDateTime
+    updatedAt: AWSDateTime
+  }
+# [Many UserProfiles: Many CourseGroups]
+# Represents a connection between a User and a CourseGroup
+type CourseGroupConnectionModel
+  @model(queries: null)
+  @key(name: "byCourseGroup", fields: ["groupID", "userID"])
+  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  id: ID!
+  groupID: String!
+  userID: String!
+  courseGroup: CourseGroup! @connection(fields: ["groupID"])
+  user: User! @connection(fields: ["userID"])
+}
+
+
+# [PRIVATE HELPER TYPES]
+enum UserState {
+  SIGNED_UP
+  UNI_SELECTED
+  PROFILE_CREATED
+  DONE
+}
+
+type Course {
+  code: String!
+  section: String!
+}
+
+
