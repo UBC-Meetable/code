@@ -34,7 +34,7 @@
     "@unimodules/react-native-adapter": "~5.7.0",
     "aws-amplify": "^3.3.26",
     "aws-amplify-react-native": "^4.3.2",
-    "expo": "^40.0.0",
+    "expo": "^40.0.1",
     "expo-asset": "~8.2.1",
     "expo-auth-session": "~3.0.0",
     "expo-blur": "~8.2.2",
