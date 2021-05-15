@@ -1,4 +1,5 @@
 import { Layout, Spinner } from "@ui-kitten/components";
+import { API } from "aws-amplify";
 import React, {
   useEffect, useRef, useState,
 } from "react";
@@ -8,10 +9,13 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
 import sendMessageToCourseGroup from "../calls/sendMessageToCourseGroup";
+import { onCreateChatMessage } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../types";
 import OtherMessage from "./OtherMessage";
+import { ChatMessage as ChatMessageAPIType } from "../API";
 import SelfMessage from "./SelfMessage";
+import useUserProfile from "../hooks/useUserProfile";
 
 const SendIcon = ({ onPress }: {onPress?: Function}) => (
   <Layout
@@ -48,26 +52,59 @@ const Chat = ({ courseGroup, groupMessages }:
   const scrollRef = useRef<ScrollView>(null);
   const user = useAuthenticatedUser();
   const [rerender, setRerender] = useState(false);
+  const profile = useUserProfile();
+
+  const [messages, setMessages] = useState(groupMessages);
+  const messagesRef = useRef<Array<ChatMessage>>();
+  messagesRef.current = messages;
 
   useEffect(() => {
-    scrollRef.current?.scrollToEnd({ animated: false });
-  }, []);
+    setTimeout(() => {
+      scrollRef.current?.scrollToEnd({ animated: false });
+    }, 200);
+  }, [messages]);
 
+  /** Subscription for chat */
   useEffect(() => {
-    console.log("groupmessages updated");
-    setRerender(!rerender);
-  }, [groupMessages]);
+    let unsub: any;
+    async function subscribeCreateMessage() {
+      const subscription:any = API.graphql({
+        query: onCreateChatMessage,
+        variables: {
+          groupChatID: courseGroup.groupID,
+        },
+      });
+
+      subscription.subscribe({
+        next: (data:any) => {
+          const newItem = data.value.data.onCreateChatMessage as ChatMessage;
+          if (newItem.author?.id === user.attributes.sub) return;
+          setMessages(() => [...messagesRef.current as ChatMessage[], newItem]);
+          setRerender(() => !rerender);
+        },
+        error: (error:any) => console.warn(error),
+      });
+      unsub = subscription.unsubscribe;
+    }
+    if (user) { subscribeCreateMessage(); }
+    return () => {
+      if (typeof unsub === "function") {
+        unsub();
+        console.log("unsubbing");
+      }
+    };
+  }, [user]);
 
   const sendMessage = () => {
     const { groupID } = courseGroup;
-
     sendMessageToCourseGroup({ groupID, body: message, userID: user.attributes.sub });
-    // const newMessage = {
-    //   groupChatID: courseGroup.groupID,
-    //   body: message,
-    // } as ChatMessage;
-
-    // setMessages([...messages, newMessage]);
+    const newMessage: ChatMessage = {
+      body: message,
+      groupChatID: groupID,
+      author: profile,
+      createdAt: Date.now().toLocaleString(),
+    };
+    setMessages([...messages, newMessage]);
     setMessage("");
   };
 
@@ -86,7 +123,7 @@ const Chat = ({ courseGroup, groupMessages }:
             display: "flex",
           }}
         >
-          {groupMessages.map((m, index) => {
+          {messages.map((m, index) => {
             // todo: if author is me, do this, else do other one
 
             if (m?.author?.id === user.attributes.sub) {

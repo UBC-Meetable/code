@@ -33,7 +33,6 @@ const EditCourseScreen = () => {
   function addCourse() {
     if (!code || !section) return;
     const newCourse: Course = { code, section };
-    console.log(newCourse);
 
     setCode(() => "");
     setSection(() => "");

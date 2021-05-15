@@ -14,23 +14,16 @@ const GroupScreen = ({
   navigation: StackNavigationProp<RootStackParamList, "Group">;
   route: any;
 }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>(route.params.groupMessages);
-  const [rerender, setRerender] = useState(false);
-  useEffect(() => {
-    const { courseGroup, groupMessages }:
+  const { courseGroup, groupMessages }:
     {courseGroup: CourseGroup, groupMessages: ChatMessage[]} = route.params;
-    // console.log("groupMessages", groupMessages);
-
+  const [messages, setMessages] = useState([] as ChatMessage[]);
+  useEffect(() => {
     navigation.setOptions({ headerBackTitle: courseGroup.title || courseGroup.groupID });
-  }, []);
+  }, [courseGroup]);
 
   useEffect(() => {
-    console.log("Groupmessages updated");
-    // setMessages(() => route.params.groupMessages);
-    console.log("Groupmessages done updated");
-    setRerender(!rerender);
-  }, [route.params.groupMessages]);
-
+    setMessages(groupMessages);
+  }, []);
   return (
     <Layout style={styles.root}>
       <Chat {...route.params} />

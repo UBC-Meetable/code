@@ -4,7 +4,7 @@ import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Layout, List, Spinner } from "@ui-kitten/components";
 import { graphqlOperation } from "aws-amplify";
 import { throttle } from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   RefreshControl,
   StyleSheet,
@@ -28,6 +28,8 @@ const CourseGroups = ({
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState<CourseGroup[] | undefined>();
   const [messages, setMessages] = useState<MessageMap>();
+  const messagesRef = useRef<MessageMap>();
+  messagesRef.current = messages;
   const joinGroup = (courseGroup: CourseGroup, groupMessages: ChatMessage[]) => {
     navigation.dispatch(
       CommonActions.navigate("Group", {
@@ -50,12 +52,10 @@ const CourseGroups = ({
         messageMap[group.groupID as string] = group.messages?.items as ChatMessage[];
       });
       setMessages(() => messageMap);
-      console.log(messageMap);
     } catch (e) {
       console.error(e);
     } finally {
       setLoading(false);
-      console.log("done");
     }
   }, 10000);
 
@@ -78,30 +78,44 @@ const CourseGroups = ({
     }
   }, [user]);
 
-  React.useEffect(() => {
-    let res:any;
-    if (!groups) return;
-    const f = async () => {
-      res = await groupChatSubscription((message) => {
-        handleNewMessage(message);
+  useEffect(() => {
+    let unsub: any;
+    async function subscribeCreateMessage() {
+      const subscription:any = API.graphql({
+        query: onCreateChatMessage,
       });
-    };
-    f();
 
-    // eslint-disable-next-line consistent-return
+      subscription.subscribe({
+        next: (data:any) => {
+          const newItem = data.value.data.onCreateChatMessage as ChatMessage;
+
+          const courseID = newItem.groupChatID;
+          if (!courseID) throw new Error("Could not get courseID of message");
+
+          const newRef = messagesRef.current!;
+          const courseMessages = newRef[courseID];
+          courseMessages.push(newItem);
+          setMessages(() => newRef);
+        },
+        error: (error:any) => console.warn(error),
+      });
+      unsub = subscription.unsubscribe;
+    }
+    subscribeCreateMessage();
+
     return () => {
-      if (typeof res?.unsubscribe === "function") {
-        res.unsubscribe();
-        console.log("unsubscibed");
+      if (typeof unsub === "function") {
+        unsub();
+        console.log("unsubbing");
       }
     };
-  }, [groups, messages]);
+  }, []);
 
   const renderItem = ({ item }:{item: CourseGroup}) => {
     if (!messages) return <Spinner />;
     if (!item.groupID) return <Spinner />;
     const id = item.groupID;
-    if (!messages[id]) <Spinner />;
+    // if (!messages[id]) <Spinner />;
 
     const groupMessages = messages[id];
 

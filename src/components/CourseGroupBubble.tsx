@@ -11,12 +11,11 @@ type CourseGroupBubbleProps = {
 }
 
 const CourseGroupBubble = ({
-  courseGroup, joinGroup,
+  courseGroup, joinGroup, messages,
 }: CourseGroupBubbleProps) => {
   const {
     groupID, users, course, title = groupID,
   } = courseGroup;
-  // console.log(courseGroup);
 
   if (!groupID || !users || !course || !title) return null;
   return (
@@ -39,12 +38,7 @@ const CourseGroupBubble = ({
       <Layout style={styles.bottomContainer}>
         <Layout style={styles.bottomTextContainer}>
           <Text style={styles.bubbleTextDesc} numberOfLines={4} ellipsizeMode="tail">
-            lorem ipsum lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
+            {messages.length > 0 ? messages[messages.length - 1].body : "No Messages Yet!"}
           </Text>
         </Layout>
         <Layout style={styles.bottomPhotoContainer}>

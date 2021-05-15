@@ -114,7 +114,6 @@ const AuthorizedApp = () => {
   if (loading) return <Spinner />;
   if (userState !== UserState.DONE) {
     let initRoute: keyof SignUpParamList;
-    console.log(userState);
 
     if (userState === UserState.SIGNED_UP) {
       initRoute = "UniScreen";
