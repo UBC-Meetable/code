@@ -13,8 +13,9 @@ import MessagesContext from "../context/MessageContext";
 import CourseGroupsContext from "../context/SubscriptionContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import useUserProfile from "../hooks/useUserProfile";
-import { ChatMessage, CourseGroup } from "../types";
+import { ChatMessage, ChatMessageWithPending, CourseGroup } from "../types";
 import OtherMessage from "./OtherMessage";
+import PendingMessage from "./PendingMessage";
 import SelfMessage from "./SelfMessage";
 
 const SendIcon = ({ onPress, name }: {onPress?: Function, name: string}) => (
@@ -50,7 +51,8 @@ const Chat = () => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
   const user = useAuthenticatedUser();
-
+  const userProfile = useUserProfile();
+  const [pendingMessages, setPendingMessages] = useState<ChatMessageWithPending[]>([]);
   const [textLoading, setTextLoading] = useState(false);
   const { groupID, messages } = useContext(MessagesContext);
 
@@ -60,9 +62,30 @@ const Chat = () => {
     }, 200);
   }, [messages]);
 
-  const sendMessage = async () => {
+  const sendMessage = () => {
     setTextLoading(true);
-    await sendMessageToCourseGroup({ groupID, body: message, userID: user.attributes.sub });
+    const newMessage: ChatMessageWithPending = {
+      __typename: "ChatMessage",
+      author: userProfile,
+      body: message,
+      groupChatID: groupID,
+      pending: true,
+    };
+    pendingMessages.push(newMessage);
+    setPendingMessages(() => [...pendingMessages]);
+    console.log(pendingMessages);
+
+    const res = sendMessageToCourseGroup({
+      groupID,
+      body: message,
+      userID: user.attributes.sub,
+    });
+
+    res.then(() => {
+      pendingMessages.pop();
+      setPendingMessages(() => [...pendingMessages]);
+      console.log(pendingMessages);
+    }).catch((e) => console.warn(e));
     setTextLoading(false);
 
     setMessage("");
@@ -99,6 +122,7 @@ const Chat = () => {
               />
             );
           })}
+          {pendingMessages.map((m, index) => (<PendingMessage message={m} key={index} />))}
         </ScrollView>
       </Layout>
       <Layout style={styles.flexInputContainer}>
