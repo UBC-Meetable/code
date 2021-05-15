@@ -55,7 +55,6 @@ export type CourseGroup = {
   __typename: "CourseGroup",
   users?: ModelCourseGroupConnectionModelConnection,
   title?: string | null,
-  courseCode?: string,
   course?: Course,
   groupID?: string,
   messages?: ModelChatMessageConnection,
@@ -178,14 +177,12 @@ export type DeleteUserInput = {
 
 export type CreateCourseGroupInput = {
   title?: string | null,
-  courseCode: string,
   course: CourseInput,
   groupID: string,
 };
 
 export type ModelCourseGroupConditionInput = {
   title?: ModelStringInput | null,
-  courseCode?: ModelStringInput | null,
   and?: Array< ModelCourseGroupConditionInput | null > | null,
   or?: Array< ModelCourseGroupConditionInput | null > | null,
   not?: ModelCourseGroupConditionInput | null,
@@ -193,7 +190,6 @@ export type ModelCourseGroupConditionInput = {
 
 export type UpdateCourseGroupInput = {
   title?: string | null,
-  courseCode?: string | null,
   course?: CourseInput | null,
   groupID: string,
 };
@@ -287,7 +283,6 @@ export type ModelUserConnection = {
 
 export type ModelCourseGroupFilterInput = {
   title?: ModelStringInput | null,
-  courseCode?: ModelStringInput | null,
   groupID?: ModelStringInput | null,
   and?: Array< ModelCourseGroupFilterInput | null > | null,
   or?: Array< ModelCourseGroupFilterInput | null > | null,
@@ -515,7 +510,6 @@ export type CreateCourseGroupMutation = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -563,7 +557,6 @@ export type UpdateCourseGroupMutation = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -611,7 +604,6 @@ export type DeleteCourseGroupMutation = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -782,7 +774,6 @@ export type CreateCourseGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,
@@ -844,7 +835,6 @@ export type UpdateCourseGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,
@@ -906,7 +896,6 @@ export type DeleteCourseGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,
@@ -1048,7 +1037,6 @@ export type GetCourseGroupQuery = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -1093,7 +1081,6 @@ export type ListCourseGroupsQuery = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,
@@ -1353,7 +1340,6 @@ export type OnCreateCourseGroupSubscription = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -1396,7 +1382,6 @@ export type OnUpdateCourseGroupSubscription = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -1439,7 +1424,6 @@ export type OnDeleteCourseGroupSubscription = {
       nextToken?: string | null,
     } | null,
     title?: string | null,
-    courseCode: string,
     course:  {
       __typename: "Course",
       code: string,
@@ -1590,7 +1574,6 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,
@@ -1647,7 +1630,6 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,
@@ -1704,7 +1686,6 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       title?: string | null,
-      courseCode: string,
       course:  {
         __typename: "Course",
         code: string,

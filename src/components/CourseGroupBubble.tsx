@@ -7,11 +7,11 @@ import { ChatMessage, CourseGroup, MessageMap } from "../types";
 type CourseGroupBubbleProps = {
     courseGroup: CourseGroup,
     messages: ChatMessage[],
-    joinGroup: () => void;
+    moveToGroupScreen: () => void;
 }
 
 const CourseGroupBubble = ({
-  courseGroup, joinGroup, messages,
+  courseGroup, moveToGroupScreen, messages,
 }: CourseGroupBubbleProps) => {
   const {
     groupID, users, course, title = groupID,
@@ -19,7 +19,7 @@ const CourseGroupBubble = ({
 
   if (!groupID || !users || !course || !title) return null;
   return (
-    <TouchableOpacity style={styles.bubble} onPress={() => joinGroup()}>
+    <TouchableOpacity style={styles.bubble} onPress={() => moveToGroupScreen()}>
       <Layout style={styles.topContainer}>
         <Layout style={styles.textContainer}>
           <Text style={styles.bubbleText}>

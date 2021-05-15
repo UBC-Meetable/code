@@ -3,6 +3,7 @@ import { Button, Layout } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
+import { CourseGroupsProvider } from "../context/SubscriptionContext";
 import CourseGroups from "../screens/CourseGroups";
 import { GroupStackParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
@@ -37,7 +38,9 @@ const CourseGroupStackNavigator = () => (
         ),
       })}
     >
-      {(props) => <CourseGroups {...props} />}
+      {(props) => (
+        <CourseGroups {...props} />
+      )}
     </GroupTabStack.Screen>
   </GroupTabStack.Navigator>
 );

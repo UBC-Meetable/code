@@ -124,7 +124,6 @@ export const createCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -165,7 +164,6 @@ export const updateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -206,7 +204,6 @@ export const deleteCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -355,7 +352,6 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section
@@ -408,7 +404,6 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section
@@ -461,7 +456,6 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section

@@ -23,7 +23,6 @@ type CourseGroup
     @auth(rules: [{allow: owner, operations: [create]}]){
   users: [CourseGroupConnectionModel!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
   title: String
-  courseCode: String!
   course: Course!
   groupID: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])

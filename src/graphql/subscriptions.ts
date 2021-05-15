@@ -112,7 +112,6 @@ export const onCreateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -150,7 +149,6 @@ export const onUpdateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -188,7 +186,6 @@ export const onDeleteCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -325,7 +322,6 @@ export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section
@@ -375,7 +371,6 @@ export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section
@@ -425,7 +420,6 @@ export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section

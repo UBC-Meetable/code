@@ -88,7 +88,6 @@ export const getCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      courseCode
       course {
         code
         section
@@ -132,7 +131,6 @@ export const listCourseGroups = /* GraphQL */ `
           nextToken
         }
         title
-        courseCode
         course {
           code
           section

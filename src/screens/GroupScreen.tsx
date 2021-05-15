@@ -9,24 +9,17 @@ import { ChatMessage, CourseGroup, RootStackParamList } from "../types";
 
 const GroupScreen = ({
   navigation,
-  route,
+  groupTitle,
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Group">;
-  route: any;
+  groupTitle: string;
 }) => {
-  const { courseGroup, groupMessages }:
-    {courseGroup: CourseGroup, groupMessages: ChatMessage[]} = route.params;
-  const [messages, setMessages] = useState([] as ChatMessage[]);
   useEffect(() => {
-    navigation.setOptions({ headerBackTitle: courseGroup.title || courseGroup.groupID });
-  }, [courseGroup]);
-
-  useEffect(() => {
-    setMessages(groupMessages);
-  }, []);
+    navigation.setOptions({ headerBackTitle: groupTitle });
+  }, [groupTitle]);
   return (
     <Layout style={styles.root}>
-      <Chat {...route.params} />
+      <Chat />
     </Layout>
   );
 };

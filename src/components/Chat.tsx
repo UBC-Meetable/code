@@ -1,23 +1,23 @@
 import { Layout, Spinner } from "@ui-kitten/components";
-import { API } from "aws-amplify";
 import React, {
+  useContext,
   useEffect, useRef, useState,
 } from "react";
 import {
   KeyboardAvoidingView, ScrollView, StyleSheet, TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import sendMessageToCourseGroup from "../calls/sendMessageToCourseGroup";
-import { onCreateChatMessage } from "../graphql/subscriptions";
+import MessagesContext from "../context/MessageContext";
+import CourseGroupsContext from "../context/SubscriptionContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import useUserProfile from "../hooks/useUserProfile";
 import { ChatMessage, CourseGroup } from "../types";
 import OtherMessage from "./OtherMessage";
-import { ChatMessage as ChatMessageAPIType } from "../API";
 import SelfMessage from "./SelfMessage";
-import useUserProfile from "../hooks/useUserProfile";
 
-const SendIcon = ({ onPress }: {onPress?: Function}) => (
+const SendIcon = ({ onPress, name }: {onPress?: Function, name: string}) => (
   <Layout
     style={{
       position: "absolute",
@@ -34,7 +34,7 @@ const SendIcon = ({ onPress }: {onPress?: Function}) => (
       }}
     >
       <Icon
-        name="send"
+        name={name}
         size={25}
         style={{
           color: "#FBBA82",
@@ -46,17 +46,13 @@ const SendIcon = ({ onPress }: {onPress?: Function}) => (
   </Layout>
 );
 
-const Chat = ({ courseGroup, groupMessages }:
-  {courseGroup: CourseGroup, groupMessages: ChatMessage[]}) => {
+const Chat = () => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
   const user = useAuthenticatedUser();
-  const [rerender, setRerender] = useState(false);
-  const profile = useUserProfile();
 
-  const [messages, setMessages] = useState(groupMessages);
-  const messagesRef = useRef<Array<ChatMessage>>();
-  messagesRef.current = messages;
+  const [textLoading, setTextLoading] = useState(false);
+  const { groupID, messages } = useContext(MessagesContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -64,47 +60,11 @@ const Chat = ({ courseGroup, groupMessages }:
     }, 200);
   }, [messages]);
 
-  /** Subscription for chat */
-  useEffect(() => {
-    let unsub: any;
-    async function subscribeCreateMessage() {
-      const subscription:any = API.graphql({
-        query: onCreateChatMessage,
-        variables: {
-          groupChatID: courseGroup.groupID,
-        },
-      });
+  const sendMessage = async () => {
+    setTextLoading(true);
+    await sendMessageToCourseGroup({ groupID, body: message, userID: user.attributes.sub });
+    setTextLoading(false);
 
-      subscription.subscribe({
-        next: (data:any) => {
-          const newItem = data.value.data.onCreateChatMessage as ChatMessage;
-          if (newItem.author?.id === user.attributes.sub) return;
-          setMessages(() => [...messagesRef.current as ChatMessage[], newItem]);
-          setRerender(() => !rerender);
-        },
-        error: (error:any) => console.warn(error),
-      });
-      unsub = subscription.unsubscribe;
-    }
-    if (user) { subscribeCreateMessage(); }
-    return () => {
-      if (typeof unsub === "function") {
-        unsub();
-        console.log("unsubbing");
-      }
-    };
-  }, [user]);
-
-  const sendMessage = () => {
-    const { groupID } = courseGroup;
-    sendMessageToCourseGroup({ groupID, body: message, userID: user.attributes.sub });
-    const newMessage: ChatMessage = {
-      body: message,
-      groupChatID: groupID,
-      author: profile,
-      createdAt: Date.now().toLocaleString(),
-    };
-    setMessages([...messages, newMessage]);
     setMessage("");
   };
 
@@ -124,8 +84,6 @@ const Chat = ({ courseGroup, groupMessages }:
           }}
         >
           {messages.map((m, index) => {
-            // todo: if author is me, do this, else do other one
-
             if (m?.author?.id === user.attributes.sub) {
               return (
                 <SelfMessage
@@ -169,6 +127,7 @@ const Chat = ({ courseGroup, groupMessages }:
           }}
         />
         <SendIcon
+          name={textLoading ? "loading" : "send"}
           onPress={() => {
             sendMessage();
           }}

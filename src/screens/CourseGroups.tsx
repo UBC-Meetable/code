@@ -1,22 +1,20 @@
-import API from "@aws-amplify/api";
 import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Layout, List, Spinner } from "@ui-kitten/components";
-import { graphqlOperation } from "aws-amplify";
 import { throttle } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useContext, useEffect, useState,
+} from "react";
 import {
   RefreshControl,
   StyleSheet,
 } from "react-native";
-import { ChatMessage as ChatMessageAPIType, OnCreateChatMessageSubscription } from "../API";
 import fetchUserCourses from "../calls/fetchUserCourses";
-import groupChatSubscription from "../calls/groupChatSubscription";
 import CourseGroupBubble from "../components/CourseGroupBubble";
-import { onCreateChatMessage } from "../graphql/subscriptions";
+import CourseGroupsContext from "../context/SubscriptionContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import {
-  ChatMessage, CourseGroup, GroupStackParamList, MessageMap,
+  ChatMessage, CourseGroup, GroupStackParamList,
 } from "../types";
 
 const CourseGroups = ({
@@ -26,104 +24,29 @@ const CourseGroups = ({
 }) => {
   const user = useAuthenticatedUser();
   const [loading, setLoading] = useState(true);
-  const [groups, setGroups] = useState<CourseGroup[] | undefined>();
-  const [messages, setMessages] = useState<MessageMap>();
-  const messagesRef = useRef<MessageMap>();
-  messagesRef.current = messages;
-  const joinGroup = (courseGroup: CourseGroup, groupMessages: ChatMessage[]) => {
+  const groups = useContext(CourseGroupsContext);
+
+  const moveToGroupScreen = (groupTitle: string, groupID: string) => {
     navigation.dispatch(
       CommonActions.navigate("Group", {
         screen: "GroupScreen",
-        courseGroup,
-        groupMessages,
+        groupID,
+        groupTitle,
       }),
     );
   };
 
   const headerHeight = useHeaderHeight();
 
-  const getCourses = throttle(async () => {
-    setLoading(() => true);
-    try {
-      const fetchedGroups = await fetchUserCourses({ id: user.attributes.sub });
-      setGroups(() => fetchedGroups);
-      const messageMap: MessageMap = {};
-      fetchedGroups.forEach((group) => {
-        messageMap[group.groupID as string] = group.messages?.items as ChatMessage[];
-      });
-      setMessages(() => messageMap);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  }, 10000);
-
-  const handleNewMessage = (newMessage: ChatMessage) => {
-    const groupID = newMessage.groupChatID as string;
-    if (!messages || !messages[groupID]) return;
-    const newGroupMessages = messages[groupID];
-    newGroupMessages.push(newMessage);
-
-    setMessages((prevMessages) => ({
-      ...prevMessages,
-      [groupID]: newGroupMessages,
-    }));
-  };
-
-  React.useEffect(() => {
-    if (user) {
-      getCourses();
-      getCourses.flush();
-    }
-  }, [user]);
-
-  useEffect(() => {
-    let unsub: any;
-    async function subscribeCreateMessage() {
-      const subscription:any = API.graphql({
-        query: onCreateChatMessage,
-      });
-
-      subscription.subscribe({
-        next: (data:any) => {
-          const newItem = data.value.data.onCreateChatMessage as ChatMessage;
-
-          const courseID = newItem.groupChatID;
-          if (!courseID) throw new Error("Could not get courseID of message");
-
-          const newRef = messagesRef.current!;
-          const courseMessages = newRef[courseID];
-          courseMessages.push(newItem);
-          setMessages(() => newRef);
-        },
-        error: (error:any) => console.warn(error),
-      });
-      unsub = subscription.unsubscribe;
-    }
-    subscribeCreateMessage();
-
-    return () => {
-      if (typeof unsub === "function") {
-        unsub();
-        console.log("unsubbing");
-      }
-    };
-  }, []);
-
   const renderItem = ({ item }:{item: CourseGroup}) => {
-    if (!messages) return <Spinner />;
     if (!item.groupID) return <Spinner />;
-    const id = item.groupID;
-    // if (!messages[id]) <Spinner />;
-
-    const groupMessages = messages[id];
+    const messages = item.messages?.items as ChatMessage[];
 
     return (
       <CourseGroupBubble
         courseGroup={item}
-        messages={groupMessages}
-        joinGroup={() => joinGroup(item, groupMessages)}
+        messages={messages}
+        moveToGroupScreen={() => moveToGroupScreen(item.title as string, item.groupID as string)}
       />
     );
   };
@@ -134,7 +57,7 @@ const CourseGroups = ({
         refreshControl={(
           <RefreshControl
             refreshing={loading}
-            onRefresh={getCourses}
+            // onRefresh={getCourses}
           />
         )}
         style={[styles.card]}
