@@ -5,7 +5,7 @@ import React, {
 import Observable from "zen-observable-ts";
 import { OnCreateChatMessageSubscription } from "../API";
 import fetchUserCourses from "../calls/fetchUserCourses";
-import { onCreateChatMessage, onUpdateCourseGroup } from "../graphql/subscriptions";
+import { onCreateChatMessage } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../types";
 
@@ -18,12 +18,11 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
   useEffect(() => {
     const getCourseGroups = async () => {
-      const courses = await fetchUserCourses({ id: user.attributes.sub });
+      const courses = await fetchUserCourses(user);
       setGroups(courses);
-      // console.log(courses);
     };
-    if (user) getCourseGroups();
-  }, [user]);
+    getCourseGroups();
+  }, []);
 
   useEffect(() => {
     const observableObj = API.graphql({

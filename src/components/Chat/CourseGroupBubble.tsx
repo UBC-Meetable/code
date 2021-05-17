@@ -2,7 +2,8 @@ import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
-import { ChatMessage, CourseGroup, MessageMap } from "../types";
+import { ChatMessage, CourseGroup, MessageMap } from "../../types";
+import MessagePreview from "./MessagePreview";
 
 type CourseGroupBubbleProps = {
     courseGroup: CourseGroup,
@@ -37,10 +38,9 @@ const CourseGroupBubble = ({
 
       <Layout style={styles.bottomContainer}>
         <Layout style={styles.bottomTextContainer}>
-          <Text style={styles.bubbleTextDesc} numberOfLines={4} ellipsizeMode="tail">
-            {messages.length > 0 ? messages[messages.length - 1].body : "No Messages Yet!"}
-          </Text>
+          <MessagePreview messages={messages} />
         </Layout>
+        {/* TODO Implement User Photos, Make new component for this */}
         <Layout style={styles.bottomPhotoContainer}>
           <Layout style={styles.photoContainer}>
             <Avatar.Icon size={38} icon="folder" />

@@ -1,6 +1,8 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
-import { Input, Layout, Text } from "@ui-kitten/components";
+import {
+  Input, Layout, Spinner, Text,
+} from "@ui-kitten/components";
 import * as React from "react";
 import {
   Image, KeyboardAvoidingView, StyleSheet, TextInput,
@@ -25,6 +27,8 @@ const ProfileScreen = () => {
   const [bioFocused, setBioFocused] = React.useState(false);
   const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
   const [localProfile, setLocalProfile] = React.useState<UserProfile>();
+  const [loading, setLoading] = React.useState(true);
+
   const updateProfile = async () => {
     const [firstName, ...lastName] = name.trim().split(" ");
     const updatedProfile = {
@@ -48,6 +52,7 @@ const ProfileScreen = () => {
 
   React.useEffect(() => {
     const f = async () => {
+      setLoading(true);
       const res = await fetchUserProfile({ id: user.attributes.sub });
       if (res.data) {
         const profile = res.data.getUser as UserProfile;
@@ -55,10 +60,22 @@ const ProfileScreen = () => {
         setBio(profile?.bio || "");
         setFetchedProfile(profile);
         setLocalProfile(profile);
+        setLoading(false);
       }
     };
     if (user) f();
   }, [user]);
+
+  if (!localProfile) {
+    return (
+      <ScrollView
+        contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}
+        bounces={false}
+      >
+        <Spinner />
+      </ScrollView>
+    );
+  }
   return (
     <ScrollView
       contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}

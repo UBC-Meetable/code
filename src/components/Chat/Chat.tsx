@@ -4,16 +4,16 @@ import React, {
   useEffect, useRef, useState,
 } from "react";
 import {
-  KeyboardAvoidingView, ScrollView, StyleSheet, TextInput,
+  KeyboardAvoidingView, RefreshControl, ScrollView, StyleSheet, TextInput,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import sendMessageToCourseGroup from "../calls/sendMessageToCourseGroup";
-import MessagesContext from "../context/MessageContext";
-import CourseGroupsContext from "../context/SubscriptionContext";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import useUserProfile from "../hooks/useUserProfile";
-import { ChatMessage, ChatMessageWithPending, CourseGroup } from "../types";
+import sendMessageToCourseGroup from "../../calls/sendMessageToCourseGroup";
+import MessagesContext from "../../context/MessageContext";
+import CourseGroupsContext from "../../context/SubscriptionContext";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import useUserProfile from "../../hooks/useUserProfile";
+import { ChatMessage, ChatMessageWithPending, CourseGroup } from "../../types";
 import OtherMessage from "./OtherMessage";
 import PendingMessage from "./PendingMessage";
 import SelfMessage from "./SelfMessage";
@@ -54,13 +54,10 @@ const Chat = () => {
   const userProfile = useUserProfile();
   const [pendingMessages, setPendingMessages] = useState<ChatMessageWithPending[]>([]);
   const [textLoading, setTextLoading] = useState(false);
-  const { groupID, messages } = useContext(MessagesContext);
-
-  useEffect(() => {
-    setTimeout(() => {
-      scrollRef.current?.scrollToEnd({ animated: false });
-    }, 200);
-  }, [messages]);
+  const [loaded, setLoaded] = useState(false);
+  const {
+    groupID, messages, loading, getMessages, reachedEnd,
+  } = useContext(MessagesContext);
 
   const sendMessage = () => {
     setTextLoading(true);
@@ -73,7 +70,6 @@ const Chat = () => {
     };
     pendingMessages.push(newMessage);
     setPendingMessages(() => [...pendingMessages]);
-    console.log(pendingMessages);
 
     const res = sendMessageToCourseGroup({
       groupID,
@@ -84,12 +80,15 @@ const Chat = () => {
     res.then(() => {
       pendingMessages.pop();
       setPendingMessages(() => [...pendingMessages]);
-      console.log(pendingMessages);
     }).catch((e) => console.warn(e));
     setTextLoading(false);
 
     setMessage("");
   };
+
+  useEffect(() => {
+    if (messages) { setLoaded(true); }
+  }, [messages]);
 
   if (!user) {
     return <Spinner />;
@@ -99,12 +98,21 @@ const Chat = () => {
     <KeyboardAvoidingView style={styles.chat} behavior="padding" keyboardVerticalOffset={100}>
       <Layout style={styles.messageContainer}>
         <ScrollView
+          maintainVisibleContentPosition={{ minIndexForVisible: 1, autoscrollToTopThreshold: 100 }}
+          // onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: false })}
           ref={scrollRef}
           style={styles.messages}
           contentContainerStyle={{
             justifyContent: "flex-end",
             display: "flex",
           }}
+          refreshControl={(
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={getMessages}
+              enabled={!reachedEnd}
+            />
+          )}
         >
           {messages.map((m, index) => {
             if (m?.author?.id === user.attributes.sub) {

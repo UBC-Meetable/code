@@ -4,16 +4,23 @@ import { MessagesByCourseGroupChatIdQuery, MessagesByCourseGroupChatIdQueryVaria
 import { messagesByCourseGroupChatId } from "../graphql/queries";
 import { ChatMessage } from "../types";
 
-const fetchCourseGroupMessages = async ({ groupChatID }:
+const fetchCourseGroupMessages = async ({ groupChatID, limit, nextToken }:
     MessagesByCourseGroupChatIdQueryVariables) => {
   const res = await API.graphql({
     query: messagesByCourseGroupChatId,
     variables: {
       groupChatID,
+      limit,
+      nextToken,
+      sortDirection: "DESC",
     },
   }) as GraphQLResult<MessagesByCourseGroupChatIdQuery>;
+
   if (res.data?.messagesByCourseGroupChatID) {
-    return res.data.messagesByCourseGroupChatID.items as ChatMessage[];
+    return {
+      messages: res.data.messagesByCourseGroupChatID.items as ChatMessage[],
+      token: res.data.messagesByCourseGroupChatID.nextToken,
+    };
   }
 
   throw new Error(`Failed to get course group with groupID ${groupChatID}`);

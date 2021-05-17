@@ -24,9 +24,10 @@ import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
 import createUserProfile from "../calls/createUserProfile";
 import fetchUserProfile from "../calls/fetchUserProfile";
-import ChatBackButton from "../components/ChatBackButton";
+import ChatBackButton from "../components/Chat/ChatBackButton";
 import { MessageProvider } from "../context/MessageContext";
 import { CourseGroupsProvider } from "../context/SubscriptionContext";
+import { UserProvider } from "../context/UserContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
 import EditCourseScreen from "../screens/EditCourseScreen";
@@ -57,7 +58,9 @@ export default function Navigation({
         <NavigationContainer
           theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
         >
-          <App />
+          <UserProvider>
+            <App />
+          </UserProvider>
         </NavigationContainer>
       </UiProvider>
     </>

@@ -4,7 +4,7 @@ import {
 } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import Chat from "../components/Chat";
+import Chat from "../components/Chat/Chat";
 import { ChatMessage, CourseGroup, RootStackParamList } from "../types";
 
 const GroupScreen = ({

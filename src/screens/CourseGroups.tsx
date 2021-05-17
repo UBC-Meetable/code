@@ -1,7 +1,6 @@
 import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Layout, List, Spinner } from "@ui-kitten/components";
-import { throttle } from "lodash";
 import React, {
   useContext, useEffect, useState,
 } from "react";
@@ -9,8 +8,7 @@ import {
   RefreshControl,
   StyleSheet,
 } from "react-native";
-import fetchUserCourses from "../calls/fetchUserCourses";
-import CourseGroupBubble from "../components/CourseGroupBubble";
+import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import CourseGroupsContext from "../context/SubscriptionContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import {
@@ -23,9 +21,16 @@ const CourseGroups = ({
   navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
 }) => {
   const user = useAuthenticatedUser();
-  const [loading, setLoading] = useState(true);
   const groups = useContext(CourseGroupsContext);
+  const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (typeof groups !== "undefined") {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [groups]);
   const moveToGroupScreen = (groupTitle: string, groupID: string) => {
     navigation.dispatch(
       CommonActions.navigate("Group", {
@@ -34,6 +39,13 @@ const CourseGroups = ({
         groupTitle,
       }),
     );
+  };
+
+  const fakeLoad = () => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
   };
 
   const headerHeight = useHeaderHeight();
@@ -57,7 +69,7 @@ const CourseGroups = ({
         refreshControl={(
           <RefreshControl
             refreshing={loading}
-            // onRefresh={getCourses}
+            onRefresh={fakeLoad}
           />
         )}
         style={[styles.card]}

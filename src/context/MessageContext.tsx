@@ -1,4 +1,5 @@
 import { API } from "aws-amplify";
+import { isNull } from "lodash";
 import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
@@ -12,24 +13,43 @@ import { ChatMessage } from "../types";
 type MessageContextType = {
   messages: ChatMessage[],
   groupID: string;
+  loading: boolean;
+  getMessages: () => void;
+  reachedEnd: boolean;
 }
 
-const MessagesContext = React.createContext({ messages: [], groupID: "" } as MessageContextType);
+const MessagesContext = React.createContext({
+  messages: [], groupID: "", loading: true, getMessages: () => {}, reachedEnd: false,
+} as MessageContextType);
 export const MessageProvider = (props: { groupID: string, children?: ReactNode }) => {
   const [messages, setMessages] = useState([] as ChatMessage[]);
+  const [loading, setLoading] = useState(true);
+  const [nextToken, setNextToken] = useState<string | null | undefined>();
+  const [reachedEnd, setReachedEnd] = useState(false);
   const user = useAuthenticatedUser();
   const messagesRef = useRef<ChatMessage[]>([]);
   messagesRef.current = messages;
 
   const { children, groupID } = props;
 
+  const getMessages = async () => {
+    if (reachedEnd) return;
+    const { messages: fetchedMessages, token } = await fetchCourseGroupMessages({
+      groupChatID: groupID,
+      limit: 20,
+      nextToken,
+    });
+    if (isNull(token)) {
+      setReachedEnd(true);
+    }
+    setNextToken(token);
+    setMessages([...fetchedMessages.reverse() as ChatMessage[], ...messages]);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const getMessages = async () => {
-      const fetchedMessages = await fetchCourseGroupMessages({ groupChatID: groupID });
-      setMessages(fetchedMessages as ChatMessage[]);
-    };
-    if (user) getMessages();
-  }, [user]);
+    getMessages();
+  }, []);
 
   useEffect(() => {
     const observableObj = API.graphql({
@@ -52,7 +72,10 @@ export const MessageProvider = (props: { groupID: string, children?: ReactNode }
   });
 
   return (
-    <MessagesContext.Provider value={{ messages, groupID }}>
+    <MessagesContext.Provider value={{
+      messages, groupID, loading, getMessages, reachedEnd,
+    }}
+    >
       {children}
     </MessagesContext.Provider>
   );

@@ -1,8 +1,8 @@
 import { Layout, Spinner, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { ChatMessage, ChatMessageWithPending } from "../types";
-import styles from "./styles/MessageStyles";
+import { ChatMessage, ChatMessageWithPending } from "../../types";
+import styles from "../styles/MessageStyles";
 
 const PendingMessage = ({ message }:{message: ChatMessageWithPending}) => (
   <Layout style={[styles.messageContainer, selfStyles.messageContainer]}>
