@@ -1,21 +1,11 @@
-import Auth from "@aws-amplify/auth";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import UserContext from "../context/UserContext";
 import { CognitoUser } from "../types";
 
 const useAuthenticatedUser = () => {
-  const [user, setUser] = useState<CognitoUser | undefined>();
-  useEffect(() => {
-    const f = async () => {
-      try {
-        const u = await Auth.currentAuthenticatedUser();
-        setUser(u);
-      } catch (e) {
-        setUser(undefined);
-      }
-    };
-    if (!user) { f(); }
-  }, []);
-  return user as CognitoUser;
+  const context = useContext(UserContext);
+  if (!context) throw new Error("useAuthenticatedUser must be used within a UserProvider");
+  return context.user as CognitoUser;
 };
 
 export default useAuthenticatedUser;

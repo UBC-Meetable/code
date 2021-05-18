@@ -2,29 +2,24 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Layout,
 } from "@ui-kitten/components";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import Chat from "../components/Chat";
+import Chat from "../components/Chat/Chat";
 import { ChatMessage, CourseGroup, RootStackParamList } from "../types";
 
 const GroupScreen = ({
   navigation,
-  route,
+  groupTitle,
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Group">;
-  route: any;
+  groupTitle: string;
 }) => {
   useEffect(() => {
-    const { courseGroup, groupMessages }:
-    {courseGroup: CourseGroup, groupMessages: ChatMessage[]} = route.params;
-    console.log("groupMessages", groupMessages);
-
-    navigation.setOptions({ headerBackTitle: courseGroup.title || courseGroup.groupID });
-  }, []);
-
+    navigation.setOptions({ headerBackTitle: groupTitle });
+  }, [groupTitle]);
   return (
     <Layout style={styles.root}>
-      <Chat {...route.params} />
+      <Chat />
     </Layout>
   );
 };

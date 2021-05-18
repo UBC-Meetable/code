@@ -343,6 +343,7 @@ export type GetUserCoursesQuery = {
                 __typename: "User",
                 firstName?: string | null,
                 lastName?: string | null,
+                id: string,
               },
             } | null > | null,
           } | null,
