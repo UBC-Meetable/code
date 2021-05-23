@@ -55,6 +55,9 @@ type CourseGroupConnectionModel
   user: User! @connection(fields: ["userID"])
 }
 
+type Mutation {
+  joinFriendGroup(user: User): Object @function(name: "joinFriendGroup-${env}")
+}
 
 # [PRIVATE HELPER TYPES]
 enum UserState {
