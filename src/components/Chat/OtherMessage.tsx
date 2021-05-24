@@ -19,7 +19,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => (
           style={styles.avatarButton}
           activeOpacity={0.5}
           // todo
-          onPress={() => profile}
+          onPress={() => console.log("modal appears here")} // profile}
         >
           <Avatar.Image
             size={30}
