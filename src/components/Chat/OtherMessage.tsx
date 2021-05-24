@@ -5,6 +5,7 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import { ChatMessage } from "../../types";
 import styles from "../styles/MessageStyles";
+import profile from "../InspectProfile";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => (
   <Layout style={otherStyles.messageContainer}>
@@ -18,7 +19,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => (
           style={styles.avatarButton}
           activeOpacity={0.5}
           // todo
-          onPress={() => console.log("showmodal")}
+          onPress={() => profile}
         >
           <Avatar.Image
             size={30}
