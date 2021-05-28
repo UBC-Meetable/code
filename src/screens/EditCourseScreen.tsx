@@ -20,7 +20,7 @@ const EditCourseScreen = () => {
 
   useEffect(() => {
     const f = async () => {
-      const fetchedCourses = await fetchUserCourses({ id: user.attributes.sub });
+      const fetchedCourses = await fetchUserCourses(user);
       const courseStringSet = new Set<string>();
       fetchedCourses.forEach((courseGroup:CourseGroup) => courseStringSet
         .add(JSON.stringify(courseGroup.course)));
@@ -32,8 +32,7 @@ const EditCourseScreen = () => {
 
   function addCourse() {
     if (!code || !section) return;
-    const newCourse: Course = { code, section };
-    console.log(newCourse);
+    const newCourse: Course = { __typename: "Course", code, section };
 
     setCode(() => "");
     setSection(() => "");

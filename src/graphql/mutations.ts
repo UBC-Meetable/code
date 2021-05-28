@@ -227,6 +227,147 @@ export const deleteCourseGroup = /* GraphQL */ `
     }
   }
 `;
+export const createFriendGroup = /* GraphQL */ `
+  mutation CreateFriendGroup(
+    $input: CreateFriendGroupInput!
+    $condition: ModelFriendGroupConditionInput
+  ) {
+    createFriendGroup(input: $input, condition: $condition) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFriendGroup = /* GraphQL */ `
+  mutation UpdateFriendGroup(
+    $input: UpdateFriendGroupInput!
+    $condition: ModelFriendGroupConditionInput
+  ) {
+    updateFriendGroup(input: $input, condition: $condition) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFriendGroup = /* GraphQL */ `
+  mutation DeleteFriendGroup(
+    $input: DeleteFriendGroupInput!
+    $condition: ModelFriendGroupConditionInput
+  ) {
+    deleteFriendGroup(input: $input, condition: $condition) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createChatMessage = /* GraphQL */ `
   mutation CreateChatMessage(
     $input: CreateChatMessageInput!
@@ -364,6 +505,25 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
         updatedAt
         owner
       }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
       user {
         id
         email
@@ -416,6 +576,25 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
         updatedAt
         owner
       }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
       user {
         id
         email
@@ -467,6 +646,25 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+      }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
       }
       user {
         id

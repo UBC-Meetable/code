@@ -41,7 +41,6 @@ const SignUpFormScreen = ({
     if (!confirmForm()) return;
     try {
       const user = await Auth.confirmSignUp(email, code);
-      console.log(user);
       onConfirmCode();
     } catch (e) {
       const message = e.message as string;

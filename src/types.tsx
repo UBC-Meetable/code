@@ -21,7 +21,10 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Quiz: undefined;
-  Group: undefined;
+  Group: {
+    groupID: string;
+    groupTitle: string;
+  };
   UniScreen: undefined;
   EditCourses: undefined;
   ProfileSettings: undefined;
@@ -126,7 +129,13 @@ export type MessageMap = {
   [id: string]: ChatMessage[]
 }
 
-export type Course = Omit<CourseAPIType, "__typename">;
-export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "__typename" | "createdAt" | "owner" | "updatedAt">;
-export type CourseGroup = Omit<CourseGroupAPIType, "__typename" | "createdAt" | "owner" >;
-export type ChatMessage = Omit<ChatMessageAPIType, "__typename" | "owner" | "userID" | "id" | "updatedAt">;
+export type Course = CourseAPIType;
+export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "createdAt" | "owner" | "updatedAt">;
+export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner" >;
+export type ChatMessage = Omit<ChatMessageAPIType, "owner" | "userID" | "id" | "updatedAt">;
+export type ChatMessageWithPending = ChatMessage & { pending?: boolean }
+
+export type ModelChatMessageConnection = {
+  items?: Array<Omit<ChatMessage, "__typename"> | null > | null,
+  nextToken?: string | null,
+};

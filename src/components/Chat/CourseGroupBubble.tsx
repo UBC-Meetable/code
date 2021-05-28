@@ -2,25 +2,25 @@ import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
-import { ChatMessage, CourseGroup, MessageMap } from "../types";
+import { ChatMessage, CourseGroup, MessageMap } from "../../types";
+import MessagePreview from "./MessagePreview";
 
 type CourseGroupBubbleProps = {
     courseGroup: CourseGroup,
     messages: ChatMessage[],
-    joinGroup: () => void;
+    moveToGroupScreen: () => void;
 }
 
 const CourseGroupBubble = ({
-  courseGroup, joinGroup,
+  courseGroup, moveToGroupScreen, messages,
 }: CourseGroupBubbleProps) => {
   const {
     groupID, users, course, title = groupID,
   } = courseGroup;
-  // console.log(courseGroup);
 
   if (!groupID || !users || !course || !title) return null;
   return (
-    <TouchableOpacity style={styles.bubble} onPress={() => joinGroup()}>
+    <TouchableOpacity style={styles.bubble} onPress={() => moveToGroupScreen()}>
       <Layout style={styles.topContainer}>
         <Layout style={styles.textContainer}>
           <Text style={styles.bubbleText}>
@@ -38,15 +38,9 @@ const CourseGroupBubble = ({
 
       <Layout style={styles.bottomContainer}>
         <Layout style={styles.bottomTextContainer}>
-          <Text style={styles.bubbleTextDesc} numberOfLines={4} ellipsizeMode="tail">
-            lorem ipsum lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-            hi hi hi hi ih ih lorem ipsum lorem ipsum
-          </Text>
+          <MessagePreview messages={messages} />
         </Layout>
+        {/* TODO Implement User Photos, Make new component for this */}
         <Layout style={styles.bottomPhotoContainer}>
           <Layout style={styles.photoContainer}>
             <Avatar.Icon size={38} icon="folder" />

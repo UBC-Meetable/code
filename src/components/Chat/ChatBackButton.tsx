@@ -1,7 +1,7 @@
 import { HeaderBackButton, StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Text } from "@ui-kitten/components";
 import React from "react";
-import { RootStackParamList } from "../types";
+import { RootStackParamList } from "../../types";
 
 const ChatBackButton = ({
   navigation,

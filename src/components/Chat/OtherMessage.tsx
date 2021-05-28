@@ -3,8 +3,9 @@ import { Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
-import { ChatMessage } from "../types";
-import styles from "./styles/MessageStyles";
+import { ChatMessage } from "../../types";
+import styles from "../styles/MessageStyles";
+import profile from "../InspectProfile";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => (
   <Layout style={otherStyles.messageContainer}>
@@ -18,11 +19,11 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => (
           style={styles.avatarButton}
           activeOpacity={0.5}
           // todo
-          onPress={() => console.log("showmodal")}
+          onPress={() => console.log("modal appears here")} // profile}
         >
           <Avatar.Image
             size={30}
-            source={require("../assets/images/profilePic2.jpg")}
+            source={require("../../assets/images/profilePic2.jpg")}
           />
         </TouchableOpacity>
         <Layout style={styles.bubble}>

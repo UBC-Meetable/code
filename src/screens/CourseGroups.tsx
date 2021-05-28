@@ -1,22 +1,18 @@
-import API from "@aws-amplify/api";
 import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Layout, List, Spinner } from "@ui-kitten/components";
-import { graphqlOperation } from "aws-amplify";
-import { throttle } from "lodash";
-import React, { useState } from "react";
+import React, {
+  useContext, useEffect, useState,
+} from "react";
 import {
   RefreshControl,
   StyleSheet,
 } from "react-native";
-import { ChatMessage as ChatMessageAPIType, OnCreateChatMessageSubscription } from "../API";
-import fetchUserCourses from "../calls/fetchUserCourses";
-import groupChatSubscription from "../calls/groupChatSubscription";
-import CourseGroupBubble from "../components/CourseGroupBubble";
-import { onCreateChatMessage } from "../graphql/subscriptions";
+import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
+import CourseGroupsContext from "../context/SubscriptionContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import {
-  ChatMessage, CourseGroup, GroupStackParamList, MessageMap,
+  ChatMessage, CourseGroup, GroupStackParamList,
 } from "../types";
 
 const CourseGroups = ({
@@ -25,84 +21,44 @@ const CourseGroups = ({
   navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
 }) => {
   const user = useAuthenticatedUser();
-  const [loading, setLoading] = useState(true);
-  const [groups, setGroups] = useState<CourseGroup[] | undefined>();
-  const [messages, setMessages] = useState<MessageMap>();
-  const joinGroup = (courseGroup: CourseGroup, groupMessages: ChatMessage[]) => {
+  const groups = useContext(CourseGroupsContext);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (typeof groups !== "undefined") {
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+  }, [groups]);
+  const moveToGroupScreen = (groupTitle: string, groupID: string) => {
     navigation.dispatch(
       CommonActions.navigate("Group", {
         screen: "GroupScreen",
-        courseGroup,
-        groupMessages,
+        groupID,
+        groupTitle,
       }),
     );
   };
 
-  const headerHeight = useHeaderHeight();
-
-  const getCourses = throttle(async () => {
-    setLoading(() => true);
-    try {
-      const fetchedGroups = await fetchUserCourses({ id: user.attributes.sub });
-      setGroups(() => fetchedGroups);
-      const messageMap: MessageMap = {};
-      fetchedGroups.forEach((group) => {
-        messageMap[group.groupID as string] = group.messages?.items as ChatMessage[];
-      });
-      setMessages(messageMap);
-    } catch (e) {
-      console.error(e);
-    } finally {
+  const fakeLoad = () => {
+    setLoading(true);
+    setTimeout(() => {
       setLoading(false);
-      console.log("done");
-    }
-  }, 10000);
-
-  const handleNewMessage = (newMessage: ChatMessage) => {
-    const groupID = newMessage.groupChatID as string;
-    const groupMessages = (messages as MessageMap)[groupID];
-    setMessages((prevMessages) => ({
-      ...prevMessages,
-      [groupID]: [...groupMessages, newMessage],
-    }));
+    }, 1000);
   };
 
-  React.useEffect(() => {
-    if (user) {
-      getCourses();
-      getCourses.flush();
-    }
-  }, [user]);
-
-  React.useEffect(() => {
-    let res:any;
-    if (!groups) return;
-    const f = async () => {
-      res = await groupChatSubscription((message) => handleNewMessage(message));
-      console.log(res);
-    };
-    f();
-
-    // eslint-disable-next-line consistent-return
-    return () => {
-      res.unsubscribe();
-      console.log("unsubscibed");
-    };
-  }, [groups]);
+  const headerHeight = useHeaderHeight();
 
   const renderItem = ({ item }:{item: CourseGroup}) => {
-    if (!messages) return <Spinner />;
     if (!item.groupID) return <Spinner />;
-    const id = item.groupID;
-    if (!messages[id]) <Spinner />;
-
-    const groupMessages = messages[id];
+    const messages = item.messages?.items as ChatMessage[];
 
     return (
       <CourseGroupBubble
         courseGroup={item}
-        messages={groupMessages}
-        joinGroup={() => joinGroup(item, groupMessages)}
+        messages={messages}
+        moveToGroupScreen={() => moveToGroupScreen(item.title as string, item.groupID as string)}
       />
     );
   };
@@ -113,7 +69,7 @@ const CourseGroups = ({
         refreshControl={(
           <RefreshControl
             refreshing={loading}
-            onRefresh={getCourses}
+            onRefresh={fakeLoad}
           />
         )}
         style={[styles.card]}

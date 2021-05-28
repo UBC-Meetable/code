@@ -46,6 +46,7 @@ export type CourseGroupConnectionModel = {
   groupID?: string,
   userID?: string,
   courseGroup?: CourseGroup,
+  friendGroup?: FriendGroup,
   user?: User,
   createdAt?: string,
   updatedAt?: string,
@@ -79,6 +80,17 @@ export type ChatMessage = {
   createdAt?: string | null,
   updatedAt?: string | null,
   owner?: string | null,
+};
+
+export type FriendGroup = {
+  __typename: "FriendGroup",
+  users?: ModelCourseGroupConnectionModelConnection,
+  groupID?: string,
+  title?: string,
+  messages?:  Array<ChatMessage > | null,
+  owner?: string | null,
+  createdAt?: string,
+  updatedAt?: string,
 };
 
 export type CreateUserInput = {
@@ -198,6 +210,29 @@ export type DeleteCourseGroupInput = {
   groupID: string,
 };
 
+export type CreateFriendGroupInput = {
+  groupID: string,
+  title: string,
+  owner?: string | null,
+};
+
+export type ModelFriendGroupConditionInput = {
+  title?: ModelStringInput | null,
+  and?: Array< ModelFriendGroupConditionInput | null > | null,
+  or?: Array< ModelFriendGroupConditionInput | null > | null,
+  not?: ModelFriendGroupConditionInput | null,
+};
+
+export type UpdateFriendGroupInput = {
+  groupID: string,
+  title?: string | null,
+  owner?: string | null,
+};
+
+export type DeleteFriendGroupInput = {
+  groupID: string,
+};
+
 export type CreateChatMessageInput = {
   id?: string | null,
   groupChatID: string,
@@ -227,7 +262,7 @@ export type UpdateChatMessageInput = {
 };
 
 export type DeleteChatMessageInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseGroupConnectionModelInput = {
@@ -251,7 +286,7 @@ export type UpdateCourseGroupConnectionModelInput = {
 };
 
 export type DeleteCourseGroupConnectionModelInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type ModelUserFilterInput = {
@@ -292,6 +327,21 @@ export type ModelCourseGroupFilterInput = {
 export type ModelCourseGroupConnection = {
   __typename: "ModelCourseGroupConnection",
   items?:  Array<CourseGroup | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelFriendGroupFilterInput = {
+  groupID?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  owner?: ModelStringInput | null,
+  and?: Array< ModelFriendGroupFilterInput | null > | null,
+  or?: Array< ModelFriendGroupFilterInput | null > | null,
+  not?: ModelFriendGroupFilterInput | null,
+};
+
+export type ModelFriendGroupConnection = {
+  __typename: "ModelFriendGroupConnection",
+  items?:  Array<FriendGroup | null > | null,
   nextToken?: string | null,
 };
 
@@ -343,6 +393,7 @@ export type GetUserCoursesQuery = {
                 __typename: "User",
                 firstName?: string | null,
                 lastName?: string | null,
+                id: string,
               },
             } | null > | null,
           } | null,
@@ -629,6 +680,165 @@ export type DeleteCourseGroupMutation = {
   } | null,
 };
 
+export type CreateFriendGroupMutationVariables = {
+  input?: CreateFriendGroupInput,
+  condition?: ModelFriendGroupConditionInput | null,
+};
+
+export type CreateFriendGroupMutation = {
+  createFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateFriendGroupMutationVariables = {
+  input?: UpdateFriendGroupInput,
+  condition?: ModelFriendGroupConditionInput | null,
+};
+
+export type UpdateFriendGroupMutation = {
+  updateFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteFriendGroupMutationVariables = {
+  input?: DeleteFriendGroupInput,
+  condition?: ModelFriendGroupConditionInput | null,
+};
+
+export type DeleteFriendGroupMutation = {
+  deleteFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateChatMessageMutationVariables = {
   input?: CreateChatMessageInput,
   condition?: ModelChatMessageConditionInput | null,
@@ -787,6 +997,28 @@ export type CreateCourseGroupConnectionModelMutation = {
       updatedAt: string,
       owner?: string | null,
     },
+    friendGroup:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     user:  {
       __typename: "User",
       id: string,
@@ -848,6 +1080,28 @@ export type UpdateCourseGroupConnectionModelMutation = {
       updatedAt: string,
       owner?: string | null,
     },
+    friendGroup:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     user:  {
       __typename: "User",
       id: string,
@@ -908,6 +1162,28 @@ export type DeleteCourseGroupConnectionModelMutation = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
+    },
+    friendGroup:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
     },
     user:  {
       __typename: "User",
@@ -1093,6 +1369,95 @@ export type ListCourseGroupsQuery = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetFriendGroupQueryVariables = {
+  groupID?: string,
+};
+
+export type GetFriendGroupQuery = {
+  getFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListFriendGroupsQueryVariables = {
+  groupID?: string | null,
+  filter?: ModelFriendGroupFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListFriendGroupsQuery = {
+  listFriendGroups?:  {
+    __typename: "ModelFriendGroupConnection",
+    items?:  Array< {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
     } | null > | null,
     nextToken?: string | null,
   } | null,
@@ -1449,6 +1814,150 @@ export type OnDeleteCourseGroupSubscription = {
   } | null,
 };
 
+export type OnCreateFriendGroupSubscription = {
+  onCreateFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateFriendGroupSubscription = {
+  onUpdateFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteFriendGroupSubscription = {
+  onDeleteFriendGroup?:  {
+    __typename: "FriendGroup",
+    users?:  {
+      __typename: "ModelCourseGroupConnectionModelConnection",
+      items?:  Array< {
+        __typename: "CourseGroupConnectionModel",
+        id: string,
+        groupID: string,
+        userID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    groupID: string,
+    title: string,
+    messages?:  Array< {
+      __typename: "ChatMessage",
+      id: string,
+      groupChatID: string,
+      userID: string,
+      author:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        major?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      body: string,
+      createdAt?: string | null,
+      updatedAt?: string | null,
+      owner?: string | null,
+    } > | null,
+    owner?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateChatMessageSubscription = {
   onCreateChatMessage?:  {
     __typename: "ChatMessage",
@@ -1587,6 +2096,28 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
       updatedAt: string,
       owner?: string | null,
     },
+    friendGroup:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     user:  {
       __typename: "User",
       id: string,
@@ -1643,6 +2174,28 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
       updatedAt: string,
       owner?: string | null,
     },
+    friendGroup:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     user:  {
       __typename: "User",
       id: string,
@@ -1698,6 +2251,28 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
+    },
+    friendGroup:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
     },
     user:  {
       __typename: "User",

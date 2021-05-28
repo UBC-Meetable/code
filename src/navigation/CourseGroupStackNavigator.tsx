@@ -37,7 +37,9 @@ const CourseGroupStackNavigator = () => (
         ),
       })}
     >
-      {(props) => <CourseGroups {...props} />}
+      {(props) => (
+        <CourseGroups {...props} />
+      )}
     </GroupTabStack.Screen>
   </GroupTabStack.Navigator>
 );

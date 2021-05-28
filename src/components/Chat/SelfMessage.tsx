@@ -1,11 +1,13 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { ChatMessage } from "../types";
-import styles from "./styles/MessageStyles";
+import { ChatMessage, ChatMessageWithPending } from "../../types";
+import styles from "../styles/MessageStyles";
 
-const SelfMessage = ({ message }:{message: ChatMessage}) => (
-  <Layout style={[styles.messageContainer, selfStyles.messageContainer]}>
+const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => (
+  <Layout style={[styles.messageContainer, selfStyles.messageContainer,
+    message.pending ? selfStyles.pending : {}]}
+  >
     <Layout style={[styles.bubble, selfStyles.bubble]}>
       <Text style={[styles.message, selfStyles.message]}>{message.body}</Text>
     </Layout>
@@ -21,6 +23,9 @@ const selfStyles = StyleSheet.create({
   },
   messageContainer: {
     justifyContent: "flex-end",
+  },
+  pending: {
+    backgroundColor: "#d9eff7",
   },
 });
 export default SelfMessage;
