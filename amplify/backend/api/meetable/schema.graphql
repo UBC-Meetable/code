@@ -68,6 +68,17 @@ type CourseGroupConnectionModel
   friendGroup: FriendGroup! @connection(fields: ["groupID"])
   user: User! @connection(fields: ["userID"])
 }
+type FriendGroupConnectionModel
+  @model(queries: null)
+  @key(name: "byFriendGroup", fields: ["groupID", "userID"])
+  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  id: ID!
+  groupID: String!
+  userID: String!
+  friendGroup: FriendGroup! @connection(fields: ["groupID"])
+  user: User! @connection(fields: ["userID"])
+}
+
 
 
 # [PRIVATE HELPER TYPES]
