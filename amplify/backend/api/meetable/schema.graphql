@@ -56,7 +56,7 @@ type CourseGroupConnectionModel
 }
 
 type Mutation {
-  joinFriendGroup(user: User): Object @function(name: "joinFriendGroup-${env}")
+  joinFriendGroup(user: User): CourseGroupConnectionModel @function(name: "joinFriendGroup-${env}")
 }
 
 # [PRIVATE HELPER TYPES]
