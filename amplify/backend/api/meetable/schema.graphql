@@ -28,6 +28,18 @@ type CourseGroup
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
 }
 
+type FriendGroup
+  @model
+  @key(fields: ["groupID"])
+  @auth[rules: [{allow: owner, operations:[create]}]]
+  {
+  users(userID: ModelStringKeyConditionInput, filter: ModelCourseGroupConnectionModelFilterInput, sortDirection: ModelSortDirection, limit: Int, nextToken: String): ModelCourseGroupConnectionModelConnection
+  groupID: String!
+  title: String!
+  messages: [ChatMessage]
+  owner: String
+}
+
 # [CONNECTIONS]
 
 #[Many ChatMessages: Many Users]
