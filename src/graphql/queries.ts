@@ -147,6 +147,88 @@ export const listCourseGroups = /* GraphQL */ `
     }
   }
 `;
+export const getFriendGroup = /* GraphQL */ `
+  query GetFriendGroup($groupID: String!) {
+    getFriendGroup(groupID: $groupID) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFriendGroups = /* GraphQL */ `
+  query ListFriendGroups(
+    $groupID: String
+    $filter: ModelFriendGroupFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listFriendGroups(
+      groupID: $groupID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getChatMessage = /* GraphQL */ `
   query GetChatMessage($id: ID!) {
     getChatMessage(id: $id) {

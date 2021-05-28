@@ -209,6 +209,138 @@ export const onDeleteCourseGroup = /* GraphQL */ `
     }
   }
 `;
+export const onCreateFriendGroup = /* GraphQL */ `
+  subscription OnCreateFriendGroup {
+    onCreateFriendGroup {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFriendGroup = /* GraphQL */ `
+  subscription OnUpdateFriendGroup {
+    onUpdateFriendGroup {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFriendGroup = /* GraphQL */ `
+  subscription OnDeleteFriendGroup {
+    onDeleteFriendGroup {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateChatMessage = /* GraphQL */ `
   subscription OnCreateChatMessage {
     onCreateChatMessage {
@@ -334,6 +466,25 @@ export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
         updatedAt
         owner
       }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
       user {
         id
         email
@@ -383,6 +534,25 @@ export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
         updatedAt
         owner
       }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
       user {
         id
         email
@@ -431,6 +601,25 @@ export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
         createdAt
         updatedAt
         owner
+      }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
       }
       user {
         id
