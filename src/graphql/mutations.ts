@@ -2,6 +2,74 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const joinFriendGroup = /* GraphQL */ `
+  mutation JoinFriendGroup($user: joinFriendGroupInput) {
+    joinFriendGroup(user: $user) {
+      id
+      groupID
+      userID
+      courseGroup {
+        users {
+          nextToken
+        }
+        title
+        course {
+          code
+          section
+        }
+        groupID
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courses {
+          code
+          section
+        }
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!

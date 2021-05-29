@@ -15,6 +15,7 @@ type User
   major: String
   courses: [Course!]
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
+  quizzes: [Quiz] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type CourseGroup
@@ -40,6 +41,17 @@ type FriendGroup
   owner: String
 }
 
+type Quiz
+  @model
+  @key(fields: ["quizID"])
+  @auth(rules: [{allow: owner, operations:[create]}])
+  {
+    user: [User!] @connection(keyName: "byQuizID", fields: ["quizID"])
+    quizID: String! 
+    responses: [QAPair!]
+    createdAt: AWSDateTime! # quiz won't be modified after
+  }
+
 # [CONNECTIONS]
 
 #[Many ChatMessages: Many Users]
@@ -64,13 +76,21 @@ type CourseGroupConnectionModel
   id: ID!
   groupID: String!
   userID: String!
-  courseGroup: CourseGroup! @connection(fields: ["groupID"])
-  friendGroup: FriendGroup! @connection(fields: ["groupID"])
+  courseGroup: CourseGroup @connection(fields: ["groupID"])
+  friendGroup: FriendGroup @connection(fields: ["groupID"])
   user: User! @connection(fields: ["userID"])
 }
 
+
+
+
+# lambda
 type Mutation {
-  joinFriendGroup(user: User): CourseGroupConnectionModel @function(name: "joinFriendGroup-${env}")
+  joinFriendGroup(user: joinFriendGroupInput): FriendGroupConnectionModel @function(name: "joinFriendGroup-${env}")
+}
+
+input joinFriendGroupInput {
+  id: String!
 }
 
 # [PRIVATE HELPER TYPES]
@@ -84,6 +104,11 @@ enum UserState {
 type Course {
   code: String!
   section: String!
+}
+
+type QAPair {
+  q: String!
+  a: String!
 }
 
 

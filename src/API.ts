@@ -93,6 +93,10 @@ export type FriendGroup = {
   updatedAt?: string,
 };
 
+export type joinFriendGroupInput = {
+  id: string,
+};
+
 export type CreateUserInput = {
   id: string,
   email: string,
@@ -262,7 +266,7 @@ export type UpdateChatMessageInput = {
 };
 
 export type DeleteChatMessageInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateCourseGroupConnectionModelInput = {
@@ -286,7 +290,7 @@ export type UpdateCourseGroupConnectionModelInput = {
 };
 
 export type DeleteCourseGroupConnectionModelInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type ModelUserFilterInput = {
@@ -377,7 +381,7 @@ export type GetUserCoursesQuery = {
       __typename: "ModelCourseGroupConnectionModelConnection",
       items?:  Array< {
         __typename: "CourseGroupConnectionModel",
-        courseGroup:  {
+        courseGroup?:  {
           __typename: "CourseGroup",
           updatedAt: string,
           groupID: string,
@@ -413,9 +417,91 @@ export type GetUserCoursesQuery = {
             code: string,
             section: string,
           },
-        },
+        } | null,
       } | null > | null,
     } | null,
+  } | null,
+};
+
+export type JoinFriendGroupMutationVariables = {
+  user?: joinFriendGroupInput | null,
+};
+
+export type JoinFriendGroupMutation = {
+  joinFriendGroup?:  {
+    __typename: "CourseGroupConnectionModel",
+    id: string,
+    groupID: string,
+    userID: string,
+    courseGroup?:  {
+      __typename: "CourseGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      title?: string | null,
+      course:  {
+        __typename: "Course",
+        code: string,
+        section: string,
+      },
+      groupID: string,
+      messages?:  {
+        __typename: "ModelChatMessageConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null,
+    friendGroup?:  {
+      __typename: "FriendGroup",
+      users?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      groupID: string,
+      title: string,
+      messages?:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        groupChatID: string,
+        userID: string,
+        body: string,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        owner?: string | null,
+      } > | null,
+      owner?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      major?: string | null,
+      courses?:  Array< {
+        __typename: "Course",
+        code: string,
+        section: string,
+      } > | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionModelConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -976,7 +1062,7 @@ export type CreateCourseGroupConnectionModelMutation = {
     id: string,
     groupID: string,
     userID: string,
-    courseGroup:  {
+    courseGroup?:  {
       __typename: "CourseGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -996,8 +1082,8 @@ export type CreateCourseGroupConnectionModelMutation = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    },
-    friendGroup:  {
+    } | null,
+    friendGroup?:  {
       __typename: "FriendGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -1018,7 +1104,7 @@ export type CreateCourseGroupConnectionModelMutation = {
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     user:  {
       __typename: "User",
       id: string,
@@ -1059,7 +1145,7 @@ export type UpdateCourseGroupConnectionModelMutation = {
     id: string,
     groupID: string,
     userID: string,
-    courseGroup:  {
+    courseGroup?:  {
       __typename: "CourseGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -1079,8 +1165,8 @@ export type UpdateCourseGroupConnectionModelMutation = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    },
-    friendGroup:  {
+    } | null,
+    friendGroup?:  {
       __typename: "FriendGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -1101,7 +1187,7 @@ export type UpdateCourseGroupConnectionModelMutation = {
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     user:  {
       __typename: "User",
       id: string,
@@ -1142,7 +1228,7 @@ export type DeleteCourseGroupConnectionModelMutation = {
     id: string,
     groupID: string,
     userID: string,
-    courseGroup:  {
+    courseGroup?:  {
       __typename: "CourseGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -1162,8 +1248,8 @@ export type DeleteCourseGroupConnectionModelMutation = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    },
-    friendGroup:  {
+    } | null,
+    friendGroup?:  {
       __typename: "FriendGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -1184,7 +1270,7 @@ export type DeleteCourseGroupConnectionModelMutation = {
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     user:  {
       __typename: "User",
       id: string,
@@ -2075,7 +2161,7 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
     id: string,
     groupID: string,
     userID: string,
-    courseGroup:  {
+    courseGroup?:  {
       __typename: "CourseGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -2095,8 +2181,8 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    },
-    friendGroup:  {
+    } | null,
+    friendGroup?:  {
       __typename: "FriendGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -2117,7 +2203,7 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     user:  {
       __typename: "User",
       id: string,
@@ -2153,7 +2239,7 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
     id: string,
     groupID: string,
     userID: string,
-    courseGroup:  {
+    courseGroup?:  {
       __typename: "CourseGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -2173,8 +2259,8 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    },
-    friendGroup:  {
+    } | null,
+    friendGroup?:  {
       __typename: "FriendGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -2195,7 +2281,7 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     user:  {
       __typename: "User",
       id: string,
@@ -2231,7 +2317,7 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
     id: string,
     groupID: string,
     userID: string,
-    courseGroup:  {
+    courseGroup?:  {
       __typename: "CourseGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -2251,8 +2337,8 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
       createdAt: string,
       updatedAt: string,
       owner?: string | null,
-    },
-    friendGroup:  {
+    } | null,
+    friendGroup?:  {
       __typename: "FriendGroup",
       users?:  {
         __typename: "ModelCourseGroupConnectionModelConnection",
@@ -2273,7 +2359,7 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
       owner?: string | null,
       createdAt: string,
       updatedAt: string,
-    },
+    } | null,
     user:  {
       __typename: "User",
       id: string,
