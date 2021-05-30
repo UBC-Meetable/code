@@ -91,6 +91,7 @@ type Mutation {
 
 input joinFriendGroupInput {
   id: String!
+  university: String!
 }
 
 # [PRIVATE HELPER TYPES]
