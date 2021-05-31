@@ -1,11 +1,13 @@
 /* eslint-disable camelcase */
-import { Layout, Text } from "@ui-kitten/components";
+import {
+  Button, Card, Layout, Modal, Text,
+} from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import { ChatMessage } from "../../types";
 import styles from "../styles/MessageStyles";
-import profile from "../InspectProfile";
+import InspectProfile from "../InspectProfile";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => (
   <Layout style={otherStyles.messageContainer}>
@@ -19,8 +21,20 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => (
           style={styles.avatarButton}
           activeOpacity={0.5}
           // todo
-          onPress={() => console.log("modal appears here")} // profile}
+          onPress={() => console.log("Profile")}
         >
+          <Modal
+            backdropStyle={otherStyles.backdrop}
+            onBackdropPress={() => console.log("Background pressed")}
+          >
+            <Card>
+              <Text>Profile</Text>
+              <Button>
+                OK
+              </Button>
+            </Card>
+          </Modal>
+
           <Avatar.Image
             size={30}
             source={require("../../assets/images/profilePic2.jpg")}
@@ -70,6 +84,9 @@ const otherStyles = StyleSheet.create({
     color: "#FBBA82",
     fontFamily: "Poppins_600SemiBold",
     alignSelf: "flex-start",
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
 });
 
