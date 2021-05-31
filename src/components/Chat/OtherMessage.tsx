@@ -9,44 +9,49 @@ import { ChatMessage } from "../../types";
 import styles from "../styles/MessageStyles";
 import InspectProfile from "../InspectProfile";
 
-const OtherMessage = ({ message } : {message: ChatMessage}) => (
-  <Layout style={otherStyles.messageContainer}>
-    <Layout style={otherStyles.messageAndAuthor}>
-      <Layout style={otherStyles.nameContainer}>
-        <Text style={otherStyles.name}>{`${message.author?.firstName} ${message.author?.lastName}`}</Text>
-      </Layout>
+const OtherMessage = ({ message } : {message: ChatMessage}) => {
+  const [visible, setVisible] = React.useState(false);
 
-      <Layout style={otherStyles.imageContainer}>
-        <TouchableOpacity
-          style={styles.avatarButton}
-          activeOpacity={0.5}
-          // todo
-          onPress={() => console.log("Profile")}
-        >
-          <Modal
-            backdropStyle={otherStyles.backdrop}
-            onBackdropPress={() => console.log("Background pressed")}
+  return (
+    <Layout style={otherStyles.messageContainer}>
+      <Layout style={otherStyles.messageAndAuthor}>
+        <Layout style={otherStyles.nameContainer}>
+          <Text style={otherStyles.name}>{`${message.author?.firstName} ${message.author?.lastName}`}</Text>
+        </Layout>
+
+        <Layout style={otherStyles.imageContainer}>
+          <TouchableOpacity
+            style={styles.avatarButton}
+            activeOpacity={0.5}
+            // todo
+            onPress={() => setVisible(true)}
           >
-            <Card>
-              <Text>Profile</Text>
-              <Button>
-                OK
-              </Button>
-            </Card>
-          </Modal>
+            <Modal
+              visible={visible}
+              backdropStyle={otherStyles.backdrop}
+              onBackdropPress={() => setVisible(false)}
+            >
+              <Card>
+                <Text>Profile</Text>
+                <Button onPress={() => setVisible(false)}>
+                  OK
+                </Button>
+              </Card>
+            </Modal>
 
-          <Avatar.Image
-            size={30}
-            source={require("../../assets/images/profilePic2.jpg")}
-          />
-        </TouchableOpacity>
-        <Layout style={styles.bubble}>
-          <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>
+            <Avatar.Image
+              size={30}
+              source={require("../../assets/images/profilePic2.jpg")}
+            />
+          </TouchableOpacity>
+          <Layout style={styles.bubble}>
+            <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>
+          </Layout>
         </Layout>
       </Layout>
     </Layout>
-  </Layout>
-);
+  );
+};
 
 const otherStyles = StyleSheet.create({
   messageAndAuthor: {
