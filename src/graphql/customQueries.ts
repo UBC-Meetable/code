@@ -30,10 +30,6 @@ export const getUserCourses = /* GraphQL */ `
               }
             }
           }
-          course {
-            code
-            section
-          }
         }
       }
     }

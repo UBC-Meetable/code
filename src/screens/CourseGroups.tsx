@@ -30,6 +30,7 @@ const CourseGroups = ({
     } else {
       setLoading(true);
     }
+    console.log(groups);
   }, [groups]);
   const moveToGroupScreen = (groupTitle: string, groupID: string) => {
     navigation.dispatch(

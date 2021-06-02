@@ -17,10 +17,6 @@ export const createUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -52,10 +48,6 @@ export const updateUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -87,10 +79,6 @@ export const deleteUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -124,11 +112,9 @@ export const createCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -164,11 +150,9 @@ export const updateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -204,11 +188,9 @@ export const deleteCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -224,6 +206,147 @@ export const deleteCourseGroup = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const createFriendGroup = /* GraphQL */ `
+  mutation CreateFriendGroup(
+    $input: CreateFriendGroupInput!
+    $condition: ModelFriendGroupConditionInput
+  ) {
+    createFriendGroup(input: $input, condition: $condition) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFriendGroup = /* GraphQL */ `
+  mutation UpdateFriendGroup(
+    $input: UpdateFriendGroupInput!
+    $condition: ModelFriendGroupConditionInput
+  ) {
+    updateFriendGroup(input: $input, condition: $condition) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFriendGroup = /* GraphQL */ `
+  mutation DeleteFriendGroup(
+    $input: DeleteFriendGroupInput!
+    $condition: ModelFriendGroupConditionInput
+  ) {
+    deleteFriendGroup(input: $input, condition: $condition) {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -246,10 +369,6 @@ export const createChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -283,10 +402,6 @@ export const updateChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -320,10 +435,6 @@ export const deleteChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -352,11 +463,9 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -374,10 +483,6 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -404,11 +509,9 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -426,10 +529,6 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -456,11 +555,9 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -478,10 +575,156 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
+        courseGroups {
+          nextToken
         }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFriendGroupConnectionModel = /* GraphQL */ `
+  mutation CreateFriendGroupConnectionModel(
+    $input: CreateFriendGroupConnectionModelInput!
+    $condition: ModelFriendGroupConnectionModelConditionInput
+  ) {
+    createFriendGroupConnectionModel(input: $input, condition: $condition) {
+      id
+      groupID
+      userID
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFriendGroupConnectionModel = /* GraphQL */ `
+  mutation UpdateFriendGroupConnectionModel(
+    $input: UpdateFriendGroupConnectionModelInput!
+    $condition: ModelFriendGroupConnectionModelConditionInput
+  ) {
+    updateFriendGroupConnectionModel(input: $input, condition: $condition) {
+      id
+      groupID
+      userID
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFriendGroupConnectionModel = /* GraphQL */ `
+  mutation DeleteFriendGroupConnectionModel(
+    $input: DeleteFriendGroupConnectionModelInput!
+    $condition: ModelFriendGroupConnectionModelConditionInput
+  ) {
+    deleteFriendGroupConnectionModel(input: $input, condition: $condition) {
+      id
+      groupID
+      userID
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
         courseGroups {
           nextToken
         }

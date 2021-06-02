@@ -14,10 +14,6 @@ export const onCreateUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -46,10 +42,6 @@ export const onUpdateUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -78,10 +70,6 @@ export const onDeleteUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -112,11 +100,9 @@ export const onCreateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -149,11 +135,9 @@ export const onUpdateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -186,11 +170,9 @@ export const onDeleteCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -206,6 +188,138 @@ export const onDeleteCourseGroup = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+    }
+  }
+`;
+export const onCreateFriendGroup = /* GraphQL */ `
+  subscription OnCreateFriendGroup {
+    onCreateFriendGroup {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFriendGroup = /* GraphQL */ `
+  subscription OnUpdateFriendGroup {
+    onUpdateFriendGroup {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFriendGroup = /* GraphQL */ `
+  subscription OnDeleteFriendGroup {
+    onDeleteFriendGroup {
+      users {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groupID
+      title
+      messages {
+        id
+        groupChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          major
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        owner
+      }
+      owner
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -225,10 +339,6 @@ export const onCreateChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -259,10 +369,6 @@ export const onUpdateChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -293,10 +399,6 @@ export const onDeleteChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -322,11 +424,9 @@ export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -344,10 +444,6 @@ export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -371,11 +467,9 @@ export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -393,10 +487,6 @@ export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -420,11 +510,9 @@ export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -442,10 +530,147 @@ export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
+        courseGroups {
+          nextToken
         }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFriendGroupConnectionModel = /* GraphQL */ `
+  subscription OnCreateFriendGroupConnectionModel {
+    onCreateFriendGroupConnectionModel {
+      id
+      groupID
+      userID
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFriendGroupConnectionModel = /* GraphQL */ `
+  subscription OnUpdateFriendGroupConnectionModel {
+    onUpdateFriendGroupConnectionModel {
+      id
+      groupID
+      userID
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
+        courseGroups {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFriendGroupConnectionModel = /* GraphQL */ `
+  subscription OnDeleteFriendGroupConnectionModel {
+    onDeleteFriendGroupConnectionModel {
+      id
+      groupID
+      userID
+      friendGroup {
+        users {
+          nextToken
+        }
+        groupID
+        title
+        messages {
+          id
+          groupChatID
+          userID
+          body
+          createdAt
+          updatedAt
+          owner
+        }
+        owner
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        major
         courseGroups {
           nextToken
         }
