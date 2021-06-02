@@ -9,7 +9,6 @@ import {
   ViewStyle,
 } from "react-native";
 import {
-  Course as CourseAPIType,
   User as UserProfileAPIType,
   CourseGroup as CourseGroupAPIType, ChatMessage as ChatMessageAPIType,
 } from "./API";
@@ -129,7 +128,6 @@ export type MessageMap = {
   [id: string]: ChatMessage[]
 }
 
-export type Course = CourseAPIType;
 export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "createdAt" | "owner" | "updatedAt">;
 export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner" >;
 export type ChatMessage = Omit<ChatMessageAPIType, "owner" | "userID" | "id" | "updatedAt">;

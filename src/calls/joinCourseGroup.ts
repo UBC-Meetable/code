@@ -1,42 +1,65 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import { CreateCourseGroupInput, CreateCourseGroupConnectionModelInput, CreateCourseGroupMutation, CreateCourseGroupConnectionModelMutation } from "../API";
-import { createCourseGroup, createCourseGroupConnectionModel } from "../graphql/mutations";
-import { catch } from "../metro.config";
-
+import {
+  CourseGroup,
+  CourseGroupConnectionModel,
+  CreateCourseGroupConnectionModelInput,
+  CreateCourseGroupConnectionModelMutation,
+  CreateCourseGroupInput,
+  CreateCourseGroupMutation,
+  ModelCourseGroupConnection,
+  User,
+} from "../API";
+import {
+  createCourseGroup,
+  createCourseGroupConnectionModel,
+} from "../graphql/mutations";
+import { CognitoUser } from "../types";
 import fetchCourseGroup from "./fetchCourseGroup";
 
-const joinCourseGroup = (input: CreateCourseGroupConnectionModelInput, courseGroupInput: CreateCourseGroupInput):
-[Promise<GraphQLResult<CreateCourseGroupMutation>> | undefined, Promise<GraphQLResult<CreateCourseGroupConnectionModelMutation>>] => {
-  let createCourseGroupPromise;
-  let createCourseGroupConnectionModelPromise;
+const joinCourseGroup = async (
+  userID: String,
+  group: CreateCourseGroupInput,
+) => {
+  let foundGroup: CourseGroup;
+  console.log("group", group);
+
   try {
-    fetchCourseGroup({groupID: input.groupID});
-  } catch(e: Error) {
-    createCourseGroupPromise = API.graphql({
-      query: createCourseGroup,
-      variables: {
-        ...courseGroupInput
-      } as CreateCourseGroupInput
-    }) as Promise<GraphQLResult<CreateCourseGroupMutation>>;
+    foundGroup = (await fetchCourseGroup({ groupID: group.groupID }));
+    console.log(foundGroup);
+  } catch (e) {
+    console.log(e);
+
+    try {
+      foundGroup = (await API.graphql({
+        query: createCourseGroup,
+        variables: group,
+      }) as GraphQLResult<CreateCourseGroupMutation>).data?.createCourseGroup as CourseGroup;
+    } catch (err) {
+      console.error("Failed to create course group");
+      throw new Error(err);
+    }
   }
 
-  createCourseGroupConnectionModelPromise = API.graphql({
-    query: createCourseGroupConnectionModel,
-    variables: {
-      groupID: input.groupID,
-      userID: input.userID,
-    } as CreateCourseGroupConnectionModelInput
-  }) as Promise<GraphQLResult<CreateCourseGroupConnectionModelMutation>>;
+  console.log("Found existing group: ", foundGroup);
 
-  return [createCourseGroupPromise, createCourseGroupConnectionModelPromise];
+  if (foundGroup!.users!.items!.find((user) => user?.userID === userID)) return foundGroup;
+  console.log("User not in existing group");
 
-
+  try {
+    return await API.graphql({
+      query: createCourseGroupConnectionModel,
+      variables: {
+        input: {
+          groupID: group.groupID,
+          userID,
+        } as CreateCourseGroupConnectionModelInput,
+      },
+    }) as Promise<GraphQLResult<CreateCourseGroupConnectionModelMutation>>;
+  } catch (e) {
+    console.error("Failed to join course group, ", e);
+    throw new Error(e);
+  }
 };
-
-/* could use like this
-Promise.all(joinCourseGroup({ groupID: "", userID: "" }, {course: {code: "", section: ""}, groupID: ""}));
-or could await the first promise and just have the fn return one promise
-*/
 
 export default joinCourseGroup;

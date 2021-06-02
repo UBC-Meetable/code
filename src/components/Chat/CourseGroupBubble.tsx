@@ -15,10 +15,10 @@ const CourseGroupBubble = ({
   courseGroup, moveToGroupScreen, messages,
 }: CourseGroupBubbleProps) => {
   const {
-    groupID, users, course, title = groupID,
+    groupID, users, title = groupID,
   } = courseGroup;
 
-  if (!groupID || !users || !course || !title) return null;
+  if (!groupID || !users || !title) return null;
   return (
     <TouchableOpacity style={styles.bubble} onPress={() => moveToGroupScreen()}>
       <Layout style={styles.topContainer}>
@@ -28,11 +28,10 @@ const CourseGroupBubble = ({
           </Text>
         </Layout>
         <Layout style={styles.sectionContainer}>
-          <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
+          {/* <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
             Section
             {" "}
-            {course.section}
-          </Chip>
+          </Chip> */}
         </Layout>
       </Layout>
 

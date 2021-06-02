@@ -14,10 +14,6 @@ export const getUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -59,10 +55,6 @@ export const listUsers = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -88,11 +80,9 @@ export const getCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -131,11 +121,9 @@ export const listCourseGroups = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -163,10 +151,6 @@ export const getChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }

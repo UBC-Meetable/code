@@ -18,7 +18,31 @@
       "function": {
         "AdminQueries00077ef8": {
           "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
-          "s3Key": "amplify-builds/AdminQueries00077ef8-486d2f7139454c66754b-build.zip"
+          "s3Key": "amplify-builds/AdminQueries00077ef8-5177316f7a6153445341-build.zip"
+        }
+      }
+    }
+  },
+  "trevor": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-meetable-trevor-183433-authRole",
+      "UnauthRoleArn": "arn:aws:iam::609336482033:role/amplify-meetable-trevor-183433-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::609336482033:role/amplify-meetable-trevor-183433-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-meetable-trevor-183433-deployment",
+      "UnauthRoleName": "amplify-meetable-trevor-183433-unauthRole",
+      "StackName": "amplify-meetable-trevor-183433",
+      "StackId": "arn:aws:cloudformation:us-east-1:609336482033:stack/amplify-meetable-trevor-183433/32b002a0-bc30-11eb-ae2b-0acf699c7d11",
+      "AmplifyAppId": "d3qmr56zgbj35m"
+    },
+    "categories": {
+      "auth": {
+        "meetablea02db50ea02db50e": {}
+      },
+      "function": {
+        "AdminQueries00077ef8": {
+          "deploymentBucketName": "amplify-meetable-trevor-183433-deployment",
+          "s3Key": "amplify-builds/AdminQueries00077ef8-5177316f7a6153445341-build.zip"
         }
       }
     }

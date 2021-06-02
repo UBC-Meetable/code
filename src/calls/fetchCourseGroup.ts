@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import {
-  GetCourseGroupQuery, GetCourseGroupQueryVariables, GetUserQuery, GetUserQueryVariables,
+  GetCourseGroupQuery, GetCourseGroupQueryVariables,
 } from "../API";
 import { getCourseGroup } from "../graphql/queries";
 import { CourseGroup } from "../types";

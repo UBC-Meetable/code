@@ -13,7 +13,6 @@ type User
   userState: UserState
   university: String
   major: String
-  courses: [Course!]
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -22,12 +21,13 @@ type CourseGroup
     @key(fields: ["groupID"])
     @auth(rules: [{allow: owner, operations: [create]}]){
   users: [CourseGroupConnectionModel!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
-  title: String
-  course: Course!
+  title: String!
   groupID: String!
+  code: String!
+  section: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
 }
-
+ 
 # [CONNECTIONS]
 
 #[Many ChatMessages: Many Users]
@@ -63,10 +63,4 @@ enum UserState {
   PROFILE_CREATED
   DONE
 }
-
-type Course {
-  code: String!
-  section: String!
-}
-
 

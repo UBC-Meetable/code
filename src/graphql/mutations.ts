@@ -17,10 +17,6 @@ export const createUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -52,10 +48,6 @@ export const updateUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -87,10 +79,6 @@ export const deleteUser = /* GraphQL */ `
       userState
       university
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
@@ -124,11 +112,9 @@ export const createCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -164,11 +150,9 @@ export const updateCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -204,11 +188,9 @@ export const deleteCourseGroup = /* GraphQL */ `
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
@@ -246,10 +228,6 @@ export const createChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -283,10 +261,6 @@ export const updateChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -320,10 +294,6 @@ export const deleteChatMessage = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -352,11 +322,9 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -374,10 +342,6 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -404,11 +368,9 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -426,10 +388,6 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
@@ -456,11 +414,9 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
           nextToken
         }
@@ -478,10 +434,6 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
         userState
         university
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
           nextToken
         }
