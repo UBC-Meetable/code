@@ -24,6 +24,16 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      friendGroups {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -56,6 +66,9 @@ export const listUsers = /* GraphQL */ `
         university
         major
         courseGroups {
+          nextToken
+        }
+        friendGroups {
           nextToken
         }
         createdAt
@@ -91,6 +104,7 @@ export const getCourseGroup = /* GraphQL */ `
           body
           createdAt
           updatedAt
+          groupType
           owner
         }
         nextToken
@@ -151,27 +165,17 @@ export const getFriendGroup = /* GraphQL */ `
       groupID
       title
       messages {
-        id
-        groupChatID
-        userID
-        author {
+        items {
           id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
+          groupChatID
+          userID
+          body
           createdAt
           updatedAt
+          groupType
           owner
         }
-        body
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       owner
       createdAt
@@ -201,13 +205,7 @@ export const listFriendGroups = /* GraphQL */ `
         groupID
         title
         messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
         owner
         createdAt
@@ -236,6 +234,9 @@ export const getChatMessage = /* GraphQL */ `
         courseGroups {
           nextToken
         }
+        friendGroups {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -243,6 +244,7 @@ export const getChatMessage = /* GraphQL */ `
       body
       createdAt
       updatedAt
+      groupType
       owner
     }
   }
@@ -275,6 +277,7 @@ export const listChatMessages = /* GraphQL */ `
         body
         createdAt
         updatedAt
+        groupType
         owner
       }
       nextToken
@@ -319,6 +322,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
         body
         createdAt
         updatedAt
+        groupType
         owner
       }
       nextToken

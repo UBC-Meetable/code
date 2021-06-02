@@ -3,25 +3,27 @@ import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
 import Observable from "zen-observable-ts";
-import { OnCreateChatMessageSubscription } from "../API";
-import fetchUserCourses from "../calls/fetchUserCourses";
+import { FriendGroup, GroupType, OnCreateChatMessageSubscription } from "../API";
+import fetchUserFriendGroups from "../calls/fetchUserFriendGroups";
 import { onCreateChatMessage } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import { ChatMessage, CourseGroup } from "../types";
+import { ChatMessage } from "../types";
 
-const CourseGroupsContext = React.createContext([] as CourseGroup[]);
-export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
-  const [groups, setGroups] = useState([] as CourseGroup[]);
+const FriendGroupsContext = React.createContext([] as FriendGroup[]);
+export const FriendGroupsProvider = (props: { children?: ReactNode }) => {
+  const [groups, setGroups] = useState([] as FriendGroup[]);
   const user = useAuthenticatedUser();
-  const groupRef = useRef<CourseGroup[]>([]);
+  const groupRef = useRef<FriendGroup[]>([]);
   groupRef.current = groups;
 
   useEffect(() => {
-    const getCourseGroups = async () => {
-      const courses = await fetchUserCourses(user);
-      setGroups(courses);
+    const getFriendGroups = async () => {
+      const friends = await fetchUserFriendGroups(user);
+      console.log("friends: *** ", friends);
+
+      setGroups(friends);
     };
-    getCourseGroups();
+    getFriendGroups();
   }, []);
 
   useEffect(() => {
@@ -31,11 +33,11 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
     const subscription = observableObj.subscribe({
       next: ({ value: { data } }: {value: {data: OnCreateChatMessageSubscription}}) => {
-        // console.log("data received from create subscription:", data.onCreateChatMessage);
         if (!data.onCreateChatMessage) return;
-        const newGroups:CourseGroup[] = [];
+        if (data.onCreateChatMessage.groupType !== GroupType.FRIEND) return;
+        const newGroups:FriendGroup[] = [];
         const matchedGroup = groupRef.current
-          ?.find((group) => group.groupID === data.onCreateChatMessage?.groupChatID) as CourseGroup;
+          ?.find((group) => group.groupID === data.onCreateChatMessage?.groupChatID) as FriendGroup;
         if (!matchedGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateChatMessage.groupChatID}`);
         const newMessages = matchedGroup.messages?.items as ChatMessage[];
         matchedGroup.messages!.items = newMessages;
@@ -59,10 +61,10 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
   const { children } = props;
   return (
-    <CourseGroupsContext.Provider value={groups}>
+    <FriendGroupsContext.Provider value={groups}>
       {children}
-    </CourseGroupsContext.Provider>
+    </FriendGroupsContext.Provider>
   );
 };
 
-export default CourseGroupsContext;
+export default FriendGroupsContext;

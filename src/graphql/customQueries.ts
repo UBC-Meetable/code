@@ -36,3 +36,39 @@ export const getUserCourses = /* GraphQL */ `
     }
   }
 `;
+
+export const getUserFriendGroups = /* GraphQL */ `
+  query GetUserFriendGroups {
+    getUser(id: "707b7da5-4a59-4150-9bd0-b0a83ed9e34a") {
+      friendGroups {
+        items {
+          friendGroup {
+            updatedAt
+            groupID
+            title
+            users {
+              items {
+                user {
+                  firstName
+                  lastName
+                }
+              }
+            }
+            messages {
+              items {
+                body
+                groupChatID
+                createdAt
+                author {
+                  firstName
+                  lastName
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

@@ -27,6 +27,16 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      friendGroups {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -58,6 +68,16 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
+      friendGroups {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       owner
@@ -80,6 +100,16 @@ export const deleteUser = /* GraphQL */ `
       university
       major
       courseGroups {
+        items {
+          id
+          groupID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      friendGroups {
         items {
           id
           groupID
@@ -123,6 +153,7 @@ export const createCourseGroup = /* GraphQL */ `
           body
           createdAt
           updatedAt
+          groupType
           owner
         }
         nextToken
@@ -161,6 +192,7 @@ export const updateCourseGroup = /* GraphQL */ `
           body
           createdAt
           updatedAt
+          groupType
           owner
         }
         nextToken
@@ -199,6 +231,7 @@ export const deleteCourseGroup = /* GraphQL */ `
           body
           createdAt
           updatedAt
+          groupType
           owner
         }
         nextToken
@@ -228,27 +261,17 @@ export const createFriendGroup = /* GraphQL */ `
       groupID
       title
       messages {
-        id
-        groupChatID
-        userID
-        author {
+        items {
           id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
+          groupChatID
+          userID
+          body
           createdAt
           updatedAt
+          groupType
           owner
         }
-        body
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       owner
       createdAt
@@ -275,27 +298,17 @@ export const updateFriendGroup = /* GraphQL */ `
       groupID
       title
       messages {
-        id
-        groupChatID
-        userID
-        author {
+        items {
           id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
+          groupChatID
+          userID
+          body
           createdAt
           updatedAt
+          groupType
           owner
         }
-        body
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       owner
       createdAt
@@ -322,27 +335,17 @@ export const deleteFriendGroup = /* GraphQL */ `
       groupID
       title
       messages {
-        id
-        groupChatID
-        userID
-        author {
+        items {
           id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
+          groupChatID
+          userID
+          body
           createdAt
           updatedAt
+          groupType
           owner
         }
-        body
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       owner
       createdAt
@@ -372,6 +375,9 @@ export const createChatMessage = /* GraphQL */ `
         courseGroups {
           nextToken
         }
+        friendGroups {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -379,6 +385,7 @@ export const createChatMessage = /* GraphQL */ `
       body
       createdAt
       updatedAt
+      groupType
       owner
     }
   }
@@ -405,6 +412,9 @@ export const updateChatMessage = /* GraphQL */ `
         courseGroups {
           nextToken
         }
+        friendGroups {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -412,6 +422,7 @@ export const updateChatMessage = /* GraphQL */ `
       body
       createdAt
       updatedAt
+      groupType
       owner
     }
   }
@@ -438,6 +449,9 @@ export const deleteChatMessage = /* GraphQL */ `
         courseGroups {
           nextToken
         }
+        friendGroups {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -445,6 +459,7 @@ export const deleteChatMessage = /* GraphQL */ `
       body
       createdAt
       updatedAt
+      groupType
       owner
     }
   }
@@ -484,6 +499,9 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
         university
         major
         courseGroups {
+          nextToken
+        }
+        friendGroups {
           nextToken
         }
         createdAt
@@ -532,6 +550,9 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
         courseGroups {
           nextToken
         }
+        friendGroups {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -578,6 +599,9 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
         courseGroups {
           nextToken
         }
+        friendGroups {
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -603,13 +627,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
         groupID
         title
         messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
         owner
         createdAt
@@ -626,6 +644,9 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
         university
         major
         courseGroups {
+          nextToken
+        }
+        friendGroups {
           nextToken
         }
         createdAt
@@ -653,13 +674,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
         groupID
         title
         messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
         owner
         createdAt
@@ -676,6 +691,9 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
         university
         major
         courseGroups {
+          nextToken
+        }
+        friendGroups {
           nextToken
         }
         createdAt
@@ -703,13 +721,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
         groupID
         title
         messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
+          nextToken
         }
         owner
         createdAt
@@ -726,6 +738,9 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
         university
         major
         courseGroups {
+          nextToken
+        }
+        friendGroups {
           nextToken
         }
         createdAt

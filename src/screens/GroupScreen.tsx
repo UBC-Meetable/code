@@ -5,21 +5,26 @@ import {
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
-import { ChatMessage, CourseGroup, RootStackParamList } from "../types";
+import {
+  ChatMessage, CourseGroup, GroupType, RootStackParamList,
+} from "../types";
 
 const GroupScreen = ({
   navigation,
   groupTitle,
+  groupType,
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Group">;
   groupTitle: string;
+  groupType: GroupType;
 }) => {
   useEffect(() => {
     navigation.setOptions({ headerBackTitle: groupTitle });
+    console.log(groupType);
   }, [groupTitle]);
   return (
     <Layout style={styles.root}>
-      <Chat />
+      <Chat groupType={groupType} />
     </Layout>
   );
 };

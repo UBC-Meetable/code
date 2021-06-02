@@ -9,10 +9,15 @@ import {
   ViewStyle,
 } from "react-native";
 import {
-  Course as CourseAPIType,
   User as UserProfileAPIType,
   CourseGroup as CourseGroupAPIType, ChatMessage as ChatMessageAPIType,
 } from "./API";
+
+// eslint-disable-next-line no-shadow
+export enum GroupType {
+  COURSE = "COURSE",
+  FRIEND = "FRIEND"
+}
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -23,6 +28,7 @@ export type RootStackParamList = {
   Quiz: undefined;
   Group: {
     groupID: string;
+    groupType: GroupType;
     groupTitle: string;
   };
   UniScreen: undefined;
@@ -129,7 +135,6 @@ export type MessageMap = {
   [id: string]: ChatMessage[]
 }
 
-export type Course = CourseAPIType;
 export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "createdAt" | "owner" | "updatedAt">;
 export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner" >;
 export type ChatMessage = Omit<ChatMessageAPIType, "owner" | "userID" | "id" | "updatedAt">;

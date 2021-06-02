@@ -15,7 +15,6 @@ type User
   major: String
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
-
 }
 
 type CourseGroup
@@ -38,7 +37,7 @@ type FriendGroup
   users: [FriendGroupConnectionModel!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
   groupID: String!
   title: String!
-  messages: [ChatMessage!]
+  messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
   owner: String
 }
  
@@ -55,7 +54,13 @@ type ChatMessage
     body: String!
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
+    groupType: GroupType!
   }
+
+enum GroupType {
+  COURSE
+  FRIEND
+}
 # [Many UserProfiles: Many CourseGroups]
 # Represents a connection between a User and a CourseGroup
 type CourseGroupConnectionModel
