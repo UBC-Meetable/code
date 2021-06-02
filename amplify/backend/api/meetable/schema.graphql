@@ -13,7 +13,6 @@ type User
   userState: UserState
   university: String
   major: String
-  courses: [Course!]
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -22,12 +21,25 @@ type CourseGroup
     @key(fields: ["groupID"])
     @auth(rules: [{allow: owner, operations: [create]}]){
   users: [CourseGroupConnectionModel!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
-  title: String
-  course: Course!
+  title: String!
   groupID: String!
+  code: String!
+  section: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
 }
 
+type FriendGroup
+  @model
+  @key(fields: ["groupID"])
+  @auth(rules: [{allow: owner, operations:[create]}])
+  {
+  users: [FriendGroupConnectionModel!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
+  groupID: String!
+  title: String!
+  messages: [ChatMessage!]
+  owner: String
+}
+ 
 # [CONNECTIONS]
 
 #[Many ChatMessages: Many Users]
@@ -55,6 +67,17 @@ type CourseGroupConnectionModel
   user: User! @connection(fields: ["userID"])
 }
 
+type FriendGroupConnectionModel
+  @model(queries: null)
+  @key(name: "byFriendGroup", fields: ["groupID", "userID"])
+  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  id: ID!
+  groupID: String!
+  userID: String!
+  friendGroup: FriendGroup! @connection(fields: ["groupID"])
+  user: User! @connection(fields: ["userID"])
+}
+
 
 # [PRIVATE HELPER TYPES]
 enum UserState {
@@ -63,10 +86,4 @@ enum UserState {
   PROFILE_CREATED
   DONE
 }
-
-type Course {
-  code: String!
-  section: String!
-}
-
 
