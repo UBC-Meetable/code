@@ -10,6 +10,8 @@ export const getUserCourses = /* GraphQL */ `
         updatedAt
           groupID
           title
+          section
+          code
           messages {
             items {
               body

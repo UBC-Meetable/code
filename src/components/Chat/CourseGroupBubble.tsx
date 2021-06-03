@@ -1,8 +1,8 @@
 import { Layout } from "@ui-kitten/components";
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
-import { ChatMessage, CourseGroup, MessageMap } from "../../types";
+import { ChatMessage, CourseGroup } from "../../types";
 import MessagePreview from "./MessagePreview";
 
 type CourseGroupBubbleProps = {
@@ -25,12 +25,15 @@ const CourseGroupBubble = ({
         <Layout style={styles.textContainer}>
           <Text style={styles.bubbleText}>
             {title || groupID}
+            {" "}
+            {courseGroup.code}
           </Text>
         </Layout>
         <Layout style={styles.sectionContainer}>
           <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
             Section
             {" "}
+            {courseGroup.section}
           </Chip>
         </Layout>
       </Layout>
