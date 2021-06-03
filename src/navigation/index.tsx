@@ -111,7 +111,7 @@ const AuthorizedApp = () => {
         }
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
 
@@ -187,8 +187,6 @@ const AuthorizedApp = () => {
                   groupTitle={props.route.params.groupTitle}
                   navigation={props.navigation}
                 />
-                {console.log(props.route.params)}
-
               </MessageProvider>
             )}
           </Stack.Screen>

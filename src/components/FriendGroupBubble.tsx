@@ -3,8 +3,9 @@ import React from "react";
 import {
   GestureResponderEvent, StyleSheet, Text, TouchableOpacity,
 } from "react-native";
-import { Avatar, Chip } from "react-native-paper";
+import { Chip } from "react-native-paper";
 import { ChatMessage, FriendGroup } from "../API";
+import PictureStack from "./PictureStack";
 
 type FriendGroupBubbleProps = {
     friendGroup: FriendGroup;
@@ -12,15 +13,10 @@ type FriendGroupBubbleProps = {
     onPress?: (event?: GestureResponderEvent) => void
 }
 
-const images = [
-  "http://placekitten.com/g/200/300",
-  "http://placekitten.com/g/200/300",
-  "http://placekitten.com/g/200/300",
-  "http://placekitten.com/g/200/300",
-];
-
 const FriendGroupBubble = ({ onPress, friendGroup, messages }: FriendGroupBubbleProps) => {
   const renderGroupMemberNames = () => "BOB";
+  const users = friendGroup.users!.items!.map((item) => item!.user!);
+
   return (
     <TouchableOpacity style={styles.bubble} onPress={onPress}>
       <Layout style={[styles.bubbleSection, styles.chips]}>
@@ -33,15 +29,7 @@ const FriendGroupBubble = ({ onPress, friendGroup, messages }: FriendGroupBubble
         <Text style={styles.names} ellipsizeMode="tail" numberOfLines={1}>
           {friendGroup.title || renderGroupMemberNames()}
         </Text>
-        <Layout style={styles.pics}>
-          {images.map((uri, index) => {
-            if (index >= 4) return;
-
-            // eslint-disable-next-line consistent-return
-            return (<Avatar.Image size={38} source={{ uri }} style={{ position: "absolute", right: 0 + index * 23 }} key={index} />);
-          })}
-        </Layout>
-
+        <PictureStack users={users} />
       </Layout>
     </TouchableOpacity>
   );
@@ -95,14 +83,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     flexDirection: "row",
-  },
-  pics: {
-    flex: 1,
-    backgroundColor: "#0000",
-    flexDirection: "row",
-    position: "relative",
-    justifyContent: "flex-end",
-    height: "100%",
   },
 });
 

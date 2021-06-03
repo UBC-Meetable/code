@@ -45,8 +45,6 @@ const FriendGroups = ({
   const headerHeight = useHeaderHeight();
 
   const renderItem = ({ item }: { item: FriendGroup }) => {
-    console.log("***item***", item);
-
     if (!item.groupID) return <Spinner />;
     const messages = item.messages!.items as ChatMessage[];
 

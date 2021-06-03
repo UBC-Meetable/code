@@ -20,6 +20,7 @@ export const getUserCourses = /* GraphQL */ `
               author {
                 firstName
                 lastName
+                profilePicture
                 id
               }
             }
@@ -29,6 +30,8 @@ export const getUserCourses = /* GraphQL */ `
               user {
                 firstName
                 lastName
+                profilePicture
+                id
               }
             }
           }
@@ -53,6 +56,8 @@ export const getUserFriendGroups = /* GraphQL */ `
                 user {
                   firstName
                   lastName
+                  profilePicture
+                  id
                 }
               }
             }
@@ -64,6 +69,7 @@ export const getUserFriendGroups = /* GraphQL */ `
                 author {
                   firstName
                   lastName
+                  profilePicture
                   id
                 }
               }

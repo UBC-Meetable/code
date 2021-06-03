@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
+import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import { ExpoPushToken } from "expo-notifications";
 import React from "react";
 import {
@@ -144,3 +145,11 @@ export type ModelChatMessageConnection = {
   items?: Array<Omit<ChatMessage, "__typename"> | null > | null,
   nextToken?: string | null,
 };
+
+export type ImageInfoType = ImageInfo & { cancelled: boolean };
+
+export enum ProfilePictureSize {
+  "PROFILE",
+  "BUBBLE",
+  "MESSAGE"
+}

@@ -20,7 +20,6 @@ const GroupScreen = ({
 }) => {
   useEffect(() => {
     navigation.setOptions({ headerBackTitle: groupTitle });
-    console.log(groupType);
   }, [groupTitle]);
   return (
     <Layout style={styles.root}>

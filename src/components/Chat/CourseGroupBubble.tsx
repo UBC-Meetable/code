@@ -1,8 +1,10 @@
 import { Layout } from "@ui-kitten/components";
-import React from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
+import { User } from "../../API";
 import { ChatMessage, CourseGroup } from "../../types";
+import PictureStack from "../PictureStack";
 import MessagePreview from "./MessagePreview";
 
 type CourseGroupBubbleProps = {
@@ -17,6 +19,19 @@ const CourseGroupBubble = ({
   const {
     groupID, users, title = groupID,
   } = courseGroup;
+
+  const [mostRecentUsers, setMostRecentUsers] = useState(new Set<User>());
+
+  useEffect(() => {
+    const newUsers = new Set<User>();
+
+    messages.forEach((message) => {
+      if (newUsers.size >= 4) return;
+      newUsers.add(message.author!);
+    });
+
+    setMostRecentUsers(newUsers);
+  }, [messages]);
 
   if (!groupID || !users || !title) return null;
   return (
@@ -44,11 +59,8 @@ const CourseGroupBubble = ({
         </Layout>
         {/* TODO Implement User Photos, Make new component for this */}
         <Layout style={styles.bottomPhotoContainer}>
-          <Layout style={styles.photoContainer}>
-            <Avatar.Icon size={38} icon="folder" />
-            <Avatar.Text size={38} label="TF" />
-            <Avatar.Icon size={38} icon="folder" />
-            <Avatar.Text size={38} label="DS" />
+          <Layout style={[styles.bubbleSection, styles.nameSection]}>
+            <PictureStack users={users.items!.map((item) => item!.user!)} />
           </Layout>
         </Layout>
 
@@ -63,6 +75,7 @@ const styles = StyleSheet.create({
     height: 100,
     display: "flex",
     margin: 10,
+    padding: 5,
     borderColor: "white",
     borderRadius: 24,
     backgroundColor: "#E6F4F9",
@@ -74,6 +87,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
     elevation: 10,
+    position: "relative",
   },
   sectionBubble: {
     height: 23,
@@ -123,7 +137,8 @@ const styles = StyleSheet.create({
   },
   photoContainer: {
     flex: 1,
-    justifyContent: "center",
+    borderWidth: 1,
+    justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "#0000",
     flexDirection: "row",
@@ -131,7 +146,16 @@ const styles = StyleSheet.create({
   bottomPhotoContainer: {
     flexShrink: 1,
     backgroundColor: "#0000",
-    marginHorizontal: 10,
+  },
+  bubbleSection: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#0000",
+  },
+  nameSection: {
+    alignItems: "center",
+    padding: 10,
+    flexDirection: "row",
   },
 });
 export default CourseGroupBubble;

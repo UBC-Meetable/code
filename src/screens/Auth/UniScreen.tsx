@@ -33,7 +33,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
     const res = await updateUserProfile({
       id: user.attributes.sub, major, university, userState: UserState.UNI_SELECTED,
     });
-    console.log(res);
+
     if (res.data) {
       navigation.navigate("NewProfileScreen");
     }

@@ -19,7 +19,6 @@ export const FriendGroupsProvider = (props: { children?: ReactNode }) => {
   useEffect(() => {
     const getFriendGroups = async () => {
       const friends = await fetchUserFriendGroups(user);
-      console.log("friends: *** ", friends);
 
       setGroups(friends);
     };
@@ -51,7 +50,7 @@ export const FriendGroupsProvider = (props: { children?: ReactNode }) => {
         });
 
         setGroups(() => newGroups);
-        // console.log("NewGroups", newGroups);
+        //
       },
       error: (error:any) => console.warn(error),
     });

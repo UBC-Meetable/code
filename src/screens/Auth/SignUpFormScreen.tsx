@@ -51,7 +51,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         username: email,
         password,
       });
-      console.log(user);
+
       onCreate(email);
     } catch (e) {
       const message = e.message as string;

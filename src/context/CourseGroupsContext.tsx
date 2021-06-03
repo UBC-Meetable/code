@@ -33,18 +33,16 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
     const subscription = observableObj.subscribe({
       next: ({ value: { data } }: {value: {data: OnCreateChatMessageSubscription}}) => {
-        // console.log("data received from create subscription:", data.onCreateChatMessage);
+        //
         if (!data.onCreateChatMessage) return;
         if (data.onCreateChatMessage.groupType !== GroupType.COURSE) return;
 
         const newGroups:CourseGroup[] = [];
-        console.log("*****", groupRef.current.map((g) => g.groupID));
-        // console.log("**msg**", data.onCreateChatMessage.groupChatID);
-        console.log("**msg**", groupRef.current.find((g) => g.groupID === data.onCreateChatMessage?.groupChatID));
+
+        //
 
         const matchedGroup = groupRef.current
           ?.find((group) => group.groupID === data.onCreateChatMessage?.groupChatID) as CourseGroup;
-        console.log("MATCHEDGROUP", matchedGroup);
 
         if (!matchedGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateChatMessage.groupChatID}`);
         const newMessages = matchedGroup.messages?.items as ChatMessage[];
@@ -59,7 +57,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
         });
 
         setGroups(() => newGroups);
-        // console.log("NewGroups", newGroups);
+        //
       },
       error: (error:any) => console.warn(error),
     });
@@ -87,7 +85,6 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
         groupRef.current.forEach((group) => {
           newGroups.push(group);
         });
-        console.log(data.onCreateCourseGroupConnectionModel.courseGroup.messages);
 
         newGroups.push(data.onCreateCourseGroupConnectionModel.courseGroup as CourseGroup);
         setGroups(() => newGroups);
