@@ -1,7 +1,8 @@
 import { Button, Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import LoginPage from "../../assets/images/login-background.svg";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import LoginRocket from "../../assets/images/login-background.svg";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 
 const window = Dimensions.get("window");
@@ -11,44 +12,51 @@ type LoginScreenProps = {
     onLogIn: () => void,
 }
 
-const LoginScreen = ({ onSignUp, onLogIn }:LoginScreenProps) => (
-  <Layout style={styles.root}>
-    <LoginPageBubbleTop
-      style={{ position: "absolute", top: 0 }}
-      width={window.width}
-      height={window.height}
-    />
-    <LoginPage
-      style={{ position: "absolute", top: 0 }}
-      width={window.width}
-      height={window.height}
-    />
-    <Layout style={styles.bottomcontainer}>
-      <Button
-        style={styles.button}
-        onPress={() => onSignUp()}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Sign Up
-          </Text>
-        )}
-      </Button>
-      <Text style={{ ...styles.buttonText }}>
-        Already have an account?
-        <Text
-          style={{ ...styles.buttonText, color: "#02A3F4" }}
-          onPress={() => onLogIn()}
+const LoginScreen = ({ onSignUp, onLogIn }:LoginScreenProps) => {
+  const units = useSafeAreaInsets();
+  return (
+    <Layout style={styles.root}>
+      <LoginPageBubbleTop
+        style={{
+          position: "absolute",
+          top: -units.top,
+        }}
+        width={window.width}
+        height={window.height}
+      />
+      <LoginRocket
+        style={{ position: "absolute", top: 0 }}
+        width={window.width}
+        // height={window.height}
+      />
+      <Layout style={styles.bottomcontainer}>
+        <Button
+          style={styles.button}
+          onPress={() => onSignUp()}
         >
-          Log in
+          {(evaProps: any) => (
+            <Text
+              {...evaProps}
+              style={{ ...evaProps.style, ...styles.buttonText }}
+            >
+              Sign Up
+            </Text>
+          )}
+        </Button>
+        <Text style={{ ...styles.buttonText }}>
+          Already have an account?
+          {" "}
+          <Text
+            style={{ ...styles.buttonText, color: "#02A3F4" }}
+            onPress={() => onLogIn()}
+          >
+            Log in
+          </Text>
         </Text>
-      </Text>
+      </Layout>
     </Layout>
-  </Layout>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   root: {
