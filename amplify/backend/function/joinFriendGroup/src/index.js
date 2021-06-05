@@ -5,6 +5,7 @@ Amplify Params - DO NOT EDIT */
 
 const AWS = require('aws-sdk');
 import PriorityQueue from "priorityqueue";
+import { updateConstructorTypeNode } from "typescript";
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const tables = {
@@ -17,44 +18,84 @@ const tables = {
 exports.handler = async (event) => {
   const incomingUser = event.arguments.user;
   const MIN_SCORE = 2; // consider passing with the lambda input
-  const pq = new PriorityQueue({ function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); // maxPQ containing type [user, score]
+  const SCORE_IF_GROUPED_BEOFRE = 0; // could consider a score reduction instead
+  //const pq = new PriorityQueue({ function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); // maxPQ containing type [user, score]
 
   // note: year is a reserved word in AWS DynamoDB, must use name substitution via ExpressionAttributeNames
-  let bucketQueryParams = {
+  const bucketQueryParams = {
     TableName: tables[user],
     KeyConditionExpression: "university = :uni",
     ExpressionAttributeNames: {
-
     },
     ExpressionAttributeValues: {
       ":uni": incomingUser.university,
     }
   };
 
-  console.log(event.arguments.user.id);
-  const bucket = await docClient.query(bucketQueryParams).promise(); // retrieve potential groupmates
-  let quizzes = {};
-  // retrieve user quizzes. note: each user only has one quiz for now. note: incoming user should be part of bucket. Is there anything similar to MongoDB populate?
-  bucket.Items.forEach(async function(user, index, array) {
-    quizzes[user.id] = await docClient.query({  // not sure if this query is right
-      TableName: tables[quiz],
-      KeyConditionExpression: "quizID = :qid",
-      ExpressionAttributeValues: {
-        ":qid": user.quizzes[0]
-      }
-    }).promise();
-  });
-  bucket.Items.forEach(async function(user, index, array) { // TODO query friendGroupConnectionModel to find if pair already grouped
-    if (quizzes[user.id] !== null && user.id !== incomingUser.id) {
-      pq.push([user, compatibilityScore(quizzes[user.id], quizzes[incomingUser.id])]);
-    }  
-  });
-  if (pq.isEmpty()) 
-  while (!pq.isEmpty()) {
-    let [user, score] = pq.pop();
-    if (score < MIN_SCORE) break;
+  // const quizzesQueryParams = {
+  //   TableName: tables[quiz],
+  //   KeyConditionExpression: "quizID = :qid",
+  //   ExpressionAttributeValues: {
+  //     ":qid": user.quizzes[0] // note: assumption is one quiz
+  //   }
+  // };
+
+  try {
+    const bucket = await docClient.query(bucketQueryParams).promise(); // retrieve potential groupmates. If this fails, OK to catch and skip everything. note: incoming user should be part of bucket.
+    // set of user id of users already grouped with incoming user in some group
+    let groupedBefore = new Set();
+    // map user id to quiz
+    let quizzes = {};
     
-  }
+    bucket.Items.forEach(function(user, index, array) {
+      // retrieve user quizzes. 
+      docClient.query({
+        TableName: tables[quiz],
+        KeyConditionExpression: "quizID = :qid",
+        ExpressionAttributeValues: {
+          ":qid": user.quizzes[0] // note: assumption is one quiz
+        }
+      }).promise().then(
+        function(data) {
+          quizzes[user.id] = data;
+        },
+        function(error) {
+          console.log(error);
+        }
+      );
+      if (user.id !== incomingUser.id) {
+        let incomingUserGroups = new Set()
+        let userGroups = new Set()
+        friendGroupConnectionModelQuery(incomingUser.id, incomingUserGroups);
+        friendGroupConnectionModelQuery(user.id, userGroups);
+        const intersection = new Set([...userGroups].filter(x => incomingUserGroups.has(x)));
+        if (intersection.size > 0) groupedBefore.add(user.id);
+      }
+    });
+
+    // TODO query friendGroupConnectionModel to find if pair already grouped
+    // init arr of [user, score]
+    userScorePairs = [];
+    bucket.Items.forEach(function(user, index, array) {
+      if (quizzes[user.id] !== null && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
+        userScorePairs.push([user, compatibilityScore(quizzes[user.id], quizzes[incomingUser.id])]);
+      } else if (groupedBefore.has(user.id)) {
+        userScorePairs.push([user, SCORE_IF_GROUPED_BEOFRE]);
+      }
+    });
+    // init maxPQ
+    let pq = PriorityQueue.from(userScorePairs, { comparator: function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); 
+
+    if (pq.isEmpty()) 
+    while (!pq.isEmpty()) {
+      let [user, score] = pq.pop();
+      if (score < MIN_SCORE) break;
+      
+    }
+
+  } catch(error) {
+      console.log(error);
+  } 
   
 
 
@@ -83,7 +124,26 @@ exports.handler = async (event) => {
   return response;
 };
 
+
+function friendGroupConnectionModelQuery(userid, set) {
+  docClient.query({
+    TableName: tables[friendGroupConnectionModel],
+    KeyConditionExpression: "userID = :userid",
+    ExpressionAttributeValues: {
+      ":userid": userid
+    }
+  }).promise.then(
+    function(data) {
+      data.forEach((fgcm) => set.add(fgcm.groupID));
+    },
+    function(error) {
+      console.log(error);
+    }
+  );
+}
+
 async function joinOwnGroup() {
+  
 
 }
 
