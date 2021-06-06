@@ -32,7 +32,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
               onBackdropPress={() => setVisible(false)}
             >
               <Card>
-                <Text>Profile</Text>
+                <InspectProfile user={message.author!} />
                 <Button onPress={() => setVisible(false)}>
                   OK
                 </Button>
