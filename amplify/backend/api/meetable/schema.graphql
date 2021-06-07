@@ -13,8 +13,8 @@ type User
   userState: UserState
   university: String
   major: String
-  courses: [Course!]
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
+  friendGroups: [FriendGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type CourseGroup
@@ -22,9 +22,10 @@ type CourseGroup
     @key(fields: ["groupID"])
     @auth(rules: [{allow: owner, operations: [create]}]){
   users: [CourseGroupConnectionModel!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
-  title: String
-  course: Course!
+  title: String!
   groupID: String!
+  code: String!
+  section: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
 }
 
@@ -33,13 +34,13 @@ type FriendGroup
   @key(fields: ["groupID"])
   @auth(rules: [{allow: owner, operations:[create]}])
   {
-  users: [CourseGroupConnectionModel!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
+  users: [FriendGroupConnectionModel!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
   groupID: String!
   title: String!
-  messages: [ChatMessage!]
+  messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
   owner: String
 }
-
+ 
 # [CONNECTIONS]
 
 #[Many ChatMessages: Many Users]
@@ -53,21 +54,26 @@ type ChatMessage
     body: String!
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
+    groupType: GroupType!
   }
+
+enum GroupType {
+  COURSE
+  FRIEND
+}
 # [Many UserProfiles: Many CourseGroups]
 # Represents a connection between a User and a CourseGroup
 type CourseGroupConnectionModel
   @model(queries: null)
   @key(name: "byCourseGroup", fields: ["groupID", "userID"])
-  @key(name: "byFriendGroup", fields: ["groupID", "userID"])
   @key(name: "byUser", fields: ["userID", "groupID"]) {
   id: ID!
   groupID: String!
   userID: String!
   courseGroup: CourseGroup! @connection(fields: ["groupID"])
-  friendGroup: FriendGroup! @connection(fields: ["groupID"])
   user: User! @connection(fields: ["userID"])
 }
+
 type FriendGroupConnectionModel
   @model(queries: null)
   @key(name: "byFriendGroup", fields: ["groupID", "userID"])
@@ -80,7 +86,6 @@ type FriendGroupConnectionModel
 }
 
 
-
 # [PRIVATE HELPER TYPES]
 enum UserState {
   SIGNED_UP
@@ -88,10 +93,4 @@ enum UserState {
   PROFILE_CREATED
   DONE
 }
-
-type Course {
-  code: String!
-  section: String!
-}
-
 
