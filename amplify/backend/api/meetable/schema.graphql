@@ -15,7 +15,7 @@ type User
   major: String
   courses: [Course!]
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
-  quizzes: [Quiz] @connection(keyName: "byUser", fields: ["id"])
+  quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
 }
 
 type CourseGroup
@@ -43,19 +43,19 @@ type FriendGroup
 
 type Quiz
   @model
-  @key(fields: ["quizID"])
+  @key(name: "byUser", fields: ["userID"])
   @auth(rules: [{allow: owner, operations:[create]}])
   {
-    user: [User!] @connection(keyName: "byQuizID", fields: ["quizID"])
+    userID: String!
     quizID: String! 
-    responses: [QAPair!]
+    responses: [QAPair!]! # always has an array with 0 or more QAPair only
     createdAt: AWSDateTime! # quiz won't be modified after
   }
 
 # [CONNECTIONS]
 
 #[Many ChatMessages: Many Users]
-type ChatMessage
+type ChatMessage # isn't there a slight chance this key would not uniquely identify a message?
   @model
   @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
   @auth(rules: [{allow: owner, operations: [create]}]) {

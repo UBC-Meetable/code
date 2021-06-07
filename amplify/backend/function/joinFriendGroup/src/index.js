@@ -18,8 +18,9 @@ const tables = {
 exports.handler = async (event) => {
   const incomingUser = event.arguments.user;
   const MIN_SCORE = 2; // consider passing with the lambda input
+  const MAX_GROUP_SIZE = 10;
   const SCORE_IF_GROUPED_BEOFRE = 0; // could consider a score reduction instead
-  //const pq = new PriorityQueue({ function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); // maxPQ containing type [user, score]
+  const pq = new PriorityQueue({ function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); // maxPQ containing type [user, score]
 
   // note: year is a reserved word in AWS DynamoDB, must use name substitution via ExpressionAttributeNames
   const bucketQueryParams = {
@@ -32,28 +33,22 @@ exports.handler = async (event) => {
     }
   };
 
-  // const quizzesQueryParams = {
-  //   TableName: tables[quiz],
-  //   KeyConditionExpression: "quizID = :qid",
-  //   ExpressionAttributeValues: {
-  //     ":qid": user.quizzes[0] // note: assumption is one quiz
-  //   }
-  // };
-
   try {
-    const bucket = await docClient.query(bucketQueryParams).promise(); // retrieve potential groupmates. If this fails, OK to catch and skip everything. note: incoming user should be part of bucket.
+    // retrieve potential groupmates. If this fails, OK to catch and skip everything. note: incoming user should be part of bucket.
+    const bucket = await docClient.query(bucketQueryParams).promise();
+    // map user id to quiz. Possible optimization is to cache this outside the main fn so it gets reused (not sure how to extend to mulitple quizzes per user)
+    let quizzes = {};
+    // map user id to group id
+    let existingGroups = {};
     // set of user id of users already grouped with incoming user in some group
     let groupedBefore = new Set();
-    // map user id to quiz
-    let quizzes = {};
-    
-    bucket.Items.forEach(function(user, index, array) {
-      // retrieve user quizzes. 
-      docClient.query({
+
+    await Promise.all(bucket.Items.map(async function(user, index, array) {
+      const res =  await docClient.query({
         TableName: tables[quiz],
-        KeyConditionExpression: "quizID = :qid",
+        KeyConditionExpression: "userID = :userID",
         ExpressionAttributeValues: {
-          ":qid": user.quizzes[0] // note: assumption is one quiz
+          ":userID": user.id // note: assumption is one quiz per user for now
         }
       }).promise().then(
         function(data) {
@@ -63,54 +58,94 @@ exports.handler = async (event) => {
           console.log(error);
         }
       );
+      return res;
+    }));
+    let incomingUserGroups = new Set()
+    await fillGroupSet(incomingUser.id, incomingUserGroups);
+    await Promise.all(bucket.Items.map(async function(user, index, array) {
       if (user.id !== incomingUser.id) {
-        let incomingUserGroups = new Set()
         let userGroups = new Set()
-        friendGroupConnectionModelQuery(incomingUser.id, incomingUserGroups);
-        friendGroupConnectionModelQuery(user.id, userGroups);
-        const intersection = new Set([...userGroups].filter(x => incomingUserGroups.has(x)));
-        if (intersection.size > 0) groupedBefore.add(user.id);
+        await fillGroupSet(user.id, userGroups);
+        const intersection = [...userGroups].filter(x => incomingUserGroups.has(x));
+        if (intersection.length > 0) {
+          groupedBefore.add(user.id);
+        } 
+        existingGroups[user.id] = userGroups;
       }
-    });
+    }));
+    
+    // bucket.Items.forEach(async function(user, index, array) {
+    //   // retrieve user quizzes. Many queries, but small and in parallel
+    //   await docClient.query({
+    //     TableName: tables[quiz],
+    //     KeyConditionExpression: "userID = :userID",
+    //     ExpressionAttributeValues: {
+    //       ":userID": user.id // note: assumption is one quiz per user for now
+    //     }
+    //   }).promise().then(
+    //     function(data) {
+    //       quizzes[user.id] = data;
+    //     },
+    //     function(error) {
+    //       console.log(error);
+    //     }
+    //   );
+    //   // find if incomingUser and current user have been grouped
+    //   if (user.id !== incomingUser.id) {
+    //     let incomingUserGroups = new Set()
+    //     let userGroups = new Set()
+    //     fillGroupSet(incomingUser.id, incomingUserGroups);
+    //     await fillGroupSet(user.id, userGroups);
+    //     const intersection = [...userGroups].filter(x => incomingUserGroups.has(x));
+    //     if (intersection.length > 0) {
+    //       groupedBefore.add(user.id);
+    //     } 
+    //     existingGroups[user.id] = userGroups;
+    //   }
+    // });
 
-    // TODO query friendGroupConnectionModel to find if pair already grouped
-    // init arr of [user, score]
-    userScorePairs = [];
+    // initializing arr of pairs then buildHeap is O(n) + O(n). This way is O(nlogn)
+
     bucket.Items.forEach(function(user, index, array) {
       if (quizzes[user.id] !== null && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
-        userScorePairs.push([user, compatibilityScore(quizzes[user.id], quizzes[incomingUser.id])]);
+        pq.push([user, compatibilityScore(quizzes[user.id], quizzes[incomingUser.id])]);
       } else if (groupedBefore.has(user.id)) {
-        userScorePairs.push([user, SCORE_IF_GROUPED_BEOFRE]);
+        pq.push([user, SCORE_IF_GROUPED_BEOFRE]);
       }
     });
-    // init maxPQ
-    let pq = PriorityQueue.from(userScorePairs, { comparator: function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); 
+    // init maxPQ buildHeap
+    // let pq = PriorityQueue.from(userScorePairs, { comparator: function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); 
 
-    if (pq.isEmpty()) 
+    groupToPut = null;
     while (!pq.isEmpty()) {
       let [user, score] = pq.pop();
       if (score < MIN_SCORE) break;
-      
+      SmallestNonEmpty = {size: Infinity, id: ""};
+      existingGroups[user.id].forEach(function(groupID) {
+        docClient.get({
+          TableName: tables[friendGroup],
+          Key: {"groupID": groupID},
+          ConsistentRead: true
+        }).promise.then(
+          function(data) { // friend group schema should have size
+            if (data.Item.size <= MAX_GROUP_SIZE && data.Item.size < SmallestNonEmpty.size) {
+              SmallestNonEmpty = {size: data.Item.size, id: groupID};
+            }            
+          },
+          function(error) {
+            console.log(error);
+          }
+        );
+      })
+      if (SmallestNonEmpty.size < Infinity) {
+        groupToPut = SmallestNonEmpty.id;
+        break;
+      }
     }
-
   } catch(error) {
       console.log(error);
-  } 
+  }
   
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
   // TODO implement
   const response = {
       statusCode: 200,
@@ -119,13 +154,13 @@ exports.handler = async (event) => {
   //      "Access-Control-Allow-Origin": "*",
   //      "Access-Control-Allow-Headers": "*"
   //  }, 
-      body: JSON.stringify('Hello from Lambda!'),
+      body: JSON.stringify(groupToPut),
+      //body: JSON.stringify('Hello from Lambda!'),
   };
   return response;
 };
 
-
-function friendGroupConnectionModelQuery(userid, set) {
+async function fillGroupSet(userid, set) {
   docClient.query({
     TableName: tables[friendGroupConnectionModel],
     KeyConditionExpression: "userID = :userid",
@@ -149,10 +184,8 @@ async function joinOwnGroup() {
 
 // [QAPair], [QAPair] -> int
 function compatibilityScore(q1, q2) {
-
-  const arrToMap = (map, obj) => { map[obj.q] = obj.a; return map};
-  const user1Responses = q1.reduce(arrToMap, {});
-  const user2Responses = q2.reduce(arrToMap, {});
+  const user1Responses = new Map(q1.map(i => [i.q, i.a]));
+  const user2Responses = new Map(q2.map(i => [i.q, i.a]));
   let score = 0;
   for (const [q, a] of user1Responses) {
     if (a === user2Responses.get(q)) score += 1;
