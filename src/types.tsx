@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
+import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import { ExpoPushToken } from "expo-notifications";
 import React from "react";
 import {
@@ -9,10 +10,15 @@ import {
   ViewStyle,
 } from "react-native";
 import {
-  Course as CourseAPIType,
   User as UserProfileAPIType,
   CourseGroup as CourseGroupAPIType, ChatMessage as ChatMessageAPIType,
 } from "./API";
+
+// eslint-disable-next-line no-shadow
+export enum GroupType {
+  COURSE = "COURSE",
+  FRIEND = "FRIEND"
+}
 
 export type RootStackParamList = {
   Tabs: undefined;
@@ -23,6 +29,7 @@ export type RootStackParamList = {
   Quiz: undefined;
   Group: {
     groupID: string;
+    groupType: GroupType;
     groupTitle: string;
   };
   UniScreen: undefined;
@@ -129,7 +136,6 @@ export type MessageMap = {
   [id: string]: ChatMessage[]
 }
 
-export type Course = CourseAPIType;
 export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "createdAt" | "owner" | "updatedAt">;
 export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner" >;
 export type ChatMessage = Omit<ChatMessageAPIType, "owner" | "userID" | "id" | "updatedAt">;
@@ -139,3 +145,11 @@ export type ModelChatMessageConnection = {
   items?: Array<Omit<ChatMessage, "__typename"> | null > | null,
   nextToken?: string | null,
 };
+
+export type ImageInfoType = ImageInfo & { cancelled: boolean };
+
+export enum ProfilePictureSize {
+  "PROFILE",
+  "BUBBLE",
+  "MESSAGE"
+}

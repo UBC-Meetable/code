@@ -57,7 +57,7 @@ const LoginFlowController = () => {
       <SignUpFormScreen
         onCreate={(initEmail: string) => {
           setEmail(() => initEmail);
-          console.log("email", initEmail);
+
           setAuthState(AuthState.CONFIRM_EMAIL);
         }}
         onLogIn={() => setAuthState(AuthState.LOGIN)}

@@ -3,44 +3,37 @@ import React from "react";
 import {
   GestureResponderEvent, StyleSheet, Text, TouchableOpacity,
 } from "react-native";
-import { Avatar, Chip } from "react-native-paper";
+import { Chip } from "react-native-paper";
+import { ChatMessage, FriendGroup } from "../API";
+import PictureStack from "./PictureStack";
 
 type FriendGroupBubbleProps = {
+    friendGroup: FriendGroup;
+    messages: ChatMessage[];
     onPress?: (event?: GestureResponderEvent) => void
 }
 
-const images = [
-  "http://placekitten.com/g/200/300",
-  "http://placekitten.com/g/200/300",
-  "http://placekitten.com/g/200/300",
-  "http://placekitten.com/g/200/300",
-];
+const FriendGroupBubble = ({ onPress, friendGroup, messages }: FriendGroupBubbleProps) => {
+  const renderGroupMemberNames = () => "BOB";
+  const users = friendGroup.users!.items!.map((item) => item!.user!);
 
-const FriendGroupBubble = ({ onPress }: FriendGroupBubbleProps) => (
-  <TouchableOpacity style={styles.bubble} onPress={onPress}>
-    <Layout style={[styles.bubbleSection, styles.chips]}>
-      <Chip style={styles.chip}>Gamer</Chip>
-      <Chip style={styles.chip}>Arts</Chip>
-      <Chip style={styles.chip}>Coding</Chip>
-      <Chip style={styles.chip}>Sports</Chip>
-    </Layout>
-    <Layout style={[styles.bubbleSection, styles.nameSection]}>
-      <Text style={styles.names} ellipsizeMode="tail" numberOfLines={1}>
-        Kevin, Lisa, John, Maggie, Kevin, Lisa, John, Maggie, Kevin, Lisa, John,
-        Maggie,
-      </Text>
-      <Layout style={styles.pics}>
-        {images.map((uri, index) => {
-          if (index >= 4) return;
-
-          // eslint-disable-next-line consistent-return
-          return (<Avatar.Image size={38} source={{ uri }} style={{ position: "absolute", right: 0 + index * 23 }} key={index} />);
-        })}
+  return (
+    <TouchableOpacity style={styles.bubble} onPress={onPress}>
+      <Layout style={[styles.bubbleSection, styles.chips]}>
+        <Chip style={styles.chip}>Gamer</Chip>
+        <Chip style={styles.chip}>Arts</Chip>
+        <Chip style={styles.chip}>Coding</Chip>
+        <Chip style={styles.chip}>Sports</Chip>
       </Layout>
-
-    </Layout>
-  </TouchableOpacity>
-);
+      <Layout style={[styles.bubbleSection, styles.nameSection]}>
+        <Text style={styles.names} ellipsizeMode="tail" numberOfLines={1}>
+          {friendGroup.title || renderGroupMemberNames()}
+        </Text>
+        <PictureStack users={users} />
+      </Layout>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   bubble: {
@@ -81,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   names: {
-    fontFamily: "Poppins_400Regular",
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 16,
     maxWidth: 250,
     overflow: "hidden",
@@ -90,14 +83,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
     flexDirection: "row",
-  },
-  pics: {
-    flex: 1,
-    backgroundColor: "#0000",
-    flexDirection: "row",
-    position: "relative",
-    justifyContent: "flex-end",
-    height: "100%",
   },
 });
 

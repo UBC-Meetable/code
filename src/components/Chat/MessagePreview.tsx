@@ -7,7 +7,7 @@ type MessagePreviewProps = {
     messages: ChatMessage[];
 };
 
-const MessagePreview = ({ messages }: MessagePreviewProps) => {
+const MessagePreview = ({ messages = [] }: MessagePreviewProps) => {
   const displayMessage = messages.length > 0 ? messages[messages.length - 1] : undefined;
 
   if (typeof displayMessage === "undefined") {
