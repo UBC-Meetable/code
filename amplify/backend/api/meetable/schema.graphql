@@ -110,12 +110,15 @@ type QAPair {
   a: String!
 }
 
-# [LAMBDA]
-type Mutation {
-  joinFriendGroup(user: joinFriendGroupInput): FriendGroupConnectionModel @function(name: "joinFriendGroup-${env}")
+# [LAMBDA FUNCTIONS]
+
+# joinFriendGroupInput -> GroupID
+type Query {
+  joinFriendGroup(user: joinFriendGroupInput): String @function(name: "joinFriendGroup-${env}")
 }
 
 input joinFriendGroupInput {
   id: String!
   university: String!
+  year: Int!
 }
