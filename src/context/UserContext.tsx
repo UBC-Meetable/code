@@ -6,6 +6,7 @@ import { CognitoUser } from "../types";
 
 type UserContextType = {
     user: CognitoUser | undefined
+    rerender: () => void;
 }
 
 const UserContext = React.createContext({
@@ -14,6 +15,10 @@ const UserContext = React.createContext({
 export const UserProvider = (props: {children?: ReactNode }) => {
   const { children } = props;
   const [user, setUser] = useState<CognitoUser | undefined>();
+  const [r, setR] = useState(false);
+  const rerender = () => {
+    setR(!r);
+  };
   useEffect(() => {
     const f = async () => {
       try {
@@ -24,10 +29,11 @@ export const UserProvider = (props: {children?: ReactNode }) => {
       }
     };
     if (!user) { f(); }
-  }, []);
+  }, [user]);
   return (
     <UserContext.Provider value={{
       user,
+      rerender,
     }}
     >
       {children}

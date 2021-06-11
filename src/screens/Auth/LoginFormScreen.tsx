@@ -2,11 +2,12 @@ import Auth from "@aws-amplify/auth";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
+import UserContext from "../../context/UserContext";
 
 const window = Dimensions.get("window");
 
@@ -20,6 +21,7 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setError] = useState<string[]>([]);
+  const { rerender } = useContext(UserContext);
 
   const confirmForm = () => {
     setError(() => []);
@@ -42,6 +44,9 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         username: email,
         password,
       });
+      console.log(user);
+
+      rerender();
     } catch (e) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);

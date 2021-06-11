@@ -90,6 +90,8 @@ const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
   const user = useAuthenticatedUser();
+  console.log(user);
+
   const handleFinish = () => {
     setUserState(UserState.DONE);
   };
@@ -118,7 +120,7 @@ const AuthorizedApp = () => {
     if (user) { f(user); }
   }, [user]);
 
-  if (loading) return <Spinner />;
+  if (loading) return <Spinner size="tiny" />;
   if (userState !== UserState.DONE) {
     let initRoute: keyof SignUpParamList;
 
