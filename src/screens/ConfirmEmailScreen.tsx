@@ -55,7 +55,7 @@ const SignUpFormScreen = ({
         width={window.width}
         height={window.height}
       />
-      <KeyboardAvoidingView behavior="position" style={styles.formContainer}>
+      <KeyboardAvoidingView behavior="height" style={styles.formContainer}>
         <Layout style={styles.emailContainer}>
           <Input
             value={email}
@@ -131,6 +131,7 @@ const styles = StyleSheet.create({
     color: Colors.dark.error,
   },
   emailContainer: {
+    height: "20%",
     marginVertical: 20,
     backgroundColor: "#0000",
   },

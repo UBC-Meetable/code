@@ -66,14 +66,14 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         width={window.width}
         height={window.height}
       />
-      <KeyboardAvoidingView behavior="padding" style={styles.formContainer} collapsable>
+      <KeyboardAvoidingView behavior="height" style={styles.formContainer} collapsable>
         <Layout style={styles.emailContainer}>
           <Input
             value={email}
             placeholder="Your Email"
             onChangeText={(e) => setEmail(e.toLowerCase())}
             keyboardType="email-address"
-            autoCompleteType="email"
+            // autoCompleteType="email"
           />
           <Input
             value={confirmEmail}
