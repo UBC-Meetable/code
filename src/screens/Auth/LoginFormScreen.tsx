@@ -146,6 +146,16 @@ const styles = StyleSheet.create({
   input: {
     marginVertical: 2,
     marginHorizontal: -20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+    borderRadius: 10,
+    backgroundColor: "white",
   },
   loginText: {
     fontSize: 15,
