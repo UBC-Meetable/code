@@ -4,7 +4,7 @@ type User
   @model 
   @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
   @key(fields: ["id"]) 
-  @key(fields: ["university", "year"], name: "byUniYear", queryField: "UserByUniYear") {
+  @key(name: "byUniYear", fields: ["university", "year"], queryField: "UserByUniYear") {
   id: String!
   email: String!
   firstName: String
