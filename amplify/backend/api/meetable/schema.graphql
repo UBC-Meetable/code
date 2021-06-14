@@ -3,7 +3,8 @@
 type User
   @model 
   @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
-  @key(fields: ["id"]) {
+  @key(fields: ["id"]) 
+  @key(fields: ["university", "year"], name: "byUniYear", queryField: "UserByUniYear") {
   id: String!
   email: String!
   firstName: String
@@ -12,6 +13,7 @@ type User
   bio: String
   userState: UserState
   university: String
+  year: Int
   major: String
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
@@ -40,6 +42,7 @@ type FriendGroup
   title: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
   owner: String
+  size: Int!
 }
  
 # [CONNECTIONS]

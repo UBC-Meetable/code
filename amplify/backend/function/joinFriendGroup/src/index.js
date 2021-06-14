@@ -97,7 +97,7 @@ exports.handler = async (event) => {
       SmallestNonEmpty = {size: Infinity, id: ""};
       let userGroups = new Set() // doesn't really have to be a set
       await fillGroupSet(user.id, userGroups);
-      for (const group of userGroups) { // small number of queries in sequence
+      for (const groupID of userGroups) { // small number of queries in sequence
         try {
           const data = await docClient.get({
             TableName: tables.friendGroup,
