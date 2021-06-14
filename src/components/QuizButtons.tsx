@@ -10,7 +10,7 @@ import {
   StyleSheet,
   View,
 } from "react-native";
-import { Icon } from "react-native-elements";
+import { Badge, Icon } from "react-native-elements";
 import { IconButton } from "react-native-paper";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -20,16 +20,17 @@ type QuizButtonsProps = {
     onLove: () => void;
     onUndo: () => void;
     onDislike: () => void;
+    remainingLoves: number;
 }
 
 const QuizButtons = ({
-  onLike, onLove, onUndo, onDislike,
+  onLike, onLove, onUndo, onDislike, remainingLoves,
 }: QuizButtonsProps) => {
   const [undoIn, setUndoIn] = useState(false);
   const [likeIn, setLikeIn] = useState(false);
   const [loveIn, setLoveIn] = useState(false);
   const [dislikeIn, setDislikeIn] = useState(false);
-
+  const loveDisabled = remainingLoves <= 0;
   return (
     <Layout style={styles.buttonsContainer}>
       <Layout style={styles.buttons}>
@@ -82,16 +83,24 @@ const QuizButtons = ({
           onPressIn={() => setLoveIn(true)}
           onPressOut={() => setLoveIn(false)}
           onPress={() => onLove()}
-          style={[!loveIn ? styles.shadow : styles.button, { width: 60, height: 60 }]}
+          style={[!loveIn ? styles.shadow
+            : styles.button, { width: 60, height: 60 }, loveDisabled && styles.disabled]}
+          disabled={loveDisabled}
         >
           {() => (
-            <Icon
-              name="heart"
-              type="antdesign"
-              color="#FF8D8D"
-              onPress={() => onLove()}
-              size={30}
-            />
+            <Layout style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#0000" }}>
+              <Icon
+                name="heart"
+                type="antdesign"
+                color={loveDisabled ? "#cc8D8D" : "#FF8D8D"}
+                backgroundColor="#0000"
+                onPress={() => onLove()}
+                disabledStyle={{ backgroundColor: "#0000" }}
+                disabled={loveDisabled}
+                size={30}
+              />
+              <Text style={{ position: "absolute", color: "white" }}>{remainingLoves}</Text>
+            </Layout>
           )}
         </Button>
       </Layout>
@@ -138,6 +147,15 @@ const styles = StyleSheet.create({
     overflow: "visible",
     marginHorizontal: 5,
     backgroundColor: "#fff",
+    borderColor: "#000",
+  },
+  disabled: {
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    overflow: "visible",
+    marginHorizontal: 5,
+    backgroundColor: "#c0c0c0",
     borderColor: "#000",
   },
 });

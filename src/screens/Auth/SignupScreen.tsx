@@ -3,6 +3,7 @@ import {
 } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Auth0BubbleBackground from "../../assets/images/auth0-bubble.svg";
 import Auth0Flair from "../../assets/images/auth0-flair.svg";
 import { TutorialStyles } from "../../components/styles";
@@ -10,40 +11,45 @@ import rootStyles from "../../components/styles/rootStyles";
 
 const window = Dimensions.get("window");
 
-const SignupScreen = ({ onContinue }: { onContinue: () => void }) => (
-  <Layout style={rootStyles}>
-    <Auth0BubbleBackground
-      style={{ position: "absolute", top: 0 }}
-      width={window.width}
-      height={window.height}
-    />
+const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
+  const units = useSafeAreaInsets();
+  return (
+    <Layout style={rootStyles}>
+      <Auth0BubbleBackground
+        style={{ position: "absolute", top: 0 }}
+      />
 
-    <Layout style={styles.mainContainer}>
-      <Text style={TutorialStyles.title}>Hang Tight!</Text>
-      <Text style={[styles.body]}>
-        We are analyzing your responses and will put you in a friend group
-        shortly.
-      </Text>
-      <Auth0Flair />
-    </Layout>
-
-    <Layout style={styles.buttonContainer}>
-      <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
-        In the meantime...
-      </Text>
-      <Button style={styles.button} onPress={() => onContinue()}>
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Create an Account
+      <Layout style={styles.mainContainer}>
+        <Layout style={styles.text}>
+          <Text style={TutorialStyles.title}>Hang Tight!</Text>
+          <Text style={[styles.body]}>
+            We are analyzing your responses and will put you in a friend group
+            shortly.
           </Text>
-        )}
-      </Button>
+        </Layout>
+        <Auth0Flair
+          style={{ position: "absolute", bottom: 0, zIndex: -100 }}
+        />
+      </Layout>
+
+      <Layout style={styles.buttonContainer}>
+        <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
+          In the meantime...
+        </Text>
+        <Button style={styles.button} onPress={() => onContinue()}>
+          {(evaProps: any) => (
+            <Text
+              {...evaProps}
+              style={{ ...evaProps.style, ...styles.buttonText }}
+            >
+              Create an Account
+            </Text>
+          )}
+        </Button>
+      </Layout>
     </Layout>
-  </Layout>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   root: {
@@ -85,9 +91,11 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     width: "80%",
-    justifyContent: "center",
+    justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: "#0000",
+    marginTop: 50,
+    paddingTop: 50,
   },
   buttonContainer: {
     alignItems: "center",
@@ -102,6 +110,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 16,
     fontFamily: "Poppins_400Regular",
+  },
+  text: {
+    display: "flex",
+    flex: 1,
+    backgroundColor: "#0000",
+    flexDirection: "column",
+    alignItems: "center",
   },
 });
 

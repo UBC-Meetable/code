@@ -1,18 +1,10 @@
-import {
-  Button, Card, Layout, Text,
-} from "@ui-kitten/components";
-import React, {
-  createRef, ReactElement, useRef, useState,
-} from "react";
+import { Layout, Text } from "@ui-kitten/components";
+import React, { useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import Carousel from "react-native-snap-carousel";
 import Swiper from "react-native-deck-swiper";
-import MeetableCarousel from "../navigation/MeetableCarousel";
-import rootStyles from "./styles/rootStyles";
+import { SwipeActions } from "../screens/Auth/QuizScreen";
 import { QuestionType } from "../types";
 import QuizCard from "./QuizCard";
-import { SwipeActions } from "../screens/Auth/QuizScreen";
-import QuizButtons from "./QuizButtons";
 
 const window = Dimensions.get("window");
 
@@ -26,14 +18,24 @@ type SwipeProps = {
   swiperRef: React.RefObject<Swiper<QuestionType>>
   cardIndex: number;
   setCardIndex: React.Dispatch<React.SetStateAction<number>>;
+  onSwiped: (data: QuestionType, direction: SwipeActions) => void;
+  remainingLoves: number;
 }
 
-const DEV_SKIP = true;
+const DEV_SKIP = false;
+
 const QuizSwipe = ({
-  onFinish, data, swiperRef,
+  onFinish, data, swiperRef, onSwiped, remainingLoves,
 }: SwipeProps) => {
   const [title, setTitle] = useState("");
+
   const renderCard = (cardData: QuestionType, index: number) => <QuizCard {...cardData} />;
+
+  const indexToCardSwipe = (index: number, direction: SwipeActions) => {
+    const card = data[index];
+    onSwiped(card, direction);
+  };
+
   const layoutRef = useRef<Layout>(null);
   swiperRef.current?.forceUpdate();
 
@@ -52,8 +54,12 @@ const QuizSwipe = ({
           containerStyle={styles.container}
           cardStyle={styles.card}
           cards={data}
+          onSwipedRight={(index) => indexToCardSwipe(index, SwipeActions.LIKE)}
+          onSwipedLeft={(index) => indexToCardSwipe(index, SwipeActions.DISLIKE)}
+          onSwipedTop={(index) => indexToCardSwipe(index, SwipeActions.LOVE)}
           renderCard={renderCard}
           showSecondCard
+          disableTopSwipe={remainingLoves <= 0}
           childrenOnTop
           stackSize={2}
           cardIndex={DEV_SKIP ? 52 : 0}
