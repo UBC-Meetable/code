@@ -2,6 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const joinFriendGroup = /* GraphQL */ `
+  query JoinFriendGroup($user: joinFriendGroupInput) {
+    joinFriendGroup(user: $user)
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: String!) {
     getUser(id: $id) {
@@ -50,6 +55,9 @@ export const getUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -93,12 +101,30 @@ export const getUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -197,6 +223,21 @@ export const listUsers = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -244,6 +285,9 @@ export const getCourseGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -276,6 +320,9 @@ export const getCourseGroup = /* GraphQL */ `
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -421,6 +468,9 @@ export const getFriendGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -451,6 +501,9 @@ export const getFriendGroup = /* GraphQL */ `
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -635,6 +688,21 @@ export const getChatMessage = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -688,6 +756,17 @@ export const listChatMessages = /* GraphQL */ `
             }
             nextToken
           }
+          quizzes {
+            items {
+              id
+              userID
+              quizID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -696,6 +775,45 @@ export const listChatMessages = /* GraphQL */ `
         createdAt
         updatedAt
         groupType
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getQuiz = /* GraphQL */ `
+  query GetQuiz($id: ID!) {
+    getQuiz(id: $id) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listQuizs = /* GraphQL */ `
+  query ListQuizs(
+    $filter: ModelQuizFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        quizID
+        responses {
+          q
+          a
+        }
+        createdAt
+        updatedAt
         owner
       }
       nextToken
@@ -750,6 +868,17 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              quizID
+              createdAt
+              updatedAt
+              owner
             }
             nextToken
           }

@@ -2,74 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const joinFriendGroup = /* GraphQL */ `
-  mutation JoinFriendGroup($user: joinFriendGroupInput) {
-    joinFriendGroup(user: $user) {
-      id
-      groupID
-      userID
-      courseGroup {
-        users {
-          nextToken
-        }
-        title
-        course {
-          code
-          section
-        }
-        groupID
-        messages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      friendGroup {
-        users {
-          nextToken
-        }
-        groupID
-        title
-        messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        owner
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        email
-        firstName
-        lastName
-        profilePicture
-        bio
-        userState
-        university
-        major
-        courses {
-          code
-          section
-        }
-        courseGroups {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        owner
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -121,6 +53,9 @@ export const createUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -164,12 +99,30 @@ export const createUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -230,6 +183,9 @@ export const updateUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -273,12 +229,30 @@ export const updateUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -339,6 +313,9 @@ export const deleteUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -382,12 +359,30 @@ export const deleteUser = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -439,6 +434,9 @@ export const createCourseGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -471,6 +469,9 @@ export const createCourseGroup = /* GraphQL */ `
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -533,6 +534,9 @@ export const updateCourseGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -565,6 +569,9 @@ export const updateCourseGroup = /* GraphQL */ `
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -627,6 +634,9 @@ export const deleteCourseGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -661,6 +671,9 @@ export const deleteCourseGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -719,6 +732,9 @@ export const createFriendGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -749,6 +765,9 @@ export const createFriendGroup = /* GraphQL */ `
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -809,6 +828,9 @@ export const updateFriendGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -839,6 +861,9 @@ export const updateFriendGroup = /* GraphQL */ `
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -899,6 +924,9 @@ export const deleteFriendGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -931,6 +959,9 @@ export const deleteFriendGroup = /* GraphQL */ `
             friendGroups {
               nextToken
             }
+            quizzes {
+              nextToken
+            }
             createdAt
             updatedAt
             owner
@@ -942,147 +973,6 @@ export const deleteFriendGroup = /* GraphQL */ `
           owner
         }
         nextToken
-      }
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createFriendGroup = /* GraphQL */ `
-  mutation CreateFriendGroup(
-    $input: CreateFriendGroupInput!
-    $condition: ModelFriendGroupConditionInput
-  ) {
-    createFriendGroup(input: $input, condition: $condition) {
-      users {
-        items {
-          id
-          groupID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      groupID
-      title
-      messages {
-        id
-        groupChatID
-        userID
-        author {
-          id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
-          createdAt
-          updatedAt
-          owner
-        }
-        body
-        createdAt
-        updatedAt
-        owner
-      }
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateFriendGroup = /* GraphQL */ `
-  mutation UpdateFriendGroup(
-    $input: UpdateFriendGroupInput!
-    $condition: ModelFriendGroupConditionInput
-  ) {
-    updateFriendGroup(input: $input, condition: $condition) {
-      users {
-        items {
-          id
-          groupID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      groupID
-      title
-      messages {
-        id
-        groupChatID
-        userID
-        author {
-          id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
-          createdAt
-          updatedAt
-          owner
-        }
-        body
-        createdAt
-        updatedAt
-        owner
-      }
-      owner
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteFriendGroup = /* GraphQL */ `
-  mutation DeleteFriendGroup(
-    $input: DeleteFriendGroupInput!
-    $condition: ModelFriendGroupConditionInput
-  ) {
-    deleteFriendGroup(input: $input, condition: $condition) {
-      users {
-        items {
-          id
-          groupID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      groupID
-      title
-      messages {
-        id
-        groupChatID
-        userID
-        author {
-          id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
-          createdAt
-          updatedAt
-          owner
-        }
-        body
-        createdAt
-        updatedAt
-        owner
       }
       owner
       createdAt
@@ -1170,6 +1060,21 @@ export const createChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1268,6 +1173,21 @@ export const updateChatMessage = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1363,6 +1283,21 @@ export const deleteChatMessage = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -1453,25 +1388,6 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
         updatedAt
         owner
       }
-      friendGroup {
-        users {
-          nextToken
-        }
-        groupID
-        title
-        messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        owner
-        createdAt
-        updatedAt
-      }
       user {
         id
         email
@@ -1543,6 +1459,21 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1633,25 +1564,6 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
         updatedAt
         owner
       }
-      friendGroup {
-        users {
-          nextToken
-        }
-        groupID
-        title
-        messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
-        }
-        owner
-        createdAt
-        updatedAt
-      }
       user {
         id
         email
@@ -1723,6 +1635,21 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1887,6 +1814,21 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -2041,6 +1983,21 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -2201,6 +2158,21 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -2358,12 +2330,84 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createQuiz = /* GraphQL */ `
+  mutation CreateQuiz(
+    $input: CreateQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    createQuiz(input: $input, condition: $condition) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateQuiz = /* GraphQL */ `
+  mutation UpdateQuiz(
+    $input: UpdateQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    updateQuiz(input: $input, condition: $condition) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteQuiz = /* GraphQL */ `
+  mutation DeleteQuiz(
+    $input: DeleteQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    deleteQuiz(input: $input, condition: $condition) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
