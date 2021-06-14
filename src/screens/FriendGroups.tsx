@@ -17,7 +17,7 @@ const FriendGroups = ({
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (typeof groups !== "undefined") {
+    if (groups == null || groups.length) {
       setLoading(false);
     } else {
       setLoading(true);

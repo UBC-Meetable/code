@@ -89,7 +89,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
-  const user = useAuthenticatedUser();
+  let user = useAuthenticatedUser();
   console.log(user);
 
   const handleFinish = () => {
@@ -120,7 +120,10 @@ const AuthorizedApp = () => {
     if (user) { f(user); }
   }, [user]);
 
-  if (loading) return <Spinner size="tiny" />;
+  if (loading) {
+    Auth.currentAuthenticatedUser().then((loggedIn) => { user = loggedIn; });
+    return <Spinner size="tiny" />;
+  }
   if (userState !== UserState.DONE) {
     let initRoute: keyof SignUpParamList;
 

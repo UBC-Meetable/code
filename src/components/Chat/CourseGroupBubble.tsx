@@ -45,7 +45,6 @@ const CourseGroupBubble = ({
   }
 
   const userPile = Array.from(userSet).reverse();
-  console.log(userPile);
 
   if (!groupID || !users || !title) return null;
   return (
