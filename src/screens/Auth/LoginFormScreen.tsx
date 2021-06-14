@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.29,
     shadowRadius: 4.65,
     elevation: 7,
-    borderRadius: 10,
+    borderRadius: 20,
     backgroundColor: "white",
   },
   loginText: {

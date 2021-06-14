@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   input: {
     marginHorizontal: -50,
-    borderRadius: 10,
+    borderRadius: 20,
     padding: 10,
     backgroundColor: "white",
     shadowColor: "#000",
