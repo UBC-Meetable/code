@@ -47,6 +47,10 @@
         "AdminQueries00077ef8": {
           "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
           "s3Key": "amplify-builds/AdminQueries00077ef8-486d2f7139454c66754b-build.zip"
+        },
+        "joinFriendGroup": {
+          "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
+          "s3Key": "amplify-builds/joinFriendGroup-416364754c63446d314d-build.zip"
         }
       }
     }

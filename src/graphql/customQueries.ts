@@ -83,7 +83,7 @@ export const getUserFriendGroups = /* GraphQL */ `
 
 
 export const getUserProfile = /* GraphQL */ `
-  query GetUser($id: String!) {
+  query GetUserProfile($id: String!) {
     getUser(id: $id) {
       id
       email

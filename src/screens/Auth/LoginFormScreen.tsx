@@ -17,11 +17,9 @@ type LoginFormScreenProps = {
 
 const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
-  const [confirmEmail, setConfirmEmail] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setError] = useState<string[]>([]);
-  const { rerender } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const confirmForm = () => {
     setError(() => []);
@@ -44,9 +42,7 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         username: email,
         password,
       });
-      console.log(user);
-
-      rerender();
+      setUser(user);
     } catch (e) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);

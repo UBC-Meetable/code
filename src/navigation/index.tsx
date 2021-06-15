@@ -90,7 +90,6 @@ const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
   let user = useAuthenticatedUser();
-  console.log(user);
 
   const handleFinish = () => {
     setUserState(UserState.DONE);

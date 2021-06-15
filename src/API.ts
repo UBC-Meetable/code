@@ -619,6 +619,29 @@ export type GetUserFriendGroupsQuery = {
   } | null,
 };
 
+export type GetUserProfileQueryVariables = {
+  id?: string,
+};
+
+export type GetUserProfileQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    email: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    profilePicture?: string | null,
+    bio?: string | null,
+    userState?: UserState | null,
+    university?: string | null,
+    year?: number | null,
+    major?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
 export type CreateUserMutationVariables = {
   input?: CreateUserInput,
   condition?: ModelUserConditionInput | null,
