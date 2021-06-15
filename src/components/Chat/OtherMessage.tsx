@@ -5,12 +5,14 @@ import {
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
-import { ChatMessage } from "../../types";
+import { ChatMessage, ProfilePictureSize } from "../../types";
+import ProfilePicture from "../ProfilePicture";
 import styles from "../styles/MessageStyles";
 import InspectProfile from "../InspectProfile";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
   const [visible, setVisible] = React.useState(false);
+  const imageKey = message.author!.profilePicture!;
 
   return (
     <Layout style={otherStyles.messageContainer}>
@@ -18,7 +20,6 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
         <Layout style={otherStyles.nameContainer}>
           <Text style={otherStyles.name}>{`${message.author?.firstName} ${message.author?.lastName}`}</Text>
         </Layout>
-
         <Layout style={otherStyles.imageContainer}>
           <TouchableOpacity
             style={styles.avatarButton}
@@ -39,10 +40,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
               </Card>
             </Modal>
 
-            <Avatar.Image
-              size={30}
-              source={require("../../assets/images/profilePic2.jpg")}
-            />
+            <ProfilePicture imageKey={imageKey} size={ProfilePictureSize.MESSAGE} />
           </TouchableOpacity>
           <Layout style={styles.bubble}>
             <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>

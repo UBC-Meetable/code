@@ -42,7 +42,6 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         username: email,
         password,
       });
-      console.log(user);
     } catch (e) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);

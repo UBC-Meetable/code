@@ -4,18 +4,16 @@ import React, {
   useEffect, useRef, useState,
 } from "react";
 import {
-  Keyboard,
-  KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet, TextInput,
+  KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { SafeAreaContext, SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import sendMessageToCourseGroup from "../../calls/sendMessageToCourseGroup";
+import sendMessageToGroup from "../../calls/sendMessageToGroup";
 import MessagesContext from "../../context/MessageContext";
-import CourseGroupsContext from "../../context/SubscriptionContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import useUserProfile from "../../hooks/useUserProfile";
-import { ChatMessage, ChatMessageWithPending, CourseGroup } from "../../types";
+import { ChatMessageWithPending, GroupType } from "../../types";
 import MessageInput from "./MessageInput";
 import OtherMessage from "./OtherMessage";
 import PendingMessage from "./PendingMessage";
@@ -50,7 +48,7 @@ const SendIcon = ({ onPress, name }: {onPress?: Function, name: string}) => (
   </Layout>
 );
 
-const Chat = () => {
+const Chat = ({ groupType }: {groupType: GroupType}) => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
   const user = useAuthenticatedUser();
@@ -77,10 +75,11 @@ const Chat = () => {
     pendingMessages.push(newMessage);
     setPendingMessages(() => [...pendingMessages]);
 
-    const res = sendMessageToCourseGroup({
+    const res = sendMessageToGroup({
       groupID,
       body: message,
       userID: user.attributes.sub,
+      groupType,
     });
 
     res.then(() => {

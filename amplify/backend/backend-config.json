@@ -59,6 +59,18 @@
           ]
         }
       ]
+    },
+    "joinFriendGroup": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    }
+  },
+  "storage": {
+    "profilePictures": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
     }
   },
   "storage": {

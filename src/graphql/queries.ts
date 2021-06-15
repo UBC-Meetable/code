@@ -2,6 +2,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const joinFriendGroup = /* GraphQL */ `
+  query JoinFriendGroup($user: joinFriendGroupInput) {
+    joinFriendGroup(user: $user)
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: String!) {
     getUser(id: $id) {
@@ -13,18 +18,117 @@ export const getUser = /* GraphQL */ `
       bio
       userState
       university
+      year
       major
-      courses {
-        code
-        section
-      }
       courseGroups {
         items {
           id
           groupID
           userID
+          courseGroup {
+            users {
+              nextToken
+            }
+            title
+            groupID
+            code
+            section
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      friendGroups {
+        items {
+          id
+          groupID
+          userID
+          friendGroup {
+            users {
+              nextToken
+            }
+            groupID
+            title
+            messages {
+              nextToken
+            }
+            owner
+            size
+            createdAt
+            updatedAt
+          }
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -58,12 +162,88 @@ export const listUsers = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -82,25 +262,87 @@ export const getCourseGroup = /* GraphQL */ `
           id
           groupID
           userID
+          courseGroup {
+            users {
+              nextToken
+            }
+            title
+            groupID
+            code
+            section
+            messages {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           createdAt
           updatedAt
         }
         nextToken
       }
       title
-      course {
-        code
-        section
-      }
       groupID
+      code
+      section
       messages {
         items {
           id
           groupChatID
           userID
+          author {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           body
           createdAt
           updatedAt
+          groupType
           owner
         }
         nextToken
@@ -128,15 +370,69 @@ export const listCourseGroups = /* GraphQL */ `
     ) {
       items {
         users {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         title
-        course {
-          code
-          section
-        }
         groupID
+        code
+        section
         messages {
+          items {
+            id
+            groupChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
           nextToken
         }
         createdAt
@@ -155,6 +451,44 @@ export const getFriendGroup = /* GraphQL */ `
           id
           groupID
           userID
+          friendGroup {
+            users {
+              nextToken
+            }
+            groupID
+            title
+            messages {
+              nextToken
+            }
+            owner
+            size
+            createdAt
+            updatedAt
+          }
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           createdAt
           updatedAt
         }
@@ -163,29 +497,44 @@ export const getFriendGroup = /* GraphQL */ `
       groupID
       title
       messages {
-        id
-        groupChatID
-        userID
-        author {
+        items {
           id
-          email
-          firstName
-          lastName
-          profilePicture
-          bio
-          userState
-          university
-          major
+          groupChatID
+          userID
+          author {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          body
           createdAt
           updatedAt
+          groupType
           owner
         }
-        body
-        createdAt
-        updatedAt
-        owner
+        nextToken
       }
       owner
+      size
       createdAt
       updatedAt
     }
@@ -208,20 +557,70 @@ export const listFriendGroups = /* GraphQL */ `
     ) {
       items {
         users {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
           nextToken
         }
         groupID
         title
         messages {
-          id
-          groupChatID
-          userID
-          body
-          createdAt
-          updatedAt
-          owner
+          items {
+            id
+            groupChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
         }
         owner
+        size
         createdAt
         updatedAt
       }
@@ -244,12 +643,88 @@ export const getChatMessage = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
-        courses {
-          code
-          section
-        }
         courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           nextToken
         }
         createdAt
@@ -259,6 +734,7 @@ export const getChatMessage = /* GraphQL */ `
       body
       createdAt
       updatedAt
+      groupType
       owner
     }
   }
@@ -283,12 +759,202 @@ export const listChatMessages = /* GraphQL */ `
           bio
           userState
           university
+          year
           major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              quizID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
           owner
         }
         body
+        createdAt
+        updatedAt
+        groupType
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getQuiz = /* GraphQL */ `
+  query GetQuiz($id: ID!) {
+    getQuiz(id: $id) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listQuizs = /* GraphQL */ `
+  query ListQuizs(
+    $filter: ModelQuizFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuizs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID
+        quizID
+        responses {
+          q
+          a
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const userByUniYear = /* GraphQL */ `
+  query UserByUniYear(
+    $university: String
+    $year: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    UserByUniYear(
+      university: $university
+      year: $year
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
@@ -327,7 +993,39 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
           bio
           userState
           university
+          year
           major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              quizID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
           createdAt
           updatedAt
           owner
@@ -335,6 +1033,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
         body
         createdAt
         updatedAt
+        groupType
         owner
       }
       nextToken

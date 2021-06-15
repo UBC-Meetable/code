@@ -3,21 +3,25 @@ import { useHeaderHeight } from "@react-navigation/stack";
 import {
   Input, Layout, Spinner, Text,
 } from "@ui-kitten/components";
+import { Storage } from "aws-amplify";
+import * as ImageManipulator from "expo-image-manipulator";
+import * as ImagePicker from "expo-image-picker";
+import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
 import {
   Image, KeyboardAvoidingView, StyleSheet, TextInput,
 } from "react-native";
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
+import * as FileSystem from "expo-file-system";
 import noAvatar from "../assets/images/noavatar.png";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
+import ProfilePicture from "../components/ProfilePicture";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { UserProfile } from "../types";
 import { styles as profileStyles } from "./Auth/NewProfileScreen";
-
 /** TODO: Cache user profile so we don't need to fetch so often. */
-
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
 
@@ -27,7 +31,10 @@ const ProfileScreen = () => {
   const [bioFocused, setBioFocused] = React.useState(false);
   const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
   const [localProfile, setLocalProfile] = React.useState<UserProfile>();
-  const [loading, setLoading] = React.useState(true);
+  const [imageLoading, setImageLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [key, setKey] = React.useState("");
+  const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
 
   const updateProfile = async () => {
     const [firstName, ...lastName] = name.trim().split(" ");
@@ -41,10 +48,64 @@ const ProfileScreen = () => {
     const same = compareProfiles(fetchedProfile, { ...localProfile, ...updatedProfile });
 
     if (!same) {
-      console.log("updating Profile");
-
       updateUserProfile(updatedProfile);
+      await FileSystem.writeAsStringAsync(path, JSON.stringify(updatedProfile));
     }
+  };
+
+  /** TODO Cache Profile Images */
+  const updateImageKey = async (imageKey: string) => {
+    await updateUserProfile({ id: user.attributes.sub, profilePicture: imageKey });
+  };
+
+  const pickImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [125, 125],
+      quality: 0.5,
+    });
+
+    if (!result.cancelled) {
+      const cropped = await ImageManipulator.manipulateAsync(result.uri, [{
+        resize: {
+          height: 125,
+          width: 125,
+        },
+      }]);
+      uploadImage(cropped);
+      setImageLoading(() => true);
+    }
+  };
+
+  const uploadImage = (toUpload: ImageInfo) => {
+    const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
+    const imageKey = `${user.attributes.sub}/${imageName}`;
+    fetch(toUpload.uri).then((response) => {
+      response.blob()
+        .then((blob) => {
+          const access = { level: "public", contentType: toUpload.type };
+          Storage.put(imageKey, blob, access)
+            .then(() => {
+              Storage.get(imageKey, { download: false, expires: 604800 }).then((success) => {
+                updateImageKey(imageKey);
+                setKey(imageKey);
+              });
+              setImageLoading(() => false);
+            })
+            .catch((err) => {
+            });
+        });
+    });
+
+    // const fileType = mime.lookup(toUpload.uri);
   };
 
   const compareProfiles = (a: any, b: any) => Object.entries(a).sort().toString()
@@ -53,18 +114,36 @@ const ProfileScreen = () => {
   React.useEffect(() => {
     const f = async () => {
       setLoading(true);
-      const res = await fetchUserProfile({ id: user.attributes.sub });
-      if (res.data) {
-        const profile = res.data.getUser as UserProfile;
+      const resPromise = fetchUserProfile({ id: user.attributes.sub });
+      const cachedProfile = await FileSystem.getInfoAsync(path);
+      if (cachedProfile.exists) {
+        const stringProfile = await FileSystem.readAsStringAsync(cachedProfile.uri);
+        const profile = JSON.parse(stringProfile) as UserProfile;
         setName(`${profile?.firstName} ${profile?.lastName}`);
         setBio(profile?.bio || "");
         setFetchedProfile(profile);
+        setKey(profile.profilePicture || "");
+        setLocalProfile(profile);
+        setLoading(false);
+      }
+      const res = await resPromise;
+      if (await res.data) {
+        const profile = res.data?.getUser as UserProfile;
+        await FileSystem.writeAsStringAsync(path, JSON.stringify(profile));
+        setName(`${profile?.firstName} ${profile?.lastName}`);
+        setBio(profile?.bio || "");
+        setFetchedProfile(profile);
+        setKey(profile.profilePicture || "");
         setLocalProfile(profile);
         setLoading(false);
       }
     };
     if (user) f();
   }, [user]);
+
+  React.useEffect(() => {
+    console.log("key updated, ", key);
+  }, [key]);
 
   if (!localProfile) {
     return (
@@ -81,7 +160,6 @@ const ProfileScreen = () => {
       contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}
       bounces={false}
     >
-
       <Layout
         style={{ backgroundColor: "#0000", position: "relative" }}
       >
@@ -102,11 +180,27 @@ const ProfileScreen = () => {
             },
             zIndex: 1000,
           }}
+          onPress={() => {
+            pickImage();
+          }}
         />
-        <Image
-          source={noAvatar}
-          style={{ borderRadius: 100, height: 125, width: 125 }}
-        />
+        <ProfilePicture imageKey={key} />
+        {/* {imageLoading ? (
+          <Layout style={styles.profileContainer}>
+            <Image
+              source={uri ? { uri } : noAvatar}
+              style={{ borderRadius: 100, height: 125, width: 125 }}
+            />
+            <Layout style={[styles.profileOverlay, styles.profileContainer]}>
+              <Spinner />
+            </Layout>
+          </Layout>
+        ) : (
+          <Image
+            source={uri ? { uri } : noAvatar}
+            style={{ borderRadius: 100, height: 125, width: 125 }}
+          />
+        )} */}
       </Layout>
 
       <Layout
@@ -272,6 +366,22 @@ const styles = StyleSheet.create({
     display: "flex",
     paddingRight: 10,
     backgroundColor: "#0000",
+  },
+  profileContainer: {
+    borderRadius: 100,
+    height: 125,
+    width: 125,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  profileOverlay: {
+    position: "absolute",
+    borderRadius: 100,
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    opacity: 0.3,
   },
 });
 

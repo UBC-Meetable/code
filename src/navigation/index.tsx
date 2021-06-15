@@ -26,7 +26,7 @@ import createUserProfile from "../calls/createUserProfile";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import ChatBackButton from "../components/Chat/ChatBackButton";
 import { MessageProvider } from "../context/MessageContext";
-import { CourseGroupsProvider } from "../context/SubscriptionContext";
+import { CourseGroupsProvider } from "../context/CourseGroupsContext";
 import { UserProvider } from "../context/UserContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
@@ -37,6 +37,7 @@ import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import SignUpStackNavigator from "./SignUpStackNavigator";
+import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 
 Amplify.configure({
   ...awsconfig,
@@ -110,7 +111,7 @@ const AuthorizedApp = () => {
         }
         setLoading(false);
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
     };
 
@@ -133,137 +134,140 @@ const AuthorizedApp = () => {
 
   return (
     <CourseGroupsProvider>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          cardStyle: { backgroundColor: "#FEEDDE" },
-        }}
-        initialRouteName="Tabs"
-      >
-        <Stack.Screen
-          name="Tabs"
-          component={BottomTabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Group"
-          options={({
-            navigation,
-          }: {
+      <FriendGroupsProvider>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            cardStyle: { backgroundColor: "#FEEDDE" },
+          }}
+          initialRouteName="Tabs"
+        >
+          <Stack.Screen
+            name="Tabs"
+            component={BottomTabNavigator}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Group"
+            options={({
+              navigation,
+            }: {
           navigation: StackNavigationProp<RootStackParamList, "Group">;
         }) => ({
-            cardStyle: {
-              backgroundColor: "#FEEDDE",
-            },
-            headerShown: true,
-            headerTitle: "",
-            headerLeft: ({ label }: { label: string }) => (
-              <ChatBackButton navigation={navigation} label={label} />
-            ),
-            headerBackground: (props) => (
-              <Layout
-                {...props}
-                style={{
-                  backgroundColor: "#FFF8F3",
-                }}
-              >
-                <BubbleHeader width={window.width} height={170} />
-              </Layout>
-            ),
-            headerLeftContainerStyle: {
-              marginLeft: 10,
-            },
-            headerStyle: {
-              height: 170,
-            },
-          } as StackNavigationOptions)}
-        >
-          {(props) => (
-            <MessageProvider groupID={props.route.params.groupID}>
-              <GroupScreen
-                groupTitle={props.route.params.groupTitle}
-                navigation={props.navigation}
-              />
-            </MessageProvider>
-          )}
-        </Stack.Screen>
-        <Stack.Screen
-          name="EditCourses"
-          options={({
-            navigation,
-          }: {
+              cardStyle: {
+                backgroundColor: "#FEEDDE",
+              },
+              headerShown: true,
+              headerTitle: "",
+              headerLeft: ({ label }: { label: string }) => (
+                <ChatBackButton navigation={navigation} label={label} />
+              ),
+              headerBackground: (props) => (
+                <Layout
+                  {...props}
+                  style={{
+                    backgroundColor: "#FFF8F3",
+                  }}
+                >
+                  <BubbleHeader width={window.width} height={170} />
+                </Layout>
+              ),
+              headerLeftContainerStyle: {
+                marginLeft: 10,
+              },
+              headerStyle: {
+                height: 170,
+              },
+            } as StackNavigationOptions)}
+          >
+            {(props) => (
+              <MessageProvider groupID={props.route.params.groupID}>
+                <GroupScreen
+                  groupType={props.route.params.groupType}
+                  groupTitle={props.route.params.groupTitle}
+                  navigation={props.navigation}
+                />
+              </MessageProvider>
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="EditCourses"
+            options={({
+              navigation,
+            }: {
           navigation: StackNavigationProp<RootStackParamList, "EditCourses">;
         }) => ({
-            cardStyle: {
-              backgroundColor: "#FEEDDE",
-            },
-            headerShown: true,
-            headerTitle: "",
-            headerLeft: () => (
-              <ChatBackButton navigation={navigation} label="Add Courses" />
-            ),
-            headerBackground: (props) => (
-              <Layout
-                {...props}
-                style={{
-                  backgroundColor: "#FFF8F3",
-                }}
-              >
-                <BubbleHeader width={window.width} height={170} />
-              </Layout>
-            ),
-            headerLeftContainerStyle: {
-              marginLeft: 10,
-            },
-            headerStyle: {
-              height: 170,
-            },
-          } as StackNavigationOptions)}
-          component={EditCourseScreen}
-        />
-        <Stack.Screen
-          name="ProfileSettings"
-          options={({
-            navigation,
-          }: {
+              cardStyle: {
+                backgroundColor: "#FEEDDE",
+              },
+              headerShown: true,
+              headerTitle: "",
+              headerLeft: () => (
+                <ChatBackButton navigation={navigation} label="Add Courses" />
+              ),
+              headerBackground: (props) => (
+                <Layout
+                  {...props}
+                  style={{
+                    backgroundColor: "#FFF8F3",
+                  }}
+                >
+                  <BubbleHeader width={window.width} height={170} />
+                </Layout>
+              ),
+              headerLeftContainerStyle: {
+                marginLeft: 10,
+              },
+              headerStyle: {
+                height: 170,
+              },
+            } as StackNavigationOptions)}
+            component={EditCourseScreen}
+          />
+          <Stack.Screen
+            name="ProfileSettings"
+            options={({
+              navigation,
+            }: {
           navigation: StackNavigationProp<
             RootStackParamList,
             "ProfileSettings"
           >;
         }) => ({
-            cardStyle: {
-              backgroundColor: "#FEEDDE",
-            },
-            headerShown: true,
-            headerTitle: "",
-            headerLeft: () => (
-              <ChatBackButton navigation={navigation} label="Settings" />
-            ),
-            headerBackground: (props) => (
-              <Layout
-                {...props}
-                style={{
-                  backgroundColor: "#FFF8F3",
-                }}
-              >
-                <BubbleHeader width={window.width} height={170} />
-              </Layout>
-            ),
-            headerLeftContainerStyle: {
-              marginLeft: 10,
-            },
-            headerStyle: {
-              height: 170,
-            },
-          } as StackNavigationOptions)}
-          component={ProfileSettingsScreen}
-        />
-        <Stack.Screen
-          name="NotFound"
-          component={NotFoundScreen}
-          options={{ title: "Oops!" }}
-        />
-      </Stack.Navigator>
+              cardStyle: {
+                backgroundColor: "#FEEDDE",
+              },
+              headerShown: true,
+              headerTitle: "",
+              headerLeft: () => (
+                <ChatBackButton navigation={navigation} label="Settings" />
+              ),
+              headerBackground: (props) => (
+                <Layout
+                  {...props}
+                  style={{
+                    backgroundColor: "#FFF8F3",
+                  }}
+                >
+                  <BubbleHeader width={window.width} height={170} />
+                </Layout>
+              ),
+              headerLeftContainerStyle: {
+                marginLeft: 10,
+              },
+              headerStyle: {
+                height: 170,
+              },
+            } as StackNavigationOptions)}
+            component={ProfileSettingsScreen}
+          />
+          <Stack.Screen
+            name="NotFound"
+            component={NotFoundScreen}
+            options={{ title: "Oops!" }}
+          />
+        </Stack.Navigator>
+      </FriendGroupsProvider>
     </CourseGroupsProvider>
   );
 };

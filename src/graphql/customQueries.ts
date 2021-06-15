@@ -10,6 +10,8 @@ export const getUserCourses = /* GraphQL */ `
         updatedAt
           groupID
           title
+          section
+          code
           messages {
             items {
               body
@@ -18,6 +20,7 @@ export const getUserCourses = /* GraphQL */ `
               author {
                 firstName
                 lastName
+                profilePicture
                 id
               }
             }
@@ -27,16 +30,74 @@ export const getUserCourses = /* GraphQL */ `
               user {
                 firstName
                 lastName
+                profilePicture
+                id
               }
             }
-          }
-          course {
-            code
-            section
           }
         }
       }
     }
+    }
+  }
+`;
+
+export const getUserFriendGroups = /* GraphQL */ `
+  query GetUserFriendGroups {
+    getUser(id: "707b7da5-4a59-4150-9bd0-b0a83ed9e34a") {
+      friendGroups {
+        items {
+          friendGroup {
+            updatedAt
+            groupID
+            title
+            users {
+              items {
+                user {
+                  firstName
+                  lastName
+                  profilePicture
+                  id
+                }
+              }
+            }
+            messages {
+              items {
+                body
+                groupChatID
+                createdAt
+                author {
+                  firstName
+                  lastName
+                  profilePicture
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+
+export const getUserProfile = /* GraphQL */ `
+  query GetUser($id: String!) {
+    getUser(id: $id) {
+      id
+      email
+      firstName
+      lastName
+      profilePicture
+      bio
+      userState
+      university
+      year
+      major
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;

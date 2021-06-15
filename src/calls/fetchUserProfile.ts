@@ -1,11 +1,11 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { GetUserQuery, GetUserQueryVariables } from "../API";
-import { getUser } from "../graphql/queries";
+import { getUserProfile } from "../graphql/customQueries";
 
 const fetchUserProfile = ({ id }: GetUserQueryVariables):
 Promise<GraphQLResult<GetUserQuery>> => API.graphql({
-  query: getUser,
+  query: getUserProfile,
   variables: {
     id,
   },
