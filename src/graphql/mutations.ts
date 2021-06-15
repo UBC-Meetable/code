@@ -16,6 +16,7 @@ export const createUser = /* GraphQL */ `
       bio
       userState
       university
+      year
       major
       courseGroups {
         items {
@@ -46,11 +47,15 @@ export const createUser = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -77,6 +82,7 @@ export const createUser = /* GraphQL */ `
               nextToken
             }
             owner
+            size
             createdAt
             updatedAt
           }
@@ -89,11 +95,15 @@ export const createUser = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -102,6 +112,21 @@ export const createUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -125,6 +150,7 @@ export const updateUser = /* GraphQL */ `
       bio
       userState
       university
+      year
       major
       courseGroups {
         items {
@@ -155,11 +181,15 @@ export const updateUser = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -186,6 +216,7 @@ export const updateUser = /* GraphQL */ `
               nextToken
             }
             owner
+            size
             createdAt
             updatedAt
           }
@@ -198,11 +229,15 @@ export const updateUser = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -211,6 +246,21 @@ export const updateUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -234,6 +284,7 @@ export const deleteUser = /* GraphQL */ `
       bio
       userState
       university
+      year
       major
       courseGroups {
         items {
@@ -264,11 +315,15 @@ export const deleteUser = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -295,6 +350,7 @@ export const deleteUser = /* GraphQL */ `
               nextToken
             }
             owner
+            size
             createdAt
             updatedAt
           }
@@ -307,11 +363,15 @@ export const deleteUser = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -320,6 +380,21 @@ export const deleteUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+        }
+        nextToken
+      }
+      quizzes {
+        items {
+          id
+          userID
+          quizID
+          responses {
+            q
+            a
+          }
+          createdAt
+          updatedAt
+          owner
         }
         nextToken
       }
@@ -364,11 +439,15 @@ export const createCourseGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -398,11 +477,15 @@ export const createCourseGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -458,11 +541,15 @@ export const updateCourseGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -492,11 +579,15 @@ export const updateCourseGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -552,11 +643,15 @@ export const deleteCourseGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -586,11 +681,15 @@ export const deleteCourseGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -632,6 +731,7 @@ export const createFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
+            size
             createdAt
             updatedAt
           }
@@ -644,11 +744,15 @@ export const createFriendGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -676,11 +780,15 @@ export const createFriendGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -696,6 +804,7 @@ export const createFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
+      size
       createdAt
       updatedAt
     }
@@ -722,6 +831,7 @@ export const updateFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
+            size
             createdAt
             updatedAt
           }
@@ -734,11 +844,15 @@ export const updateFriendGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -766,11 +880,15 @@ export const updateFriendGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -786,6 +904,7 @@ export const updateFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
+      size
       createdAt
       updatedAt
     }
@@ -812,6 +931,7 @@ export const deleteFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
+            size
             createdAt
             updatedAt
           }
@@ -824,11 +944,15 @@ export const deleteFriendGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -856,11 +980,15 @@ export const deleteFriendGroup = /* GraphQL */ `
             bio
             userState
             university
+            year
             major
             courseGroups {
               nextToken
             }
             friendGroups {
+              nextToken
+            }
+            quizzes {
               nextToken
             }
             createdAt
@@ -876,6 +1004,7 @@ export const deleteFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
+      size
       createdAt
       updatedAt
     }
@@ -899,6 +1028,7 @@ export const createChatMessage = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -923,6 +1053,7 @@ export const createChatMessage = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -942,6 +1073,7 @@ export const createChatMessage = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -954,6 +1086,7 @@ export const createChatMessage = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -961,6 +1094,21 @@ export const createChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -994,6 +1142,7 @@ export const updateChatMessage = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1018,6 +1167,7 @@ export const updateChatMessage = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1037,6 +1187,7 @@ export const updateChatMessage = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1049,6 +1200,7 @@ export const updateChatMessage = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1056,6 +1208,21 @@ export const updateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1089,6 +1256,7 @@ export const deleteChatMessage = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1113,6 +1281,7 @@ export const deleteChatMessage = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1132,6 +1301,7 @@ export const deleteChatMessage = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1144,6 +1314,7 @@ export const deleteChatMessage = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1151,6 +1322,21 @@ export const deleteChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1199,6 +1385,7 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1227,6 +1414,7 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1253,6 +1441,7 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1277,6 +1466,7 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1296,6 +1486,7 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1308,6 +1499,7 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1315,6 +1507,21 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1360,6 +1567,7 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1388,6 +1596,7 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1414,6 +1623,7 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1438,6 +1648,7 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1457,6 +1668,7 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1469,6 +1681,7 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1476,6 +1689,21 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1521,6 +1749,7 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1549,6 +1778,7 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1575,6 +1805,7 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1599,6 +1830,7 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1618,6 +1850,7 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1630,6 +1863,7 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1637,6 +1871,21 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1668,6 +1917,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1680,6 +1930,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1706,6 +1957,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1720,6 +1972,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         owner
+        size
         createdAt
         updatedAt
       }
@@ -1732,6 +1985,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1756,6 +2010,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1775,6 +2030,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1787,6 +2043,7 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1794,6 +2051,21 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1825,6 +2097,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1837,6 +2110,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1863,6 +2137,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1877,6 +2152,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         owner
+        size
         createdAt
         updatedAt
       }
@@ -1889,6 +2165,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -1913,6 +2190,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1932,6 +2210,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1944,6 +2223,7 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -1951,6 +2231,21 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
             }
             createdAt
             updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
           }
           nextToken
         }
@@ -1982,6 +2277,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -1994,6 +2290,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -2020,6 +2317,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -2034,6 +2332,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
           nextToken
         }
         owner
+        size
         createdAt
         updatedAt
       }
@@ -2046,6 +2345,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
         bio
         userState
         university
+        year
         major
         courseGroups {
           items {
@@ -2070,6 +2370,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -2089,6 +2390,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
               groupID
               title
               owner
+              size
               createdAt
               updatedAt
             }
@@ -2101,6 +2403,7 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
               bio
               userState
               university
+              year
               major
               createdAt
               updatedAt
@@ -2111,12 +2414,84 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
           }
           nextToken
         }
+        quizzes {
+          items {
+            id
+            userID
+            quizID
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         createdAt
         updatedAt
         owner
       }
       createdAt
       updatedAt
+    }
+  }
+`;
+export const createQuiz = /* GraphQL */ `
+  mutation CreateQuiz(
+    $input: CreateQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    createQuiz(input: $input, condition: $condition) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateQuiz = /* GraphQL */ `
+  mutation UpdateQuiz(
+    $input: UpdateQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    updateQuiz(input: $input, condition: $condition) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteQuiz = /* GraphQL */ `
+  mutation DeleteQuiz(
+    $input: DeleteQuizInput!
+    $condition: ModelQuizConditionInput
+  ) {
+    deleteQuiz(input: $input, condition: $condition) {
+      id
+      userID
+      quizID
+      responses {
+        q
+        a
+      }
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;

@@ -80,3 +80,24 @@ export const getUserFriendGroups = /* GraphQL */ `
     }
   }
 `
+
+
+export const getUserProfile = /* GraphQL */ `
+  query GetUser($id: String!) {
+    getUser(id: $id) {
+      id
+      email
+      firstName
+      lastName
+      profilePicture
+      bio
+      userState
+      university
+      year
+      major
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;

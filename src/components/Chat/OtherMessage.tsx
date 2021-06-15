@@ -6,6 +6,7 @@ import { Avatar } from "react-native-paper";
 import { ChatMessage, ProfilePictureSize } from "../../types";
 import ProfilePicture from "../ProfilePicture";
 import styles from "../styles/MessageStyles";
+import profile from "../InspectProfile";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
   const imageKey = message.author!.profilePicture!;
