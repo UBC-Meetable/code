@@ -94,6 +94,7 @@ const AuthorizedApp = () => {
   const handleFinish = () => {
     setUserState(UserState.DONE);
   };
+
   React.useEffect(() => {
     const f = async (loggedInUser: CognitoUser) => {
       if (!loggedInUser) return;

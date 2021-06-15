@@ -5,6 +5,7 @@ import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Auth0BubbleBackground from "../../assets/images/auth0-bubble.svg";
+import BubbleBackground from "../../assets/images/quizBubble.svg";
 import Auth0Flair from "../../assets/images/auth0-flair.svg";
 import { TutorialStyles } from "../../components/styles";
 import rootStyles from "../../components/styles/rootStyles";
@@ -16,9 +17,10 @@ const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
   return (
     <Layout style={rootStyles}>
       <Auth0BubbleBackground
+        width={window.width}
+        height={window.height + 100}
         style={{ position: "absolute", top: 0 }}
       />
-
       <Layout style={styles.mainContainer}>
         <Layout style={styles.text}>
           <Text style={TutorialStyles.title}>Hang Tight!</Text>
@@ -29,6 +31,7 @@ const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
         </Layout>
         <Auth0Flair
           style={{ position: "absolute", bottom: 0, zIndex: -100 }}
+          width={window.width}
         />
       </Layout>
 

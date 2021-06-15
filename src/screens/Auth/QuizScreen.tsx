@@ -16,7 +16,7 @@ import { QuestionType } from "../../types";
 
 const window = Dimensions.get("window");
 
-const DEV_SKIP = false;
+const DEV_SKIP = true;
 
 export enum SwipeActions {
   "LIKE" = "liked",
