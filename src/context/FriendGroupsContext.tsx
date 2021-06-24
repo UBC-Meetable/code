@@ -20,7 +20,7 @@ export const FriendGroupsProvider = (props: { children?: ReactNode }) => {
     const getFriendGroups = async () => {
       const friends = await fetchUserFriendGroups(user);
 
-      setGroups(friends || null);
+      setGroups(friends);
     };
     getFriendGroups();
   }, []);

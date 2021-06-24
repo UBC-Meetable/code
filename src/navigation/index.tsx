@@ -38,6 +38,7 @@ import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
 import BottomTabNavigator from "./BottomTabNavigator";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
+import QuizScreen from "../screens/Auth/QuizScreen";
 
 Amplify.configure({
   ...awsconfig,
@@ -124,16 +125,25 @@ const AuthorizedApp = () => {
     Auth.currentAuthenticatedUser().then((loggedIn) => { user = loggedIn; });
     return <Spinner size="tiny" />;
   }
+
+  // Handle post-signup account inititalization
   if (userState !== UserState.DONE) {
     let initRoute: keyof SignUpParamList;
 
-    if (userState === UserState.SIGNED_UP) {
+    switch (userState) {
+    case UserState.SIGNED_UP:
       initRoute = "UniScreen";
-    } else if (userState === UserState.UNI_SELECTED) {
+      break;
+    case UserState.UNI_SELECTED:
       initRoute = "NewProfileScreen";
-    } else {
+      break;
+    case UserState.PROFILE_CREATED:
       initRoute = "NewEditCourses";
+      break;
+    default:
+      throw new Error("UserState undefined");
     }
+
     return <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />;
   }
 
@@ -266,6 +276,19 @@ const AuthorizedApp = () => {
             } as StackNavigationOptions)}
             component={ProfileSettingsScreen}
           />
+          <Stack.Screen
+            name="Quiz"
+          >
+            {(props) => (
+              <QuizScreen
+                onFinish={(q) => {
+                  props.navigation.pop();
+                  props.route.params.return(q);
+                }}
+                {...props}
+              />
+            )}
+          </Stack.Screen>
           <Stack.Screen
             name="NotFound"
             component={NotFoundScreen}

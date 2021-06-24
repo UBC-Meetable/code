@@ -26,7 +26,9 @@ export type RootStackParamList = {
   Tutorial: undefined;
   Login: undefined;
   Signup: undefined;
-  Quiz: undefined;
+  Quiz: {
+    return: (q: QuestionType[]) => void; 
+  };
   Group: {
     groupID: string;
     groupType: GroupType;
@@ -58,6 +60,11 @@ export type GroupStackParamList = {
     groupMessages: ChatMessage[];
   };
   ProfileScreen: undefined;
+};
+
+export type FriendGroupStackScreens = {
+  FriendGroups: undefined;
+  Quiz: undefined;
 };
 
 export type TabTwoParamList = {
@@ -152,4 +159,11 @@ export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
   "MESSAGE"
+}
+
+export enum SwipeActions {
+  "LIKE" = "liked",
+  "LOVE" = "loved",
+  "DISLIKE" = "disliked",
+  "UNDO" = "undo",
 }

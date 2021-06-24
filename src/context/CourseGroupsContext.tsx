@@ -3,10 +3,10 @@ import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
 import Observable from "zen-observable-ts";
-import { GroupType, OnCreateChatMessageSubscription, OnCreateCourseGroupConnectionModelSubscription } from "../API";
+import { GroupType, OnCreateChatMessageSubscription, OnCreateCourseGroupConnectionSubscription } from "../API";
 import fetchCourseGroup from "../calls/fetchCourseGroup";
 import fetchUserCourses from "../calls/fetchUserCourses";
-import { onCreateChatMessage, onCreateCourseGroupConnectionModel } from "../graphql/subscriptions";
+import { onCreateChatMessage, onCreateCourseGroupConnection } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../types";
 
@@ -67,26 +67,26 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
   useEffect(() => {
     const observableObj = API.graphql({
-      query: onCreateCourseGroupConnectionModel,
+      query: onCreateCourseGroupConnection,
     }) as Observable<Object>;
 
     const subscription = observableObj.subscribe({
       next: ({ value: { data } }:
-        {value: {data: OnCreateCourseGroupConnectionModelSubscription}}) => {
-        if (!data.onCreateCourseGroupConnectionModel) return;
+        {value: {data: OnCreateCourseGroupConnectionSubscription}}) => {
+        if (!data.onCreateCourseGroupConnection) return;
 
         const newGroups:CourseGroup[] = [];
         const findGroup = {
-          ...data.onCreateCourseGroupConnectionModel.courseGroup,
+          ...data.onCreateCourseGroupConnection.courseGroup,
           messages: [] as any,
         } as CourseGroup;
 
-        if (!findGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateCourseGroupConnectionModel.groupID}`);
+        if (!findGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateCourseGroupConnection.groupID}`);
         groupRef.current.forEach((group) => {
           newGroups.push(group);
         });
 
-        newGroups.push(data.onCreateCourseGroupConnectionModel.courseGroup as CourseGroup);
+        newGroups.push(data.onCreateCourseGroupConnection.courseGroup as CourseGroup);
         setGroups(() => newGroups);
       },
       error: (error:any) => console.warn(error),

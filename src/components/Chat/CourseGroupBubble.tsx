@@ -2,7 +2,7 @@ import { Layout } from "@ui-kitten/components";
 import React, { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
-import { CourseGroupConnectionModel, User } from "../../API";
+import { CourseGroupConnection, User } from "../../API";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../../types";
 import PictureStack from "../PictureStack";

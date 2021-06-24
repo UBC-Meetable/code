@@ -116,7 +116,30 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -247,7 +270,30 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -378,7 +424,30 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -1071,7 +1140,21 @@ export const onCreateChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1182,7 +1265,21 @@ export const onUpdateChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1293,7 +1390,21 @@ export const onDeleteChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1316,9 +1427,9 @@ export const onDeleteChatMessage = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
-  subscription OnCreateCourseGroupConnectionModel {
-    onCreateCourseGroupConnectionModel {
+export const onCreateCourseGroupConnection = /* GraphQL */ `
+  subscription OnCreateCourseGroupConnection {
+    onCreateCourseGroupConnection {
       id
       groupID
       userID
@@ -1475,7 +1586,21 @@ export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1495,9 +1620,9 @@ export const onCreateCourseGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
-  subscription OnUpdateCourseGroupConnectionModel {
-    onUpdateCourseGroupConnectionModel {
+export const onUpdateCourseGroupConnection = /* GraphQL */ `
+  subscription OnUpdateCourseGroupConnection {
+    onUpdateCourseGroupConnection {
       id
       groupID
       userID
@@ -1654,7 +1779,21 @@ export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1674,9 +1813,9 @@ export const onUpdateCourseGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
-  subscription OnDeleteCourseGroupConnectionModel {
-    onDeleteCourseGroupConnectionModel {
+export const onDeleteCourseGroupConnection = /* GraphQL */ `
+  subscription OnDeleteCourseGroupConnection {
+    onDeleteCourseGroupConnection {
       id
       groupID
       userID
@@ -1833,7 +1972,21 @@ export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1853,9 +2006,9 @@ export const onDeleteCourseGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const onCreateFriendGroupConnectionModel = /* GraphQL */ `
-  subscription OnCreateFriendGroupConnectionModel {
-    onCreateFriendGroupConnectionModel {
+export const onCreateFriendGroupConnection = /* GraphQL */ `
+  subscription OnCreateFriendGroupConnection {
+    onCreateFriendGroupConnection {
       id
       groupID
       userID
@@ -2010,7 +2163,21 @@ export const onCreateFriendGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -2030,9 +2197,9 @@ export const onCreateFriendGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateFriendGroupConnectionModel = /* GraphQL */ `
-  subscription OnUpdateFriendGroupConnectionModel {
-    onUpdateFriendGroupConnectionModel {
+export const onUpdateFriendGroupConnection = /* GraphQL */ `
+  subscription OnUpdateFriendGroupConnection {
+    onUpdateFriendGroupConnection {
       id
       groupID
       userID
@@ -2187,7 +2354,21 @@ export const onUpdateFriendGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -2207,9 +2388,9 @@ export const onUpdateFriendGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteFriendGroupConnectionModel = /* GraphQL */ `
-  subscription OnDeleteFriendGroupConnectionModel {
-    onDeleteFriendGroupConnectionModel {
+export const onDeleteFriendGroupConnection = /* GraphQL */ `
+  subscription OnDeleteFriendGroupConnection {
+    onDeleteFriendGroupConnection {
       id
       groupID
       userID
@@ -2364,7 +2545,21 @@ export const onDeleteFriendGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -2389,7 +2584,117 @@ export const onCreateQuiz = /* GraphQL */ `
     onCreateQuiz {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a
@@ -2405,7 +2710,117 @@ export const onUpdateQuiz = /* GraphQL */ `
     onUpdateQuiz {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a
@@ -2421,7 +2836,117 @@ export const onDeleteQuiz = /* GraphQL */ `
     onDeleteQuiz {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a

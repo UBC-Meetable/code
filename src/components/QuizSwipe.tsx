@@ -2,8 +2,7 @@ import { Layout, Text } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
-import { SwipeActions } from "../screens/Auth/QuizScreen";
-import { QuestionType } from "../types";
+import { QuestionType, SwipeActions } from "../types";
 import QuizCard from "./QuizCard";
 
 const window = Dimensions.get("window");
@@ -27,8 +26,6 @@ const DEV_SKIP = true;
 const QuizSwipe = ({
   onFinish, data, swiperRef, onSwiped, remainingLoves,
 }: SwipeProps) => {
-  const [title, setTitle] = useState("");
-
   const renderCard = (cardData: QuestionType, index: number) => <QuizCard {...cardData} />;
 
   const indexToCardSwipe = (index: number, direction: SwipeActions) => {
@@ -37,7 +34,6 @@ const QuizSwipe = ({
   };
 
   const layoutRef = useRef<Layout>(null);
-  swiperRef.current?.forceUpdate();
 
   return (
     <Layout style={{

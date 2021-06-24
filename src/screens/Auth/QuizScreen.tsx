@@ -7,29 +7,28 @@ import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CreateQuizInput, QAPair, QAPairInput } from "../../API";
 import BubbleBackground from "../../assets/images/quizBubble.svg";
 import QuizButtons from "../../components/QuizButtons";
 import QuizSwipe from "../../components/QuizSwipe";
 import questions from "../../data/data";
 import sampleData from "../../data/sampleQuiz.json";
-import { QuestionType } from "../../types";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import { QuestionType, SwipeActions } from "../../types";
 
 const window = Dimensions.get("window");
 
 const DEV_SKIP = true;
 
-export enum SwipeActions {
-  "LIKE" = "liked",
-  "LOVE" = "loved",
-  "DISLIKE" = "disliked",
-  "UNDO" = "undo",
-}
-
-const QuizScreen = ({ onFinish }: { onFinish: () => void }) => {
+const QuizScreen = ({
+  onFinish,
+}: {
+  onFinish: (q: QuestionType[]) => void;
+}) => {
   const [responses, setResponses] = useState(
-    DEV_SKIP ? sampleData.responses : ([] as QuestionType[])
+    DEV_SKIP ? sampleData.responses : ([] as QuestionType[]),
   );
-  const quizPath = `${FileSystem.documentDirectory}quiz`
+  const quizPath = `${FileSystem.documentDirectory}quiz`;
   const swiperRef = useRef<Swiper<QuestionType>>(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [remainingLoves, setRemainingLoves] = useState(3);
@@ -38,58 +37,41 @@ const QuizScreen = ({ onFinish }: { onFinish: () => void }) => {
   const debouncedSwipeHandler = _.debounce(
     (action: SwipeActions) => {
       switch (action) {
-        case SwipeActions.LIKE:
-          swiperRef.current?.swipeRight();
-          break;
-        case SwipeActions.LOVE:
-          if (remainingLoves > 0)
-            swiperRef.current?.swipeTop();
-          break;
-        case SwipeActions.DISLIKE:
-          swiperRef.current?.swipeLeft();
-          break;
-        case SwipeActions.UNDO:
-          swiperRef.current?.swipeBack((i) => {
-            let prevResponse = responseStack.pop() as SwipeActions;
-            
-            if (prevResponse === SwipeActions.LOVE) {
-              setRemainingLoves((prev) => prev + 1);
-            }
-          });
-          break;
-        default:
-          throw new Error("Swiper error");
+      case SwipeActions.LIKE:
+        swiperRef.current?.swipeRight();
+        break;
+      case SwipeActions.LOVE:
+        if (remainingLoves > 0) swiperRef.current?.swipeTop();
+        break;
+      case SwipeActions.DISLIKE:
+        swiperRef.current?.swipeLeft();
+        break;
+      case SwipeActions.UNDO:
+        swiperRef.current?.swipeBack((i) => {
+          const prevResponse = responseStack.pop() as SwipeActions;
+
+          if (prevResponse === SwipeActions.LOVE) {
+            setRemainingLoves((prev) => prev + 1);
+          }
+        });
+        break;
+      default:
+        throw new Error("Swiper error");
       }
     },
     500,
-    { leading: true, trailing: false }
+    { leading: true, trailing: false },
   );
 
   const handleSwipe = (data: QuestionType, answer: SwipeActions) => {
     const formattedAnswer = data;
     formattedAnswer.response = answer;
     if (answer === SwipeActions.LOVE) {
-      setRemainingLoves((prev) => prev - 1)
+      setRemainingLoves((prev) => prev - 1);
     }
     responseStack.push(answer);
-    setResponses((prevResponses) => [...prevResponses, formattedAnswer] );
-    console.log([...responses,formattedAnswer]);
-    
-  }
-  
-
-  useEffect(() => {
-    FileSystem.makeDirectoryAsync(quizPath).then(() => {
-      console.log("made directory");
-    }).catch(() => {
-      console.log("directory exists");
-      FileSystem.readDirectoryAsync(quizPath).then((res) => {
-        console.log(res);
-        
-      } );
-    })
-  }, [])
-
+    setResponses((prevResponses) => [...prevResponses, formattedAnswer]);
+  };
 
   return (
     <Layout style={styles.container}>
@@ -101,7 +83,7 @@ const QuizScreen = ({ onFinish }: { onFinish: () => void }) => {
         <QuizSwipe
           remainingLoves={remainingLoves}
           onSwiped={handleSwipe}
-          onFinish={onFinish}
+          onFinish={() => onFinish(responses)}
           cardIndex={cardIndex}
           setCardIndex={setCardIndex}
           swiperRef={swiperRef}
