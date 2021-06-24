@@ -46,10 +46,8 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: "#0000",
-    // overflow: "hidden",
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "green",
   },
   root: {
     marginHorizontal: 20,

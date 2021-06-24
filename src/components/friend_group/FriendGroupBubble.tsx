@@ -4,8 +4,8 @@ import {
   GestureResponderEvent, StyleSheet, Text, TouchableOpacity,
 } from "react-native";
 import { Chip } from "react-native-paper";
-import { ChatMessage, FriendGroup } from "../API";
-import PictureStack from "./PictureStack";
+import { ChatMessage, FriendGroup } from "../../API";
+import PictureStack from "../PictureStack";
 
 type FriendGroupBubbleProps = {
     friendGroup: FriendGroup;
