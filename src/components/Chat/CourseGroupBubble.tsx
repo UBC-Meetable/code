@@ -70,7 +70,6 @@ const CourseGroupBubble = ({
         <Layout style={styles.bottomTextContainer}>
           <MessagePreview messages={messages} />
         </Layout>
-        {/* TODO Implement User Photos, Make new component for this */}
         <Layout style={styles.bottomPhotoContainer}>
           <Layout style={[styles.bubbleSection, styles.nameSection]}>
             <PictureStack users={userPile} />

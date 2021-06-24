@@ -20,7 +20,7 @@ import updateUserProfile from "../calls/updateUserProfile";
 import ProfilePicture from "../components/ProfilePicture";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { UserProfile } from "../types";
-import { styles as profileStyles } from "./Auth/NewProfileScreen";
+import { profileStyles } from "./Auth/NewProfileScreen";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
@@ -180,23 +180,10 @@ const ProfileScreen = () => {
             pickImage();
           }}
         />
-        <ProfilePicture imageKey={key} />
-        {/* {imageLoading ? (
-          <Layout style={styles.profileContainer}>
-            <Image
-              source={uri ? { uri } : noAvatar}
-              style={{ borderRadius: 100, height: 125, width: 125 }}
-            />
-            <Layout style={[styles.profileOverlay, styles.profileContainer]}>
-              <Spinner />
-            </Layout>
-          </Layout>
-        ) : (
-          <Image
-            source={uri ? { uri } : noAvatar}
-            style={{ borderRadius: 100, height: 125, width: 125 }}
-          />
-        )} */}
+        <ProfilePicture
+          imageKey={key}
+          onPress={() => pickImage()}
+        />
       </Layout>
 
       <Layout

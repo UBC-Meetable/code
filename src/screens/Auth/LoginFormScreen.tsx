@@ -2,7 +2,7 @@ import Auth from "@aws-amplify/auth";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
@@ -19,6 +19,8 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setError] = useState<string[]>([]);
+  const emailRef = useRef<Input>(null);
+  const passwordRef = useRef<Input>(null);
   const { setUser } = useContext(UserContext);
 
   const confirmForm = () => {
@@ -60,6 +62,8 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         <Layout style={styles.emailContainer}>
           <Input
             value={email}
+            ref={emailRef}
+            onSubmitEditing={() => passwordRef.current?.focus()}
             placeholder="Your Email"
             onChangeText={(e) => setEmail(e.toLowerCase())}
             keyboardType="email-address"
@@ -69,6 +73,8 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         <Layout style={styles.emailContainer}>
           <Input
             value={password}
+            ref={passwordRef}
+            onSubmitEditing={() => login()}
             placeholder="Your Password"
             onChangeText={(e) => setPassword(e)}
             secureTextEntry
