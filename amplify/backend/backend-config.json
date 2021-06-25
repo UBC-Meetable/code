@@ -72,11 +72,5 @@
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }
-  },
-  "storage": {
-    "profilePictures": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation"
-    }
   }
 }
