@@ -66,6 +66,7 @@ export const getUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -114,6 +115,7 @@ export const getUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -218,6 +220,7 @@ export const listUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -251,6 +254,7 @@ export const listUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -340,6 +344,7 @@ export const getCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -437,6 +442,7 @@ export const listCourseGroups = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -528,6 +534,7 @@ export const getFriendGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -623,6 +630,7 @@ export const listFriendGroups = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -713,6 +721,7 @@ export const getChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -746,6 +755,7 @@ export const getChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -819,6 +829,7 @@ export const listChatMessages = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -829,6 +840,7 @@ export const listChatMessages = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -903,6 +915,7 @@ export const getQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -936,6 +949,7 @@ export const getQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1010,6 +1024,7 @@ export const listQuizs = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -1020,6 +1035,7 @@ export const listQuizs = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -1108,6 +1124,7 @@ export const userByUniYear = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1141,6 +1158,7 @@ export const userByUniYear = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1220,6 +1238,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -1230,6 +1249,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }

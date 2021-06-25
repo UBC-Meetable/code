@@ -83,7 +83,9 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
         if (!findGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateCourseGroupConnection.groupID}`);
         groupRef.current.forEach((group) => {
-          newGroups.push(group);
+          if (data.onCreateCourseGroupConnection?.courseGroup.groupID !== group.groupID) {
+            newGroups.push(group);
+          }
         });
 
         newGroups.push(data.onCreateCourseGroupConnection.courseGroup as CourseGroup);

@@ -68,6 +68,7 @@ enum GroupType {
 # [Many UserProfiles: Many CourseGroups]
 # Represents a connection between a User and a CourseGroup
 type CourseGroupConnection
+  @auth(rules: [{allow: owner, operations: [create, update, delete]}])
   @model(queries: null)
   @key(name: "byCourseGroup", fields: ["groupID", "userID"])
   @key(name: "byUser", fields: ["userID", "groupID"]) {
@@ -79,6 +80,7 @@ type CourseGroupConnection
 }
 
 type FriendGroupConnection
+  @auth(rules: [{allow: owner, operations: [create, update, delete]}])
   @model(queries: null)
   @key(name: "byFriendGroup", fields: ["groupID", "userID"])
   @key(name: "byUser", fields: ["userID", "groupID"]) {
