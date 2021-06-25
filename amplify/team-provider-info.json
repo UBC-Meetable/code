@@ -54,5 +54,27 @@
         }
       }
     }
+  },
+  "alex": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-meetable-alex-185954-authRole",
+      "UnauthRoleArn": "arn:aws:iam::609336482033:role/amplify-meetable-alex-185954-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::609336482033:role/amplify-meetable-alex-185954-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-meetable-alex-185954-deployment",
+      "UnauthRoleName": "amplify-meetable-alex-185954-unauthRole",
+      "StackName": "amplify-meetable-alex-185954",
+      "StackId": "arn:aws:cloudformation:us-east-1:609336482033:stack/amplify-meetable-alex-185954/09b9a8a0-d559-11eb-a2d8-0ed4f058f52d",
+      "AmplifyAppId": "d3qmr56zgbj35m"
+    },
+    "categories": {
+      "auth": {
+        "meetablea02db50ea02db50e": {}
+      },
+      "function": {
+        "AdminQueries00077ef8": {},
+        "joinFriendGroup": {}
+      }
+    }
   }
 }
