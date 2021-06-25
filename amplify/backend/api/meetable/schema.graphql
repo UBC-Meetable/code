@@ -15,8 +15,8 @@ type User
   university: String
   year: Int
   major: String
-  courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
-  friendGroups: [FriendGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
+  courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
+  friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
 }
 
@@ -24,7 +24,7 @@ type CourseGroup
     @model 
     @key(fields: ["groupID"])
     @auth(rules: [{allow: owner, operations: [create]}]){
-  users: [CourseGroupConnectionModel!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
+  users: [CourseGroupConnection!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
   title: String!
   groupID: String!
   code: String!
@@ -37,7 +37,7 @@ type FriendGroup
   @key(fields: ["groupID"])
   @auth(rules: [{allow: owner, operations:[create]}])
   {
-  users: [FriendGroupConnectionModel!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
+  users: [FriendGroupConnection!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
   groupID: String!
   title: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
@@ -67,7 +67,7 @@ enum GroupType {
 }
 # [Many UserProfiles: Many CourseGroups]
 # Represents a connection between a User and a CourseGroup
-type CourseGroupConnectionModel
+type CourseGroupConnection
   @model(queries: null)
   @key(name: "byCourseGroup", fields: ["groupID", "userID"])
   @key(name: "byUser", fields: ["userID", "groupID"]) {
@@ -78,7 +78,7 @@ type CourseGroupConnectionModel
   user: User! @connection(fields: ["userID"])
 }
 
-type FriendGroupConnectionModel
+type FriendGroupConnection
   @model(queries: null)
   @key(name: "byFriendGroup", fields: ["groupID", "userID"])
   @key(name: "byUser", fields: ["userID", "groupID"]) {
@@ -95,7 +95,7 @@ type Quiz
   @auth(rules: [{allow: owner, operations:[create]}])
   {
     userID: String!
-    quizID: String! 
+    user: User! @connection(fields: ["userID"])
     responses: [QAPair!]! # always has an array with 0 or more QAPair only
     createdAt: AWSDateTime! # quiz won't be modified after
   }

@@ -14,8 +14,8 @@ export type User = {
   university?: string | null,
   year?: number | null,
   major?: string | null,
-  courseGroups?: ModelCourseGroupConnectionModelConnection,
-  friendGroups?: ModelFriendGroupConnectionModelConnection,
+  courseGroups?: ModelCourseGroupConnectionConnection,
+  friendGroups?: ModelFriendGroupConnectionConnection,
   quizzes?: ModelQuizConnection,
   createdAt?: string,
   updatedAt?: string,
@@ -30,14 +30,14 @@ export enum UserState {
 }
 
 
-export type ModelCourseGroupConnectionModelConnection = {
-  __typename: "ModelCourseGroupConnectionModelConnection",
-  items?:  Array<CourseGroupConnectionModel | null > | null,
+export type ModelCourseGroupConnectionConnection = {
+  __typename: "ModelCourseGroupConnectionConnection",
+  items?:  Array<CourseGroupConnection | null > | null,
   nextToken?: string | null,
 };
 
-export type CourseGroupConnectionModel = {
-  __typename: "CourseGroupConnectionModel",
+export type CourseGroupConnection = {
+  __typename: "CourseGroupConnection",
   id?: string,
   groupID?: string,
   userID?: string,
@@ -49,7 +49,7 @@ export type CourseGroupConnectionModel = {
 
 export type CourseGroup = {
   __typename: "CourseGroup",
-  users?: ModelCourseGroupConnectionModelConnection,
+  users?: ModelCourseGroupConnectionConnection,
   title?: string,
   groupID?: string,
   code?: string,
@@ -85,14 +85,14 @@ export enum GroupType {
 }
 
 
-export type ModelFriendGroupConnectionModelConnection = {
-  __typename: "ModelFriendGroupConnectionModelConnection",
-  items?:  Array<FriendGroupConnectionModel | null > | null,
+export type ModelFriendGroupConnectionConnection = {
+  __typename: "ModelFriendGroupConnectionConnection",
+  items?:  Array<FriendGroupConnection | null > | null,
   nextToken?: string | null,
 };
 
-export type FriendGroupConnectionModel = {
-  __typename: "FriendGroupConnectionModel",
+export type FriendGroupConnection = {
+  __typename: "FriendGroupConnection",
   id?: string,
   groupID?: string,
   userID?: string,
@@ -104,7 +104,7 @@ export type FriendGroupConnectionModel = {
 
 export type FriendGroup = {
   __typename: "FriendGroup",
-  users?: ModelFriendGroupConnectionModelConnection,
+  users?: ModelFriendGroupConnectionConnection,
   groupID?: string,
   title?: string,
   messages?: ModelChatMessageConnection,
@@ -124,7 +124,7 @@ export type Quiz = {
   __typename: "Quiz",
   id?: string,
   userID?: string,
-  quizID?: string,
+  user?: User,
   responses?:  Array<QAPair >,
   createdAt?: string,
   updatedAt?: string,
@@ -332,58 +332,57 @@ export type DeleteChatMessageInput = {
   id?: string | null,
 };
 
-export type CreateCourseGroupConnectionModelInput = {
+export type CreateCourseGroupConnectionInput = {
   id?: string | null,
   groupID: string,
   userID: string,
 };
 
-export type ModelCourseGroupConnectionModelConditionInput = {
+export type ModelCourseGroupConnectionConditionInput = {
   groupID?: ModelStringInput | null,
   userID?: ModelStringInput | null,
-  and?: Array< ModelCourseGroupConnectionModelConditionInput | null > | null,
-  or?: Array< ModelCourseGroupConnectionModelConditionInput | null > | null,
-  not?: ModelCourseGroupConnectionModelConditionInput | null,
+  and?: Array< ModelCourseGroupConnectionConditionInput | null > | null,
+  or?: Array< ModelCourseGroupConnectionConditionInput | null > | null,
+  not?: ModelCourseGroupConnectionConditionInput | null,
 };
 
-export type UpdateCourseGroupConnectionModelInput = {
+export type UpdateCourseGroupConnectionInput = {
   id: string,
   groupID?: string | null,
   userID?: string | null,
 };
 
-export type DeleteCourseGroupConnectionModelInput = {
+export type DeleteCourseGroupConnectionInput = {
   id?: string | null,
 };
 
-export type CreateFriendGroupConnectionModelInput = {
+export type CreateFriendGroupConnectionInput = {
   id?: string | null,
   groupID: string,
   userID: string,
 };
 
-export type ModelFriendGroupConnectionModelConditionInput = {
+export type ModelFriendGroupConnectionConditionInput = {
   groupID?: ModelStringInput | null,
   userID?: ModelStringInput | null,
-  and?: Array< ModelFriendGroupConnectionModelConditionInput | null > | null,
-  or?: Array< ModelFriendGroupConnectionModelConditionInput | null > | null,
-  not?: ModelFriendGroupConnectionModelConditionInput | null,
+  and?: Array< ModelFriendGroupConnectionConditionInput | null > | null,
+  or?: Array< ModelFriendGroupConnectionConditionInput | null > | null,
+  not?: ModelFriendGroupConnectionConditionInput | null,
 };
 
-export type UpdateFriendGroupConnectionModelInput = {
+export type UpdateFriendGroupConnectionInput = {
   id: string,
   groupID?: string | null,
   userID?: string | null,
 };
 
-export type DeleteFriendGroupConnectionModelInput = {
+export type DeleteFriendGroupConnectionInput = {
   id?: string | null,
 };
 
 export type CreateQuizInput = {
   id?: string | null,
   userID: string,
-  quizID: string,
   responses: Array< QAPairInput >,
   createdAt?: string | null,
 };
@@ -395,7 +394,6 @@ export type QAPairInput = {
 
 export type ModelQuizConditionInput = {
   userID?: ModelStringInput | null,
-  quizID?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   and?: Array< ModelQuizConditionInput | null > | null,
   or?: Array< ModelQuizConditionInput | null > | null,
@@ -404,7 +402,6 @@ export type ModelQuizConditionInput = {
 
 export type UpdateQuizInput = {
   userID?: string | null,
-  quizID?: string | null,
   responses?: Array< QAPairInput > | null,
   createdAt?: string | null,
 };
@@ -493,7 +490,6 @@ export type ModelChatMessageFilterInput = {
 
 export type ModelQuizFilterInput = {
   userID?: ModelStringInput | null,
-  quizID?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   and?: Array< ModelQuizFilterInput | null > | null,
   or?: Array< ModelQuizFilterInput | null > | null,
@@ -527,9 +523,9 @@ export type GetUserCoursesQuery = {
   getUser?:  {
     __typename: "User",
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         courseGroup:  {
           __typename: "CourseGroup",
           updatedAt: string,
@@ -554,9 +550,9 @@ export type GetUserCoursesQuery = {
             } | null > | null,
           } | null,
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
-              __typename: "CourseGroupConnectionModel",
+              __typename: "CourseGroupConnection",
               user:  {
                 __typename: "User",
                 firstName?: string | null,
@@ -572,22 +568,26 @@ export type GetUserCoursesQuery = {
   } | null,
 };
 
+export type GetUserFriendGroupsQueryVariables = {
+  id?: string,
+};
+
 export type GetUserFriendGroupsQuery = {
   getUser?:  {
     __typename: "User",
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         friendGroup:  {
           __typename: "FriendGroup",
           updatedAt: string,
           groupID: string,
           title: string,
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             items?:  Array< {
-              __typename: "FriendGroupConnectionModel",
+              __typename: "FriendGroupConnection",
               user:  {
                 __typename: "User",
                 firstName?: string | null,
@@ -619,6 +619,55 @@ export type GetUserFriendGroupsQuery = {
   } | null,
 };
 
+export type GetUserProfileQueryVariables = {
+  id?: string,
+};
+
+export type GetUserProfileQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    email: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    profilePicture?: string | null,
+    bio?: string | null,
+    userState?: UserState | null,
+    university?: string | null,
+    year?: number | null,
+    major?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type GetUserQuizzesQueryVariables = {
+  id?: string,
+};
+
+export type GetUserQuizzesQuery = {
+  getUser?:  {
+    __typename: "User",
+    quizzes?:  {
+      __typename: "ModelQuizConnection",
+      items?:  Array< {
+        __typename: "Quiz",
+        responses:  Array< {
+          __typename: "QAPair",
+          a: string,
+          q: string,
+        } >,
+        user:  {
+          __typename: "User",
+          id: string,
+        },
+        id: string,
+      } | null > | null,
+    } | null,
+  } | null,
+};
+
 export type CreateUserMutationVariables = {
   input?: CreateUserInput,
   condition?: ModelUserConditionInput | null,
@@ -638,16 +687,16 @@ export type CreateUserMutation = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -675,11 +724,11 @@ export type CreateUserMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -696,16 +745,16 @@ export type CreateUserMutation = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -732,11 +781,11 @@ export type CreateUserMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -758,7 +807,34 @@ export type CreateUserMutation = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -795,16 +871,16 @@ export type UpdateUserMutation = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -832,11 +908,11 @@ export type UpdateUserMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -853,16 +929,16 @@ export type UpdateUserMutation = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -889,11 +965,11 @@ export type UpdateUserMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -915,7 +991,34 @@ export type UpdateUserMutation = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -952,16 +1055,16 @@ export type DeleteUserMutation = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -989,11 +1092,11 @@ export type DeleteUserMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1010,16 +1113,16 @@ export type DeleteUserMutation = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -1046,11 +1149,11 @@ export type DeleteUserMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1072,7 +1175,34 @@ export type DeleteUserMutation = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -1099,16 +1229,16 @@ export type CreateCourseGroupMutation = {
   createCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -1136,11 +1266,11 @@ export type CreateCourseGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1180,11 +1310,11 @@ export type CreateCourseGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1218,16 +1348,16 @@ export type UpdateCourseGroupMutation = {
   updateCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -1255,11 +1385,11 @@ export type UpdateCourseGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1299,11 +1429,11 @@ export type UpdateCourseGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1337,16 +1467,16 @@ export type DeleteCourseGroupMutation = {
   deleteCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -1374,11 +1504,11 @@ export type DeleteCourseGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1418,11 +1548,11 @@ export type DeleteCourseGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1456,16 +1586,16 @@ export type CreateFriendGroupMutation = {
   createFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -1492,11 +1622,11 @@ export type CreateFriendGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1534,11 +1664,11 @@ export type CreateFriendGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1573,16 +1703,16 @@ export type UpdateFriendGroupMutation = {
   updateFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -1609,11 +1739,11 @@ export type UpdateFriendGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1651,11 +1781,11 @@ export type UpdateFriendGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1690,16 +1820,16 @@ export type DeleteFriendGroupMutation = {
   deleteFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -1726,11 +1856,11 @@ export type DeleteFriendGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1768,11 +1898,11 @@ export type DeleteFriendGroupMutation = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -1822,9 +1952,9 @@ export type CreateChatMessageMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -1860,9 +1990,9 @@ export type CreateChatMessageMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -1902,7 +2032,22 @@ export type CreateChatMessageMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -1950,9 +2095,9 @@ export type UpdateChatMessageMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -1988,9 +2133,9 @@ export type UpdateChatMessageMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2030,7 +2175,22 @@ export type UpdateChatMessageMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -2078,9 +2238,9 @@ export type DeleteChatMessageMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2116,9 +2276,9 @@ export type DeleteChatMessageMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2158,7 +2318,22 @@ export type DeleteChatMessageMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -2182,23 +2357,23 @@ export type DeleteChatMessageMutation = {
   } | null,
 };
 
-export type CreateCourseGroupConnectionModelMutationVariables = {
-  input?: CreateCourseGroupConnectionModelInput,
-  condition?: ModelCourseGroupConnectionModelConditionInput | null,
+export type CreateCourseGroupConnectionMutationVariables = {
+  input?: CreateCourseGroupConnectionInput,
+  condition?: ModelCourseGroupConnectionConditionInput | null,
 };
 
-export type CreateCourseGroupConnectionModelMutation = {
-  createCourseGroupConnectionModel?:  {
-    __typename: "CourseGroupConnectionModel",
+export type CreateCourseGroupConnectionMutation = {
+  createCourseGroupConnection?:  {
+    __typename: "CourseGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2285,9 +2460,9 @@ export type CreateCourseGroupConnectionModelMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2323,9 +2498,9 @@ export type CreateCourseGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2365,7 +2540,22 @@ export type CreateCourseGroupConnectionModelMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -2386,23 +2576,23 @@ export type CreateCourseGroupConnectionModelMutation = {
   } | null,
 };
 
-export type UpdateCourseGroupConnectionModelMutationVariables = {
-  input?: UpdateCourseGroupConnectionModelInput,
-  condition?: ModelCourseGroupConnectionModelConditionInput | null,
+export type UpdateCourseGroupConnectionMutationVariables = {
+  input?: UpdateCourseGroupConnectionInput,
+  condition?: ModelCourseGroupConnectionConditionInput | null,
 };
 
-export type UpdateCourseGroupConnectionModelMutation = {
-  updateCourseGroupConnectionModel?:  {
-    __typename: "CourseGroupConnectionModel",
+export type UpdateCourseGroupConnectionMutation = {
+  updateCourseGroupConnection?:  {
+    __typename: "CourseGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2489,9 +2679,9 @@ export type UpdateCourseGroupConnectionModelMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2527,9 +2717,9 @@ export type UpdateCourseGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2569,7 +2759,22 @@ export type UpdateCourseGroupConnectionModelMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -2590,23 +2795,23 @@ export type UpdateCourseGroupConnectionModelMutation = {
   } | null,
 };
 
-export type DeleteCourseGroupConnectionModelMutationVariables = {
-  input?: DeleteCourseGroupConnectionModelInput,
-  condition?: ModelCourseGroupConnectionModelConditionInput | null,
+export type DeleteCourseGroupConnectionMutationVariables = {
+  input?: DeleteCourseGroupConnectionInput,
+  condition?: ModelCourseGroupConnectionConditionInput | null,
 };
 
-export type DeleteCourseGroupConnectionModelMutation = {
-  deleteCourseGroupConnectionModel?:  {
-    __typename: "CourseGroupConnectionModel",
+export type DeleteCourseGroupConnectionMutation = {
+  deleteCourseGroupConnection?:  {
+    __typename: "CourseGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2693,9 +2898,9 @@ export type DeleteCourseGroupConnectionModelMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2731,9 +2936,9 @@ export type DeleteCourseGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2773,7 +2978,22 @@ export type DeleteCourseGroupConnectionModelMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -2794,23 +3014,23 @@ export type DeleteCourseGroupConnectionModelMutation = {
   } | null,
 };
 
-export type CreateFriendGroupConnectionModelMutationVariables = {
-  input?: CreateFriendGroupConnectionModelInput,
-  condition?: ModelFriendGroupConnectionModelConditionInput | null,
+export type CreateFriendGroupConnectionMutationVariables = {
+  input?: CreateFriendGroupConnectionInput,
+  condition?: ModelFriendGroupConnectionConditionInput | null,
 };
 
-export type CreateFriendGroupConnectionModelMutation = {
-  createFriendGroupConnectionModel?:  {
-    __typename: "FriendGroupConnectionModel",
+export type CreateFriendGroupConnectionMutation = {
+  createFriendGroupConnection?:  {
+    __typename: "FriendGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     friendGroup:  {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2895,9 +3115,9 @@ export type CreateFriendGroupConnectionModelMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2933,9 +3153,9 @@ export type CreateFriendGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -2975,7 +3195,22 @@ export type CreateFriendGroupConnectionModelMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -2996,23 +3231,23 @@ export type CreateFriendGroupConnectionModelMutation = {
   } | null,
 };
 
-export type UpdateFriendGroupConnectionModelMutationVariables = {
-  input?: UpdateFriendGroupConnectionModelInput,
-  condition?: ModelFriendGroupConnectionModelConditionInput | null,
+export type UpdateFriendGroupConnectionMutationVariables = {
+  input?: UpdateFriendGroupConnectionInput,
+  condition?: ModelFriendGroupConnectionConditionInput | null,
 };
 
-export type UpdateFriendGroupConnectionModelMutation = {
-  updateFriendGroupConnectionModel?:  {
-    __typename: "FriendGroupConnectionModel",
+export type UpdateFriendGroupConnectionMutation = {
+  updateFriendGroupConnection?:  {
+    __typename: "FriendGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     friendGroup:  {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3097,9 +3332,9 @@ export type UpdateFriendGroupConnectionModelMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3135,9 +3370,9 @@ export type UpdateFriendGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3177,7 +3412,22 @@ export type UpdateFriendGroupConnectionModelMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -3198,23 +3448,23 @@ export type UpdateFriendGroupConnectionModelMutation = {
   } | null,
 };
 
-export type DeleteFriendGroupConnectionModelMutationVariables = {
-  input?: DeleteFriendGroupConnectionModelInput,
-  condition?: ModelFriendGroupConnectionModelConditionInput | null,
+export type DeleteFriendGroupConnectionMutationVariables = {
+  input?: DeleteFriendGroupConnectionInput,
+  condition?: ModelFriendGroupConnectionConditionInput | null,
 };
 
-export type DeleteFriendGroupConnectionModelMutation = {
-  deleteFriendGroupConnectionModel?:  {
-    __typename: "FriendGroupConnectionModel",
+export type DeleteFriendGroupConnectionMutation = {
+  deleteFriendGroupConnection?:  {
+    __typename: "FriendGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     friendGroup:  {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3299,9 +3549,9 @@ export type DeleteFriendGroupConnectionModelMutation = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3337,9 +3587,9 @@ export type DeleteFriendGroupConnectionModelMutation = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3379,7 +3629,22 @@ export type DeleteFriendGroupConnectionModelMutation = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -3410,7 +3675,130 @@ export type CreateQuizMutation = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
     responses:  Array< {
       __typename: "QAPair",
       q: string,
@@ -3432,7 +3820,130 @@ export type UpdateQuizMutation = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
     responses:  Array< {
       __typename: "QAPair",
       q: string,
@@ -3454,7 +3965,130 @@ export type DeleteQuizMutation = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
     responses:  Array< {
       __typename: "QAPair",
       q: string,
@@ -3492,16 +4126,16 @@ export type GetUserQuery = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -3529,11 +4163,11 @@ export type GetUserQuery = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -3550,16 +4184,16 @@ export type GetUserQuery = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -3586,11 +4220,11 @@ export type GetUserQuery = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -3612,7 +4246,34 @@ export type GetUserQuery = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -3654,9 +4315,9 @@ export type ListUsersQuery = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3692,9 +4353,9 @@ export type ListUsersQuery = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3734,7 +4395,22 @@ export type ListUsersQuery = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -3762,16 +4438,16 @@ export type GetCourseGroupQuery = {
   getCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -3799,11 +4475,11 @@ export type GetCourseGroupQuery = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -3843,11 +4519,11 @@ export type GetCourseGroupQuery = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -3886,9 +4562,9 @@ export type ListCourseGroupsQuery = {
     items?:  Array< {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -3974,16 +4650,16 @@ export type GetFriendGroupQuery = {
   getFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -4010,11 +4686,11 @@ export type GetFriendGroupQuery = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -4052,11 +4728,11 @@ export type GetFriendGroupQuery = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -4096,9 +4772,9 @@ export type ListFriendGroupsQuery = {
     items?:  Array< {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -4197,9 +4873,9 @@ export type GetChatMessageQuery = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -4235,9 +4911,9 @@ export type GetChatMessageQuery = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -4277,7 +4953,22 @@ export type GetChatMessageQuery = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -4328,9 +5019,9 @@ export type ListChatMessagesQuery = {
         year?: number | null,
         major?: string | null,
         courseGroups?:  {
-          __typename: "ModelCourseGroupConnectionModelConnection",
+          __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
-            __typename: "CourseGroupConnectionModel",
+            __typename: "CourseGroupConnection",
             id: string,
             groupID: string,
             userID: string,
@@ -4340,9 +5031,9 @@ export type ListChatMessagesQuery = {
           nextToken?: string | null,
         } | null,
         friendGroups?:  {
-          __typename: "ModelFriendGroupConnectionModelConnection",
+          __typename: "ModelFriendGroupConnectionConnection",
           items?:  Array< {
-            __typename: "FriendGroupConnectionModel",
+            __typename: "FriendGroupConnection",
             id: string,
             groupID: string,
             userID: string,
@@ -4357,7 +5048,6 @@ export type ListChatMessagesQuery = {
             __typename: "Quiz",
             id: string,
             userID: string,
-            quizID: string,
             createdAt: string,
             updatedAt: string,
             owner?: string | null,
@@ -4387,58 +5077,7 @@ export type GetQuizQuery = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
-    responses:  Array< {
-      __typename: "QAPair",
-      q: string,
-      a: string,
-    } >,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListQuizsQueryVariables = {
-  filter?: ModelQuizFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListQuizsQuery = {
-  listQuizs?:  {
-    __typename: "ModelQuizConnection",
-    items?:  Array< {
-      __typename: "Quiz",
-      id: string,
-      userID: string,
-      quizID: string,
-      responses:  Array< {
-        __typename: "QAPair",
-        q: string,
-        a: string,
-      } >,
-      createdAt: string,
-      updatedAt: string,
-      owner?: string | null,
-    } | null > | null,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type UserByUniYearQueryVariables = {
-  university?: string | null,
-  year?: ModelIntKeyConditionInput | null,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserByUniYearQuery = {
-  UserByUniYear?:  {
-    __typename: "ModelUserConnection",
-    items?:  Array< {
+    user:  {
       __typename: "User",
       id: string,
       email: string,
@@ -4451,9 +5090,9 @@ export type UserByUniYearQuery = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -4489,9 +5128,9 @@ export type UserByUniYearQuery = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -4531,7 +5170,247 @@ export type UserByUniYearQuery = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
+    responses:  Array< {
+      __typename: "QAPair",
+      q: string,
+      a: string,
+    } >,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListQuizsQueryVariables = {
+  filter?: ModelQuizFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListQuizsQuery = {
+  listQuizs?:  {
+    __typename: "ModelQuizConnection",
+    items?:  Array< {
+      __typename: "Quiz",
+      id: string,
+      userID: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        email: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        profilePicture?: string | null,
+        bio?: string | null,
+        userState?: UserState | null,
+        university?: string | null,
+        year?: number | null,
+        major?: string | null,
+        courseGroups?:  {
+          __typename: "ModelCourseGroupConnectionConnection",
+          items?:  Array< {
+            __typename: "CourseGroupConnection",
+            id: string,
+            groupID: string,
+            userID: string,
+            createdAt: string,
+            updatedAt: string,
+          } | null > | null,
+          nextToken?: string | null,
+        } | null,
+        friendGroups?:  {
+          __typename: "ModelFriendGroupConnectionConnection",
+          items?:  Array< {
+            __typename: "FriendGroupConnection",
+            id: string,
+            groupID: string,
+            userID: string,
+            createdAt: string,
+            updatedAt: string,
+          } | null > | null,
+          nextToken?: string | null,
+        } | null,
+        quizzes?:  {
+          __typename: "ModelQuizConnection",
+          items?:  Array< {
+            __typename: "Quiz",
+            id: string,
+            userID: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null > | null,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      responses:  Array< {
+        __typename: "QAPair",
+        q: string,
+        a: string,
+      } >,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type UserByUniYearQueryVariables = {
+  university?: string | null,
+  year?: ModelIntKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserByUniYearQuery = {
+  UserByUniYear?:  {
+    __typename: "ModelUserConnection",
+    items?:  Array< {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -4581,9 +5460,9 @@ export type MessagesByCourseGroupChatIdQuery = {
         year?: number | null,
         major?: string | null,
         courseGroups?:  {
-          __typename: "ModelCourseGroupConnectionModelConnection",
+          __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
-            __typename: "CourseGroupConnectionModel",
+            __typename: "CourseGroupConnection",
             id: string,
             groupID: string,
             userID: string,
@@ -4593,9 +5472,9 @@ export type MessagesByCourseGroupChatIdQuery = {
           nextToken?: string | null,
         } | null,
         friendGroups?:  {
-          __typename: "ModelFriendGroupConnectionModelConnection",
+          __typename: "ModelFriendGroupConnectionConnection",
           items?:  Array< {
-            __typename: "FriendGroupConnectionModel",
+            __typename: "FriendGroupConnection",
             id: string,
             groupID: string,
             userID: string,
@@ -4610,7 +5489,6 @@ export type MessagesByCourseGroupChatIdQuery = {
             __typename: "Quiz",
             id: string,
             userID: string,
-            quizID: string,
             createdAt: string,
             updatedAt: string,
             owner?: string | null,
@@ -4645,16 +5523,16 @@ export type OnCreateUserSubscription = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -4682,11 +5560,11 @@ export type OnCreateUserSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -4703,16 +5581,16 @@ export type OnCreateUserSubscription = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -4739,11 +5617,11 @@ export type OnCreateUserSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -4765,7 +5643,34 @@ export type OnCreateUserSubscription = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -4797,16 +5702,16 @@ export type OnUpdateUserSubscription = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -4834,11 +5739,11 @@ export type OnUpdateUserSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -4855,16 +5760,16 @@ export type OnUpdateUserSubscription = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -4891,11 +5796,11 @@ export type OnUpdateUserSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -4917,7 +5822,34 @@ export type OnUpdateUserSubscription = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -4949,16 +5881,16 @@ export type OnDeleteUserSubscription = {
     year?: number | null,
     major?: string | null,
     courseGroups?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -4986,11 +5918,11 @@ export type OnDeleteUserSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5007,16 +5939,16 @@ export type OnDeleteUserSubscription = {
       nextToken?: string | null,
     } | null,
     friendGroups?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -5043,11 +5975,11 @@ export type OnDeleteUserSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5069,7 +6001,34 @@ export type OnDeleteUserSubscription = {
         __typename: "Quiz",
         id: string,
         userID: string,
-        quizID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university?: string | null,
+          year?: number | null,
+          major?: string | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupConnectionConnection",
+            nextToken?: string | null,
+          } | null,
+          quizzes?:  {
+            __typename: "ModelQuizConnection",
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
         responses:  Array< {
           __typename: "QAPair",
           q: string,
@@ -5091,16 +6050,16 @@ export type OnCreateCourseGroupSubscription = {
   onCreateCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -5128,11 +6087,11 @@ export type OnCreateCourseGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5172,11 +6131,11 @@ export type OnCreateCourseGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5205,16 +6164,16 @@ export type OnUpdateCourseGroupSubscription = {
   onUpdateCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -5242,11 +6201,11 @@ export type OnUpdateCourseGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5286,11 +6245,11 @@ export type OnUpdateCourseGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5319,16 +6278,16 @@ export type OnDeleteCourseGroupSubscription = {
   onDeleteCourseGroup?:  {
     __typename: "CourseGroup",
     users?:  {
-      __typename: "ModelCourseGroupConnectionModelConnection",
+      __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
-        __typename: "CourseGroupConnectionModel",
+        __typename: "CourseGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           title: string,
@@ -5356,11 +6315,11 @@ export type OnDeleteCourseGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5400,11 +6359,11 @@ export type OnDeleteCourseGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5433,16 +6392,16 @@ export type OnCreateFriendGroupSubscription = {
   onCreateFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -5469,11 +6428,11 @@ export type OnCreateFriendGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5511,11 +6470,11 @@ export type OnCreateFriendGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5545,16 +6504,16 @@ export type OnUpdateFriendGroupSubscription = {
   onUpdateFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -5581,11 +6540,11 @@ export type OnUpdateFriendGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5623,11 +6582,11 @@ export type OnUpdateFriendGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5657,16 +6616,16 @@ export type OnDeleteFriendGroupSubscription = {
   onDeleteFriendGroup?:  {
     __typename: "FriendGroup",
     users?:  {
-      __typename: "ModelFriendGroupConnectionModelConnection",
+      __typename: "ModelFriendGroupConnectionConnection",
       items?:  Array< {
-        __typename: "FriendGroupConnectionModel",
+        __typename: "FriendGroupConnection",
         id: string,
         groupID: string,
         userID: string,
         friendGroup:  {
           __typename: "FriendGroup",
           users?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           groupID: string,
@@ -5693,11 +6652,11 @@ export type OnDeleteFriendGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5735,11 +6694,11 @@ export type OnDeleteFriendGroupSubscription = {
           year?: number | null,
           major?: string | null,
           courseGroups?:  {
-            __typename: "ModelCourseGroupConnectionModelConnection",
+            __typename: "ModelCourseGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           friendGroups?:  {
-            __typename: "ModelFriendGroupConnectionModelConnection",
+            __typename: "ModelFriendGroupConnectionConnection",
             nextToken?: string | null,
           } | null,
           quizzes?:  {
@@ -5784,9 +6743,9 @@ export type OnCreateChatMessageSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -5822,9 +6781,9 @@ export type OnCreateChatMessageSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -5864,7 +6823,22 @@ export type OnCreateChatMessageSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -5907,9 +6881,9 @@ export type OnUpdateChatMessageSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -5945,9 +6919,9 @@ export type OnUpdateChatMessageSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -5987,7 +6961,22 @@ export type OnUpdateChatMessageSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -6030,9 +7019,9 @@ export type OnDeleteChatMessageSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6068,9 +7057,9 @@ export type OnDeleteChatMessageSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6110,7 +7099,22 @@ export type OnDeleteChatMessageSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -6134,18 +7138,18 @@ export type OnDeleteChatMessageSubscription = {
   } | null,
 };
 
-export type OnCreateCourseGroupConnectionModelSubscription = {
-  onCreateCourseGroupConnectionModel?:  {
-    __typename: "CourseGroupConnectionModel",
+export type OnCreateCourseGroupConnectionSubscription = {
+  onCreateCourseGroupConnection?:  {
+    __typename: "CourseGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6232,9 +7236,9 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6270,9 +7274,9 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6312,7 +7316,22 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -6333,18 +7352,18 @@ export type OnCreateCourseGroupConnectionModelSubscription = {
   } | null,
 };
 
-export type OnUpdateCourseGroupConnectionModelSubscription = {
-  onUpdateCourseGroupConnectionModel?:  {
-    __typename: "CourseGroupConnectionModel",
+export type OnUpdateCourseGroupConnectionSubscription = {
+  onUpdateCourseGroupConnection?:  {
+    __typename: "CourseGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6431,9 +7450,9 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6469,9 +7488,9 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6511,7 +7530,22 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -6532,18 +7566,18 @@ export type OnUpdateCourseGroupConnectionModelSubscription = {
   } | null,
 };
 
-export type OnDeleteCourseGroupConnectionModelSubscription = {
-  onDeleteCourseGroupConnectionModel?:  {
-    __typename: "CourseGroupConnectionModel",
+export type OnDeleteCourseGroupConnectionSubscription = {
+  onDeleteCourseGroupConnection?:  {
+    __typename: "CourseGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6630,9 +7664,9 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6668,9 +7702,9 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6710,7 +7744,22 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -6731,18 +7780,18 @@ export type OnDeleteCourseGroupConnectionModelSubscription = {
   } | null,
 };
 
-export type OnCreateFriendGroupConnectionModelSubscription = {
-  onCreateFriendGroupConnectionModel?:  {
-    __typename: "FriendGroupConnectionModel",
+export type OnCreateFriendGroupConnectionSubscription = {
+  onCreateFriendGroupConnection?:  {
+    __typename: "FriendGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     friendGroup:  {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6827,9 +7876,9 @@ export type OnCreateFriendGroupConnectionModelSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6865,9 +7914,9 @@ export type OnCreateFriendGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -6907,7 +7956,22 @@ export type OnCreateFriendGroupConnectionModelSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -6928,18 +7992,18 @@ export type OnCreateFriendGroupConnectionModelSubscription = {
   } | null,
 };
 
-export type OnUpdateFriendGroupConnectionModelSubscription = {
-  onUpdateFriendGroupConnectionModel?:  {
-    __typename: "FriendGroupConnectionModel",
+export type OnUpdateFriendGroupConnectionSubscription = {
+  onUpdateFriendGroupConnection?:  {
+    __typename: "FriendGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     friendGroup:  {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -7024,9 +8088,9 @@ export type OnUpdateFriendGroupConnectionModelSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -7062,9 +8126,9 @@ export type OnUpdateFriendGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -7104,7 +8168,22 @@ export type OnUpdateFriendGroupConnectionModelSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -7125,18 +8204,18 @@ export type OnUpdateFriendGroupConnectionModelSubscription = {
   } | null,
 };
 
-export type OnDeleteFriendGroupConnectionModelSubscription = {
-  onDeleteFriendGroupConnectionModel?:  {
-    __typename: "FriendGroupConnectionModel",
+export type OnDeleteFriendGroupConnectionSubscription = {
+  onDeleteFriendGroupConnection?:  {
+    __typename: "FriendGroupConnection",
     id: string,
     groupID: string,
     userID: string,
     friendGroup:  {
       __typename: "FriendGroup",
       users?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -7221,9 +8300,9 @@ export type OnDeleteFriendGroupConnectionModelSubscription = {
       year?: number | null,
       major?: string | null,
       courseGroups?:  {
-        __typename: "ModelCourseGroupConnectionModelConnection",
+        __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
-          __typename: "CourseGroupConnectionModel",
+          __typename: "CourseGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -7259,9 +8338,9 @@ export type OnDeleteFriendGroupConnectionModelSubscription = {
         nextToken?: string | null,
       } | null,
       friendGroups?:  {
-        __typename: "ModelFriendGroupConnectionModelConnection",
+        __typename: "ModelFriendGroupConnectionConnection",
         items?:  Array< {
-          __typename: "FriendGroupConnectionModel",
+          __typename: "FriendGroupConnection",
           id: string,
           groupID: string,
           userID: string,
@@ -7301,7 +8380,22 @@ export type OnDeleteFriendGroupConnectionModelSubscription = {
           __typename: "Quiz",
           id: string,
           userID: string,
-          quizID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
           responses:  Array< {
             __typename: "QAPair",
             q: string,
@@ -7327,7 +8421,130 @@ export type OnCreateQuizSubscription = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
     responses:  Array< {
       __typename: "QAPair",
       q: string,
@@ -7344,7 +8561,130 @@ export type OnUpdateQuizSubscription = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
     responses:  Array< {
       __typename: "QAPair",
       q: string,
@@ -7361,7 +8701,130 @@ export type OnDeleteQuizSubscription = {
     __typename: "Quiz",
     id: string,
     userID: string,
-    quizID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      email: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      profilePicture?: string | null,
+      bio?: string | null,
+      userState?: UserState | null,
+      university?: string | null,
+      year?: number | null,
+      major?: string | null,
+      courseGroups?:  {
+        __typename: "ModelCourseGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "CourseGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      friendGroups?:  {
+        __typename: "ModelFriendGroupConnectionConnection",
+        items?:  Array< {
+          __typename: "FriendGroupConnection",
+          id: string,
+          groupID: string,
+          userID: string,
+          friendGroup:  {
+            __typename: "FriendGroup",
+            groupID: string,
+            title: string,
+            owner?: string | null,
+            size: number,
+            createdAt: string,
+            updatedAt: string,
+          },
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      quizzes?:  {
+        __typename: "ModelQuizConnection",
+        items?:  Array< {
+          __typename: "Quiz",
+          id: string,
+          userID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university?: string | null,
+            year?: number | null,
+            major?: string | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          responses:  Array< {
+            __typename: "QAPair",
+            q: string,
+            a: string,
+          } >,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null > | null,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
     responses:  Array< {
       __typename: "QAPair",
       q: string,

@@ -3,9 +3,7 @@ import {
   CourseGroup,
   CreateCourseGroupInput,
 } from "../API";
-import {
-  createCourseGroupConnectionModel,
-} from "../graphql/mutations";
+import { createCourseGroupConnection } from "../graphql/mutations";
 import createCourseGroup from "./createCourseGroup";
 import fetchCourseGroup from "./fetchCourseGroup";
 
@@ -30,7 +28,7 @@ const joinCourseGroup = async (
 
   try {
     await API.graphql({
-      query: createCourseGroupConnectionModel,
+      query: createCourseGroupConnection,
       variables: {
         input: {
           groupID: group.groupID,

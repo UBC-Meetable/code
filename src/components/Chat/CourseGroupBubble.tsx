@@ -2,7 +2,8 @@ import { Layout } from "@ui-kitten/components";
 import React, { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Avatar, Chip } from "react-native-paper";
-import { User } from "../../API";
+import { CourseGroupConnection, User } from "../../API";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../../types";
 import PictureStack from "../PictureStack";
 import MessagePreview from "./MessagePreview";
@@ -20,18 +21,30 @@ const CourseGroupBubble = ({
     groupID, users, title = groupID,
   } = courseGroup;
 
-  const [mostRecentUsers, setMostRecentUsers] = useState(new Set<User>());
+  const me = useAuthenticatedUser();
+  const userSet = new Set<User>();
+  const userIdSet = new Set<string>();
+  for (let i = 0; i < Math.min(messages.length, 4) && userSet.size < 4; i += 1) {
+    const user = (messages[i] as ChatMessage).author as User;
+    if (!userIdSet.has(user.id!) && user.id !== me.attributes.sub) {
+      userIdSet.add(user.id!);
+      userSet.add(user);
+    }
+  }
 
-  useEffect(() => {
-    const newUsers = new Set<User>();
+  if (userSet.size < 4) {
+    const list = users!.items!.map((i) => i!.user!);
+    for (let i = 0; i < Math.min(list!.length, 4) && userSet.size < 4; i += 1) {
+      const user = (list[i] as User);
 
-    messages.forEach((message) => {
-      if (newUsers.size >= 4) return;
-      newUsers.add(message.author!);
-    });
+      if (!userIdSet.has(user.id!) && user.id !== me.attributes.sub) {
+        userIdSet.add(user.id!);
+        userSet.add(user);
+      }
+    }
+  }
 
-    setMostRecentUsers(newUsers);
-  }, [messages]);
+  const userPile = Array.from(userSet).reverse();
 
   if (!groupID || !users || !title) return null;
   return (
@@ -60,7 +73,7 @@ const CourseGroupBubble = ({
         {/* TODO Implement User Photos, Make new component for this */}
         <Layout style={styles.bottomPhotoContainer}>
           <Layout style={[styles.bubbleSection, styles.nameSection]}>
-            <PictureStack users={users.items!.map((item) => item!.user!)} />
+            <PictureStack users={userPile} />
           </Layout>
         </Layout>
 

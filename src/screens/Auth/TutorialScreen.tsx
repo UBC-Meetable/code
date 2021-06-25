@@ -3,8 +3,9 @@ import {
 } from "@ui-kitten/components";
 import React, { createRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Carousel from "react-native-snap-carousel";
-import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
+import QuizBubbleTop from "../../assets/images/tutorial-bubble.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import End from "../../components/tutorial_slides/End";
 import Intro from "../../components/tutorial_slides/Intro";
@@ -22,11 +23,12 @@ type TutorialProps = {
 const TutorialScreen = ({ onContinue }: TutorialProps) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const carouselRef = createRef<Carousel<any>>();
+  const units = useSafeAreaInsets();
   return (
     <Layout style={rootStyles}>
-      <BubbleBackground
+      <QuizBubbleTop
         width={window.width}
-        height={window.height}
+        height={window.height + 4 * units.top}
         style={{ position: "absolute" }}
       />
 

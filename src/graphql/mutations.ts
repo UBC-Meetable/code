@@ -119,7 +119,30 @@ export const createUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -253,7 +276,30 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -387,7 +433,30 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -1101,7 +1170,21 @@ export const createChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1215,7 +1298,21 @@ export const updateChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1329,7 +1426,21 @@ export const deleteChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1352,12 +1463,12 @@ export const deleteChatMessage = /* GraphQL */ `
     }
   }
 `;
-export const createCourseGroupConnectionModel = /* GraphQL */ `
-  mutation CreateCourseGroupConnectionModel(
-    $input: CreateCourseGroupConnectionModelInput!
-    $condition: ModelCourseGroupConnectionModelConditionInput
+export const createCourseGroupConnection = /* GraphQL */ `
+  mutation CreateCourseGroupConnection(
+    $input: CreateCourseGroupConnectionInput!
+    $condition: ModelCourseGroupConnectionConditionInput
   ) {
-    createCourseGroupConnectionModel(input: $input, condition: $condition) {
+    createCourseGroupConnection(input: $input, condition: $condition) {
       id
       groupID
       userID
@@ -1514,7 +1625,21 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1534,12 +1659,12 @@ export const createCourseGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const updateCourseGroupConnectionModel = /* GraphQL */ `
-  mutation UpdateCourseGroupConnectionModel(
-    $input: UpdateCourseGroupConnectionModelInput!
-    $condition: ModelCourseGroupConnectionModelConditionInput
+export const updateCourseGroupConnection = /* GraphQL */ `
+  mutation UpdateCourseGroupConnection(
+    $input: UpdateCourseGroupConnectionInput!
+    $condition: ModelCourseGroupConnectionConditionInput
   ) {
-    updateCourseGroupConnectionModel(input: $input, condition: $condition) {
+    updateCourseGroupConnection(input: $input, condition: $condition) {
       id
       groupID
       userID
@@ -1696,7 +1821,21 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1716,12 +1855,12 @@ export const updateCourseGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const deleteCourseGroupConnectionModel = /* GraphQL */ `
-  mutation DeleteCourseGroupConnectionModel(
-    $input: DeleteCourseGroupConnectionModelInput!
-    $condition: ModelCourseGroupConnectionModelConditionInput
+export const deleteCourseGroupConnection = /* GraphQL */ `
+  mutation DeleteCourseGroupConnection(
+    $input: DeleteCourseGroupConnectionInput!
+    $condition: ModelCourseGroupConnectionConditionInput
   ) {
-    deleteCourseGroupConnectionModel(input: $input, condition: $condition) {
+    deleteCourseGroupConnection(input: $input, condition: $condition) {
       id
       groupID
       userID
@@ -1878,7 +2017,21 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1898,12 +2051,12 @@ export const deleteCourseGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const createFriendGroupConnectionModel = /* GraphQL */ `
-  mutation CreateFriendGroupConnectionModel(
-    $input: CreateFriendGroupConnectionModelInput!
-    $condition: ModelFriendGroupConnectionModelConditionInput
+export const createFriendGroupConnection = /* GraphQL */ `
+  mutation CreateFriendGroupConnection(
+    $input: CreateFriendGroupConnectionInput!
+    $condition: ModelFriendGroupConnectionConditionInput
   ) {
-    createFriendGroupConnectionModel(input: $input, condition: $condition) {
+    createFriendGroupConnection(input: $input, condition: $condition) {
       id
       groupID
       userID
@@ -2058,7 +2211,21 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -2078,12 +2245,12 @@ export const createFriendGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const updateFriendGroupConnectionModel = /* GraphQL */ `
-  mutation UpdateFriendGroupConnectionModel(
-    $input: UpdateFriendGroupConnectionModelInput!
-    $condition: ModelFriendGroupConnectionModelConditionInput
+export const updateFriendGroupConnection = /* GraphQL */ `
+  mutation UpdateFriendGroupConnection(
+    $input: UpdateFriendGroupConnectionInput!
+    $condition: ModelFriendGroupConnectionConditionInput
   ) {
-    updateFriendGroupConnectionModel(input: $input, condition: $condition) {
+    updateFriendGroupConnection(input: $input, condition: $condition) {
       id
       groupID
       userID
@@ -2238,7 +2405,21 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -2258,12 +2439,12 @@ export const updateFriendGroupConnectionModel = /* GraphQL */ `
     }
   }
 `;
-export const deleteFriendGroupConnectionModel = /* GraphQL */ `
-  mutation DeleteFriendGroupConnectionModel(
-    $input: DeleteFriendGroupConnectionModelInput!
-    $condition: ModelFriendGroupConnectionModelConditionInput
+export const deleteFriendGroupConnection = /* GraphQL */ `
+  mutation DeleteFriendGroupConnection(
+    $input: DeleteFriendGroupConnectionInput!
+    $condition: ModelFriendGroupConnectionConditionInput
   ) {
-    deleteFriendGroupConnectionModel(input: $input, condition: $condition) {
+    deleteFriendGroupConnection(input: $input, condition: $condition) {
       id
       groupID
       userID
@@ -2418,7 +2599,21 @@ export const deleteFriendGroupConnectionModel = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -2446,7 +2641,117 @@ export const createQuiz = /* GraphQL */ `
     createQuiz(input: $input, condition: $condition) {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a
@@ -2465,7 +2770,117 @@ export const updateQuiz = /* GraphQL */ `
     updateQuiz(input: $input, condition: $condition) {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a
@@ -2484,7 +2899,117 @@ export const deleteQuiz = /* GraphQL */ `
     deleteQuiz(input: $input, condition: $condition) {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a

@@ -13,7 +13,7 @@ type MySlideComponentProps = {
   type MeetableCarouselProps = {
   children: any[] | any;
   style?: StyleProp<ViewStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: any;
   slideState?: [number, React.Dispatch<React.SetStateAction<number>>];
   layout?: "tinder" | "default" | "stack"
 };

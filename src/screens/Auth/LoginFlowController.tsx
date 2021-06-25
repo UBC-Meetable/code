@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { CreateQuizInput, QAPair } from "../../API";
+import submitQuiz from "../../calls/submitQuiz";
 import ConfirmEmailScreen from "../ConfirmEmailScreen";
 import LoginFormScreen from "./LoginFormScreen";
 import LoginScreen from "./LoginScreen";
@@ -33,14 +35,21 @@ const LoginFlowController = () => {
           setAuthState(AuthState.LOGIN);
         }}
         onSignUp={() => {
-          setAuthState(AuthState.TUTORIAL);
+          setAuthState(AuthState.SIGN_UP);
         }}
       />
     );
   case AuthState.TUTORIAL:
     return <TutorialScreen onContinue={() => setAuthState(AuthState.QUIZ)} />;
   case AuthState.QUIZ:
-    return <QuizScreen onFinish={() => setAuthState(AuthState.CREATE)} />;
+    return (
+      <QuizScreen onFinish={() => {
+        // submitQuiz(finishedQuiz).then(() => {
+        // });
+        setAuthState(AuthState.CREATE);
+      }}
+      />
+    );
   case AuthState.CREATE:
     return (
       <SignupScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />
@@ -57,14 +66,13 @@ const LoginFlowController = () => {
       <SignUpFormScreen
         onCreate={(initEmail: string) => {
           setEmail(() => initEmail);
-
           setAuthState(AuthState.CONFIRM_EMAIL);
         }}
         onLogIn={() => setAuthState(AuthState.LOGIN)}
       />
     );
   case AuthState.LOGIN:
-    return <LoginFormScreen onSignUp={() => setAuthState(AuthState.TUTORIAL)} />;
+    return <LoginFormScreen onSignUp={() => setAuthState(AuthState.SIGN_UP)} />;
   default:
     return (
       <LoginScreen

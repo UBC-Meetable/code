@@ -141,10 +141,6 @@ const ProfileScreen = () => {
     if (user) f();
   }, [user]);
 
-  React.useEffect(() => {
-    console.log("key updated, ", key);
-  }, [key]);
-
   if (!localProfile) {
     return (
       <ScrollView

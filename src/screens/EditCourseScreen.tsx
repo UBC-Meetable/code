@@ -6,7 +6,7 @@ import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CourseGroup, CreateCourseGroupConnectionModelMutation } from "../API";
+import { CourseGroup, CreateCourseGroupConnectionMutation } from "../API";
 import joinCourseGroup from "../calls/joinCourseGroup";
 import CourseGroupsContext from "../context/CourseGroupsContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
@@ -57,7 +57,7 @@ const EditCourseScreen = () => {
   } as SimpleCourseGroup);
 
   function isCourseGroup(item: CourseGroup
-    | GraphQLResult<CreateCourseGroupConnectionModelMutation>): item is CourseGroup {
+    | GraphQLResult<CreateCourseGroupConnectionMutation>): item is CourseGroup {
     return (item as CourseGroup).groupID !== undefined;
   }
 

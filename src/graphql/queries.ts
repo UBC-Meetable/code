@@ -121,7 +121,30 @@ export const getUser = /* GraphQL */ `
         items {
           id
           userID
-          quizID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              nextToken
+            }
+            friendGroups {
+              nextToken
+            }
+            quizzes {
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
           responses {
             q
             a
@@ -235,7 +258,21 @@ export const listUsers = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -716,7 +753,21 @@ export const getChatMessage = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -785,7 +836,6 @@ export const listChatMessages = /* GraphQL */ `
             items {
               id
               userID
-              quizID
               createdAt
               updatedAt
               owner
@@ -811,7 +861,117 @@ export const getQuiz = /* GraphQL */ `
     getQuiz(id: $id) {
       id
       userID
-      quizID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              title
+              groupID
+              code
+              section
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              groupID
+              title
+              owner
+              size
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
       responses {
         q
         a
@@ -832,7 +992,51 @@ export const listQuizs = /* GraphQL */ `
       items {
         id
         userID
-        quizID
+        user {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          year
+          major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
         responses {
           q
           a
@@ -944,7 +1148,21 @@ export const userByUniYear = /* GraphQL */ `
           items {
             id
             userID
-            quizID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              createdAt
+              updatedAt
+              owner
+            }
             responses {
               q
               a
@@ -1019,7 +1237,6 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
             items {
               id
               userID
-              quizID
               createdAt
               updatedAt
               owner

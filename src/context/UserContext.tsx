@@ -5,7 +5,8 @@ import React, {
 import { CognitoUser } from "../types";
 
 type UserContextType = {
-    user: CognitoUser | undefined
+    user: CognitoUser | undefined;
+    setUser: React.Dispatch<React.SetStateAction<CognitoUser | undefined>>;
 }
 
 const UserContext = React.createContext({
@@ -14,6 +15,7 @@ const UserContext = React.createContext({
 export const UserProvider = (props: {children?: ReactNode }) => {
   const { children } = props;
   const [user, setUser] = useState<CognitoUser | undefined>();
+
   useEffect(() => {
     const f = async () => {
       try {
@@ -24,10 +26,11 @@ export const UserProvider = (props: {children?: ReactNode }) => {
       }
     };
     if (!user) { f(); }
-  }, []);
+  }, [user]);
   return (
     <UserContext.Provider value={{
       user,
+      setUser,
     }}
     >
       {children}

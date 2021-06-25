@@ -43,8 +43,8 @@ export const getUserCourses = /* GraphQL */ `
 `;
 
 export const getUserFriendGroups = /* GraphQL */ `
-  query GetUserFriendGroups {
-    getUser(id: "707b7da5-4a59-4150-9bd0-b0a83ed9e34a") {
+  query GetUserFriendGroups($id: String!) {
+    getUser(id: $id) {
       friendGroups {
         items {
           friendGroup {
@@ -83,7 +83,7 @@ export const getUserFriendGroups = /* GraphQL */ `
 
 
 export const getUserProfile = /* GraphQL */ `
-  query GetUser($id: String!) {
+  query GetUserProfile($id: String!) {
     getUser(id: $id) {
       id
       email
@@ -100,4 +100,23 @@ export const getUserProfile = /* GraphQL */ `
       owner
     }
   }
+`;
+
+export const getUserQuizzes =  /* GraphQL */ `
+query GetUserQuizzes($id: String!) {
+  getUser(id: $id) {
+    quizzes {
+      items {
+        responses {
+          a
+          q
+        }
+        user {
+          id
+        }
+        id
+      }
+    }
+  }
+}
 `;

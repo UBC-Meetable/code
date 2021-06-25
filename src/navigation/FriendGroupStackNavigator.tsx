@@ -1,10 +1,11 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import QuizScreen from "../screens/Auth/QuizScreen";
 import FriendGroups from "../screens/FriendGroups";
-import { GroupStackParamList } from "../types";
+import { FriendGroupStackScreens } from "../types";
 import HeaderOptions from "./HeaderOptions";
 
-const GroupTabStack = createStackNavigator<GroupStackParamList>();
+const GroupTabStack = createStackNavigator<FriendGroupStackScreens>();
 
 const FriendGroupStackNavigator = () => (
   <GroupTabStack.Navigator
