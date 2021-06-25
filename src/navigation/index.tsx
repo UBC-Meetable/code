@@ -10,35 +10,37 @@ import {
   DefaultTheme, NavigationContainer,
 } from "@react-navigation/native";
 import {
-  createStackNavigator, HeaderBackButton, StackNavigationOptions, StackNavigationProp,
+  createStackNavigator, StackNavigationOptions, StackNavigationProp,
 } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider, Layout, Spinner, Text,
+  ApplicationProvider as UiProvider, Layout,
 } from "@ui-kitten/components";
 import Amplify from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as React from "react";
 import { ColorSchemeName, Dimensions, useColorScheme } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
 import createUserProfile from "../calls/createUserProfile";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import ChatBackButton from "../components/Chat/ChatBackButton";
-import { MessageProvider } from "../context/MessageContext";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
+import { FriendGroupsProvider } from "../context/FriendGroupsContext";
+import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
+import QuizScreen from "../screens/Auth/QuizScreen";
 import EditCourseScreen from "../screens/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
+import Blank from "./Blank";
 import BottomTabNavigator from "./BottomTabNavigator";
 import SignUpStackNavigator from "./SignUpStackNavigator";
-import { FriendGroupsProvider } from "../context/FriendGroupsContext";
-import QuizScreen from "../screens/Auth/QuizScreen";
 
 Amplify.configure({
   ...awsconfig,
@@ -75,9 +77,10 @@ const App = () => {
     Poppins_600SemiBold,
     Poppins_400Regular,
   });
+  const units = useSafeAreaInsets();
   if (!fontsLoaded) {
     return (
-      <Spinner />
+      <Blank />
     );
   }
   return <AuthenticatedApp />;
@@ -123,7 +126,7 @@ const AuthorizedApp = () => {
 
   if (loading) {
     Auth.currentAuthenticatedUser().then((loggedIn) => { user = loggedIn; });
-    return <Spinner size="tiny" />;
+    return <Blank />;
   }
 
   // Handle post-signup account inititalization

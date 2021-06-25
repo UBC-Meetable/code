@@ -568,6 +568,10 @@ export type GetUserCoursesQuery = {
   } | null,
 };
 
+export type GetUserFriendGroupsQueryVariables = {
+  id?: string,
+};
+
 export type GetUserFriendGroupsQuery = {
   getUser?:  {
     __typename: "User",

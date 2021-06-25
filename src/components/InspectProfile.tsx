@@ -11,6 +11,7 @@ import { Image, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
 import profilePic from "../assets/images/profilePic2.jpg";
+import { User } from "../API";
 
 const CrossIcon = () => (
   <Layout
@@ -34,7 +35,7 @@ const CrossIcon = () => (
   </Layout>
 );
 
-const InspectProfile = () => {
+const InspectProfile = ({ user }:{user: User}) => {
   const [fontsLoaded] = useFonts({
     Poppins_500Medium,
     Poppins_600SemiBold,
@@ -63,15 +64,12 @@ const InspectProfile = () => {
             />
           </Layout>
           <Layout style={styles.nameContainer}>
-            <Text style={styles.name}>Irene</Text>
-            <Text style={styles.name}>Zhang</Text>
+            <Text style={styles.name}>{`${user.firstName}`}</Text>
+            <Text style={styles.name}>{`${user.lastName}`}</Text>
           </Layout>
           <Layout style={styles.bioContainer}>
             <Text style={styles.header}>Bio</Text>
-            <Text style={styles.bio}>
-              Hi, I’m a 2nd year at UBC studying Marketing! In my free time, I
-              like playing Among Us!
-            </Text>
+            <Text style={styles.bio}>{`${user.bio}`}</Text>
           </Layout>
           <Layout style={styles.interestContainer}>
             <Text style={styles.header}>Matching Interests</Text>
