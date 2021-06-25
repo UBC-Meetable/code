@@ -66,9 +66,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         width={window.width}
         height={window.height}
       />
-      <KeyboardAvoidingView behavior="padding" style={styles.formContainer} collapsable>
+      <KeyboardAvoidingView
+        behavior="height"
+        style={styles.formContainer}
+        collapsable
+      >
+        <Text style={styles.header}>Let's get Started!</Text>
         <Layout style={styles.emailContainer}>
           <Input
+            style={styles.input}
+            size="large"
             value={email}
             placeholder="Your Email"
             onChangeText={(e) => setEmail(e.toLowerCase())}
@@ -76,6 +83,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             autoCompleteType="email"
           />
           <Input
+            style={styles.input}
+            size="large"
             value={confirmEmail}
             placeholder="Confirm Email"
             onChangeText={(e) => setConfirmEmail(e.toLowerCase())}
@@ -85,6 +94,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         </Layout>
         <Layout style={styles.emailContainer}>
           <Input
+            style={styles.input}
+            size="large"
             value={password}
             placeholder="Your Password"
             onChangeText={(e) => setPassword(e)}
@@ -92,6 +103,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             autoCompleteType="password"
           />
           <Input
+            style={styles.input}
+            size="large"
             value={confirmPassword}
             placeholder="Confirm Password"
             onChangeText={(e) => setConfirmPassword(e)}
@@ -161,6 +174,26 @@ const styles = StyleSheet.create({
   emailContainer: {
     marginVertical: 20,
     backgroundColor: "#0000",
+  },
+  header: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 30,
+  },
+  input: {
+    marginHorizontal: -50,
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
   loginText: {
     fontSize: 15,

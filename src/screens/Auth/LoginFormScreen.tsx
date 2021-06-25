@@ -56,9 +56,12 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         width={window.width}
         height={window.height}
       />
-      <KeyboardAvoidingView behavior="position" style={styles.formContainer}>
+      <KeyboardAvoidingView behavior="height" style={styles.formContainer}>
+        <Text style={styles.title}>Welcome to Meetable!</Text>
         <Layout style={styles.emailContainer}>
           <Input
+            style={styles.input}
+            size="large"
             value={email}
             placeholder="Your Email"
             onChangeText={(e) => setEmail(e.toLowerCase())}
@@ -68,6 +71,8 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
         </Layout>
         <Layout style={styles.emailContainer}>
           <Input
+            style={styles.input}
+            size="large"
             value={password}
             placeholder="Your Password"
             onChangeText={(e) => setPassword(e)}
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: "center",
-    width: "70%",
+    width: "80%",
     minWidth: 200,
   },
   error: {
@@ -138,9 +143,29 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     backgroundColor: "#0000",
   },
+  input: {
+    marginVertical: 2,
+    marginHorizontal: -20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+    borderRadius: 20,
+    backgroundColor: "white",
+  },
   loginText: {
     fontSize: 15,
     textAlign: "center",
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 30,
   },
 });
 
