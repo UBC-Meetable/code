@@ -10,7 +10,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 const tables = {
     user: 'User-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    friendGroupConnectionModel: 'FriendGroupConnectionModel-mpv3yeuj2jga7n6hm2uupwpodm-dev',
+    friendGroupConnection: 'FriendGroupConnectionModel-mpv3yeuj2jga7n6hm2uupwpodm-dev',
     friendGroup: 'FriendGroup-mpv3yeuj2jga7n6hm2uupwpodm-dev',
     quiz: '',
 };
@@ -47,6 +47,7 @@ exports.handler = async (event) => {
     // set of user id of users already grouped with incoming user in some group
     let groupedBefore = new Set();
 
+    // is byUser actually a secondary index??
     await Promise.all(bucket.Items.map(async function(user, index, array) {
       const res =  await docClient.query({
         TableName: tables.quiz,
@@ -72,7 +73,8 @@ exports.handler = async (event) => {
     await Promise.all(incomingUserGroups.map(async (groupID) => {
       console.log("iteration")
       const res = await docClient.query({
-        TableName: tables.friendGroupConnectionModel,
+        TableName: tables.friendGroupConnection,
+        IndexName: "byFriendGroup",
         KeyConditionExpression: "groupID = :groupID",
         ExpressionAttributeValues: {
           ":groupID": groupID
@@ -147,7 +149,8 @@ exports.handler = async (event) => {
 
 async function fillGroupSet(userid, set) {
   docClient.query({
-    TableName: tables.friendGroupConnectionModel,
+    TableName: tables.friendGroupConnection,
+    IndexName: "byUser",
     KeyConditionExpression: "userID = :userid",
     ExpressionAttributeValues: {
       ":userid": userid

@@ -91,7 +91,7 @@ type FriendGroupConnection
 
 type Quiz
   @model
-  @key(name: "byUser", fields: ["userID"])
+  @key(fields: ["userID"]) # removed secondary index (it should just be a normal key)
   @auth(rules: [{allow: owner, operations:[create]}])
   {
     userID: String!
