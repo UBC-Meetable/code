@@ -1,4 +1,13 @@
 /* Amplify Params - DO NOT EDIT
+	API_MEETABLE_COURSEGROUPTABLE_ARN
+	API_MEETABLE_COURSEGROUPTABLE_NAME
+	API_MEETABLE_FRIENDGROUPTABLE_ARN
+	API_MEETABLE_FRIENDGROUPTABLE_NAME
+	API_MEETABLE_GRAPHQLAPIIDOUTPUT
+	API_MEETABLE_QUIZTABLE_ARN
+	API_MEETABLE_QUIZTABLE_NAME
+	API_MEETABLE_USERTABLE_ARN
+	API_MEETABLE_USERTABLE_NAME
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
@@ -9,10 +18,10 @@ const PriorityQueue = require("priorityqueue");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const tables = {
-    user: 'User-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    friendGroupConnectionModel: 'FriendGroupConnectionModel-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    friendGroup: 'FriendGroup-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    quiz: '',
+    user: process.env.API_MEETABLE_USERTABLE_NAME,
+    friendGroupConnectionModel: process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME,
+    friendGroup: process.env.API_MEETABLE_FRIENDGROUPTABLE_NAME,
+    quiz: process.env.API_MEETABLE_QUIZTABLE_NAME,
 };
 
 exports.handler = async (event) => {

@@ -10,12 +10,14 @@ import {
   FriendGroup, GroupType, QAPairInput, Quiz,
 } from "../API";
 import getUserQuizzes from "../calls/fetchUserQuizzes";
+import getBestFriendGroup from "../calls/getBestFriendGroup";
 import submitQuiz from "../calls/submitQuiz";
 import FriendGroupBubble from "../components/friend_group/FriendGroupBubble";
 import NoQuizzes from "../components/friend_group/NoQuizzes";
 import Returned from "../components/friend_group/Returned";
 import FriendGroupsContext from "../context/FriendGroupsContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import useUserProfile from "../hooks/useUserProfile";
 import {
   ChatMessage, FriendGroupStackScreens, GroupStackParamList, QuestionType, RootStackParamList,
 } from "../types";
@@ -42,6 +44,7 @@ const FriendGroups = ({
   const [quizzes, setQuizzes] = useState<Quiz[]>([]);
   const [UIState, setUIState] = useState<UIStateOptions>(UIStateOptions.DEFAULT);
   const user = useAuthenticatedUser();
+  const userProfile = useUserProfile();
 
   useEffect(() => {
     setLoading((old) => ({ ...old, quizzes: true }));
@@ -60,6 +63,11 @@ const FriendGroups = ({
           setUIState(UIStateOptions.NO_QUIZZES);
         } else if (fetchedQuizzes.length && !groups.length) {
           setUIState(UIStateOptions.RETURNED);
+          getBestFriendGroup({
+            id: user.attributes.sub,
+            university: userProfile.university!,
+            year: userProfile.year!,
+          });
         }
       }
       setLoading((old) => ({ ...old, quizzes: false }));

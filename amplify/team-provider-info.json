@@ -50,7 +50,7 @@
         },
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-416364754c63446d314d-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-737066344a2b6e6d6a52-build.zip"
         }
       }
     }
