@@ -9,10 +9,10 @@ const PriorityQueue = require("priorityqueue");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const tables = {
-    user: 'User-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    friendGroupConnection: 'FriendGroupConnectionModel-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    friendGroup: 'FriendGroup-mpv3yeuj2jga7n6hm2uupwpodm-dev',
-    quiz: '',
+    user: 'User-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
+    friendGroupConnection: 'FriendGroupConnection-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
+    friendGroup: 'FriendGroup-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
+    quiz: 'Quiz-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
 };
 
 exports.handler = async (event) => {
@@ -119,7 +119,7 @@ exports.handler = async (event) => {
             console.log(err);
         }
       }));
-      if (sizes.keys().length > 0) {
+      if (sizes.keys().length > 0) { // curr user is in at least one group
         let minSize = Math.min(...sizes.keys());
         let idOfMin = sizes[minSize];
         if (minSize <= MAX_GROUP_SIZE) {
