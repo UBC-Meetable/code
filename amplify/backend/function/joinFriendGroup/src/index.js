@@ -26,6 +26,7 @@ exports.handler = async (event) => {
   // note: year is a reserved word in AWS DynamoDB, must use name substitution via ExpressionAttributeNames
   const bucketQueryParams = {
     TableName: tables.user,
+    IndexName: "byUniYear",
     KeyConditionExpression: "university = :uni AND #year = :year",
     
     ExpressionAttributeNames: {
@@ -40,6 +41,7 @@ exports.handler = async (event) => {
   try {
     // retrieve potential groupmates. If this fails, OK to catch and skip everything. note: incoming user should be part of bucket.
     const bucket = await docClient.query(bucketQueryParams).promise();
+    console.log(bucket.Items);
     // map user id to quiz. Possible optimization is to cache this outside the main fn so it gets reused (not sure how to extend to mulitple quizzes per user)
     let quizzes = {};
     // set of user id of users already grouped with incoming user in some group
@@ -62,16 +64,20 @@ exports.handler = async (event) => {
       );
       return res;
     }));
+    console.log("quizzes\n" + quizzes);
     let incomingUserGroups = new Set()
     await fillGroupSet(incomingUser.id, incomingUserGroups);
+    incomingUserGroups = new Array(incomingUserGroups);
+    console.log("incomingUserGroups\n" + incomingUserGroups);
     await Promise.all(incomingUserGroups.map(async (groupID) => {
+      console.log("iteration")
       const res = await docClient.query({
         TableName: tables.friendGroupConnectionModel,
         KeyConditionExpression: "groupID = :groupID",
         ExpressionAttributeValues: {
           ":groupID": groupID
         }
-      }).promise.then(
+      }).promise().then(
         function(data) {
           data.Items.forEach(fgcm => groupedBefore.add(fgcm.userID));
         },
@@ -94,28 +100,34 @@ exports.handler = async (event) => {
     while (!pq.isEmpty()) {
       let [user, score] = pq.pop();
       if (score < MIN_SCORE) break;
-      SmallestNonEmpty = {size: Infinity, id: ""};
       let userGroups = new Set() // doesn't really have to be a set
       await fillGroupSet(user.id, userGroups);
-      for (const groupID of userGroups) { // small number of queries in sequence
+      userGroups = new Array(userGroups);
+      // fetch sizes in parallel then take the min
+      let sizes = {};
+      await Promise.all(userGroups.map(async (groupID) => {
         try {
           const data = await docClient.get({
             TableName: tables.friendGroup,
             Key: {"groupID": groupID},
             ConsistentRead: true
           }).promise();
-          if (data.Item.size <= MAX_GROUP_SIZE && data.Item.size < SmallestNonEmpty.size) {
-            SmallestNonEmpty = {size: data.Item.size, id: groupID};
-          }
-        } catch (error) {
-          console.log(error);
+          sizes[data.Item.size] = groupID;
+        } catch (err) {
+            console.log(err);
+        }
+      }));
+      if (sizes.keys().length > 0) {
+        let minSize = Math.min(...sizes.keys());
+        let idOfMin = sizes[minSize];
+        if (minSize <= MAX_GROUP_SIZE) {
+          groupToPut = idOfMin;
+          break;
         }
       }
-      if (SmallestNonEmpty.size < Infinity) {
-        groupToPut = SmallestNonEmpty.id;
-        break;
-      }
     }
+
+
   } catch(error) {
       console.log(error);
       return {statusCode: 500, body: JSON.stringify(error)};
@@ -140,7 +152,7 @@ async function fillGroupSet(userid, set) {
     ExpressionAttributeValues: {
       ":userid": userid
     }
-  }).promise.then(
+  }).promise().then(
     function(data) {
       data.Items.forEach((fgcm) => set.add(fgcm.groupID));
     },
