@@ -3,7 +3,8 @@
 type User
   @model 
   @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
-  @key(fields: ["id"]) {
+  @key(fields: ["id"]) 
+  @key(name: "byUniYear", fields: ["university", "year"], queryField: "UserByUniYear") {
   id: String!
   email: String!
   firstName: String
@@ -12,9 +13,11 @@ type User
   bio: String
   userState: UserState
   university: String
+  year: Int
   major: String
   courseGroups: [CourseGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnectionModel] @connection(keyName: "byUser", fields: ["id"])
+  quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
 }
 
 type CourseGroup
@@ -39,6 +42,7 @@ type FriendGroup
   title: String!
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
   owner: String
+  size: Int!
 }
  
 # [CONNECTIONS]
@@ -85,6 +89,16 @@ type FriendGroupConnectionModel
   user: User! @connection(fields: ["userID"])
 }
 
+type Quiz
+  @model
+  @key(name: "byUser", fields: ["userID"])
+  @auth(rules: [{allow: owner, operations:[create]}])
+  {
+    userID: String!
+    quizID: String! 
+    responses: [QAPair!]! # always has an array with 0 or more QAPair only
+    createdAt: AWSDateTime! # quiz won't be modified after
+  }
 
 # [PRIVATE HELPER TYPES]
 enum UserState {
@@ -94,3 +108,20 @@ enum UserState {
   DONE
 }
 
+type QAPair {
+  q: String!
+  a: String!
+}
+
+# [LAMBDA FUNCTIONS]
+
+# joinFriendGroupInput -> GroupID
+type Query {
+  joinFriendGroup(user: joinFriendGroupInput): String @function(name: "joinFriendGroup-${env}")
+}
+
+input joinFriendGroupInput {
+  id: String!
+  university: String!
+  year: Int!
+}
