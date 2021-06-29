@@ -91,7 +91,7 @@ type FriendGroupConnection
 
 type Quiz
   @model
-  @key(fields: ["userID"]) # removed secondary index (it should just be a normal key)
+  @key(name: "byUser", fields: ["userID"]) # secondary index necessary?? Can't seem to remove w/ amplify push
   @auth(rules: [{allow: owner, operations:[create]}])
   {
     userID: String!

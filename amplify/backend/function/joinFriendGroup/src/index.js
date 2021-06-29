@@ -51,13 +51,14 @@ exports.handler = async (event) => {
     await Promise.all(bucket.Items.map(async function(user, index, array) {
       const res =  await docClient.query({
         TableName: tables.quiz,
+        IndexName: "byUser",
         KeyConditionExpression: "userID = :userID",
         ExpressionAttributeValues: {
           ":userID": user.id // note: assumption is one quiz per user for now
         }
       }).promise().then(
         function(data) {
-          quizzes[user.id] = data;
+          quizzes[user.id] = data.Items[0].responses;
         },
         function(error) {
           console.log(error);
@@ -68,7 +69,7 @@ exports.handler = async (event) => {
     console.log("quizzes\n" + quizzes);
     let incomingUserGroups = new Set()
     await fillGroupSet(incomingUser.id, incomingUserGroups);
-    incomingUserGroups = new Array(incomingUserGroups);
+    incomingUserGroups = Array.from(incomingUserGroups);
     console.log("incomingUserGroups\n" + incomingUserGroups);
     await Promise.all(incomingUserGroups.map(async (groupID) => {
       console.log("iteration")
@@ -104,7 +105,8 @@ exports.handler = async (event) => {
       if (score < MIN_SCORE) break;
       let userGroups = new Set() // doesn't really have to be a set
       await fillGroupSet(user.id, userGroups);
-      userGroups = new Array(userGroups);
+      userGroups = Array.from(userGroups);
+      console.log(userGroups);
       // fetch sizes in parallel then take the min
       let sizes = {};
       await Promise.all(userGroups.map(async (groupID) => {
@@ -119,7 +121,7 @@ exports.handler = async (event) => {
             console.log(err);
         }
       }));
-      if (sizes.keys().length > 0) { // curr user is in at least one group
+      if (Object.keys(sizes).length > 0) { // curr user is in at least one group
         let minSize = Math.min(...sizes.keys());
         let idOfMin = sizes[minSize];
         if (minSize <= MAX_GROUP_SIZE) {
@@ -157,7 +159,10 @@ async function fillGroupSet(userid, set) {
     }
   }).promise().then(
     function(data) {
-      data.Items.forEach((fgcm) => set.add(fgcm.groupID));
+      data.Items.forEach((fgcm) => {
+        set.add(fgcm.groupID); 
+        console.log("added");
+      });
     },
     function(error) {
       console.log(error);
@@ -167,12 +172,14 @@ async function fillGroupSet(userid, set) {
 
 // [QAPair], [QAPair] -> int
 function compatibilityScore(q1, q2) {
+  console.log(q1);
   const user1Responses = new Map(q1.map(i => [i.q, i.a]));
   const user2Responses = new Map(q2.map(i => [i.q, i.a]));
   let score = 0;
   for (const [q, a] of user1Responses) {
     if (a === user2Responses.get(q)) score += 1;
   }
+  console.log(score);
   return score;
 }
 
