@@ -58,7 +58,7 @@ exports.handler = async (event) => {
         }
       }).promise().then(
         function(data) {
-          quizzes[user.id] = data.Items[0].responses;
+          quizzes[user.id] = data;
         },
         function(error) {
           console.log(error);
@@ -94,7 +94,7 @@ exports.handler = async (event) => {
     // initializing arr of pairs then buildHeap is O(n) + O(n). This way is O(nlogn)
     bucket.Items.forEach(function(user, index, array) {
       if (quizzes[user.id] !== null && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
-        pq.push([user, compatibilityScore(quizzes[user.id], quizzes[incomingUser.id])]);
+        pq.push([user, compatibilityScore(quizzes[user.id].Items[0].responses, quizzes[incomingUser.id].Items[0].responses)]);
       } else if (groupedBefore.has(user.id)) {
         pq.push([user, SCORE_IF_GROUPED_BEOFRE]);
       }
