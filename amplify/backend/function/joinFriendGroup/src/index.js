@@ -42,6 +42,10 @@ exports.handler = async (event) => {
     // retrieve potential groupmates. If this fails, OK to catch and skip everything. note: incoming user should be part of bucket.
     const bucket = await docClient.query(bucketQueryParams).promise();
     console.log(bucket.Items);
+
+    // const junk  = new Array(500).fill({id: '50'});
+    // bucket.Items.push.apply(bucket.Items, junk);
+
     // map user id to quiz. Possible optimization is to cache this outside the main fn so it gets reused (not sure how to extend to mulitple quizzes per user)
     let quizzes = {};
     // set of user id of users already grouped with incoming user in some group
@@ -58,7 +62,10 @@ exports.handler = async (event) => {
         }
       }).promise().then(
         function(data) {
-          quizzes[user.id] = data;
+          if (data.Items.length > 0) {
+            quizzes[user.id] = data;
+            console.log(data);
+          }
         },
         function(error) {
           console.log(error);
@@ -93,7 +100,7 @@ exports.handler = async (event) => {
 
     // initializing arr of pairs then buildHeap is O(n) + O(n). This way is O(nlogn)
     bucket.Items.forEach(function(user, index, array) {
-      if (quizzes[user.id] !== null && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
+      if (user.id in quizzes && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
         pq.push([user, compatibilityScore(quizzes[user.id].Items[0].responses, quizzes[incomingUser.id].Items[0].responses)]);
       } else if (groupedBefore.has(user.id)) {
         pq.push([user, SCORE_IF_GROUPED_BEOFRE]);
@@ -106,7 +113,6 @@ exports.handler = async (event) => {
       let userGroups = new Set() // doesn't really have to be a set
       await fillGroupSet(user.id, userGroups);
       userGroups = Array.from(userGroups);
-      //userGroups = ['1'];
       console.log(userGroups);
       // fetch sizes in parallel then take the min
       let sizes = {};
