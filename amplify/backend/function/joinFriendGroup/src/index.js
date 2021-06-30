@@ -70,7 +70,7 @@ exports.handler = async (event) => {
     let incomingUserGroups = new Set()
     await fillGroupSet(incomingUser.id, incomingUserGroups);
     incomingUserGroups = Array.from(incomingUserGroups);
-    console.log("incomingUserGroups\n" + incomingUserGroups);
+    console.log(incomingUserGroups);
     await Promise.all(incomingUserGroups.map(async (groupID) => {
       console.log("iteration")
       const res = await docClient.query({
@@ -106,6 +106,7 @@ exports.handler = async (event) => {
       let userGroups = new Set() // doesn't really have to be a set
       await fillGroupSet(user.id, userGroups);
       userGroups = Array.from(userGroups);
+      //userGroups = ['1'];
       console.log(userGroups);
       // fetch sizes in parallel then take the min
       let sizes = {};
@@ -122,7 +123,7 @@ exports.handler = async (event) => {
         }
       }));
       if (Object.keys(sizes).length > 0) { // curr user is in at least one group
-        let minSize = Math.min(...sizes.keys());
+        let minSize = Math.min(...Object.keys(sizes));
         let idOfMin = sizes[minSize];
         if (minSize <= MAX_GROUP_SIZE) {
           groupToPut = idOfMin;
@@ -150,7 +151,8 @@ exports.handler = async (event) => {
 };
 
 async function fillGroupSet(userid, set) {
-  docClient.query({
+  // return keyword is necessary to await the docClient promise. Otherwise it won't (unless await is used here)
+  return docClient.query({
     TableName: tables.friendGroupConnection,
     IndexName: "byUser",
     KeyConditionExpression: "userID = :userid",
