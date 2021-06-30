@@ -5,6 +5,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
+import Colors from "../constants/Colors";
 import {
   ChatMessage, CourseGroup, GroupType, RootStackParamList,
 } from "../types";
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-evenly",
     alignItems: "center",
+    backgroundColor: Colors.theme.lightCreme,
   },
 });
 

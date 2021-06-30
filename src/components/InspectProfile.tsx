@@ -12,6 +12,7 @@ import { Chip } from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
 import profilePic from "../assets/images/profilePic2.jpg";
 import { User } from "../API";
+import Colors from "../constants/Colors";
 
 const CrossIcon = () => (
   <Layout
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#94DBCE",
   },
   nonMatching: {
-    backgroundColor: "#FEEDDE",
+    backgroundColor: Colors.theme.creme,
   },
   chip: {
     display: "flex",

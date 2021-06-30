@@ -21,6 +21,7 @@ import ProfilePicture from "../components/ProfilePicture";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { UserProfile } from "../types";
 import { profileStyles } from "./Auth/NewProfileScreen";
+import Colors from "../constants/Colors";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
@@ -241,7 +242,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: "#FEEDDE",
+    backgroundColor: Colors.theme.creme,
   },
   name: {
     fontSize: 24,

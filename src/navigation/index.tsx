@@ -26,11 +26,14 @@ import awsconfig from "../aws-exports";
 import createUserProfile from "../calls/createUserProfile";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import ChatBackButton from "../components/Chat/ChatBackButton";
+import Colors from "../constants/Colors";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
+import { UserProfileProvider } from "../context/UserProfileContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import useUserProfile from "../hooks/useUserProfile";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
 import QuizScreen from "../screens/Auth/QuizScreen";
 import EditCourseScreen from "../screens/EditCourseScreen";
@@ -63,7 +66,9 @@ export default function Navigation({
           theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
         >
           <UserProvider>
-            <App />
+            <UserProfileProvider>
+              <App />
+            </UserProfileProvider>
           </UserProvider>
         </NavigationContainer>
       </UiProvider>
@@ -78,7 +83,8 @@ const App = () => {
     Poppins_400Regular,
   });
   const units = useSafeAreaInsets();
-  if (!fontsLoaded) {
+  const { loading } = useUserProfile();
+  if (!fontsLoaded || loading) {
     return (
       <Blank />
     );
@@ -107,7 +113,9 @@ const AuthorizedApp = () => {
         let userProfile = (await fetchUserProfile({ id }))
           .data?.getUser;
         if (!userProfile) {
-          userProfile = (await createUserProfile({ email, id })).data
+          userProfile = (await createUserProfile({
+            email, id, university: "", year: -1,
+          })).data
             ?.createUser;
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
@@ -156,7 +164,7 @@ const AuthorizedApp = () => {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            cardStyle: { backgroundColor: "#FEEDDE" },
+            cardStyle: { backgroundColor: "#FFF9F5" },
           }}
           initialRouteName="Tabs"
         >
@@ -173,7 +181,7 @@ const AuthorizedApp = () => {
           navigation: StackNavigationProp<RootStackParamList, "Group">;
         }) => ({
               cardStyle: {
-                backgroundColor: "#FEEDDE",
+                backgroundColor: Colors.theme.creme,
               },
               headerShown: true,
               headerTitle: "",
@@ -184,7 +192,7 @@ const AuthorizedApp = () => {
                 <Layout
                   {...props}
                   style={{
-                    backgroundColor: "#FFF8F3",
+                    backgroundColor: Colors.theme.lightCreme,
                   }}
                 >
                   <BubbleHeader width={window.width} height={170} />
@@ -216,7 +224,7 @@ const AuthorizedApp = () => {
           navigation: StackNavigationProp<RootStackParamList, "EditCourses">;
         }) => ({
               cardStyle: {
-                backgroundColor: "#FEEDDE",
+                backgroundColor: Colors.theme.creme,
               },
               headerShown: true,
               headerTitle: "",
@@ -227,7 +235,7 @@ const AuthorizedApp = () => {
                 <Layout
                   {...props}
                   style={{
-                    backgroundColor: "#FFF8F3",
+                    backgroundColor: Colors.theme.lightCreme,
                   }}
                 >
                   <BubbleHeader width={window.width} height={170} />
@@ -253,7 +261,7 @@ const AuthorizedApp = () => {
           >;
         }) => ({
               cardStyle: {
-                backgroundColor: "#FEEDDE",
+                backgroundColor: Colors.theme.creme,
               },
               headerShown: true,
               headerTitle: "",
@@ -264,7 +272,7 @@ const AuthorizedApp = () => {
                 <Layout
                   {...props}
                   style={{
-                    backgroundColor: "#FFF8F3",
+                    backgroundColor: Colors.theme.lightCreme,
                   }}
                 >
                   <BubbleHeader width={window.width} height={170} />

@@ -18,6 +18,7 @@ import { UserState } from "../../API";
 import fetchUserProfile from "../../calls/fetchUserProfile";
 import updateUserProfile from "../../calls/updateUserProfile";
 import ProfilePicture from "../../components/ProfilePicture";
+import Colors from "../../constants/Colors";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SignUpParamList, UserProfile } from "../../types";
 
@@ -279,7 +280,7 @@ const profileStyles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
   },
   profile: {
     height: 144,
@@ -394,7 +395,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: "#FEEDDE",
+    backgroundColor: Colors.theme.creme,
   },
   name: {
     fontSize: 24,

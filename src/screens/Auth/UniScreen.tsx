@@ -17,6 +17,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { UserState } from "../../API";
 import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
 import updateUserProfile from "../../calls/updateUserProfile";
+import Colors from "../../constants/Colors";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SignUpParamList } from "../../types";
 // import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
     paddingTop: 100,
   },
   button: {

@@ -1,6 +1,8 @@
 /* Amplify Params - DO NOT EDIT
 	API_MEETABLE_COURSEGROUPTABLE_ARN
 	API_MEETABLE_COURSEGROUPTABLE_NAME
+	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_ARN
+	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME
 	API_MEETABLE_FRIENDGROUPTABLE_ARN
 	API_MEETABLE_FRIENDGROUPTABLE_NAME
 	API_MEETABLE_GRAPHQLAPIIDOUTPUT
@@ -27,14 +29,16 @@ const tables = {
 exports.handler = async (event) => {
   const incomingUser = event.arguments.user;
   const MIN_SCORE = 2; // consider passing with the lambda input
-  const MAX_GROUP_SIZE = 10;
+  const MAX_GROUP_SIZE = 5;
   const SCORE_IF_GROUPED_BEOFRE = 0; // could consider a score reduction instead
   let pq = new PriorityQueue.BinaryHeap({ function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); // maxPQ containing type [user, score]
   let groupToPut = null; // string groupID of group to join or null if none found
+  const relevantUsers = [];
 
   // note: year is a reserved word in AWS DynamoDB, must use name substitution via ExpressionAttributeNames
   const bucketQueryParams = {
     TableName: tables.user,
+    IndexName: "byUniYear",
     KeyConditionExpression: "university = :uni AND #year = :year",
     
     ExpressionAttributeNames: {
@@ -54,16 +58,20 @@ exports.handler = async (event) => {
     // set of user id of users already grouped with incoming user in some group
     let groupedBefore = new Set();
 
-    await Promise.all(bucket.Items.map(async function(user, index, array) {
-      const res =  await docClient.query({
+    await Promise.all(bucket.Items.map(function(user, index, array) {
+      const res = docClient.query({
         TableName: tables.quiz,
+        IndexName: "byUser",
         KeyConditionExpression: "userID = :userID",
         ExpressionAttributeValues: {
           ":userID": user.id // note: assumption is one quiz per user for now
         }
-      }).promise().then(
+      }).promise()
+      .then(
         function(data) {
-          quizzes[user.id] = data;
+          // console.log({data});
+          let [answers] = data.Items.map((item) => item.responses);
+          quizzes[user.id] = answers;
         },
         function(error) {
           console.log(error);
@@ -73,14 +81,15 @@ exports.handler = async (event) => {
     }));
     let incomingUserGroups = new Set()
     await fillGroupSet(incomingUser.id, incomingUserGroups);
-    await Promise.all(incomingUserGroups.map(async (groupID) => {
-      const res = await docClient.query({
+    console.log(incomingUserGroups);
+    await Promise.all(Array.from(incomingUserGroups).map((groupID) => {
+      const res = docClient.query({
         TableName: tables.friendGroupConnectionModel,
         KeyConditionExpression: "groupID = :groupID",
         ExpressionAttributeValues: {
           ":groupID": groupID
         }
-      }).promise.then(
+      }).promise().then(
         function(data) {
           data.Items.forEach(fgcm => groupedBefore.add(fgcm.userID));
         },
@@ -100,24 +109,33 @@ exports.handler = async (event) => {
       }
     });
 
+    console.log(`${pq.length} users in PQ`);
     while (!pq.isEmpty()) {
       let [user, score] = pq.pop();
+      console.log({user, score});
       if (score < MIN_SCORE) break;
+      relevantUsers.push(user.id);
       SmallestNonEmpty = {size: Infinity, id: ""};
       let userGroups = new Set() // doesn't really have to be a set
       await fillGroupSet(user.id, userGroups);
+      console.log(userGroups);
       for (const groupID of userGroups) { // small number of queries in sequence
         try {
-          const data = await docClient.get({
-            TableName: tables.friendGroup,
-            Key: {"groupID": groupID},
-            ConsistentRead: true
+          const membersInGroup = await docClient.query({
+            TableName: tables.friendGroupConnectionModel,
+            IndexName: "byFriendGroup",
+            KeyConditionExpression: "groupID = :groupID",
+            ExpressionAttributeValues: {
+              ":groupID": groupID
+            }
           }).promise();
-          if (data.Item.size <= MAX_GROUP_SIZE && data.Item.size < SmallestNonEmpty.size) {
-            SmallestNonEmpty = {size: data.Item.size, id: groupID};
+          
+          const groupSize = membersInGroup.Count;
+          if (groupSize <= MAX_GROUP_SIZE && groupSize < SmallestNonEmpty.size) {
+            SmallestNonEmpty = {size: groupSize, id: groupID};
           }
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
       if (SmallestNonEmpty.size < Infinity) {
@@ -125,44 +143,46 @@ exports.handler = async (event) => {
         break;
       }
     }
+    console.log(relevantUsers);
   } catch(error) {
-      console.log(error);
+      console.error(error);
       return {statusCode: 500, body: JSON.stringify(error)};
   }
   
   const response = {
       statusCode: 200,
-  //  Uncomment below to enable CORS requests
-  //  headers: {
-  //      "Access-Control-Allow-Origin": "*",
-  //      "Access-Control-Allow-Headers": "*"
-  //  }, 
-      body: JSON.stringify(groupToPut),
+      groupID: groupToPut,
+      relevantUsers,
+      // body: JSON.stringify(groupToPut),
   };
   return response;
 };
 
 async function fillGroupSet(userid, set) {
-  docClient.query({
+  console.log("FillGroupSet");
+  return docClient.query({
     TableName: tables.friendGroupConnectionModel,
+    IndexName: "byUser",
     KeyConditionExpression: "userID = :userid",
     ExpressionAttributeValues: {
       ":userid": userid
     }
-  }).promise.then(
+  }).promise().then(
     function(data) {
+      console.log(data);
       data.Items.forEach((fgcm) => set.add(fgcm.groupID));
     },
     function(error) {
-      console.log(error);
+      console.error(error);
     }
   );
 }
 
 // [QAPair], [QAPair] -> int
 function compatibilityScore(q1, q2) {
-  const user1Responses = new Map(q1.map(i => [i.q, i.a]));
-  const user2Responses = new Map(q2.map(i => [i.q, i.a]));
+  console.log("Compatability Score");
+  const user1Responses = new Map(q1.map(i => [i.q,i.a]));
+  const user2Responses = new Map(q2.map(i => [i.q,i.a]));
   let score = 0;
   for (const [q, a] of user1Responses) {
     if (a === user2Responses.get(q)) score += 1;

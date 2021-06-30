@@ -7,7 +7,7 @@ const getBestFriendGroup = (input: joinFriendGroupInput):
 Promise<GraphQLResult<JoinFriendGroupQuery>> => API.graphql({
   query: joinFriendGroup,
   variables: {
-    input,
+    user: input,
   },
 }) as Promise<GraphQLResult<JoinFriendGroupQuery>>;
 

@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CourseGroup, CreateCourseGroupConnectionMutation, UserState } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import updateUserProfile from "../../calls/updateUserProfile";
+import Colors from "../../constants/Colors";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000",
   },
   root: {
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
     height: "100%",
     flexDirection: "column",
     alignItems: "center",
@@ -332,7 +333,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
     justifyContent: "center",
   },
 });

@@ -83,7 +83,6 @@ export const createUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -242,7 +241,6 @@ export const updateUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -401,7 +399,6 @@ export const deleteUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -809,7 +806,6 @@ export const createFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -883,7 +879,6 @@ export const createFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -910,7 +905,6 @@ export const updateFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -984,7 +978,6 @@ export const updateFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -1011,7 +1004,6 @@ export const deleteFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -1085,7 +1077,6 @@ export const deleteFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -1155,7 +1146,6 @@ export const createChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1285,7 +1275,6 @@ export const updateChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1415,7 +1404,6 @@ export const deleteChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1617,7 +1605,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1817,7 +1804,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2017,7 +2003,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2100,7 +2085,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2156,7 +2140,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -2215,7 +2198,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2298,7 +2280,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2354,7 +2335,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -2413,7 +2393,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2496,7 +2475,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2552,7 +2530,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -2611,7 +2588,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2738,7 +2714,6 @@ export const createQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2869,7 +2844,6 @@ export const updateQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -3000,7 +2974,6 @@ export const deleteQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }

@@ -4,7 +4,11 @@
 
 export const joinFriendGroup = /* GraphQL */ `
   query JoinFriendGroup($user: joinFriendGroupInput) {
-    joinFriendGroup(user: $user)
+    joinFriendGroup(user: $user) {
+      statusCode
+      groupID
+      relevantUsers
+    }
   }
 `;
 export const getUser = /* GraphQL */ `
@@ -85,7 +89,6 @@ export const getUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -233,7 +236,6 @@ export const listUsers = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -504,7 +506,6 @@ export const getFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -578,7 +579,6 @@ export const getFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -609,7 +609,6 @@ export const listFriendGroups = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -665,7 +664,6 @@ export const listFriendGroups = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -734,7 +732,6 @@ export const getChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -928,7 +925,6 @@ export const getQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1137,7 +1133,6 @@ export const userByUniYear = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }

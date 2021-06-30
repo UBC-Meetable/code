@@ -48,17 +48,20 @@ const CourseGroupBubble = ({
 
   if (!groupID || !users || !title) return null;
   return (
-    <TouchableOpacity style={styles.bubble} onPress={() => moveToGroupScreen()}>
-      <Layout style={styles.topContainer}>
-        <Layout style={styles.textContainer}>
-          <Text style={styles.bubbleText}>
+    <TouchableOpacity style={groupBubbleStyles.bubble} onPress={() => moveToGroupScreen()}>
+      <Layout style={groupBubbleStyles.topContainer}>
+        <Layout style={groupBubbleStyles.textContainer}>
+          <Text style={groupBubbleStyles.bubbleText}>
             {title || groupID}
             {" "}
             {courseGroup.code}
           </Text>
         </Layout>
-        <Layout style={styles.sectionContainer}>
-          <Chip style={styles.sectionBubble} textStyle={styles.sectionBubbleText}>
+        <Layout style={groupBubbleStyles.sectionContainer}>
+          <Chip
+            style={groupBubbleStyles.sectionBubble}
+            textStyle={groupBubbleStyles.sectionBubbleText}
+          >
             Section
             {" "}
             {courseGroup.section}
@@ -66,12 +69,12 @@ const CourseGroupBubble = ({
         </Layout>
       </Layout>
 
-      <Layout style={styles.bottomContainer}>
-        <Layout style={styles.bottomTextContainer}>
+      <Layout style={groupBubbleStyles.bottomContainer}>
+        <Layout style={groupBubbleStyles.bottomTextContainer}>
           <MessagePreview messages={messages} />
         </Layout>
-        <Layout style={styles.bottomPhotoContainer}>
-          <Layout style={[styles.bubbleSection, styles.nameSection]}>
+        <Layout style={groupBubbleStyles.bottomPhotoContainer}>
+          <Layout style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}>
             <PictureStack users={userPile} />
           </Layout>
         </Layout>
@@ -81,7 +84,7 @@ const CourseGroupBubble = ({
   );
 };
 
-const styles = StyleSheet.create({
+export const groupBubbleStyles = StyleSheet.create({
   bubble: {
     minHeight: 100,
     height: 100,

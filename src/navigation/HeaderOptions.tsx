@@ -28,5 +28,5 @@ export default {
       <BubbleHeader width={window.width} height={150} />
     </Layout>
   ),
-  cardStyle: { backgroundColor: "#FEEDDE" },
+  cardStyle: { backgroundColor: "#FFF9F5" },
 } as StackNavigationOptions;

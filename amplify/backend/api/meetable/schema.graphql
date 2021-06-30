@@ -12,8 +12,8 @@ type User
   profilePicture: String
   bio: String
   userState: UserState
-  university: String
-  year: Int
+  university: String!
+  year: Int!
   major: String
   courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
@@ -39,11 +39,10 @@ type FriendGroup
   {
   users: [FriendGroupConnection!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
   groupID: String!
-  title: String!
+  title: String
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
   owner: String
-  size: Int!
-}
+} 
  
 # [CONNECTIONS]
 
@@ -119,11 +118,17 @@ type QAPair {
 
 # joinFriendGroupInput -> GroupID
 type Query {
-  joinFriendGroup(user: joinFriendGroupInput): String @function(name: "joinFriendGroup-${env}")
+  joinFriendGroup(user: joinFriendGroupInput): joinFriendGroupOutput @function(name: "joinFriendGroup-${env}")
 }
 
 input joinFriendGroupInput {
   id: String!
   university: String!
   year: Int!
+}
+
+type joinFriendGroupOutput {
+  statusCode: Int!
+  groupID: String
+  relevantUsers: [String!]!
 }

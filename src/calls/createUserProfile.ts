@@ -11,6 +11,8 @@ Promise<GraphQLResult<CreateUserMutation>> => API.graphql({
       email: input.email,
       id: input.id,
       userState: UserState.SIGNED_UP,
+      university: input.university,
+      year: input.year,
     },
   },
 }) as Promise<GraphQLResult<CreateUserMutation>>;

@@ -4,6 +4,7 @@ import {
   StyleSheet,
 } from "react-native";
 import Sorting from "../../assets/icons/sorting.svg";
+import Colors from "../../constants/Colors";
 
 const Returned = () => (
   <Layout style={styles.root}>
@@ -31,7 +32,7 @@ const Returned = () => (
 const styles = StyleSheet.create(
   {
     root: {
-      backgroundColor: "#FFF8F3",
+      backgroundColor: Colors.theme.lightCreme,
       width: "70%",
       maxWidth: 300,
       minWidth: 200,
