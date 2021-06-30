@@ -1,23 +1,13 @@
-import { useEffect, useState } from "react";
-import fetchUserProfile from "../calls/fetchUserProfile";
-import { User } from "../API";
-import useAuthenticatedUser from "./useAuthenticatedUser";
+import { useContext } from "react";
+import { joinFriendGroupInput } from "../API";
+import UserProfileContext, { UserSchoolInfoContextType } from "../context/UserProfileContext";
 
 const useUserProfile = () => {
-  const [profile, setProfile] = useState<User | undefined>();
-  const user = useAuthenticatedUser();
-  useEffect(() => {
-    const f = async () => {
-      try {
-        const u = await fetchUserProfile({ id: user.attributes.sub });
-        setProfile(u.data?.getUser as User);
-      } catch (e) {
-        setProfile(undefined);
-      }
-    };
-    if (!profile) { f(); }
-  }, [user]);
-  return profile as User;
+  const context = useContext(UserProfileContext);
+  if (!context) throw new Error("useAuthenticatedUser must be used within a UserProvider");
+  const loading = context.loading as boolean;
+  const info = context.info as joinFriendGroupInput;
+  return { info, loading };
 };
 
 export default useUserProfile;

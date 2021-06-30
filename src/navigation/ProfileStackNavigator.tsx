@@ -39,7 +39,6 @@ const ProfileStackNavigator = () => (
       options={({ navigation }) => ({
         headerShown: true,
         headerRight: () => (
-          // TODO make profile settings screen
           <Button onPress={() => navigation.navigate("ProfileSettings")} style={styles.iconButton} appearance="ghost" accessoryLeft={StarIcon} />
         ),
       })}

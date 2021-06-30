@@ -3,15 +3,21 @@ import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import { Storage } from "aws-amplify";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
 import { ProfilePictureSize } from "../types";
 
 type ProfilePictureProps = {
     imageKey: string;
     size?: ProfilePictureSize;
+    onPress?: () => void;
 };
 
-const ProfilePicture = ({ imageKey, size = ProfilePictureSize.PROFILE }:ProfilePictureProps) => {
+const ProfilePicture = ({
+  imageKey,
+  size = ProfilePictureSize.PROFILE,
+  onPress,
+}:ProfilePictureProps) => {
   const [uri, setUri] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
 
@@ -66,10 +72,12 @@ const ProfilePicture = ({ imageKey, size = ProfilePictureSize.PROFILE }:ProfileP
         </Layout>
       </Layout>
     ) : (
-      <Image
-        source={uri ? { uri } : noAvatar}
-        style={{ borderRadius: 100, ...sizeObj }}
-      />
+      <TouchableOpacity style={{ borderRadius: 100 }} onPress={onPress}>
+        <Image
+          source={uri ? { uri } : noAvatar}
+          style={{ borderRadius: 100, ...sizeObj }}
+        />
+      </TouchableOpacity>
     )
   );
 };

@@ -1,6 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import {
+  CreateCourseGroupInput,
   CreateCourseGroupMutation,
   CreateCourseGroupMutationVariables,
 } from "../API";
@@ -10,6 +11,8 @@ import { CourseGroup } from "../types";
 const createCourseGroup = async ({
   input,
 }: CreateCourseGroupMutationVariables) => {
+  console.log(input);
+
   const res = await API.graphql({
     query,
     variables: { input },

@@ -1,5 +1,7 @@
-import { Button, Layout, Text } from "@ui-kitten/components";
-import React from "react";
+import {
+  Button, Input, Layout, Text,
+} from "@ui-kitten/components";
+import React, { useRef } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginRocket from "../../assets/images/login-background.svg";
@@ -14,6 +16,7 @@ type LoginScreenProps = {
 
 const LoginScreen = ({ onSignUp, onLogIn }:LoginScreenProps) => {
   const units = useSafeAreaInsets();
+
   return (
     <Layout style={styles.root}>
       <LoginPageBubbleTop

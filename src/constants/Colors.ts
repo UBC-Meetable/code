@@ -17,4 +17,10 @@ export default {
     tabIconSelected: tintColorDark,
     error: "#ff0033",
   },
+  theme: {
+    transparent: "#0000",
+    background: "#FFF9F5",
+    creme: "#FEEDDE",
+    lightCreme: "#FFF8F3",
+  },
 };

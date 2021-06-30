@@ -1,6 +1,7 @@
 import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
+import Colors from "../../constants/Colors";
 
 type MessageInputProps = {
     value: string;
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     width: "90%",
-    backgroundColor: "#FEEDDE",
+    backgroundColor: Colors.theme.creme,
   },
   inputContainer: {
     // width: "100%",

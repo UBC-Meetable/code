@@ -12,10 +12,12 @@ const MessagePreview = ({ messages = [] }: MessagePreviewProps) => {
 
   if (typeof displayMessage === "undefined") {
     return (
-      <Layout style={styles.container}>
-        <Text style={styles.body} numberOfLines={4} ellipsizeMode="tail">
-          No Messages Yet!
-        </Text>
+      <Layout style={styles.root}>
+        <Layout style={styles.container}>
+          <Text style={styles.body} numberOfLines={4} ellipsizeMode="tail">
+            No Messages Yet!
+          </Text>
+        </Layout>
       </Layout>
     );
   }

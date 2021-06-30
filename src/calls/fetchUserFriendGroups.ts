@@ -17,7 +17,6 @@ const fetchUserFriendGroups = async (user: CognitoUser) => {
 
   const fetchedGroups = res.data?.getUser
     ?.friendGroups?.items!.map((group:any) => group.friendGroup);
-  console.log(res);
 
   return fetchedGroups as FriendGroup[];
 };

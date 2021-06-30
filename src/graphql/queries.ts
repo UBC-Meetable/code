@@ -4,7 +4,11 @@
 
 export const joinFriendGroup = /* GraphQL */ `
   query JoinFriendGroup($user: joinFriendGroupInput) {
-    joinFriendGroup(user: $user)
+    joinFriendGroup(user: $user) {
+      statusCode
+      groupID
+      relevantUsers
+    }
   }
 `;
 export const getUser = /* GraphQL */ `
@@ -66,6 +70,7 @@ export const getUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -84,7 +89,6 @@ export const getUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -114,6 +118,7 @@ export const getUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -218,6 +223,7 @@ export const listUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -230,7 +236,6 @@ export const listUsers = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -251,6 +256,7 @@ export const listUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -340,6 +346,7 @@ export const getCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -437,6 +444,7 @@ export const listCourseGroups = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -498,7 +506,6 @@ export const getFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -528,6 +535,7 @@ export const getFriendGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -571,7 +579,6 @@ export const getFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -602,7 +609,6 @@ export const listFriendGroups = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -623,6 +629,7 @@ export const listFriendGroups = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -657,7 +664,6 @@ export const listFriendGroups = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -713,6 +719,7 @@ export const getChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -725,7 +732,6 @@ export const getChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -746,6 +752,7 @@ export const getChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -819,6 +826,7 @@ export const listChatMessages = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -829,6 +837,7 @@ export const listChatMessages = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -903,6 +912,7 @@ export const getQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -915,7 +925,6 @@ export const getQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -936,6 +945,7 @@ export const getQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1010,6 +1020,7 @@ export const listQuizs = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -1020,6 +1031,7 @@ export const listQuizs = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -1108,6 +1120,7 @@ export const userByUniYear = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1120,7 +1133,6 @@ export const userByUniYear = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1141,6 +1153,7 @@ export const userByUniYear = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1220,6 +1233,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }
@@ -1230,6 +1244,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
               userID
               createdAt
               updatedAt
+              owner
             }
             nextToken
           }

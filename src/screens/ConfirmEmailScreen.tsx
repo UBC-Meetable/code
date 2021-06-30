@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff8f3",
+    backgroundColor: Colors.theme.lightCreme,
   },
   button: {
     marginBottom: 20,

@@ -7,6 +7,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Colors from "../constants/Colors";
 import { RootStackParamList } from "../types";
 
 const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
   },
   addCoursebutton: {
     marginTop: 20,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "75%",
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 10,
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
     width: "100%",
   },
   inputStyle: {
@@ -160,7 +161,7 @@ const stylesTwo = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
   },
 });
 

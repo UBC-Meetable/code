@@ -2,6 +2,7 @@ import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { User } from "../API";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ProfilePictureSize } from "../types";
 import ProfilePicture from "./ProfilePicture";
 
@@ -10,7 +11,9 @@ type PictureStackProps = {
 };
 
 const PictureStack = ({ users }:PictureStackProps) => {
-  const pictureIds = users.map((user) => user?.profilePicture || "");
+  const user = useAuthenticatedUser();
+  const otherUsers = users.filter((currUser) => currUser.id !== user.attributes.sub);
+  const pictureIds = otherUsers.map((currUser) => currUser?.profilePicture || "");
   return (
     <Layout style={styles.pics}>
       {

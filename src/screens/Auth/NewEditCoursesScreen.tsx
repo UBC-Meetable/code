@@ -1,149 +1,246 @@
+import { GraphQLResult } from "@aws-amplify/api";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CourseInput, UserState } from "../../API";
+import { CourseGroup, CreateCourseGroupConnectionMutation, UserState } from "../../API";
+import joinCourseGroup from "../../calls/joinCourseGroup";
 import updateUserProfile from "../../calls/updateUserProfile";
+import Colors from "../../constants/Colors";
+import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { Course } from "../../types";
 
-const NewEditCourseScreen = ({ onFinish } : {onFinish: () => void}) => {
-  const [courses, setCourses] = useState(new Set<string>());
-  const [code, setCode] = useState("");
-  const [section, setSection] = useState("");
+type SimpleCourseGroup = {
+  title: string;
+  code: string;
+  section: string;
+  groupID: string;
+};
+
+const simplifyCourseGroup = (group: CourseGroup) => {
+  const newGroup: SimpleCourseGroup = {
+    groupID: group.groupID!,
+    title: group.title!,
+    section: group.section!,
+    code: group.code!,
+  };
+  return newGroup;
+};
+
+const simplifyCourseGroups = (groups: CourseGroup[]) => groups.map(simplifyCourseGroup);
+/** TODO: make styling more dynamic */
+// Todo: componentize file
+/** TODO: Cache user courses so we don't need to fetch so often. */
+const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
+  const courseGroups = useContext(CourseGroupsContext);
+  const [courses, setCourses] = useState(simplifyCourseGroups(courseGroups));
+  const [newCourses, setNewCourses] = useState([] as SimpleCourseGroup[]);
+  const [currTitle, setTitle] = useState("");
+  const [currCode, setCode] = useState("");
+  const [currSection, setSection] = useState("");
   const user = useAuthenticatedUser();
+
+  const generateNewGroup = ({
+    code,
+    section,
+    title,
+  }: {
+    code: string;
+    section: string;
+    title: string;
+  }) => ({
+    groupID: `${title}${code}-${section}`.toLowerCase(),
+    code,
+    section,
+    title: title.toUpperCase(),
+  } as SimpleCourseGroup);
+
+  function isCourseGroup(item: CourseGroup
+    | GraphQLResult<CreateCourseGroupConnectionMutation>): item is CourseGroup {
+    return (item as CourseGroup).groupID !== undefined;
+  }
+
   function addCourse() {
-    if (!code || !section) return;
-    const newCourse: Course = { code, section };
+    if (!currTitle || !currCode || !currSection) return;
+
+    const newGroup = generateNewGroup({
+      code: currCode,
+      title: currTitle,
+      section: currSection,
+    });
+
+    if (newCourses.concat(courses).find((g) => g.groupID === newGroup.groupID)) { return; }
+
+    setNewCourses([...newCourses, newGroup]);
     setCode("");
+    setTitle("");
     setSection("");
-    setCourses(new Set(courses.add(JSON.stringify(newCourse))));
   }
 
-  function deleteCourse(name: String) {
-    setCourses((prev) => new Set(Array.from(prev.values()).filter((x) => x !== name)));
+  function deleteCourse(course: SimpleCourseGroup) {
+    setCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== course.groupID));
+    setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== course.groupID));
   }
 
-  const onSave = async () => {
-    if (!courses.size) {
-      const res = await updateUserProfile({
-        id: user.attributes.sub,
-        userState: UserState.DONE,
-      });
-      if (res.data) {
-        onFinish();
-      }
-      return;
-    }
-    const courseArr = Array.from(courses)
-      .map((courseString) => JSON.parse(courseString) as CourseInput);
+  const handleSave = async () => {
+    const promises = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
+      generateNewGroup(course))) as
+      Promise<CourseGroup>[];
+
+    const results = await Promise.all(promises);
+    const handleCourseGroup = (result: CourseGroup) => {
+      setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== result.groupID));
+      setCourses([...courses, simplifyCourseGroup(result)]);
+    };
+    results.forEach(handleCourseGroup);
     const res = await updateUserProfile({
       id: user.attributes.sub,
-      courses: courseArr,
       userState: UserState.DONE,
     });
     if (res.data) {
       onFinish();
     }
+    // todo error handle
   };
+
+  const renderCourses = (
+    groups: SimpleCourseGroup[],
+    isNew = false,
+  ) => groups.map((group, index) => (
+    <Layout
+      key={index}
+      style={[styles.courseContainer, isNew && styles.newCourseContainer]}
+    >
+      <Layout
+        style={[
+          styles.courseTextContainer,
+          isNew && styles.newCourseContainer,
+        ]}
+      >
+        <Text style={[styles.courseTextStyle, isNew && styles.newCourseText]}>
+          {`${group.title} ${group.code}, Section ${group.section}`}
+        </Text>
+      </Layout>
+
+      {isNew && (
+        <Layout
+          style={[styles.deleteContainer, isNew && styles.newCourseContainer]}
+        >
+          <Button
+            appearance="ghost"
+            onPress={() => {
+              deleteCourse(group);
+            }}
+          >
+            {(evaProps: any) => (
+              <Text
+                {...evaProps}
+                style={{ ...evaProps.style, ...styles.deleteButtonText }}
+              >
+                X
+              </Text>
+            )}
+          </Button>
+        </Layout>
+      )}
+    </Layout>
+  ));
 
   return (
     <SafeAreaView style={styles.root}>
-      <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>Course Code</Text>
-        <Input
-          style={styles.inputStyle}
-          placeholder="COMM 101"
-          value={code}
-          onChangeText={(newCode) => {
-            setCode(newCode);
-          }}
-        />
+      <Layout style={[styles.form, styles.noBg]}>
+        <Layout style={styles.container2}>
+          <Text style={styles.textStyle}>Course</Text>
+          <Layout style={styles.codeContainer}>
+            <Input
+              style={[styles.courseCodeInput, styles.courseStyle]}
+              placeholder="COMM"
+              value={currTitle}
+              onChangeText={(newTitle) => {
+                setTitle(newTitle.trim().toUpperCase());
+              }}
+            />
+            <Input
+              style={[styles.courseCodeInput, styles.codeStyle]}
+              placeholder="101"
+              value={currCode}
+              onChangeText={(newCode) => {
+                setCode(newCode.trim());
+              }}
+            />
+            <Input
+              style={[styles.courseCodeInput, styles.codeStyle]}
+              placeholder="Section"
+              value={currSection}
+              onChangeText={(newSection) => {
+                setSection(newSection.trim());
+              }}
+            />
+          </Layout>
+        </Layout>
       </Layout>
-      <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>Section</Text>
-        <Input
-          style={styles.inputStyle}
-          placeholder="235"
-          value={section}
-          onChangeText={(newSection) => {
-            setSection(newSection);
+      <Layout style={[styles.noBg, styles.form]}>
+        <Button
+          style={styles.addCoursebutton}
+          onPress={() => {
+            addCourse();
           }}
-        />
+        >
+          {(evaProps: any) => (
+            <Text
+              {...evaProps}
+              style={{ ...evaProps.style, ...styles.buttonText }}
+            >
+              Add Course
+            </Text>
+          )}
+        </Button>
       </Layout>
-      <Button
-        style={styles.addCoursebutton}
-        onPress={() => {
-          addCourse();
-        }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Add Course
-          </Text>
-        )}
-      </Button>
+      <Text style={styles.textStyle}>Your Courses</Text>
       <ScrollView contentContainerStyle={styles.selectionsContainer}>
-        {Array.from(courses.values()).map((course, index) => {
-          const courseObj = JSON.parse(course) as Course;
-          return (
-            <Layout key={index} style={styles.courseContainer}>
-              <Text style={styles.courseTextStyle}>{`${courseObj.code} ${courseObj.section}`}</Text>
-              <Button
-                appearance="ghost"
-                onPress={() => {
-                  deleteCourse(course);
-                }}
-              >
-                {(evaProps: any) => (
-                  <Text
-                    {...evaProps}
-                    style={{ ...evaProps.style, ...styles.deleteButtonText }}
-                  >
-                    X
-                  </Text>
-                )}
-              </Button>
-            </Layout>
-          );
-        })}
+        {renderCourses(courses)}
+        {renderCourses(newCourses, true)}
       </ScrollView>
-      <Button
-        style={styles.button}
-        onPress={() => {
-          onSave();
-        }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            {courses.size > 0 ? "Save and Continue" : "Add Later"}
-          </Text>
-        )}
-      </Button>
+
+      <Layout style={[styles.noBg, styles.form]}>
+        <Button
+          style={styles.saveButton}
+          onPress={() => {
+            handleSave();
+          }}
+        >
+          {(evaProps: any) => (
+            <Text
+              {...evaProps}
+              style={{ ...evaProps.style, ...styles.buttonText }}
+            >
+              Save and Continue
+            </Text>
+          )}
+        </Button>
+      </Layout>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  noBg: {
+    backgroundColor: "#0000",
+  },
   root: {
-    flex: 1,
-    display: "flex",
+    backgroundColor: Colors.theme.lightCreme,
     height: "100%",
-    justifyContent: "space-around",
+    flexDirection: "column",
     alignItems: "center",
-    backgroundColor: "#FFF8F3",
+  },
+  form: {
+    alignItems: "center",
+    width: "80%",
   },
   addCoursebutton: {
-    marginTop: 20,
     marginBottom: 30,
     width: "75%",
     borderRadius: 100,
@@ -151,10 +248,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#FBBA82",
     height: 50,
   },
-  button: {
-    marginTop: 10,
+  saveButton: {
     marginBottom: 30,
-    width: "75%",
     borderRadius: 100,
     borderWidth: 0,
     backgroundColor: "#7ED1EF",
@@ -166,56 +261,31 @@ const styles = StyleSheet.create({
     textAlign: "center",
     flex: 1,
   },
-  blacktext: {
-    color: "#000",
-  },
-  topcontainer: {
-    flex: 1,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomcontainer: {
-    flex: 0,
-    display: "flex",
-    flexBasis: 150,
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  bodyContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-    marginTop: 30,
-  },
   selectionsContainer: {
-    display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "center",
     width: "75%",
-    backgroundColor: "#FFF8F3",
-    marginTop: 10,
-    marginBottom: 10,
     marginLeft: 10,
-    marginRight: 10,
   },
   courseContainer: {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: "#FFF8F3",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 10,
     width: "100%",
+    marginVertical: 2.5,
   },
-  inputStyle: {
-    borderRadius: 100,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
-    backgroundColor: "#ffff",
+  newCourseContainer: {
+    backgroundColor: "grey",
+  },
+  newCourseText: {
+    color: "white",
+  },
+  courseTextContainer: {
+    flex: 1,
+    borderRadius: 10,
+    padding: 20,
   },
   textStyle: {
     fontFamily: "Poppins_600SemiBold",
@@ -223,21 +293,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "500",
     lineHeight: 24,
-    marginLeft: 30,
-    marginRight: 30,
+  },
+  deleteContainer: {
+    flexBasis: 60,
+    borderRadius: 10,
   },
   courseTextStyle: {
     fontFamily: "Poppins_400Regular",
     fontSize: 15,
-    marginHorizontal: 20,
-    marginVertical: 10,
-    marginLeft: 30,
-    marginRight: 80,
   },
   deleteButtonText: {
     fontSize: 20,
-    color: "#FAE1CB",
-    marginLeft: 80,
+    color: "red",
   },
   headerStyle: {
     textAlign: "left",
@@ -245,17 +312,30 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginRight: 165,
   },
-});
-
-const stylesTwo = StyleSheet.create({
-  container: {
+  codeContainer: {
+    flexDirection: "row",
+    backgroundColor: "#0000",
+  },
+  courseStyle: {
+    flex: 0.4,
+  },
+  codeStyle: {
+    flex: 0.3,
+  },
+  courseCodeInput: {
+    borderRadius: 100,
+    margin: 5,
+    backgroundColor: "#ffff",
+  },
+  container2: {
     width: "100%",
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
+    justifyContent: "center",
   },
 });
 
-export default NewEditCourseScreen;
+export default NewEditCoursesScreen;

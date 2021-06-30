@@ -2,7 +2,7 @@ import Auth from "@aws-amplify/auth";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
@@ -21,6 +21,10 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setError] = useState<string[]>([]);
+  const emailRef = useRef<Input>(null);
+  const passwordRef = useRef<Input>(null);
+  const confirmEmailRef = useRef<Input>(null);
+  const confirmPasswordRef = useRef<Input>(null);
 
   const confirmForm = () => {
     setError(() => []);
@@ -43,6 +47,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
     }
     return flag;
   };
+
   const createProfile = async () => {
     setError([]);
     if (!confirmForm()) return;
@@ -73,7 +78,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       >
         <Text style={styles.header}>Let's get Started!</Text>
         <Layout style={styles.emailContainer}>
+
           <Input
+            ref={emailRef}
             style={styles.input}
             size="large"
             value={email}
@@ -81,11 +88,14 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             onChangeText={(e) => setEmail(e.toLowerCase())}
             keyboardType="email-address"
             autoCompleteType="email"
+            onSubmitEditing={() => confirmEmailRef.current?.focus()}
           />
           <Input
             style={styles.input}
             size="large"
             value={confirmEmail}
+            ref={confirmEmailRef}
+            onSubmitEditing={() => passwordRef.current?.focus()}
             placeholder="Confirm Email"
             onChangeText={(e) => setConfirmEmail(e.toLowerCase())}
             keyboardType="email-address"
@@ -93,20 +103,26 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           />
         </Layout>
         <Layout style={styles.emailContainer}>
+
           <Input
             style={styles.input}
             size="large"
             value={password}
+            ref={passwordRef}
             placeholder="Your Password"
             onChangeText={(e) => setPassword(e)}
             secureTextEntry
+            onSubmitEditing={() => confirmPasswordRef.current?.focus()}
             autoCompleteType="password"
           />
+
           <Input
             style={styles.input}
             size="large"
             value={confirmPassword}
+            ref={confirmPasswordRef}
             placeholder="Confirm Password"
+            onSubmitEditing={() => createProfile()}
             onChangeText={(e) => setConfirmPassword(e)}
             secureTextEntry
             autoCompleteType="password"

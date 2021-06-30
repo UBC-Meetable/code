@@ -61,6 +61,7 @@ export const onCreateUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -79,7 +80,6 @@ export const onCreateUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -109,6 +109,7 @@ export const onCreateUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -215,6 +216,7 @@ export const onUpdateUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -233,7 +235,6 @@ export const onUpdateUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -263,6 +264,7 @@ export const onUpdateUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -369,6 +371,7 @@ export const onDeleteUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -387,7 +390,6 @@ export const onDeleteUser = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -417,6 +419,7 @@ export const onDeleteUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -513,6 +516,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -612,6 +616,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -711,6 +716,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -779,7 +785,6 @@ export const onCreateFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -809,6 +814,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -852,7 +858,6 @@ export const onCreateFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -876,7 +881,6 @@ export const onUpdateFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -906,6 +910,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -949,7 +954,6 @@ export const onUpdateFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -973,7 +977,6 @@ export const onDeleteFriendGroup = /* GraphQL */ `
               nextToken
             }
             owner
-            size
             createdAt
             updatedAt
           }
@@ -1003,6 +1006,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
+          owner
         }
         nextToken
       }
@@ -1046,7 +1050,6 @@ export const onDeleteFriendGroup = /* GraphQL */ `
         nextToken
       }
       owner
-      size
       createdAt
       updatedAt
     }
@@ -1100,6 +1103,7 @@ export const onCreateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1112,7 +1116,6 @@ export const onCreateChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1133,6 +1136,7 @@ export const onCreateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1225,6 +1229,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1237,7 +1242,6 @@ export const onUpdateChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1258,6 +1262,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1350,6 +1355,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1362,7 +1368,6 @@ export const onDeleteChatMessage = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1383,6 +1388,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1465,6 +1471,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1546,6 +1553,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1558,7 +1566,6 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1579,6 +1586,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1617,6 +1625,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1658,6 +1667,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1739,6 +1749,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1751,7 +1762,6 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1772,6 +1782,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1810,6 +1821,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -1851,6 +1863,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1932,6 +1945,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -1944,7 +1958,6 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -1965,6 +1978,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2003,6 +2017,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2022,7 +2037,6 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2043,6 +2057,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2077,7 +2092,6 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -2123,6 +2137,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2135,7 +2150,6 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2156,6 +2170,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2194,6 +2209,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2213,7 +2229,6 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2234,6 +2249,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2268,7 +2284,6 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -2314,6 +2329,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2326,7 +2342,6 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2347,6 +2362,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2385,6 +2401,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2404,7 +2421,6 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2425,6 +2441,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2459,7 +2476,6 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         owner
-        size
         createdAt
         updatedAt
       }
@@ -2505,6 +2521,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2517,7 +2534,6 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2538,6 +2554,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2576,6 +2593,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      owner
     }
   }
 `;
@@ -2626,6 +2644,7 @@ export const onCreateQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2638,7 +2657,6 @@ export const onCreateQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2659,6 +2677,7 @@ export const onCreateQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2752,6 +2771,7 @@ export const onUpdateQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2764,7 +2784,6 @@ export const onUpdateQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2785,6 +2804,7 @@ export const onUpdateQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2878,6 +2898,7 @@ export const onDeleteQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }
@@ -2890,7 +2911,6 @@ export const onDeleteQuiz = /* GraphQL */ `
               groupID
               title
               owner
-              size
               createdAt
               updatedAt
             }
@@ -2911,6 +2931,7 @@ export const onDeleteQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
+            owner
           }
           nextToken
         }

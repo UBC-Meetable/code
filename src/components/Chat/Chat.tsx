@@ -10,6 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import sendMessageToGroup from "../../calls/sendMessageToGroup";
+import Colors from "../../constants/Colors";
 import MessagesContext from "../../context/MessageContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import useUserProfile from "../../hooks/useUserProfile";
@@ -164,7 +165,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
 const styles = StyleSheet.create({
   chat: {
     width: "100%",
-    backgroundColor: "#FFF8F3",
+    backgroundColor: Colors.theme.lightCreme,
     display: "flex",
     flex: 1,
   },

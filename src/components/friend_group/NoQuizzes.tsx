@@ -7,6 +7,7 @@ import {
 import Like from "../../assets/icons/like.svg";
 import Dislike from "../../assets/icons/dislike.svg";
 import Love from "../../assets/icons/love.svg";
+import Colors from "../../constants/Colors";
 
 type NoQuizzesProps = {
   onContinue: (event: GestureResponderEvent) => void;
@@ -64,7 +65,7 @@ const NoQuizzes = ({ onContinue }: NoQuizzesProps) => (
 const styles = StyleSheet.create(
   {
     root: {
-      backgroundColor: "#FFF8F3",
+      backgroundColor: Colors.theme.lightCreme,
       width: "70%",
       maxWidth: 300,
       minWidth: 200,

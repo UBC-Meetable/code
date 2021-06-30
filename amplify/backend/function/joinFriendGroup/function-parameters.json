@@ -1,4 +1,30 @@
 {
-  "permissions": {},
+  "permissions": {
+    "storage": {
+      "User:@model(appsync)": [
+        "read",
+        "update"
+      ],
+      "CourseGroup:@model(appsync)": [
+        "read"
+      ],
+      "FriendGroup:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "FriendGroupConnection:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Quiz:@model(appsync)": [
+        "read",
+        "update"
+      ]
+    }
+  },
   "lambdaLayers": []
 }
