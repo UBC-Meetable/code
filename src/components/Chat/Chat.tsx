@@ -68,7 +68,6 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     setTextLoading(true);
     const newMessage: ChatMessageWithPending = {
       __typename: "ChatMessage",
-      author: userProfile,
       body: message,
       groupChatID: groupID,
       pending: true,

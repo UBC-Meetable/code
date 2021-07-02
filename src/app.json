@@ -3,7 +3,7 @@
     "name": "meetable-app",
     "slug": "meetable-app",
     "description": "Meetable Mobile Application",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "meetable",
@@ -16,9 +16,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.trevorflanigan.meetable-app"
     },
     "android": {
       "adaptiveIcon": {

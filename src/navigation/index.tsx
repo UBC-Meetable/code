@@ -33,7 +33,6 @@ import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
 import { UserProfileProvider } from "../context/UserProfileContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import useUserProfile from "../hooks/useUserProfile";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
 import QuizScreen from "../screens/Auth/QuizScreen";
 import EditCourseScreen from "../screens/EditCourseScreen";
@@ -83,8 +82,7 @@ const App = () => {
     Poppins_400Regular,
   });
   const units = useSafeAreaInsets();
-  const { loading } = useUserProfile();
-  if (!fontsLoaded || loading) {
+  if (!fontsLoaded) {
     return (
       <Blank />
     );
