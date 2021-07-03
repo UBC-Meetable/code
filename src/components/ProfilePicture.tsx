@@ -1,11 +1,11 @@
 import { Layout, Spinner } from "@ui-kitten/components";
 import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Storage } from "aws-amplify";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
-import { ProfilePictureSize } from "../types";
+import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 
 type ProfilePictureProps = {
     imageKey: string;
@@ -48,13 +48,13 @@ const ProfilePicture = ({
   /** TODO: Maybe have these not as static sizes? */
   switch (size) {
   case ProfilePictureSize.PROFILE:
-    sizeObj = { height: 125, width: 125 };
+    sizeObj = ProfilePictureDimensions.PROFILE;
     break;
   case ProfilePictureSize.BUBBLE:
-    sizeObj = { height: 38, width: 38 };
+    sizeObj = ProfilePictureDimensions.BUBBLE;
     break;
   case ProfilePictureSize.MESSAGE:
-    sizeObj = { height: 30, width: 30 };
+    sizeObj = ProfilePictureDimensions.MESSAGE;
     break;
   default:
     throw new Error("Size Object Error");
@@ -72,12 +72,12 @@ const ProfilePicture = ({
         </Layout>
       </Layout>
     ) : (
-      <TouchableOpacity style={{ borderRadius: 100 }} onPress={onPress}>
+      <TouchableWithoutFeedback style={{ borderRadius: 100 }} onPress={onPress}>
         <Image
           source={uri ? { uri } : noAvatar}
           style={{ borderRadius: 100, ...sizeObj }}
         />
-      </TouchableOpacity>
+      </TouchableWithoutFeedback>
     )
   );
 };

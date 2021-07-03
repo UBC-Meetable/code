@@ -21,7 +21,7 @@ type SwipeProps = {
   remainingLoves: number;
 }
 
-const DEV_SKIP = true;
+const DEV_SKIP = false;
 
 const QuizSwipe = ({
   onFinish, data, swiperRef, onSwiped, remainingLoves,

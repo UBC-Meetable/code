@@ -2,19 +2,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Button, Layout } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import Icon from "react-native-vector-icons/AntDesign";
 import CourseGroups from "../screens/CourseGroups";
 import { GroupStackParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
 
 const GroupTabStack = createStackNavigator<GroupStackParamList>();
 
-const StarIcon = () => (
+const BooksIcon = () => (
   <Layout style={{
     display: "flex", justifyContent: "center", alignItems: "center",
   }}
   >
-    <Icon name="ios-settings" size={30} style={{ margin: -30 }} />
+    <Icon name="book" size={30} style={{ margin: -30 }} />
   </Layout>
 );
 
@@ -33,7 +33,7 @@ const CourseGroupStackNavigator = () => (
       options={({ navigation }) => ({
         headerShown: true,
         headerRight: () => (
-          <Button onPress={() => navigation.navigate("EditCourses")} style={styles.iconButton} appearance="ghost" accessoryLeft={StarIcon} />
+          <Button onPress={() => navigation.navigate("EditCourses")} style={styles.iconButton} appearance="ghost" accessoryLeft={BooksIcon} />
         ),
       })}
     >

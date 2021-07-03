@@ -161,6 +161,12 @@ export enum ProfilePictureSize {
   "MESSAGE"
 }
 
+export const ProfilePictureDimensions = {
+  PROFILE: { height: 125, width: 125 },
+  BUBBLE: { height: 38, width: 38 },
+  MESSAGE: { height: 30, width: 30 }
+}
+
 export enum SwipeActions {
   "LIKE" = "liked",
   "LOVE" = "loved",

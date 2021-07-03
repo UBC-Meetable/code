@@ -32,8 +32,6 @@ const ProfileScreen = () => {
   const [bioFocused, setBioFocused] = React.useState(false);
   const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
   const [localProfile, setLocalProfile] = React.useState<UserProfile>();
-  const [imageLoading, setImageLoading] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [key, setKey] = React.useState("");
   const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
 
@@ -82,7 +80,6 @@ const ProfileScreen = () => {
         },
       }]);
       uploadImage(cropped);
-      setImageLoading(() => true);
     }
   };
 
@@ -99,7 +96,6 @@ const ProfileScreen = () => {
                 updateImageKey(imageKey);
                 setKey(imageKey);
               });
-              setImageLoading(() => false);
             })
             .catch((err) => {
             });
@@ -114,7 +110,6 @@ const ProfileScreen = () => {
 
   React.useEffect(() => {
     const f = async () => {
-      setLoading(true);
       const resPromise = fetchUserProfile({ id: user.attributes.sub });
       const cachedProfile = await FileSystem.getInfoAsync(path);
       if (cachedProfile.exists) {
@@ -125,7 +120,6 @@ const ProfileScreen = () => {
         setFetchedProfile(profile);
         setKey(profile.profilePicture || "");
         setLocalProfile(profile);
-        setLoading(false);
       }
       const res = await resPromise;
       if (await res.data) {
@@ -136,7 +130,6 @@ const ProfileScreen = () => {
         setFetchedProfile(profile);
         setKey(profile.profilePicture || "");
         setLocalProfile(profile);
-        setLoading(false);
       }
     };
     if (user) f();

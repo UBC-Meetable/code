@@ -24,23 +24,23 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
           <TouchableOpacity
             style={styles.avatarButton}
             activeOpacity={0.5}
-            // todo
-            onPress={() => setVisible(true)}
           >
             <Modal
               visible={visible}
               backdropStyle={otherStyles.backdrop}
-              onBackdropPress={() => setVisible(false)}
+              onBackdropPress={() => {
+                setVisible(false);
+              }}
+              style={otherStyles.modal}
             >
-              <Card>
-                <InspectProfile user={message.author!} />
-                <Button onPress={() => setVisible(false)}>
-                  OK
-                </Button>
-              </Card>
+              <InspectProfile user={message.author!} />
             </Modal>
 
-            <ProfilePicture imageKey={imageKey} size={ProfilePictureSize.MESSAGE} />
+            <ProfilePicture
+              imageKey={imageKey}
+              size={ProfilePictureSize.MESSAGE}
+              onPress={() => setVisible(true)}
+            />
           </TouchableOpacity>
           <Layout style={styles.bubble}>
             <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>
@@ -89,7 +89,17 @@ const otherStyles = StyleSheet.create({
     alignSelf: "flex-start",
   },
   backdrop: {
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(251, 186, 130, 0.5)",
+  },
+  modal: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: "60%",
+    flexGrow: 1,
+    flex: 1,
+    width: "85%",
+    minWidth: 300,
+    maxWidth: 500,
   },
 });
 
