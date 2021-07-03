@@ -20,7 +20,6 @@ import updateUserProfile from "../../calls/updateUserProfile";
 import Colors from "../../constants/Colors";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SignUpParamList } from "../../types";
-// import Auth0BubbleBackground from "../assets/images/auth0-bubble.svg";
 
 const window = Dimensions.get("window");
 

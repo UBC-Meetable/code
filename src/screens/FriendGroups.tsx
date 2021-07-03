@@ -178,6 +178,19 @@ const FriendGroups = ({
     </Layout>
   );
 
+  const renderLoad = () => (
+    <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
+      <List
+        refreshControl={
+          <RefreshControl refreshing onRefresh={fakeLoad} />
+        }
+        style={[styles.card]}
+        data={[]}
+        renderItem={renderItem}
+      />
+    </Layout>
+  );
+
   const renderNoQuizzes = () => (
     <Layout style={[{
       paddingTop: headerHeight,
@@ -202,21 +215,10 @@ const FriendGroups = ({
     </Layout>
   );
 
-  if (isLoading(loading)) {
-    return (
-      <Layout style={[{
-        paddingTop: headerHeight,
-        backgroundColor: "#0000",
-        justifyContent: "center",
-        alignItems: "center",
-      }, StyleSheet.absoluteFill]}
-      >
-        <Spinner />
-      </Layout>
-    );
-  }
-
   const render = () => {
+    if (isLoading(loading)) {
+      return renderLoad();
+    }
     switch (UIState) {
     case UIStateOptions.DEFAULT:
       return renderGroups();

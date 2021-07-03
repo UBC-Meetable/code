@@ -173,40 +173,40 @@ const EditCourseScreen = () => {
           </Layout>
         </Layout>
       </Layout>
-      <Layout style={[styles.noBg, styles.form]}>
+      <Layout style={[styles.noBg, styles.form, styles.bottomContainer]}>
         <Button
-          style={styles.addCoursebutton}
+          style={[styles.button, styles.addCoursebutton]}
           onPress={() => {
-            addCourse();
+            handleSave();
           }}
         >
-          {(evaProps: any) => (
+          {() => (
             <Text
-              {...evaProps}
-              style={{ ...evaProps.style, ...styles.buttonText }}
+              style={styles.buttonText}
             >
               Add Course
             </Text>
           )}
         </Button>
       </Layout>
-      <Text style={styles.textStyle}>Your Courses</Text>
-      <ScrollView contentContainerStyle={styles.selectionsContainer}>
-        {renderCourses(courses)}
-        {renderCourses(newCourses, true)}
-      </ScrollView>
 
-      <Layout style={[styles.noBg, styles.form]}>
+      <Layout style={[styles.noBg, styles.middleContainer, { width: "100%", alignItems: "center" }]}>
+        <Text style={styles.textStyle}>Your Courses</Text>
+        <ScrollView contentContainerStyle={styles.selectionsContainer}>
+          {renderCourses(courses)}
+          {renderCourses(newCourses, true)}
+        </ScrollView>
+      </Layout>
+      <Layout style={[styles.noBg, styles.form, styles.bottomContainer]}>
         <Button
-          style={styles.saveButton}
+          style={styles.button}
           onPress={() => {
             handleSave();
           }}
         >
-          {(evaProps: any) => (
+          {() => (
             <Text
-              {...evaProps}
-              style={{ ...evaProps.style, ...styles.buttonText }}
+              style={styles.buttonText}
             >
               Save
             </Text>
@@ -218,6 +218,24 @@ const EditCourseScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  middleContainer: {
+    flex: 1,
+    flexGrow: 1,
+  },
+  bottomContainer: {
+    flex: 0,
+    flexBasis: 50,
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  addCourseContainer: {
+    flex: 0,
+    flexBasis: 50,
+    marginVertical: 10,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   noBg: {
     backgroundColor: "#0000",
   },
@@ -232,26 +250,21 @@ const styles = StyleSheet.create({
     width: "80%",
   },
   addCoursebutton: {
-    marginBottom: 30,
-    width: "75%",
-    borderRadius: 100,
-    borderWidth: 0,
     backgroundColor: "#FBBA82",
-    height: 50,
   },
-  saveButton: {
+  button: {
     marginBottom: 30,
     width: "75%",
     borderRadius: 100,
     borderWidth: 0,
+    minHeight: 50,
+    flex: 1,
     backgroundColor: "#7ED1EF",
-    height: 50,
   },
   buttonText: {
     fontFamily: "Poppins_600SemiBold",
-    fontSize: 20,
+    color: "#fff",
     textAlign: "center",
-    flex: 1,
   },
   selectionsContainer: {
     flexDirection: "column",
