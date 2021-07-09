@@ -2,7 +2,7 @@
 # [MODELS]
 type User
   @model 
-  @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
+  #@auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
   @key(fields: ["id"]) 
   @key(name: "byUniYear", fields: ["university", "year"], queryField: "UserByUniYear") {
   id: String!
@@ -23,7 +23,8 @@ type User
 type CourseGroup
     @model 
     @key(fields: ["groupID"])
-    @auth(rules: [{allow: owner, operations: [create]}]){
+    #@auth(rules: [{allow: owner, operations: [create]}])
+    {
   users: [CourseGroupConnection!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
   title: String!
   groupID: String!
@@ -35,7 +36,7 @@ type CourseGroup
 type FriendGroup
   @model
   @key(fields: ["groupID"])
-  @auth(rules: [{allow: owner, operations:[create]}])
+  #@auth(rules: [{allow: owner, operations:[create]}])
   {
   users: [FriendGroupConnection!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
   groupID: String!
@@ -51,7 +52,8 @@ type FriendGroup
 type ChatMessage
   @model
   @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
-  @auth(rules: [{allow: owner, operations: [create]}]) {
+  #@auth(rules: [{allow: owner, operations: [create]}]) 
+  {
     groupChatID: String!
     userID: String!
     author: User! @connection(fields: ["userID"])
@@ -92,7 +94,7 @@ type FriendGroupConnection
 type Quiz
   @model
   @key(name: "byUser", fields: ["userID"]) # secondary index necessary?? Can't seem to remove w/ amplify push
-  @auth(rules: [{allow: owner, operations:[create]}])
+  #@auth(rules: [{allow: owner, operations:[create]}])
   {
     userID: String!
     user: User! @connection(fields: ["userID"])

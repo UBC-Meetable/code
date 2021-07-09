@@ -1,6 +1,6 @@
 {
     "identityPoolName": "meetablea02db50e_identitypool_a02db50e",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "meetaba02db50e",
     "userPoolName": "meetablea02db50e_userpool_a02db50e",
     "autoVerifiedAttributes": [
@@ -61,5 +61,6 @@
         "Ref": "AWS::StackId"
     },
     "permissions": [],
-    "dependsOn": []
+    "dependsOn": [],
+    "authProviders": []
 }

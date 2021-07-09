@@ -1,0 +1,35 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "api": {
+      "meetable": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "storage": {
+      "User:@model(appsync)": [
+        "read"
+      ],
+      "CourseGroup:@model(appsync)": [
+        "read"
+      ],
+      "FriendGroup:@model(appsync)": [
+        "read"
+      ],
+      "ChatMessage:@model(appsync)": [
+        "read"
+      ],
+      "CourseGroupConnection:@model(appsync)": [
+        "read"
+      ],
+      "FriendGroupConnection:@model(appsync)": [
+        "read"
+      ],
+      "Quiz:@model(appsync)": [
+        "read"
+      ]
+    }
+  }
+}

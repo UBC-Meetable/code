@@ -9,24 +9,43 @@
 	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME
 	API_MEETABLE_FRIENDGROUPTABLE_ARN
 	API_MEETABLE_FRIENDGROUPTABLE_NAME
+	API_MEETABLE_GRAPHQLAPIENDPOINTOUTPUT
 	API_MEETABLE_GRAPHQLAPIIDOUTPUT
+	API_MEETABLE_GRAPHQLAPIKEYOUTPUT
 	API_MEETABLE_QUIZTABLE_ARN
 	API_MEETABLE_QUIZTABLE_NAME
 	API_MEETABLE_USERTABLE_ARN
 	API_MEETABLE_USERTABLE_NAME
 	ENV
-	FUNCTION_JOINFRIENDGROUP_NAME
 	REGION
 Amplify Params - DO NOT EDIT */
-// const axios = require('axios');
-// const gql = require('graphql-tag');
-// const graphql = require('graphql');
-const amplify = require('aws-amplify');
+
+
+// const AWSAppSyncClient = require('aws-appsync').AWSAppSyncClient;
+// const AUTH_TYPE = require('aws-appsync').AUTH_TYPE;
+
+// const awsconfig = require('./aws-exports');
+
+
+// const client = new AWSAppSyncClient({
+//   url: awsconfig.aws_appsync_graphqlEndpoint,
+//   region: awsconfig.aws_appsync_region,
+//   auth: {
+//     type: AUTH_TYPE.API_KEY,
+//     apiKey: awsconfig.aws_appsync_apiKey,
+//   },
+// });
+
+
+
+
+const axios = require('axios');
+const gql = require('graphql-tag');
+const print = require('graphql').print;
+
 const AWS = require('aws-sdk');
-const API = amplify.API;
-//const docClient = new AWS.DynamoDB.DocumentClient();
-//const lambda = new AWS.Lambda();
-const API_URL = "https://xfljscizzjctdkz77uthysiecu.appsync-api.us-east-1.amazonaws.com/graphql";
+const docClient = new AWS.DynamoDB.DocumentClient();
+
 const joinFriendGroup =  gql`
   query JoinFriendGroup($user: joinFriendGroupInput) {
     joinFriendGroup(user: $user) {
@@ -36,61 +55,84 @@ const joinFriendGroup =  gql`
   }
 `;
 
-exports.handler = async (event) => {
-try {
-    // const graphqlData = await axios({
-    //     url: "https://xfljscizzjctdkz77uthysiecu.appsync-api.us-east-1.amazonaws.com/graphql",
-    //     method: 'post',
-    //     headers: {
-    //         //'x-api-key': process.env.API_<YOUR_API_NAME>_GRAPHQLAPIKEYOUTPUT
-    //     },
-    //     data: {
-    //         query: joinFriendGroup,
-    //     }
-    // });
-    const data = await axios.get(API_URL, {
-        query: `query JoinFriendGroup($user: joinFriendGroupInput) {
-                    joinFriendGroup(user: $user) {
-                        statusCode
-                        body
-                    }
-                }
-      `,
-        variables: {
-          id: 2,
-          city: 'Test'
-        }
-      }, {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-      
-    const body = {
-        graphqlData: graphqlData.data.data.listTodos
+const listUsers = /* GraphQL */ gql`
+  query ListUsers {
+    listUsers {
+      items {
+        id
+      }
     }
-    return {
-        statusCode: 200,
-        body: JSON.stringify(body),
+  }
+  #       profilePicture
+  #       bio
+  #       userState
+  #       university
+  #       year
+  #       major
+  #       quizzes {
+  #         items {
+  #           id
+  #           userID
+  #           responses {
+  #             q
+  #             a
+  #           }
+  #           createdAt
+  #           updatedAt
+  #           owner
+  #         }
+  #         nextToken
+  #       }
+  #       createdAt
+  #       updatedAt
+  #       owner
+  #     }
+  #     nextToken
+  #   }
+  # }
+`;
+
+exports.handler = async (event) => {
+  try {
+    const user = {
+      id: "2",
+      university: "UBC",
+      year: 1
+    };
+    const graphqlData = await axios({
+        url: process.env.API_MEETABLE_GRAPHQLAPIENDPOINTOUTPUT,
+        method: 'post',
         headers: {
-            "Access-Control-Allow-Origin": "*",
+            'x-api-key': process.env.API_MEETABLE_GRAPHQLAPIKEYOUTPUT
+        },
+        data: {
+            query: `
+            query JoinFriendGroup {
+              joinFriendGroup(user: ${user}) {
+                statusCode
+                body
+              }
             }
+          `,
         }
-    } catch (err) {
-        console.log('error posting to appsync: ', err);
-    } 
-    
+    });
+    //console.log(graphqlData);
 
 
-    // // TODO implement
-    // const response = {
-    //     statusCode: 200,
-    // //  Uncomment below to enable CORS requests
-    // //  headers: {
-    // //      "Access-Control-Allow-Origin": "*",
-    // //      "Access-Control-Allow-Headers": "*"
-    // //  }, 
-    //     body: JSON.stringify('Hello from Lambda!'),
-    // };
-    // return response;
-};
+
+    // TODO implement
+    const response = {
+        statusCode: 200,
+    //  Uncomment below to enable CORS requests
+    //  headers: {
+    //      "Access-Control-Allow-Origin": "*",
+    //      "Access-Control-Allow-Headers": "*"
+    //  }, 
+        body: JSON.stringify(graphqlData.data.data),
+    };
+    return response;
+  } catch (err) {
+  console.log(err)
+  }
+
+}
