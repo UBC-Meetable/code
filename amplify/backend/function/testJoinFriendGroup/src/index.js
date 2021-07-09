@@ -99,6 +99,16 @@ exports.handler = async (event) => {
       university: "UBC",
       year: 1
     };
+    // console.log(`${user}`); // prints [object Object];
+    console.log(`
+    query JoinFriendGroup {
+      joinFriendGroup(user: ${JSON.stringify(user)}) {
+        statusCode
+        body
+      }
+    }
+  `);
+    
     const graphqlData = await axios({
         url: process.env.API_MEETABLE_GRAPHQLAPIENDPOINTOUTPUT,
         method: 'post',
@@ -108,7 +118,7 @@ exports.handler = async (event) => {
         data: {
             query: `
             query JoinFriendGroup {
-              joinFriendGroup(user: ${user}) {
+              joinFriendGroup(user: {id:"2",university:"UBC",year:1}) {
                 statusCode
                 body
               }
