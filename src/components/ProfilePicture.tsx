@@ -23,14 +23,16 @@ const ProfilePicture = ({
 
   /** Get image from cache first, download it if there is an update  */
   useEffect(() => {
+    console.log("imageKey", imageKey);
+
     const checkCache = async () => {
       setImageLoading(true);
       const safePathName = imageKey.replace(/^.*[\\/]/, "");
       const path = `${FileSystem.cacheDirectory}${safePathName}`;
       const image = await FileSystem.getInfoAsync(path);
       if (image.exists) {
-        setUri(image.uri);
-        setImageLoading(false);
+        setUri(() => image.uri);
+        setImageLoading(() => false);
         return;
       }
 
@@ -39,6 +41,7 @@ const ProfilePicture = ({
       const newImage = await FileSystem.downloadAsync(s3Uri, path);
       setUri(newImage.uri);
       setImageLoading(false);
+      console.log("Got URI:", uri);
     };
 
     checkCache();
@@ -60,6 +63,16 @@ const ProfilePicture = ({
     throw new Error("Size Object Error");
   }
 
+  const DefaultAvatar = () => (
+    <TouchableWithoutFeedback style={{ borderRadius: 100 }} onPress={onPress}>
+      <Image
+        source={noAvatar}
+        style={{ borderRadius: 100, ...sizeObj }}
+      />
+    </TouchableWithoutFeedback>
+  );
+
+  if (!uri) return <DefaultAvatar />;
   return (
     imageLoading ? (
       <Layout style={styles.profileContainer}>

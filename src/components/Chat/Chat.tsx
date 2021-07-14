@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
   messageContainer: {
     flex: 1,
     backgroundColor: "#0000",
+    width: "100%",
   },
   inputContainer: {
     flexBasis: 70,

@@ -1,11 +1,13 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
+  Button,
   Layout,
 } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
 import Colors from "../constants/Colors";
+import { GearIcon } from "../navigation/ProfileStackNavigator";
 import {
   ChatMessage, CourseGroup, GroupType, RootStackParamList,
 } from "../types";
@@ -21,7 +23,14 @@ const GroupScreen = ({
 }) => {
   useEffect(() => {
     navigation.setOptions({ headerBackTitle: groupTitle });
-  }, [groupTitle]);
+    if (groupType === GroupType.FRIEND) {
+      navigation.setOptions({
+        headerRight: () => (
+          <Button onPress={() => navigation.navigate("FriendOptions")} style={styles.iconButton} appearance="ghost" accessoryLeft={GearIcon} />
+        ),
+      });
+    }
+  }, [groupTitle, groupType]);
   return (
     <Layout style={styles.root}>
       <Chat groupType={groupType} />
@@ -37,6 +46,15 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     backgroundColor: Colors.theme.lightCreme,
+  },
+  iconButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+    marginRight: 15,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
   },
 });
 

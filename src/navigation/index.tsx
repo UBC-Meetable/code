@@ -3,22 +3,31 @@
 import { Auth } from "@aws-amplify/auth";
 import * as eva from "@eva-design/eva";
 import {
-  Poppins_400Regular, Poppins_500Medium,
-  Poppins_600SemiBold, useFonts,
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  useFonts,
 } from "@expo-google-fonts/poppins";
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import {
-  DefaultTheme, NavigationContainer,
-} from "@react-navigation/native";
-import {
-  createStackNavigator, StackNavigationOptions, StackNavigationProp,
+  createStackNavigator,
+  StackNavigationOptions,
+  StackNavigationProp,
 } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider, Layout,
+  ApplicationProvider as UiProvider,
+  Button,
+  Layout,
 } from "@ui-kitten/components";
 import Amplify from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as React from "react";
-import { ColorSchemeName, Dimensions, useColorScheme } from "react-native";
+import {
+  ColorSchemeName,
+  Dimensions,
+  StyleSheet,
+  useColorScheme,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
@@ -42,6 +51,8 @@ import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
 import BottomTabNavigator from "./BottomTabNavigator";
+import generateOptions from "./generateOptions";
+import { GearIcon } from "./ProfileStackNavigator";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 
 Amplify.configure({
@@ -83,9 +94,7 @@ const App = () => {
   });
   const units = useSafeAreaInsets();
   if (!fontsLoaded) {
-    return (
-      <Blank />
-    );
+    return <Blank />;
   }
   return <AuthenticatedApp />;
 };
@@ -108,13 +117,16 @@ const AuthorizedApp = () => {
       if (!loggedInUser) return;
       try {
         const { email, sub: id } = loggedInUser.attributes;
-        let userProfile = (await fetchUserProfile({ id }))
-          .data?.getUser;
+        let userProfile = (await fetchUserProfile({ id })).data?.getUser;
         if (!userProfile) {
-          userProfile = (await createUserProfile({
-            email, id, university: "", year: -1,
-          })).data
-            ?.createUser;
+          userProfile = (
+            await createUserProfile({
+              email,
+              id,
+              university: "None",
+              year: -1,
+            })
+          ).data?.createUser;
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
         const { userState: fetchedUserState } = userProfile;
@@ -127,11 +139,15 @@ const AuthorizedApp = () => {
       }
     };
 
-    if (user) { f(user); }
+    if (user) {
+      f(user);
+    }
   }, [user]);
 
   if (loading) {
-    Auth.currentAuthenticatedUser().then((loggedIn) => { user = loggedIn; });
+    Auth.currentAuthenticatedUser().then((loggedIn) => {
+      user = loggedIn;
+    });
     return <Blank />;
   }
 
@@ -153,7 +169,9 @@ const AuthorizedApp = () => {
       throw new Error("UserState undefined");
     }
 
-    return <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />;
+    return (
+      <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />
+    );
   }
 
   return (
@@ -162,7 +180,13 @@ const AuthorizedApp = () => {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            cardStyle: { backgroundColor: "#FFF9F5" },
+            cardStyle: { backgroundColor: Colors.theme.background },
+            headerLeftContainerStyle: {
+              marginLeft: 10,
+            },
+            headerStyle: {
+              height: 170,
+            },
           }}
           initialRouteName="Tabs"
         >
@@ -173,36 +197,10 @@ const AuthorizedApp = () => {
           />
           <Stack.Screen
             name="Group"
-            options={({
-              navigation,
-            }: {
-          navigation: StackNavigationProp<RootStackParamList, "Group">;
-        }) => ({
-              cardStyle: {
-                backgroundColor: Colors.theme.creme,
-              },
-              headerShown: true,
-              headerTitle: "",
-              headerLeft: ({ label }: { label: string }) => (
+            options={({ navigation }) => generateOptions(navigation,
+              ({ label }: { label: string }) => (
                 <ChatBackButton navigation={navigation} label={label} />
-              ),
-              headerBackground: (props) => (
-                <Layout
-                  {...props}
-                  style={{
-                    backgroundColor: Colors.theme.lightCreme,
-                  }}
-                >
-                  <BubbleHeader width={window.width} height={170} />
-                </Layout>
-              ),
-              headerLeftContainerStyle: {
-                marginLeft: 10,
-              },
-              headerStyle: {
-                height: 170,
-              },
-            } as StackNavigationOptions)}
+              ))}
           >
             {(props) => (
               <MessageProvider groupID={props.route.params.groupID}>
@@ -216,36 +214,34 @@ const AuthorizedApp = () => {
           </Stack.Screen>
           <Stack.Screen
             name="EditCourses"
-            options={({
-              navigation,
-            }: {
-          navigation: StackNavigationProp<RootStackParamList, "EditCourses">;
-        }) => ({
-              cardStyle: {
-                backgroundColor: Colors.theme.creme,
-              },
-              headerShown: true,
-              headerTitle: "",
-              headerLeft: () => (
-                <ChatBackButton navigation={navigation} label="Add Courses" />
-              ),
-              headerBackground: (props) => (
-                <Layout
-                  {...props}
-                  style={{
-                    backgroundColor: Colors.theme.lightCreme,
-                  }}
-                >
-                  <BubbleHeader width={window.width} height={170} />
-                </Layout>
-              ),
-              headerLeftContainerStyle: {
-                marginLeft: 10,
-              },
-              headerStyle: {
-                height: 170,
-              },
-            } as StackNavigationOptions)}
+            options={({ navigation }) => generateOptions(navigation, "Add Courses")}
+            // options={({
+            //   navigation,
+            // }: {
+            //   navigation: StackNavigationProp<
+            //     RootStackParamList,
+            //     "EditCourses"
+            //   >;
+            // }) => ({
+            //   cardStyle: {
+            //     backgroundColor: Colors.theme.creme,
+            //   },
+            //   headerShown: true,
+            //   headerTitle: "",
+            //   headerLeft: () => (
+            //     <ChatBackButton navigation={navigation} label="Add Courses" />
+            //   ),
+            //   headerBackground: (props) => (
+            //     <Layout
+            //       {...props}
+            //       style={{
+            //         backgroundColor: Colors.theme.lightCreme,
+            //       }}
+            //     >
+            //       <BubbleHeader width={window.width} height={170} />
+            //     </Layout>
+            //   ),
+            // } as StackNavigationOptions)}
             component={EditCourseScreen}
           />
           <Stack.Screen
@@ -253,11 +249,11 @@ const AuthorizedApp = () => {
             options={({
               navigation,
             }: {
-          navigation: StackNavigationProp<
-            RootStackParamList,
-            "ProfileSettings"
-          >;
-        }) => ({
+              navigation: StackNavigationProp<
+                RootStackParamList,
+                "ProfileSettings"
+              >;
+            }) => ({
               cardStyle: {
                 backgroundColor: Colors.theme.creme,
               },
@@ -276,18 +272,10 @@ const AuthorizedApp = () => {
                   <BubbleHeader width={window.width} height={170} />
                 </Layout>
               ),
-              headerLeftContainerStyle: {
-                marginLeft: 10,
-              },
-              headerStyle: {
-                height: 170,
-              },
             } as StackNavigationOptions)}
             component={ProfileSettingsScreen}
           />
-          <Stack.Screen
-            name="Quiz"
-          >
+          <Stack.Screen name="Quiz">
             {(props) => (
               <QuizScreen
                 onFinish={(q) => {
@@ -298,11 +286,6 @@ const AuthorizedApp = () => {
               />
             )}
           </Stack.Screen>
-          <Stack.Screen
-            name="NotFound"
-            component={NotFoundScreen}
-            options={{ title: "Oops!" }}
-          />
         </Stack.Navigator>
       </FriendGroupsProvider>
     </CourseGroupsProvider>
@@ -313,7 +296,5 @@ const AuthenticatedApp = withAuthenticator(AuthorizedApp, {
   signUpConfig: {
     hiddenDefaults: ["phone_number"],
   },
-  authenticatorComponents: [
-    <LoginFlowController />,
-  ],
+  authenticatorComponents: [<LoginFlowController />],
 });

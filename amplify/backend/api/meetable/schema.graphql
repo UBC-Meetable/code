@@ -68,9 +68,9 @@ enum GroupType {
 # Represents a connection between a User and a CourseGroup
 type CourseGroupConnection
   @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-  @model(queries: null)
+  @model
   @key(name: "byCourseGroup", fields: ["groupID", "userID"])
-  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  @key(name: "byUser", fields: ["userID", "groupID"], queryField: "CourseGroupByUser") {
   id: ID!
   groupID: String!
   userID: String!
@@ -80,9 +80,9 @@ type CourseGroupConnection
 
 type FriendGroupConnection
   @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-  @model(queries: null)
+  @model
   @key(name: "byFriendGroup", fields: ["groupID", "userID"])
-  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  @key(name: "byUser", fields: ["userID", "groupID"], queryField: "FriendGroupByUser") {
   id: ID!
   groupID: String!
   userID: String!

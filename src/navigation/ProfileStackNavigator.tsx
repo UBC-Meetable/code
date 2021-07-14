@@ -16,7 +16,7 @@ import HeaderOptions from "./HeaderOptions";
 
 const ProfileTabStack = createStackNavigator<TabTwoParamList>();
 
-const StarIcon = () => (
+export const GearIcon = () => (
   <Layout style={{
     display: "flex", justifyContent: "center", alignItems: "center",
   }}
@@ -39,7 +39,7 @@ const ProfileStackNavigator = () => (
       options={({ navigation }) => ({
         headerShown: true,
         headerRight: () => (
-          <Button onPress={() => navigation.navigate("ProfileSettings")} style={styles.iconButton} appearance="ghost" accessoryLeft={StarIcon} />
+          <Button onPress={() => navigation.navigate("ProfileSettings")} style={styles.iconButton} appearance="ghost" accessoryLeft={GearIcon} />
         ),
       })}
     />
