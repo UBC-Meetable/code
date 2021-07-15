@@ -28,9 +28,10 @@ const tables = {
 
 exports.handler = async (event) => {
   const incomingUser = event.arguments.user;
+  console.log({incomingUser});
   const MIN_SCORE = 2; // consider passing with the lambda input
   const MAX_GROUP_SIZE = 5;
-  const SCORE_IF_GROUPED_BEOFRE = 0; // could consider a score reduction instead
+  const SCORE_IF_GROUPED_BEFORE = 0; // could consider a score reduction instead
   let pq = new PriorityQueue.BinaryHeap({ function(a, b) {a[1] == b[1] ? 0 : (a[1] > b[1] ? -1 : 1)} }); // maxPQ containing type [user, score]
   let groupToPut = null; // string groupID of group to join or null if none found
   const relevantUsers = [];
@@ -69,9 +70,11 @@ exports.handler = async (event) => {
       }).promise()
       .then(
         function(data) {
-          // console.log({data});
+          console.log(data);
           let [answers] = data.Items.map((item) => item.responses);
-          quizzes[user.id] = answers;
+          if (answers)
+            quizzes[user.id] = answers;
+          console.log(`Answers for user id ${user.id}: ${answers}`);
         },
         function(error) {
           console.log(error);
@@ -83,29 +86,36 @@ exports.handler = async (event) => {
     await fillGroupSet(incomingUser.id, incomingUserGroups);
     console.log(incomingUserGroups);
     await Promise.all(Array.from(incomingUserGroups).map((groupID) => {
+      console.log({groupID});
       const res = docClient.query({
         TableName: tables.friendGroupConnectionModel,
+        IndexName: "byFriendGroup",
         KeyConditionExpression: "groupID = :groupID",
         ExpressionAttributeValues: {
           ":groupID": groupID
         }
       }).promise().then(
         function(data) {
+          console.log("Retrieved data from FriendGroupConnectionsTable", {data});
           data.Items.forEach(fgcm => groupedBefore.add(fgcm.userID));
         },
         function(error) {
-          console.log(error);
+          console.error("An error occurred:",error);
         }
       );
       return res;
     }));
 
+    console.log(quizzes);
+    console.log(quizzes[incomingUser.id]);
+
+
     // initializing arr of pairs then buildHeap is O(n) + O(n). This way is O(nlogn)
     bucket.Items.forEach(function(user, index, array) {
-      if (quizzes[user.id] !== null && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
+      if (quizzes[user.id] !== undefined &&quizzes[user.id] !== null && user.id !== incomingUser.id && !groupedBefore.has(user.id)) {
         pq.push([user, compatibilityScore(quizzes[user.id], quizzes[incomingUser.id])]);
       } else if (groupedBefore.has(user.id)) {
-        pq.push([user, SCORE_IF_GROUPED_BEOFRE]);
+        pq.push([user, SCORE_IF_GROUPED_BEFORE]);
       }
     });
 
@@ -129,6 +139,8 @@ exports.handler = async (event) => {
               ":groupID": groupID
             }
           }).promise();
+
+          console.log({membersInGroup});
           
           const groupSize = membersInGroup.Count;
           if (groupSize <= MAX_GROUP_SIZE && groupSize < SmallestNonEmpty.size) {
@@ -181,6 +193,8 @@ async function fillGroupSet(userid, set) {
 // [QAPair], [QAPair] -> int
 function compatibilityScore(q1, q2) {
   console.log("Compatability Score");
+  console.log("q1", q1);
+  console.log("q2", q2);
   const user1Responses = new Map(q1.map(i => [i.q,i.a]));
   const user2Responses = new Map(q2.map(i => [i.q,i.a]));
   let score = 0;

@@ -3,9 +3,9 @@
   "typeName": "Query",
   "fieldName": "", 
   "arguments": { "user": {
-    "id": "7e6f5c34-c570-4c08-95a1-ade7f9224a44",
+    "id": "1943998a-6fe8-4cc1-b322-879ea4375fec",
     "university": "The University of British Columbia",
-    "year": 1
+    "year": -1
   } }, 
   "identity": {},
   "source": {}, 

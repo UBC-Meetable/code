@@ -45,8 +45,6 @@ const NewProfileScreen = ({
         userState: UserState.PROFILE_CREATED,
       });
 
-      console.log(res);
-
       if (res.data) {
         navigation.navigate("NewEditCourses");
       }

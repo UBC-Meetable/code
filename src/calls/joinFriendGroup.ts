@@ -10,12 +10,19 @@ const joinFriendGroup = async (
   groupID: string | undefined | null,
 ) => {
   let foundGroup: FriendGroup;
+  console.log("JoinFriendGroup");
+  console.log({ userID, groupID });
+
+  const trueGroupID = groupID || uuid();
 
   try {
     foundGroup = (await fetchFriendGroup({ groupID: groupID as string }));
+    console.log("Found Friend Group:", foundGroup.groupID);
   } catch (e) {
+    console.log("GroupID was not provided");
     try {
-      foundGroup = await createFriendGroup({ input: { groupID: groupID || uuid() } });
+      foundGroup = await createFriendGroup({ input: { groupID: trueGroupID } });
+      console.log("Created Friend Group:", foundGroup);
     } catch (err) {
       console.error("Failed to create friend group");
       throw new Error(err);
@@ -29,7 +36,7 @@ const joinFriendGroup = async (
       query: createFriendGroupConnection,
       variables: {
         input: {
-          groupID,
+          groupID: trueGroupID,
           userID,
         },
       },

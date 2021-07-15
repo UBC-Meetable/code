@@ -6,9 +6,9 @@ import {
   CreateFriendGroupMutationVariables,
   FriendGroup,
 } from "../API";
-import { createCourseGroup as query } from "../graphql/mutations";
+import { createFriendGroup as query } from "../graphql/mutations";
 
-const createCourseGroup = async ({
+const createFriendGroup = async ({
   input,
 }: CreateFriendGroupMutationVariables) => {
   try {
@@ -27,4 +27,4 @@ const createCourseGroup = async ({
   }
 };
 
-export default createCourseGroup;
+export default createFriendGroup;

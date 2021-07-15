@@ -84,8 +84,11 @@ const FriendGroups = ({
             const userID = user.attributes.sub;
             if (groupID) {
               // join existing group
+              console.log("Joining existing Group");
+
               await joinFriendGroup(userID, groupID);
             } else {
+              console.log("Creating new Group");
               await joinFriendGroup(userID, groupID);
               // create empty group so others will join.
             }
