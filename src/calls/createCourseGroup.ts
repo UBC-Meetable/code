@@ -11,8 +11,6 @@ import { CourseGroup } from "../types";
 const createCourseGroup = async ({
   input,
 }: CreateCourseGroupMutationVariables) => {
-  console.log(input);
-
   const res = await API.graphql({
     query,
     variables: { input },

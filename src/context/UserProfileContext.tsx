@@ -33,11 +33,6 @@ export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
               year: userInfo.year,
             },
           );
-          console.log({
-            id: userInfo.id,
-            university: userInfo.university,
-            year: userInfo.year,
-          });
 
           setLoading(() => false);
         }

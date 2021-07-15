@@ -13,7 +13,6 @@ const window = Dimensions.get("window");
 const generateOptions = (navigation:
   StackNavigationProp<RootStackParamList, keyof RootStackParamList>,
 headerLeft: string | any) => {
-  console.log(headerLeft);
   if (typeof headerLeft === "string") { headerLeft = () => <ChatBackButton navigation={navigation} label={headerLeft} />; }
   return ({
     cardStyle: {

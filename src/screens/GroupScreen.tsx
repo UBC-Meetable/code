@@ -3,14 +3,12 @@ import {
   Button,
   Layout,
 } from "@ui-kitten/components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
 import Colors from "../constants/Colors";
 import { GearIcon } from "../navigation/ProfileStackNavigator";
-import {
-  ChatMessage, CourseGroup, GroupType, RootStackParamList,
-} from "../types";
+import { GroupType, RootStackParamList } from "../types";
 
 const GroupScreen = ({
   navigation,

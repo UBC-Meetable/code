@@ -47,12 +47,14 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
     code,
     section,
     title,
+    includeSection = false,
   }: {
     code: string;
     section: string;
     title: string;
+    includeSection?: boolean,
   }) => ({
-    groupID: `${title}${code}-${section}`.toLowerCase(),
+    groupID: `${title}${code}${includeSection ? `-${section}` : ""}`.toLowerCase(),
     code,
     section,
     title: title.toUpperCase(),
@@ -217,7 +219,7 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
               {...evaProps}
               style={{ ...evaProps.style, ...styles.buttonText }}
             >
-              Save and Continue
+              {newCourses.length > 0 ? "Save and Continue" : "Continue Later"}
             </Text>
           )}
         </Button>

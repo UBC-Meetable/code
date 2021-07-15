@@ -23,8 +23,6 @@ const ProfilePicture = ({
 
   /** Get image from cache first, download it if there is an update  */
   useEffect(() => {
-    console.log("imageKey", imageKey);
-
     const checkCache = async () => {
       setImageLoading(true);
       const safePathName = imageKey.replace(/^.*[\\/]/, "");
@@ -41,10 +39,9 @@ const ProfilePicture = ({
       const newImage = await FileSystem.downloadAsync(s3Uri, path);
       setUri(newImage.uri);
       setImageLoading(false);
-      console.log("Got URI:", uri);
     };
 
-    checkCache();
+    if (imageKey) { checkCache(); }
   }, [imageKey]);
 
   let sizeObj: {height: number, width: number};

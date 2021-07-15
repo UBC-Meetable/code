@@ -52,15 +52,15 @@ const CourseGroups = ({
   const renderItem = ({ item }: { item: CourseGroup }) => {
     if (!item.groupID) return <Spinner />;
     const messages = item.messages?.items as ChatMessage[];
-
+    const itemName = `${item.title} ${item.code}`;
     return (
       <CourseGroupBubble
         courseGroup={item}
         messages={messages}
         moveToGroupScreen={() => moveToGroupScreen(
-            item.title!,
-            item.groupID!,
-            GroupType.COURSE,
+          itemName,
+          item.groupID!,
+          GroupType.COURSE,
         )}
       />
     );

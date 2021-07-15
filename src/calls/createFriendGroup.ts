@@ -11,8 +11,6 @@ import { createCourseGroup as query } from "../graphql/mutations";
 const createCourseGroup = async ({
   input,
 }: CreateFriendGroupMutationVariables) => {
-  console.log(input);
-
   try {
     const res = await API.graphql({
       query,

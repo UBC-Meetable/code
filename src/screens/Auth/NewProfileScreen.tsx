@@ -27,18 +27,11 @@ const NewProfileScreen = ({
 }: {
   navigation: StackNavigationProp<SignUpParamList, "NewProfileScreen">;
 }) => {
-  const headerHeight = useHeaderHeight();
-
   const user = useAuthenticatedUser();
   const [bio, setBio] = React.useState("");
   const [name, setName] = React.useState("");
   const [bioFocused, setBioFocused] = React.useState(false);
-  const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
-  const [localProfile, setLocalProfile] = React.useState<UserProfile>();
-  const [imageLoading, setImageLoading] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const [key, setKey] = React.useState("");
-  const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
   const units = useSafeAreaInsets();
 
   const handleFinish = async () => {
@@ -52,26 +45,11 @@ const NewProfileScreen = ({
         userState: UserState.PROFILE_CREATED,
       });
 
+      console.log(res);
+
       if (res.data) {
         navigation.navigate("NewEditCourses");
       }
-    }
-  };
-
-  const updateProfile = async () => {
-    const [firstName, ...lastName] = name.trim().split(" ");
-    const updatedProfile = {
-      email: user.attributes.email,
-      id: user.attributes.sub,
-      bio,
-      firstName,
-      lastName: lastName.join(""),
-    };
-    const same = compareProfiles(fetchedProfile, { ...localProfile, ...updatedProfile });
-
-    if (!same) {
-      updateUserProfile(updatedProfile);
-      await FileSystem.writeAsStringAsync(path, JSON.stringify(updatedProfile));
     }
   };
 
@@ -103,7 +81,6 @@ const NewProfileScreen = ({
         },
       }]);
       uploadImage(cropped);
-      setImageLoading(() => true);
     }
   };
 
@@ -120,7 +97,6 @@ const NewProfileScreen = ({
                 updateImageKey(imageKey);
                 setKey(imageKey);
               });
-              setImageLoading(() => false);
             })
             .catch((err) => {
             });
@@ -130,49 +106,6 @@ const NewProfileScreen = ({
     // const fileType = mime.lookup(toUpload.uri);
   };
 
-  const compareProfiles = (a: any, b: any) => Object.entries(a).sort().toString()
-  === Object.entries(b).sort().toString();
-
-  React.useEffect(() => {
-    const f = async () => {
-      setLoading(true);
-      const resPromise = fetchUserProfile({ id: user.attributes.sub });
-      const cachedProfile = await FileSystem.getInfoAsync(path);
-      if (cachedProfile.exists) {
-        const stringProfile = await FileSystem.readAsStringAsync(cachedProfile.uri);
-        const profile = JSON.parse(stringProfile) as UserProfile;
-        setName(`${profile?.firstName} ${profile?.lastName}`);
-        setBio(profile?.bio || "");
-        setFetchedProfile(profile);
-        setKey(profile.profilePicture || "");
-        setLocalProfile(profile);
-        setLoading(false);
-      }
-      const res = await resPromise;
-      if (await res.data) {
-        const profile = res.data?.getUser as UserProfile;
-        await FileSystem.writeAsStringAsync(path, JSON.stringify(profile));
-        setName(`${profile?.firstName} ${profile?.lastName}`);
-        setBio(profile?.bio || "");
-        setFetchedProfile(profile);
-        setKey(profile.profilePicture || "");
-        setLocalProfile(profile);
-        setLoading(false);
-      }
-    };
-    if (user) f();
-  }, [user]);
-
-  if (!localProfile) {
-    return (
-      <ScrollView
-        contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}
-        bounces={false}
-      >
-        <Spinner />
-      </ScrollView>
-    );
-  }
   return (
     <ScrollView
       contentContainerStyle={[profileStyles.container,
@@ -218,8 +151,6 @@ const NewProfileScreen = ({
           onChangeText={(e) => setName(e)}
           style={profileStyles.inputStyle}
           textStyle={profileStyles.inputTextStyle}
-          onSubmitEditing={() => updateProfile()}
-          onBlur={() => updateProfile()}
         />
       </Layout>
 
@@ -237,11 +168,9 @@ const NewProfileScreen = ({
           }}
           onBlur={() => {
             setBioFocused(false);
-            updateProfile();
           }}
           onSubmitEditing={() => {
             setBioFocused(false);
-            updateProfile();
           }}
           placeholder="Write a short bio about yourself..."
           multiline

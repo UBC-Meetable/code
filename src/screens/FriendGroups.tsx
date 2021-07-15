@@ -75,7 +75,6 @@ const FriendGroups = ({
             year: userProfile.year,
           });
           const returnVal = groupOutput.data?.joinFriendGroup;
-          console.log(returnVal);
 
           if (!returnVal) {
             console.error(groupOutput.errors);
@@ -85,12 +84,10 @@ const FriendGroups = ({
             const userID = user.attributes.sub;
             if (groupID) {
               // join existing group
-              console.log("join existing group");
               await joinFriendGroup(userID, groupID);
             } else {
               await joinFriendGroup(userID, groupID);
               // create empty group so others will join.
-              console.log("create new group");
             }
           }
         }

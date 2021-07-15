@@ -46,21 +46,18 @@ const EditCourseScreen = () => {
     code,
     section,
     title,
+    includeSection = false,
   }: {
     code: string;
     section: string;
     title: string;
+    includeSection?: boolean,
   }) => ({
-    groupID: `${title}${code}-${section}`.toLowerCase(),
+    groupID: `${title}${code}${includeSection ? `-${section}` : ""}`.toLowerCase(),
     code,
     section,
     title: title.toUpperCase(),
   } as SimpleCourseGroup);
-
-  function isCourseGroup(item: CourseGroup
-    | GraphQLResult<CreateCourseGroupConnectionMutation>): item is CourseGroup {
-    return (item as CourseGroup).groupID !== undefined;
-  }
 
   function addCourse() {
     if (!currTitle || !currCode || !currSection) return;
@@ -90,6 +87,7 @@ const EditCourseScreen = () => {
       Promise<CourseGroup>[];
 
     const results = await Promise.all(promises);
+
     const handleCourseGroup = (result: CourseGroup) => {
       setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== result.groupID));
       setCourses([...courses, simplifyCourseGroup(result)]);
@@ -177,7 +175,7 @@ const EditCourseScreen = () => {
         <Button
           style={[styles.button, styles.addCoursebutton]}
           onPress={() => {
-            handleSave();
+            addCourse();
           }}
         >
           {() => (

@@ -35,14 +35,22 @@ const ProfileScreen = () => {
   const [key, setKey] = React.useState("");
   const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
 
+  const formatName = (unformattedName: string): [string, string] => {
+    if (unformattedName.length > 0) {
+      const split = unformattedName.split(" ");
+      return [split[0], split.slice(1).join(" ")];
+    }
+    return ["", ""];
+  };
+
   const updateProfile = async () => {
-    const [firstName, ...lastName] = name.trim().split(" ");
+    const [firstName, lastName] = formatName(name);
     const updatedProfile = {
       email: user.attributes.email,
       id: user.attributes.sub,
       bio,
       firstName,
-      lastName: lastName.join(""),
+      lastName,
     };
     const same = compareProfiles(fetchedProfile, { ...localProfile, ...updatedProfile });
 
@@ -101,8 +109,6 @@ const ProfileScreen = () => {
             });
         });
     });
-
-    // const fileType = mime.lookup(toUpload.uri);
   };
 
   const compareProfiles = (a: any, b: any) => Object.entries(a).sort().toString()
