@@ -4,7 +4,11 @@
 
 export const joinFriendGroup = /* GraphQL */ `
   query JoinFriendGroup($user: joinFriendGroupInput) {
-    joinFriendGroup(user: $user)
+    joinFriendGroup(user: $user) {
+      status
+      group
+      error
+    }
   }
 `;
 export const getUser = /* GraphQL */ `
@@ -38,7 +42,6 @@ export const getUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -62,7 +65,6 @@ export const getUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -110,7 +112,6 @@ export const getUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -143,7 +144,6 @@ export const getUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           responses {
             q
@@ -151,13 +151,11 @@ export const getUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -199,7 +197,6 @@ export const listUsers = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -214,7 +211,6 @@ export const listUsers = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -247,7 +243,6 @@ export const listUsers = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -271,7 +266,6 @@ export const listUsers = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -279,13 +273,11 @@ export const listUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -312,7 +304,6 @@ export const getCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -336,7 +327,6 @@ export const getCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -374,19 +364,16 @@ export const getCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -418,7 +405,6 @@ export const listCourseGroups = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -433,7 +419,6 @@ export const listCourseGroups = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -462,19 +447,16 @@ export const listCourseGroups = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -524,7 +506,6 @@ export const getFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -560,13 +541,11 @@ export const getFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
@@ -619,7 +598,6 @@ export const listFriendGroups = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -646,13 +624,11 @@ export const listFriendGroups = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
@@ -694,7 +670,6 @@ export const getChatMessage = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -709,7 +684,6 @@ export const getChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -742,7 +716,6 @@ export const getChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -766,7 +739,6 @@ export const getChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -774,19 +746,16 @@ export const getChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       body
       createdAt
       updatedAt
       groupType
-      owner
     }
   }
 `;
@@ -838,19 +807,16 @@ export const listChatMessages = /* GraphQL */ `
               userID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
           createdAt
           updatedAt
-          owner
         }
         body
         createdAt
         updatedAt
         groupType
-        owner
       }
       nextToken
     }
@@ -884,7 +850,6 @@ export const getQuiz = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -899,7 +864,6 @@ export const getQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -932,7 +896,6 @@ export const getQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -956,7 +919,6 @@ export const getQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -964,13 +926,11 @@ export const getQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       responses {
         q
@@ -978,7 +938,6 @@ export const getQuiz = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -1029,13 +988,11 @@ export const listQuizs = /* GraphQL */ `
               userID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
           createdAt
           updatedAt
-          owner
         }
         responses {
           q
@@ -1043,7 +1000,6 @@ export const listQuizs = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -1089,7 +1045,6 @@ export const userByUniYear = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1104,7 +1059,6 @@ export const userByUniYear = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1137,7 +1091,6 @@ export const userByUniYear = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1161,7 +1114,6 @@ export const userByUniYear = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -1169,13 +1121,11 @@ export const userByUniYear = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       nextToken
     }
@@ -1239,19 +1189,16 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
               userID
               createdAt
               updatedAt
-              owner
             }
             nextToken
           }
           createdAt
           updatedAt
-          owner
         }
         body
         createdAt
         updatedAt
         groupType
-        owner
       }
       nextToken
     }

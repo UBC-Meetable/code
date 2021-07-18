@@ -100,11 +100,11 @@
         },
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-alexzhou-191632-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-633744474d4572476133-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-577a6d517238416a6e6a-build.zip"
         },
         "testJoinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-alexzhou-191632-deployment",
-          "s3Key": "amplify-builds/testJoinFriendGroup-51586f356c7742744244-build.zip"
+          "s3Key": "amplify-builds/testJoinFriendGroup-6f614f4c766a674f5731-build.zip"
         }
       }
     }

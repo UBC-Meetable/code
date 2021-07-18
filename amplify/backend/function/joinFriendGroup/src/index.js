@@ -141,17 +141,17 @@ exports.handler = async (event) => {
 
   } catch(error) {
       console.log(error);
-      return {statusCode: 500, body: JSON.stringify(error)};
+      return {status: 500, error: JSON.stringify(error)};
   }
   
   const response = {
-      statusCode: 200,
+      status: 200,
   //  Uncomment below to enable CORS requests
   //  headers: {
   //      "Access-Control-Allow-Origin": "*",
   //      "Access-Control-Allow-Headers": "*"
   //  }, 
-      body: JSON.stringify(groupToPut),
+      group: groupToPut,
   };
   return response;
 };

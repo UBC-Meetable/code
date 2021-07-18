@@ -119,11 +119,17 @@ type QAPair {
 
 # joinFriendGroupInput -> GroupID
 type Query {
-  joinFriendGroup(user: joinFriendGroupInput): String @function(name: "joinFriendGroup-${env}")
+  joinFriendGroup(user: joinFriendGroupInput): joinFriendGroupOutput @function(name: "joinFriendGroup-${env}")
 }
 
 input joinFriendGroupInput {
   id: String!
   university: String!
   year: Int!
+}
+
+type joinFriendGroupOutput {
+  status: Int!
+  group: String
+  error: String
 }

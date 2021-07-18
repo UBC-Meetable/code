@@ -36,7 +36,6 @@ export const createUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -60,7 +59,6 @@ export const createUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -108,7 +106,6 @@ export const createUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -141,7 +138,6 @@ export const createUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           responses {
             q
@@ -149,13 +145,11 @@ export const createUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -193,7 +187,6 @@ export const updateUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -217,7 +210,6 @@ export const updateUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -265,7 +257,6 @@ export const updateUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -298,7 +289,6 @@ export const updateUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           responses {
             q
@@ -306,13 +296,11 @@ export const updateUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -350,7 +338,6 @@ export const deleteUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -374,7 +361,6 @@ export const deleteUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -422,7 +408,6 @@ export const deleteUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -455,7 +440,6 @@ export const deleteUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           responses {
             q
@@ -463,13 +447,11 @@ export const deleteUser = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -497,7 +479,6 @@ export const createCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -521,7 +502,6 @@ export const createCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -559,19 +539,16 @@ export const createCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -599,7 +576,6 @@ export const updateCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -623,7 +599,6 @@ export const updateCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -661,19 +636,16 @@ export const updateCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -701,7 +673,6 @@ export const deleteCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           user {
             id
@@ -725,7 +696,6 @@ export const deleteCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -763,19 +733,16 @@ export const deleteCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -826,7 +793,6 @@ export const createFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -862,13 +828,11 @@ export const createFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
@@ -926,7 +890,6 @@ export const updateFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -962,13 +925,11 @@ export const updateFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
@@ -1026,7 +987,6 @@ export const deleteFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           createdAt
           updatedAt
@@ -1062,13 +1022,11 @@ export const deleteFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           body
           createdAt
           updatedAt
           groupType
-          owner
         }
         nextToken
       }
@@ -1111,7 +1069,6 @@ export const createChatMessage = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1126,7 +1083,6 @@ export const createChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1159,7 +1115,6 @@ export const createChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1183,7 +1138,6 @@ export const createChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -1191,19 +1145,16 @@ export const createChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       body
       createdAt
       updatedAt
       groupType
-      owner
     }
   }
 `;
@@ -1239,7 +1190,6 @@ export const updateChatMessage = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1254,7 +1204,6 @@ export const updateChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1287,7 +1236,6 @@ export const updateChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1311,7 +1259,6 @@ export const updateChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -1319,19 +1266,16 @@ export const updateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       body
       createdAt
       updatedAt
       groupType
-      owner
     }
   }
 `;
@@ -1367,7 +1311,6 @@ export const deleteChatMessage = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1382,7 +1325,6 @@ export const deleteChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1415,7 +1357,6 @@ export const deleteChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1439,7 +1380,6 @@ export const deleteChatMessage = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -1447,19 +1387,16 @@ export const deleteChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       body
       createdAt
       updatedAt
       groupType
-      owner
     }
   }
 `;
@@ -1485,7 +1422,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1500,7 +1436,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1529,19 +1464,16 @@ export const createCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       user {
         id
@@ -1566,7 +1498,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1581,7 +1512,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1614,7 +1544,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1638,7 +1567,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -1646,13 +1574,11 @@ export const createCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -1681,7 +1607,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1696,7 +1621,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1725,19 +1649,16 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       user {
         id
@@ -1762,7 +1683,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1777,7 +1697,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1810,7 +1729,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1834,7 +1752,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -1842,13 +1759,11 @@ export const updateCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -1877,7 +1792,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1892,7 +1806,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -1921,19 +1834,16 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       user {
         id
@@ -1958,7 +1868,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -1973,7 +1882,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2006,7 +1914,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2030,7 +1937,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -2038,13 +1944,11 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -2087,7 +1991,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2114,13 +2017,11 @@ export const createFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
@@ -2152,7 +2053,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -2167,7 +2067,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2200,7 +2099,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2224,7 +2122,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -2232,13 +2129,11 @@ export const createFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -2281,7 +2176,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2308,13 +2202,11 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
@@ -2346,7 +2238,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -2361,7 +2252,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2394,7 +2284,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2418,7 +2307,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -2426,13 +2314,11 @@ export const updateFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -2475,7 +2361,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2502,13 +2387,11 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             body
             createdAt
             updatedAt
             groupType
-            owner
           }
           nextToken
         }
@@ -2540,7 +2423,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -2555,7 +2437,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2588,7 +2469,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2612,7 +2492,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -2620,13 +2499,11 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       createdAt
       updatedAt
@@ -2664,7 +2541,6 @@ export const createQuiz = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -2679,7 +2555,6 @@ export const createQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2712,7 +2587,6 @@ export const createQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2736,7 +2610,6 @@ export const createQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -2744,13 +2617,11 @@ export const createQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       responses {
         q
@@ -2758,7 +2629,6 @@ export const createQuiz = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -2793,7 +2663,6 @@ export const updateQuiz = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -2808,7 +2677,6 @@ export const updateQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2841,7 +2709,6 @@ export const updateQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2865,7 +2732,6 @@ export const updateQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -2873,13 +2739,11 @@ export const updateQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       responses {
         q
@@ -2887,7 +2751,6 @@ export const updateQuiz = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
@@ -2922,7 +2785,6 @@ export const deleteQuiz = /* GraphQL */ `
               section
               createdAt
               updatedAt
-              owner
             }
             user {
               id
@@ -2937,7 +2799,6 @@ export const deleteQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2970,7 +2831,6 @@ export const deleteQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             createdAt
             updatedAt
@@ -2994,7 +2854,6 @@ export const deleteQuiz = /* GraphQL */ `
               major
               createdAt
               updatedAt
-              owner
             }
             responses {
               q
@@ -3002,13 +2861,11 @@ export const deleteQuiz = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            owner
           }
           nextToken
         }
         createdAt
         updatedAt
-        owner
       }
       responses {
         q
@@ -3016,7 +2873,6 @@ export const deleteQuiz = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      owner
     }
   }
 `;
