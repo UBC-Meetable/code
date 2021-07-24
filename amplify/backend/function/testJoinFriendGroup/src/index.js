@@ -35,63 +35,92 @@ const joinFriendGroup =  gql`
   }
 `;
 
-const listUsers = /* GraphQL */ gql`
-  query ListUsers {
-    listUsers {
-      items {
-        id
-      }
-    }
-  }
-`;
 
-
-const ungroupedUserWithQuiz = {
-  "id": "1",
-  "quizzes": [
-    "1"
-  ],
-  "university": "UBC",
-  "year": 1
-};
 
 const groupedUserWithQuiz = {
-  "friendGroupConnection": [
-    "1"
-  ],
-  "id": "1",
-  "quizzes": [
-    "1"
-  ],
-  "university": "UBC",
-  "year": 1
+  "Item": {
+    "friendGroupConnection": [
+      "1"
+    ],
+    "id": "1",
+    "quizzes": [
+      "1"
+    ],
+    "university": "UBC",
+    "year": 1
+  },
+  "TableName": process.env.API_MEETABLE_USERTABLE_NAME
+};
+const ungroupedUserWithQuiz = {
+  "Item": {
+    "id": "2",
+    "quizzes": [
+      "2"
+    ],
+    "university": "UBC",
+    "year": 1
+  },
+  "TableName": process.env.API_MEETABLE_USERTABLE_NAME
+};
+const connection = {
+  "Item": {
+    "groupID": "1",
+    "id": "1",
+    "userID": "1"
+  },
+  "TableName": process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME
+}
+const group = {
+  "Item": {
+    "groupID": "1",
+    "size": 1,
+    "users": [
+      "1"
+    ]
+  },
+  "TableName": process.env.API_MEETABLE_FRIENDGROUPTABLE_NAME
+}
+const genericQuiz = {
+  "Item": {
+    "id": "1",
+    "responses": [
+      {
+        "a": "a",
+        "q": "q1"
+      },
+      {
+        "a": "b",
+        "q": "q3"
+      },
+      {
+        "a": "c",
+        "q": "q2"
+      },
+      {
+        "a": "c",
+        "q": "q5"
+      }
+    ],
+    "userID": "1"
+  },
+  "TableName": process.env.API_MEETABLE_QUIZTABLE_NAME
 };
 
-const quiz1 = {
-
-}
-
 exports.handler = async (event) => {
-
-  let tests = [testJoinExistingGroup];
+  const tests = 
+  [
+    testFirstGroupRequestSomeExistingUsers, 
+    testJoinExistingGroup, 
+  
+  ];
   let results = [];
-
   for (const test of tests) {
     const res = await test();
-    console.log(res);
+    //console.log(res);
     results.push(res);
   }
-
-
-
-
   // console.log(`${user}`); // prints [object Object];
   // JSON.stringify puts quotes around property names which is invalid for the graphql query    
-
-
-
-
-
 
   // // TODO implement
   // const response = {
@@ -104,8 +133,6 @@ exports.handler = async (event) => {
   //     body: graphqlData.data
   // };
   return results;
-
-
 }
 
 async function callLambda(query) {
@@ -129,107 +156,11 @@ async function callLambda(query) {
 // attempt to group a user
 // expect null as the group returned
 async function testFirstGroupRequestSomeExistingUsers() {
-  
-}
-
-// non-full group with compatible user exists
-// expect groupID 1
-async function testJoinExistingGroup() {
-
-  const user1quiz = {
-    "Item": {
-      "id": "1",
-      "responses": [
-        {
-          "a": "a",
-          "q": "q1"
-        },
-        {
-          "a": "b",
-          "q": "q3"
-        },
-        {
-          "a": "c",
-          "q": "q2"
-        },
-        {
-          "a": "c",
-          "q": "q5"
-        }
-      ],
-      "userID": "1"
-    },
-    "TableName": process.env.API_MEETABLE_QUIZTABLE_NAME
-  };
-  const user2quiz = JSON.parse(JSON.stringify(user1quiz)); // deep copy
-  user2quiz["Item"]["userID"] = "2";
-  user2quiz["Item"]["id"] = "2";
-
-  console.log(user1quiz["Item"]["userID"]);
-
-  const user1 = {
-    "Item": {
-      "friendGroupConnection": [
-        "1"
-      ],
-      "id": "1",
-      "quizzes": [
-        "1"
-      ],
-      "university": "UBC",
-      "year": 1
-    },
-    "TableName": process.env.API_MEETABLE_USERTABLE_NAME
-  };
-  const user2 = {
-    "Item": {
-      "id": "2",
-      "quizzes": [
-        "2"
-      ],
-      "university": "UBC",
-      "year": 1
-    },
-    "TableName": process.env.API_MEETABLE_USERTABLE_NAME
-  };
-  const connection = {
-    "Item": {
-      "groupID": "1",
-      "id": "1",
-      "userID": "1"
-    },
-    "TableName": process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME
-  }
-  const group = {
-    "Item": {
-      "groupID": "1",
-      "size": 1,
-      "users": [
-        "1"
-      ]
-    },
-    "TableName": process.env.API_MEETABLE_FRIENDGROUPTABLE_NAME
-  }
-
-  const user3 = {
-    "Item": {
-      "id": "3",
-      "university": "UBC",
-      "year": 1
-    },
-    "TableName": process.env.API_MEETABLE_USERTABLE_NAME
-  }
-
-  const promises = [
-    dbPut(user1),
-    dbPut(group),
-    dbPut(connection),
-    dbPut(user2),
-    dbPut(user1quiz),
-    dbPut(user2quiz),
-    ]
-  await Promise.all(promises);
-
+  let ungroupedUserWithQuiz2 = JSON.parse(JSON.stringify(ungroupedUserWithQuiz));
+  ungroupedUserWithQuiz2["Item"]["id"] = "1";
+  let quiz2 = JSON.parse(JSON.stringify(genericQuiz));
+  quiz2["Item"]["id"] = "2";
+  await setup([ungroupedUserWithQuiz, ungroupedUserWithQuiz2, quiz2]);
   const res = await callLambda(`
   query JoinFriendGroup {
     joinFriendGroup(user: {id:"2",university:"UBC",year:1}) {
@@ -239,18 +170,55 @@ async function testJoinExistingGroup() {
     }
   }
   `);
+  await tearDown([ungroupedUserWithQuiz, ungroupedUserWithQuiz2, quiz2]);
+  res["expectedGroup"] = null;
+  res["passed"] = res["expectedGroup"] === res["data"]["joinFriendGroup"]["group"];
+  return res;  
+}
 
-  const cleanup = [
-    dbDelete(process.env.API_MEETABLE_USERTABLE_NAME, {id: '1'}),
-    dbDelete(process.env.API_MEETABLE_USERTABLE_NAME, {id: '2'}),
-    dbDelete(process.env.API_MEETABLE_QUIZTABLE_NAME, {id: '1'}),
-    dbDelete(process.env.API_MEETABLE_QUIZTABLE_NAME, {id: '2'}),
-    dbDelete(process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME, {id: '1'}),
-    dbDelete(process.env.API_MEETABLE_FRIENDGROUPTABLE_NAME, {groupID: '1'}),
-  ];
-  const results = await Promise.all(cleanup);
+// non-full group with compatible user exists
+// expect groupID == 1
+async function testJoinExistingGroup() {
+  const user2quiz = JSON.parse(JSON.stringify(genericQuiz)); // deep copy
+  user2quiz["Item"]["userID"] = "2";
+  user2quiz["Item"]["id"] = "2";
+
+  await setup([groupedUserWithQuiz, group, connection,
+    ungroupedUserWithQuiz, genericQuiz, user2quiz]);
+  const res = await callLambda(`
+  query JoinFriendGroup {
+    joinFriendGroup(user: {id:"2",university:"UBC",year:1}) {
+      status
+      group
+      error
+    }
+  }
+  `);
+  await tearDown([groupedUserWithQuiz, group, connection,
+    ungroupedUserWithQuiz, genericQuiz, user2quiz]);
 
   res["expectedGroup"] = '1';
+  res["passed"] = res["data"]["joinFriendGroup"]["status"] === 200 
+    && res["expectedGroup"] === res["data"]["joinFriendGroup"]["group"];
+  return res;
+}
+
+// write all items to the db
+// return the array of resolved or rejected promises
+async function setup(items) {
+  // 1 line arrow fn implicit return
+ const res = await Promise.all(items.map(item => dbPut(item)));
+ return res;
+}
+
+// delete all records in the db corresponding to items
+// return the array of resolved or rejected promises
+async function tearDown(items) {
+  const res = await Promise.all(items.map(item => {
+    // friend group PK is groupID rather than id for some reason
+    return dbDelete(item["TableName"], 
+    item["Item"]["id"] ? {id: item["Item"]["id"]} : {groupID: item["Item"]["groupID"]});
+  }));
   return res;
 }
 
