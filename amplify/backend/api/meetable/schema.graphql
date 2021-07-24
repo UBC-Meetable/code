@@ -43,6 +43,20 @@ type FriendGroup
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
   owner: String
 } 
+
+type Report
+  @model
+  @key(name: "byReporter", fields: ["reportingUserID"])
+  @key(name: "byReported", fields: ["reportedUserID"])
+  @auth(rules: [{ allow: owner, operations: [create]}])
+  {
+    id: ID!
+    message: ChatMessage
+    title: String!
+    body: String!
+    reportingUserID: String!
+    reportedUserID: String!
+  } 
  
 # [CONNECTIONS]
 
