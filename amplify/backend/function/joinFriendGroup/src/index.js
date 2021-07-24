@@ -9,10 +9,10 @@ const PriorityQueue = require("priorityqueue");
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const tables = {
-    user: 'User-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
-    friendGroupConnection: 'FriendGroupConnection-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
-    friendGroup: 'FriendGroup-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
-    quiz: 'Quiz-noyf4zeilna6ba2t3h65pz6gjm-alexzhou',
+  user: process.env.API_MEETABLE_USERTABLE_NAME,
+  friendGroupConnection: process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME,
+  friendGroup: process.env.API_MEETABLE_FRIENDGROUPTABLE_NAME,
+  quiz: process.env.API_MEETABLE_QUIZTABLE_NAME,
 };
 
 exports.handler = async (event) => {
@@ -53,7 +53,7 @@ exports.handler = async (event) => {
 
     // is byUser actually a secondary index??
     await Promise.all(bucket.Items.map(async function(user, index, array) {
-      const res =  await docClient.query({
+      const res = docClient.query({
         TableName: tables.quiz,
         IndexName: "byUser",
         KeyConditionExpression: "userID = :userID",
@@ -80,7 +80,7 @@ exports.handler = async (event) => {
     console.log(incomingUserGroups);
     await Promise.all(incomingUserGroups.map(async (groupID) => {
       console.log("iteration")
-      const res = await docClient.query({
+      const res = docClient.query({
         TableName: tables.friendGroupConnection,
         IndexName: "byFriendGroup",
         KeyConditionExpression: "groupID = :groupID",
