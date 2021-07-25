@@ -10,6 +10,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
+import BottomText from "./BottomText";
 import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
@@ -158,16 +159,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               </Text>
             )}
           </Button>
-          <Text style={{ ...styles.loginText }}>
-            Already have an account?
-            {" "}
-            <Text
-              style={{ ...styles.loginText, color: "#02A3F4" }}
-              onPress={() => onLogIn()}
-            >
-              Log in
-            </Text>
-          </Text>
+          <BottomText onPressText={onLogIn} />
         </Layout>
       </KeyboardAvoidingView>
     </KeyboardSwipeLayout>

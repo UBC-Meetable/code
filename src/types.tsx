@@ -174,3 +174,13 @@ export enum SwipeActions {
   "DISLIKE" = "disliked",
   "UNDO" = "undo",
 }
+
+export enum AuthState {
+  LANDING_SCREEN,
+  TUTORIAL,
+  CREATE,
+  SIGN_UP,
+  LOGIN,
+  UNIVERSITY_SCREEN,
+  CONFIRM_EMAIL,
+}

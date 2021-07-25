@@ -9,6 +9,7 @@ import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
 import UserContext from "../../context/UserContext";
+import BottomText from "./BottomText";
 import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
@@ -113,16 +114,7 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
               </Text>
             )}
           </Button>
-          <Text style={{ ...styles.loginText }}>
-            Don't have an account?
-            {" "}
-            <Text
-              style={{ ...styles.loginText, color: "#02A3F4" }}
-              onPress={() => onSignUp()}
-            >
-              Sign Up
-            </Text>
-          </Text>
+          <BottomText onPressText={onSignUp} />
         </Layout>
       </KeyboardAvoidingView>
     </KeyboardSwipeLayout>

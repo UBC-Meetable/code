@@ -6,6 +6,7 @@ import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginRocket from "../../assets/images/login-background.svg";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
+import BottomText from "./BottomText";
 
 const window = Dimensions.get("window");
 
@@ -46,16 +47,7 @@ const LoginScreen = ({ onSignUp, onLogIn }:LoginScreenProps) => {
             </Text>
           )}
         </Button>
-        <Text style={{ ...styles.buttonText }}>
-          Already have an account?
-          {" "}
-          <Text
-            style={{ ...styles.buttonText, color: "#02A3F4" }}
-            onPress={() => onLogIn()}
-          >
-            Log in
-          </Text>
-        </Text>
+        <BottomText onPressText={onSignUp} />
       </Layout>
     </Layout>
   );

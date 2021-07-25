@@ -64,7 +64,7 @@ const TutorialScreen = ({ onContinue }: TutorialProps) => {
               {...evaProps}
               style={{ ...evaProps.style, ...styles.buttonText }}
             >
-              {activeSlide === Cards.length - 1 ? "Take the Quiz" : "Next"}
+              {activeSlide === Cards.length - 1 ? "Let's Go!" : "Next"}
             </Text>
           )}
         </Button>

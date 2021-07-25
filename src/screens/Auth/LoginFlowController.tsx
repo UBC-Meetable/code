@@ -1,90 +1,94 @@
+import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
-import { CreateQuizInput, QAPair } from "../../API";
-import submitQuiz from "../../calls/submitQuiz";
+import AuthStateContext from "../../context/AuthStateContext";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import { AuthState } from "../../types";
 import ConfirmEmailScreen from "../ConfirmEmailScreen";
 import LoginFormScreen from "./LoginFormScreen";
 import LoginScreen from "./LoginScreen";
-import QuizScreen from "./QuizScreen";
 import SignUpFormScreen from "./SignUpFormScreen";
 import SignupScreen from "./SignupScreen";
 import TutorialScreen from "./TutorialScreen";
 
 // eslint-disable-next-line no-shadow
-enum AuthState {
-  LANDING_SCREEN,
-  TUTORIAL,
-  QUIZ,
-  CREATE,
-  SIGN_UP,
-  LOGIN,
-  UNIVERSITY_SCREEN,
-  CONFIRM_EMAIL,
-}
 
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
   const [authState, setAuthState] = useState<AuthState>(
     AuthState.LANDING_SCREEN,
   );
+  const user = useAuthenticatedUser();
 
-  switch (authState) {
-  case AuthState.LANDING_SCREEN:
-    return (
-      <LoginScreen
-        onLogIn={() => {
-          setAuthState(AuthState.LOGIN);
-        }}
-        onSignUp={() => {
-          setAuthState(AuthState.SIGN_UP);
-        }}
-      />
+  React.useEffect(() => {
+    console.log(user);
+
+    SecureStore.getItemAsync("firstLaunch").then(
+      (firstLaunch) => {
+        console.log(firstLaunch);
+        if (!firstLaunch) {
+          SecureStore.setItemAsync("firstLaunch", "true").then(() => {
+            setAuthState(() => AuthState.TUTORIAL);
+          });
+        }
+      },
     );
-  case AuthState.TUTORIAL:
-    return <TutorialScreen onContinue={() => setAuthState(AuthState.QUIZ)} />;
-  case AuthState.QUIZ:
-    return (
-      <QuizScreen onFinish={() => {
-        // submitQuiz(finishedQuiz).then(() => {
-        // });
-        setAuthState(AuthState.CREATE);
-      }}
-      />
-    );
-  case AuthState.CREATE:
-    return (
-      <SignupScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />
-    );
-  case AuthState.CONFIRM_EMAIL:
-    return (
-      <ConfirmEmailScreen
-        initialEmail={email}
-        onConfirmCode={() => setAuthState(AuthState.LOGIN)}
-      />
-    );
-  case AuthState.SIGN_UP:
-    return (
-      <SignUpFormScreen
-        onCreate={(initEmail: string) => {
-          setEmail(() => initEmail);
-          setAuthState(AuthState.CONFIRM_EMAIL);
-        }}
-        onLogIn={() => setAuthState(AuthState.LOGIN)}
-      />
-    );
-  case AuthState.LOGIN:
-    return <LoginFormScreen onSignUp={() => setAuthState(AuthState.SIGN_UP)} />;
-  default:
-    return (
-      <LoginScreen
-        onLogIn={() => {
-          setAuthState(AuthState.LOGIN);
-        }}
-        onSignUp={() => {
-          setAuthState(AuthState.TUTORIAL);
-        }}
-      />
-    );
-  }
+  }, []);
+  const renderFromAuthState = () => {
+    switch (authState) {
+    case AuthState.LANDING_SCREEN:
+      return (
+        <LoginScreen
+          onLogIn={() => {
+            setAuthState(AuthState.LOGIN);
+          }}
+          onSignUp={() => {
+            setAuthState(AuthState.SIGN_UP);
+          }}
+        />
+      );
+    case AuthState.TUTORIAL:
+      return <TutorialScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />;
+    case AuthState.CREATE:
+      return (
+        <SignupScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />
+      );
+    case AuthState.CONFIRM_EMAIL:
+      return (
+        <ConfirmEmailScreen
+          initialEmail={email}
+          onConfirmCode={() => setAuthState(AuthState.LOGIN)}
+        />
+      );
+    case AuthState.SIGN_UP:
+      return (
+        <SignUpFormScreen
+          onCreate={(initEmail: string) => {
+            setEmail(() => initEmail);
+            setAuthState(AuthState.CONFIRM_EMAIL);
+          }}
+          onLogIn={() => setAuthState(AuthState.LOGIN)}
+        />
+      );
+    case AuthState.LOGIN:
+      return <LoginFormScreen onSignUp={() => setAuthState(AuthState.SIGN_UP)} />;
+    default:
+      return (
+        <LoginScreen
+          onLogIn={() => {
+            setAuthState(AuthState.LOGIN);
+          }}
+          onSignUp={() => {
+            setAuthState(AuthState.SIGN_UP);
+          }}
+        />
+      );
+    }
+  };
+  return (
+    <AuthStateContext.Provider value={authState}>
+      {renderFromAuthState()}
+    </AuthStateContext.Provider>
+  );
 };
 
 export default LoginFlowController;

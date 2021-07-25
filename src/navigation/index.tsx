@@ -61,6 +61,7 @@ Amplify.configure({
     disabled: true,
   },
 });
+
 const window = Dimensions.get("window");
 
 export default function Navigation({
@@ -215,33 +216,6 @@ const AuthorizedApp = () => {
           <Stack.Screen
             name="EditCourses"
             options={({ navigation }) => generateOptions(navigation, "Add Courses")}
-            // options={({
-            //   navigation,
-            // }: {
-            //   navigation: StackNavigationProp<
-            //     RootStackParamList,
-            //     "EditCourses"
-            //   >;
-            // }) => ({
-            //   cardStyle: {
-            //     backgroundColor: Colors.theme.creme,
-            //   },
-            //   headerShown: true,
-            //   headerTitle: "",
-            //   headerLeft: () => (
-            //     <ChatBackButton navigation={navigation} label="Add Courses" />
-            //   ),
-            //   headerBackground: (props) => (
-            //     <Layout
-            //       {...props}
-            //       style={{
-            //         backgroundColor: Colors.theme.lightCreme,
-            //       }}
-            //     >
-            //       <BubbleHeader width={window.width} height={170} />
-            //     </Layout>
-            //   ),
-            // } as StackNavigationOptions)}
             component={EditCourseScreen}
           />
           <Stack.Screen

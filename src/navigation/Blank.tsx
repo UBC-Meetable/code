@@ -1,4 +1,4 @@
-import { Layout } from "@ui-kitten/components";
+import { Layout, Spinner } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -13,7 +13,7 @@ const Blank = () => {
       flex: 1,
       display: "flex",
       height: "100%",
-      justifyContent: "flex-end",
+      justifyContent: "center",
       alignItems: "center",
       backgroundColor: "#0000",
     }}
@@ -26,6 +26,9 @@ const Blank = () => {
         width={window.width}
         height={window.height}
       />
+      <Layout style={{ position: "absolute", top: window.height / 2, zIndex: 1000 }}>
+        <Spinner />
+      </Layout>
       <LoginRocket
         style={{ position: "absolute", top: 0 }}
         width={window.width}
