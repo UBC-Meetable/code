@@ -26,7 +26,10 @@ const Blank = () => {
         width={window.width}
         height={window.height}
       />
-      <Layout style={{ position: "absolute", top: window.height / 2, zIndex: 1000 }}>
+      <Layout style={{
+        position: "absolute", top: window.height / 2, zIndex: 1000, backgroundColor: "#0000",
+      }}
+      >
         <Spinner />
       </Layout>
       <LoginRocket

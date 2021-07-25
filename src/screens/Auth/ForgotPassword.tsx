@@ -1,50 +1,29 @@
-import Auth from "@aws-amplify/auth";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
-import Colors from "../constants/Colors";
-import BottomText from "./Auth/BottomText";
+import { Auth } from "aws-amplify";
+import Colors from "../../constants/Colors";
+import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
+import BottomText from "./BottomText";
 
 const window = Dimensions.get("window");
 
-type SignUpFormScreenProps = {
-  onConfirmCode: () => void;
-  onBack: () => void;
-  initialEmail?: string;
+type ForgotPasswordProps = {
+  onBack: () => void
+  afterSubmit: (email: string) => void
 };
 
-const SignUpFormScreen = ({
-  onConfirmCode,
-  onBack,
-  initialEmail = "",
-}: SignUpFormScreenProps) => {
-  const [email, setEmail] = useState(initialEmail);
-  const [code, setCode] = useState("");
-  const [errors, setError] = useState<string[]>([]);
+const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
+  const [email, setEmail] = React.useState("");
+  const [errors, setError] = React.useState<string[]>([]);
 
-  const confirmForm = () => {
-    setError(() => []);
-    let flag = true;
-    if (!email) {
-      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
-      flag = false;
-    }
-    if (!code) {
-      setError((prevErrors) => [...prevErrors, "Code cannot be blank"]);
-      flag = false;
-    }
-    return flag;
-  };
-  const createProfile = async () => {
-    setError([]);
-    if (!confirmForm()) return;
+  const submit = async () => {
     try {
-      const user = await Auth.confirmSignUp(email, code);
-      onConfirmCode();
+      await Auth.forgotPassword(email);
+      afterSubmit(email);
     } catch (e) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
@@ -54,7 +33,9 @@ const SignUpFormScreen = ({
   return (
     <SafeAreaView style={styles.root}>
       <LoginPageBubbleTop
-        style={{ position: "absolute", top: 0 }}
+        style={{
+          position: "absolute", top: 0,
+        }}
         width={window.width}
         height={window.height}
       />
@@ -65,15 +46,8 @@ const SignUpFormScreen = ({
             placeholder="Your Email"
             onChangeText={(e) => setEmail(e.toLowerCase())}
             keyboardType="email-address"
-            disabled={initialEmail.length > 0}
             autoCompleteType="email"
-          />
-          <Input
-            value={code}
-            placeholder="Confirmation Code"
-            onChangeText={(e) => setCode(e.toLowerCase())}
-            keyboardType="email-address"
-            autoCompleteType="email"
+            style={styles.email}
           />
         </Layout>
         {errors.length > 0
@@ -83,11 +57,10 @@ const SignUpFormScreen = ({
             </Text>
           ))}
       </KeyboardAvoidingView>
-
       <Button
         style={styles.button}
         onPress={() => {
-          createProfile();
+          submit();
         }}
       >
         {(evaProps: any) => (
@@ -95,10 +68,11 @@ const SignUpFormScreen = ({
             {...evaProps}
             style={{ ...evaProps.style, ...styles.buttonText }}
           >
-            Confirm Email
+            Forgot Password
           </Text>
         )}
       </Button>
+
       <BottomText onPressText={() => onBack()} />
     </SafeAreaView>
   );
@@ -109,9 +83,10 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     height: "100%",
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.theme.lightCreme,
+    backgroundColor: Colors.theme.background,
   },
   button: {
     marginBottom: 20,
@@ -128,8 +103,9 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: "center",
-    width: "70%",
+    width: "100%",
     minWidth: 200,
+    alignItems: "center",
   },
   error: {
     color: Colors.dark.error,
@@ -143,6 +119,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
   },
+  email: {
+    width: "80%",
+  },
 });
 
-export default SignUpFormScreen;
+export default ForgotPassword;

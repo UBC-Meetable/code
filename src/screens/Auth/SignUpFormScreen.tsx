@@ -4,11 +4,9 @@ import {
 } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import {
-  Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet, TextInput,
+  Dimensions, KeyboardAvoidingView, StyleSheet,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
-import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
 import BottomText from "./BottomText";
 import KeyboardSwipeLayout from "./KeyboardSwipeLayout";

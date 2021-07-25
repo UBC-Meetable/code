@@ -3,16 +3,19 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Colors from "../constants/Colors";
+import UserContext from "../context/UserContext";
 import { RootStackParamList } from "../types";
 
 const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
+  const { setUser } = useContext(UserContext);
   const handleLogout = async () => {
     Auth.signOut();
+    setUser(undefined);
     navigation.reset({
       index: 0,
       routes: [{ name: "Tabs" }],

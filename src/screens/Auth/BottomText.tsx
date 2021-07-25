@@ -17,6 +17,10 @@ const BottomText = ({ onPressText }:BottomTextProps) => {
       return ["Already have an account?", "Log In"];
     case AuthState.LOGIN:
       return ["Don't have an account?", "Sign Up"];
+    case AuthState.CONFIRM_EMAIL:
+    case AuthState.FORGOT_PASSWORD:
+    case AuthState.FORGOT_PASSWORD_CONFIRM:
+      return ["", "Back"];
     default:
       return ["", ""];
     }

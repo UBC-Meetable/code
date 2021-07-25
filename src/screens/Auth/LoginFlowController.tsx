@@ -4,6 +4,8 @@ import AuthStateContext from "../../context/AuthStateContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { AuthState } from "../../types";
 import ConfirmEmailScreen from "../ConfirmEmailScreen";
+import ForgotPassword from "./ForgotPassword";
+import ForgotPasswordConfirm from "./ForgotPasswordConfirm";
 import LoginFormScreen from "./LoginFormScreen";
 import LoginScreen from "./LoginScreen";
 import SignUpFormScreen from "./SignUpFormScreen";
@@ -14,6 +16,8 @@ import TutorialScreen from "./TutorialScreen";
 
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
+  const [confirmEmail, setConfirmEmail] = useState("");
+
   const [authState, setAuthState] = useState<AuthState>(
     AuthState.LANDING_SCREEN,
   );
@@ -44,6 +48,12 @@ const LoginFlowController = () => {
           onSignUp={() => {
             setAuthState(AuthState.SIGN_UP);
           }}
+          onForgot={() => {
+            setAuthState(AuthState.FORGOT_PASSWORD);
+          }}
+          onConfirm={() => {
+            setAuthState(AuthState.CONFIRM_EMAIL);
+          }}
         />
       );
     case AuthState.TUTORIAL:
@@ -55,6 +65,7 @@ const LoginFlowController = () => {
     case AuthState.CONFIRM_EMAIL:
       return (
         <ConfirmEmailScreen
+          onBack={() => setAuthState(AuthState.LANDING_SCREEN)}
           initialEmail={email}
           onConfirmCode={() => setAuthState(AuthState.LOGIN)}
         />
@@ -71,6 +82,24 @@ const LoginFlowController = () => {
       );
     case AuthState.LOGIN:
       return <LoginFormScreen onSignUp={() => setAuthState(AuthState.SIGN_UP)} />;
+    case AuthState.FORGOT_PASSWORD:
+      return (
+        <ForgotPassword
+          onBack={() => setAuthState(AuthState.LANDING_SCREEN)}
+          afterSubmit={(confirmedEmail:string) => {
+            setConfirmEmail(confirmedEmail);
+            setAuthState(AuthState.FORGOT_PASSWORD_CONFIRM);
+          }}
+        />
+      );
+    case AuthState.FORGOT_PASSWORD_CONFIRM:
+      return (
+        <ForgotPasswordConfirm
+          afterSubmit={() => setAuthState(AuthState.LOGIN)}
+          onBack={() => setAuthState(AuthState.LANDING_SCREEN)}
+          email={confirmEmail}
+        />
+      );
     default:
       return (
         <LoginScreen
@@ -79,6 +108,12 @@ const LoginFlowController = () => {
           }}
           onSignUp={() => {
             setAuthState(AuthState.SIGN_UP);
+          }}
+          onForgot={() => {
+            setAuthState(AuthState.FORGOT_PASSWORD);
+          }}
+          onConfirm={() => {
+            setAuthState(AuthState.CONFIRM_EMAIL);
           }}
         />
       );

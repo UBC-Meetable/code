@@ -26,7 +26,7 @@ const CourseGroupBubble = ({
   const userIdSet = new Set<string>();
   for (let i = 0; i < Math.min(messages.length, 4) && userSet.size < 4; i += 1) {
     const user = (messages[i] as ChatMessage).author as User;
-    if (!userIdSet.has(user.id!) && user.id !== me.attributes.sub) {
+    if (!userIdSet.has(user.id!) && user.id !== me?.attributes.sub) {
       userIdSet.add(user.id!);
       userSet.add(user);
     }
@@ -37,7 +37,7 @@ const CourseGroupBubble = ({
     for (let i = 0; i < Math.min(list!.length, 4) && userSet.size < 4; i += 1) {
       const user = (list[i] as User);
 
-      if (!userIdSet.has(user.id!) && user.id !== me.attributes.sub) {
+      if (!userIdSet.has(user.id!) && user.id !== me?.attributes.sub) {
         userIdSet.add(user.id!);
         userSet.add(user);
       }
