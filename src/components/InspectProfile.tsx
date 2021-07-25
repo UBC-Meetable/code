@@ -3,11 +3,11 @@ import {
   Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, useFonts,
 } from "@expo-google-fonts/poppins";
 import {
-  Button, Card, Layout, Spinner, Text,
+  Button, Card, Layout, Spinner, Text, Modal, Input,
 } from "@ui-kitten/components";
 import { BlurView } from "expo-blur";
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Chip } from "react-native-paper";
 import Icon from "react-native-vector-icons/Entypo";
 import profilePic from "../assets/images/profilePic2.jpg";
@@ -41,6 +41,10 @@ const InspectProfile = ({ user }:{user: User}) => {
     Poppins_600SemiBold,
     Poppins_400Regular,
   });
+
+  const [visible, setVisible] = React.useState(false);
+
+  const [value, setValue] = React.useState("");
 
   if (!fontsLoaded) {
     return (
@@ -80,6 +84,25 @@ const InspectProfile = ({ user }:{user: User}) => {
               <Chip style={[styles.nonMatching, styles.chip]}>Basketball</Chip>
               <Chip style={[styles.nonMatching, styles.chip]}>Marketing</Chip>
             </Layout>
+          </Layout>
+          <Layout style={styles.buttonContainer}>
+            <View style={styles.buttonContainer}>
+              <Modal
+                visible={visible}
+                backdropStyle={styles.backdrop}
+                onBackdropPress={() => setVisible(false)}
+              >
+                <Input
+                  placeholder="Why are you reporting this user?"
+                  value={value}
+                  onChangeText={(nextValue) => setValue(nextValue)}
+                />
+                <Button
+                  style={styles.reportButton}
+                  onPress={() => setVisible(false)}
+                />
+              </Modal>
+            </View>
           </Layout>
         </Card>
       </Layout>
@@ -191,6 +214,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     fontFamily: "Poppins_400Regular",
     fontSize: 16,
+  },
+  reportButton: {
+
   },
 });
 
