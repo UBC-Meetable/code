@@ -3,10 +3,14 @@ import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
-import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
+import {
+  Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet, TextInput,
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
+import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
@@ -25,7 +29,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const passwordRef = useRef<Input>(null);
   const confirmEmailRef = useRef<Input>(null);
   const confirmPasswordRef = useRef<Input>(null);
-
+  const [passwordFocused, setPasswordFocused] = useState(false);
   const confirmForm = () => {
     setError(() => []);
     let flag = true;
@@ -65,20 +69,19 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   };
 
   return (
-    <Layout style={rootStyles}>
+    <KeyboardSwipeLayout>
       <LoginPageBubbleTop
         style={{ position: "absolute", top: 0 }}
         width={window.width}
         height={window.height}
       />
       <KeyboardAvoidingView
-        behavior="height"
-        style={styles.formContainer}
-        collapsable
+        behavior="position"
+        enabled={passwordRef.current?.isFocused() || confirmPasswordRef.current?.isFocused()}
       >
+
         <Text style={styles.header}>Let's get Started!</Text>
         <Layout style={styles.emailContainer}>
-
           <Input
             ref={emailRef}
             style={styles.input}
@@ -103,8 +106,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           />
         </Layout>
         <Layout style={styles.emailContainer}>
-
           <Input
+            onFocus={() => setPasswordFocused(true)}
+            onBlur={() => setPasswordFocused(false)}
             style={styles.input}
             size="large"
             value={password}
@@ -115,8 +119,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             onSubmitEditing={() => confirmPasswordRef.current?.focus()}
             autoCompleteType="password"
           />
-
           <Input
+            onFocus={() => setPasswordFocused(true)}
+            onBlur={() => setPasswordFocused(false)}
             style={styles.input}
             size="large"
             value={confirmPassword}
@@ -134,34 +139,38 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               {error}
             </Text>
           ))}
-      </KeyboardAvoidingView>
-
-      <Button
-        style={styles.button}
-        onPress={() => {
-          createProfile();
+        <Layout style={{
+          justifyContent: "center", alignItems: "center", backgroundColor: "#0000", flex: 0,
         }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Create Profile
-          </Text>
-        )}
-      </Button>
-      <Text style={{ ...styles.loginText }}>
-        Already have an account?
-        {" "}
-        <Text
-          style={{ ...styles.loginText, color: "#02A3F4" }}
-          onPress={() => onLogIn()}
         >
-          Log in
-        </Text>
-      </Text>
-    </Layout>
+          <Button
+            style={styles.button}
+            onPress={() => {
+              createProfile();
+            }}
+          >
+            {(evaProps: any) => (
+              <Text
+                {...evaProps}
+                style={{ ...evaProps.style, ...styles.buttonText }}
+              >
+                Create Profile
+              </Text>
+            )}
+          </Button>
+          <Text style={{ ...styles.loginText }}>
+            Already have an account?
+            {" "}
+            <Text
+              style={{ ...styles.loginText, color: "#02A3F4" }}
+              onPress={() => onLogIn()}
+            >
+              Log in
+            </Text>
+          </Text>
+        </Layout>
+      </KeyboardAvoidingView>
+    </KeyboardSwipeLayout>
   );
 };
 
@@ -181,8 +190,9 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     justifyContent: "center",
-    width: "70%",
+    width: "80%",
     minWidth: 200,
+    backgroundColor: "#0000",
   },
   error: {
     color: Colors.dark.error,
@@ -190,6 +200,10 @@ const styles = StyleSheet.create({
   emailContainer: {
     marginVertical: 20,
     backgroundColor: "#0000",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
   },
   header: {
     fontSize: 30,
@@ -201,6 +215,7 @@ const styles = StyleSheet.create({
     marginHorizontal: -50,
     borderRadius: 20,
     padding: 10,
+    width: "100%",
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: {
@@ -214,6 +229,24 @@ const styles = StyleSheet.create({
   loginText: {
     fontSize: 15,
     textAlign: "center",
+  },
+  bioBubble: {
+    height: "100%",
+    maxHeight: 300,
+    flex: 1,
+    padding: 10,
+    width: "100%",
+    backgroundColor: "white",
+    borderRadius: 24,
+    marginVertical: 5,
+  },
+  keyboardHider: {
+    height: "100%",
+    maxHeight: 300,
+    flex: 1,
+    padding: 10,
+    width: "90%",
+    marginVertical: 5,
   },
 });
 

@@ -107,7 +107,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     >
       <ScrollView
         maintainVisibleContentPosition={{ minIndexForVisible: 1, autoscrollToTopThreshold: 100 }}
-        // onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: false })}
+        onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: false })}
         ref={scrollRef}
         style={styles.messages}
         contentContainerStyle={{

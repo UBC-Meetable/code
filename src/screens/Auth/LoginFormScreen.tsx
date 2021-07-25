@@ -4,10 +4,12 @@ import {
 } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import rootStyles from "../../components/styles/rootStyles";
 import Colors from "../../constants/Colors";
 import UserContext from "../../context/UserContext";
+import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
@@ -52,13 +54,13 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
   };
 
   return (
-    <Layout style={rootStyles}>
+    <KeyboardSwipeLayout>
       <LoginPageBubbleTop
         style={{ position: "absolute", top: 0 }}
         width={window.width}
         height={window.height}
       />
-      <KeyboardAvoidingView behavior="height" style={styles.formContainer}>
+      <KeyboardAvoidingView behavior="position">
         <Text style={styles.title}>Welcome to Meetable!</Text>
         <Layout style={styles.emailContainer}>
           <Input
@@ -92,34 +94,38 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
               {error}
             </Text>
           ))}
-      </KeyboardAvoidingView>
-
-      <Button
-        style={styles.button}
-        onPress={() => {
-          login();
+        <Layout style={{
+          justifyContent: "center", alignItems: "center", backgroundColor: "#0000", flex: 0,
         }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Log In
-          </Text>
-        )}
-      </Button>
-      <Text style={{ ...styles.loginText }}>
-        Don't have an account?
-        {" "}
-        <Text
-          style={{ ...styles.loginText, color: "#02A3F4" }}
-          onPress={() => onSignUp()}
         >
-          Sign Up
-        </Text>
-      </Text>
-    </Layout>
+          <Button
+            style={styles.button}
+            onPress={() => {
+              login();
+            }}
+          >
+            {(evaProps: any) => (
+              <Text
+                {...evaProps}
+                style={{ ...evaProps.style, ...styles.buttonText }}
+              >
+                Log In
+              </Text>
+            )}
+          </Button>
+          <Text style={{ ...styles.loginText }}>
+            Don't have an account?
+            {" "}
+            <Text
+              style={{ ...styles.loginText, color: "#02A3F4" }}
+              onPress={() => onSignUp()}
+            >
+              Sign Up
+            </Text>
+          </Text>
+        </Layout>
+      </KeyboardAvoidingView>
+    </KeyboardSwipeLayout>
   );
 };
 
@@ -141,6 +147,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "80%",
     minWidth: 200,
+    backgroundColor: "#0000",
   },
   error: {
     color: Colors.dark.error,
