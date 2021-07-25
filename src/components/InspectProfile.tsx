@@ -1,120 +1,113 @@
 /* eslint-disable camelcase */
 import {
-  Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, useFonts,
-} from "@expo-google-fonts/poppins";
-import {
-  Button, Card, Layout, Spinner, Text, Modal, Input,
+  Layout,
+  Text,
+  Modal,
+  Button,
+  Card,
+  Input,
 } from "@ui-kitten/components";
-import { BlurView } from "expo-blur";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
-import Icon from "react-native-vector-icons/Entypo";
-import profilePic from "../assets/images/profilePic2.jpg";
 import { User } from "../API";
+import Colors from "../constants/Colors";
+import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
+import ProfilePicture from "./ProfilePicture";
 
-const CrossIcon = () => (
-  <Layout
-    style={{
-      display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "center",
-    }}
-  >
-    <Icon
-      name="cross"
-      size={37}
-      style={{
-        color: "white",
-        marginRight: -37,
-        marginBottom: -37,
-        marginLeft: -36,
-        marginTop: -19,
-      }}
-    />
-  </Layout>
-);
-
-const InspectProfile = ({ user }:{user: User}) => {
-  const [fontsLoaded] = useFonts({
-    Poppins_500Medium,
-    Poppins_600SemiBold,
-    Poppins_400Regular,
-  });
-
+const InspectProfile = ({ user }: { user: User }) => {
+  const g = "h";
   const [visible, setVisible] = React.useState(false);
-
   const [value, setValue] = React.useState("");
 
-  if (!fontsLoaded) {
-    return (
-      <Card style={styles.card} disabled>
-        <Spinner />
-      </Card>
-    );
-  }
-
   return (
-    <BlurView tint="default" intensity={80} style={[StyleSheet.absoluteFill]}>
-      <Layout style={styles.backdrop}>
-        <Card style={styles.card} disabled>
-          <Image source={profilePic} style={styles.profilePic} />
-          <Layout style={styles.buttonContainer}>
-            <Button
-              style={styles.button}
-              activeOpacity={0.8}
-              accessoryLeft={CrossIcon}
-              onPress={() => console.log("hello")}
-            />
-          </Layout>
-          <Layout style={styles.nameContainer}>
-            <Text style={styles.name}>{`${user.firstName}`}</Text>
-            <Text style={styles.name}>{`${user.lastName}`}</Text>
-          </Layout>
-          <Layout style={styles.bioContainer}>
-            <Text style={styles.header}>Bio</Text>
-            <Text style={styles.bio}>{`${user.bio}`}</Text>
-          </Layout>
-          <Layout style={styles.interestContainer}>
-            <Text style={styles.header}>Matching Interests</Text>
-            <Layout style={styles.chips}>
-              <Chip style={[styles.matching, styles.chip]}>Coding</Chip>
-              <Chip style={[styles.matching, styles.chip]}>Music</Chip>
-              <Chip style={[styles.matching, styles.chip]}>Biology</Chip>
-              <Chip style={[styles.nonMatching, styles.chip]}>Basketball</Chip>
-              <Chip style={[styles.nonMatching, styles.chip]}>Marketing</Chip>
-            </Layout>
-          </Layout>
-          <Layout style={styles.buttonContainer}>
-            <View style={styles.buttonContainer}>
-              <Modal
-                visible={visible}
-                backdropStyle={styles.backdrop}
-                onBackdropPress={() => setVisible(false)}
-              >
-                <Input
-                  placeholder="Why are you reporting this user?"
-                  value={value}
-                  onChangeText={(nextValue) => setValue(nextValue)}
-                  multiline
-                  textStyle={{ minHeight: 64 }}
-                />
-                <Button
-                  style={styles.reportButton}
-                  onPress={() => setVisible(false)}
-                >
-                  Report User
-                </Button>
-              </Modal>
-            </View>
-          </Layout>
-        </Card>
+    <Layout style={styles.card}>
+      <Layout style={styles.profileContainer}>
+        <ProfilePicture
+          imageKey={user.profilePicture || ""}
+          size={ProfilePictureSize.PROFILE}
+        />
       </Layout>
-    </BlurView>
+      <Layout style={styles.nameContainer}>
+        <Text style={styles.name}>{`${user.firstName}`}</Text>
+        <Text style={styles.name}>{`${user.lastName}`}</Text>
+      </Layout>
+      <Layout style={styles.mainContent}>
+        <Layout style={styles.bioContainer}>
+          <Text style={styles.header}>Bio</Text>
+          <ScrollView style={styles.scroll}>
+            <Text style={styles.bio}>{`${user.bio}`}</Text>
+          </ScrollView>
+        </Layout>
+        <Layout style={styles.interestContainer}>
+          <Text style={styles.header}>Matching Interests</Text>
+          <Layout style={styles.chips}>
+            <Chip style={[styles.matching, styles.chip]}>Coding</Chip>
+            <Chip style={[styles.matching, styles.chip]}>Music</Chip>
+            <Chip style={[styles.matching, styles.chip]}>Biology</Chip>
+            <Chip style={[styles.nonMatching, styles.chip]}>Basketball</Chip>
+            <Chip style={[styles.nonMatching, styles.chip]}>Marketing</Chip>
+          </Layout>
+        </Layout>
+        <Layout>
+          <Button onPress={() => setVisible(true)}>Report User</Button>
+          <Modal
+            visible={visible}
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => setVisible(false)}
+          >
+            <Card disabled>
+              <Text style={styles.reportText}>
+                Why are you reporting this user?
+              </Text>
+              <Input
+                placeholder="Write your reason here..."
+                value={value}
+                onChangeText={(nextValue) => setValue(nextValue)}
+                multiline
+                textStyle={{ minHeight: 100 }}
+              />
+              <Button
+                style={styles.reportButton}
+                onPress={() => setVisible(false)}
+              >
+                Report User
+              </Button>
+            </Card>
+          </Modal>
+        </Layout>
+      </Layout>
+    </Layout>
   );
 };
 
+const transformPictureDistance = -ProfilePictureDimensions.PROFILE.height / 2;
+
 const styles = StyleSheet.create({
+  scroll: {
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#C9E8F3",
+  },
+  root: {
+    width: "100%",
+  },
+  profileContainer: {
+    backgroundColor: "#0000",
+    transform: [{ translateY: transformPictureDistance }],
+    marginBottom: transformPictureDistance,
+    alignItems: "center",
+  },
+  mainContent: {
+    backgroundColor: "#0000",
+    flex: 1,
+    flexGrow: 1,
+    borderColor: "green",
+    width: "100%",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    justifyContent: "space-evenly",
+  },
   chips: {
     display: "flex",
     flexDirection: "row",
@@ -122,110 +115,82 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "baseline",
     flex: 1,
+    backgroundColor: "#0000",
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
   },
   matching: {
     backgroundColor: "#94DBCE",
   },
   nonMatching: {
-    backgroundColor: "#FEEDDE",
+    backgroundColor: Colors.theme.creme,
   },
   chip: {
     display: "flex",
     justifyContent: "center",
-    // textAlign: "center",
     maxWidth: 120,
     margin: 3,
     flexGrow: 1,
   },
   bio: {
-    marginTop: 5,
-    marginBottom: 5,
+    margin: 5,
+    flex: 1,
   },
   header: {
     fontSize: 18,
     fontFamily: "Poppins_600SemiBold",
     color: "#FBBA82",
   },
-  blurView: {
-    overflow: "visible",
-  },
-  backdrop: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(2251, 186, 130, 0.2)",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  button: {
-    margin: 2,
-    width: 37,
-    height: 37,
-    borderRadius: 100,
-    backgroundColor: "#FBBA82",
-    borderWidth: 0,
-  },
   card: {
-    width: "85%",
-    minWidth: 300,
-    maxWidth: 500,
-    height: "55%",
-    minHeight: 300,
-    maxHeight: 500,
+    flex: 1,
     borderRadius: 20,
     overflow: "visible",
-    borderWidth: 0,
+    alignItems: "center",
+    flexDirection: "column",
+    display: "flex",
+    shadowOffset: { height: 3, width: 2 },
+    shadowColor: "black",
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
     padding: 0,
-  },
-  profilePic: {
-    height: 145,
-    width: 145,
-    position: "absolute",
-    top: -72.5,
-    zIndex: 2,
-    margin: 0,
-    alignSelf: "center",
-    borderRadius: 100,
-  },
-  buttonContainer: {
-    height: 40,
     width: "100%",
-    padding: 0,
-    margin: 0,
   },
   nameContainer: {
-    display: "flex",
-    flexDirection: "column",
-    marginTop: 30,
-    justifyContent: "center",
     alignItems: "center",
+    flex: 0,
   },
   name: {
+    marginTop: 10,
     fontSize: 24,
     fontFamily: "Poppins_500Medium",
   },
   bioContainer: {
-    flexBasis: 110,
+    flexGrow: 1,
     flexDirection: "column",
     fontFamily: "Poppins_400Regular",
     fontSize: 16,
     flex: 1,
+    margin: 10,
+    overflow: "visible",
   },
   interestContainer: {
+    margin: 10,
     flexBasis: 110,
     flexDirection: "column",
     fontFamily: "Poppins_400Regular",
     fontSize: 16,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   reportButton: {
-    margin: 2,
-    width: 37,
-    height: 37,
-    borderRadius: 100,
-    backgroundColor: "#FBBA82",
-    borderWidth: 0,
+    margin: 10,
+  },
+  reportText: {
+    marginBottom: 20,
+    fontSize: 25,
   },
 });
 
