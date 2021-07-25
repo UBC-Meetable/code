@@ -2,7 +2,11 @@
 {
   "typeName": "Query",
   "fieldName": "", 
-  "arguments": { "user": { "id": "0a0c8dae-4be0-464f-b19d-5454f097fbbd", "university": "The University of British Columbia", "year": 3 } }, 
+  "arguments": { "user": {
+    "id": "1943998a-6fe8-4cc1-b322-879ea4375fec",
+    "university": "The University of British Columbia",
+    "year": -1
+  } }, 
   "identity": {},
   "source": {}, 
   "request": {}, 
