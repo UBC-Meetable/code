@@ -96,11 +96,15 @@ const InspectProfile = ({ user }:{user: User}) => {
                   placeholder="Why are you reporting this user?"
                   value={value}
                   onChangeText={(nextValue) => setValue(nextValue)}
+                  multiline
+                  textStyle={{ minHeight: 64 }}
                 />
                 <Button
                   style={styles.reportButton}
                   onPress={() => setVisible(false)}
-                />
+                >
+                  Report User
+                </Button>
               </Modal>
             </View>
           </Layout>
@@ -216,7 +220,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   reportButton: {
-
+    margin: 2,
+    width: 37,
+    height: 37,
+    borderRadius: 100,
+    backgroundColor: "#FBBA82",
+    borderWidth: 0,
   },
 });
 
