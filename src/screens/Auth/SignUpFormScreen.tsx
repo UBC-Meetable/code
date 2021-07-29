@@ -166,7 +166,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
 const styles = StyleSheet.create({
   button: {
-    marginBottom: 20,
+    marginBottom: 25,
     width: "90%",
     borderRadius: 100,
     borderWidth: 0,

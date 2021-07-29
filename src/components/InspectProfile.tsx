@@ -1,15 +1,79 @@
 /* eslint-disable camelcase */
-import { Layout, Text } from "@ui-kitten/components";
-import React from "react";
+import {
+  Button,
+  Card,
+  Input, Layout, Modal, Spinner, Text,
+} from "@ui-kitten/components";
+import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
 import { User } from "../API";
+import reportUser from "../calls/reportUser";
 import Colors from "../constants/Colors";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 import ProfilePicture from "./ProfilePicture";
 
-const InspectProfile = ({ user }:{user: User}) => {
-  const g = "h";
+type ReportUserProps = {
+  onPressReport: (value: string) => Promise<boolean>;
+  onSuccess: () => void;
+  };
+
+const ReportUserModal = ({ onPressReport, onSuccess }: ReportUserProps) => {
+  const [value, setValue] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  // const [success, setSuccess] = useState(false);
+
+  return (
+    <ScrollView
+      style={{ width: "100%" }}
+      scrollEnabled={false}
+      keyboardDismissMode="interactive"
+      bounces={false}
+    >
+      <Card disabled>
+        <Text style={styles.reportText}>
+          Why are you reporting this user?
+        </Text>
+        <Input
+          placeholder="Write your reason here..."
+          value={value}
+          onChangeText={(nextValue) => setValue(nextValue)}
+          multiline
+          textStyle={{ minHeight: 100 }}
+        />
+        <Button
+          accessoryLeft={() => (disabled ? <Spinner /> : <Layout />)}
+          style={styles.reportButton}
+          onPress={() => {
+            setDisabled(true);
+            onPressReport(value).then((reported) => {
+              // setSuccess(reported);
+              if (!reported) {
+                setDisabled(false);
+              } else onSuccess();
+            });
+          }}
+          disabled={disabled}
+        >
+          Report User
+        </Button>
+      </Card>
+    </ScrollView>
+  );
+};
+
+const InspectProfile = ({ user }: { user: User }) => {
+  const [visible, setVisible] = React.useState(false);
+  const me = useAuthenticatedUser();
+  const [success, setSuccess] = useState(false);
+
+  const handleReport = async (body: string) => {
+    const reported = await reportUser({
+      body, reportingUserID: me.attributes.sub, reportedUserID: user.id!, title: "Report",
+    });
+    return reported;
+  };
   return (
     <Layout style={styles.card}>
       <Layout style={styles.profileContainer}>
@@ -26,9 +90,7 @@ const InspectProfile = ({ user }:{user: User}) => {
         <Layout style={styles.bioContainer}>
           <Text style={styles.header}>Bio</Text>
           <ScrollView style={styles.scroll}>
-            <Text style={styles.bio}>
-              {`${user.bio}`}
-            </Text>
+            <Text style={styles.bio}>{`${user.bio}`}</Text>
           </ScrollView>
         </Layout>
         <Layout style={styles.interestContainer}>
@@ -40,6 +102,24 @@ const InspectProfile = ({ user }:{user: User}) => {
             <Chip style={[styles.nonMatching, styles.chip]}>Basketball</Chip>
             <Chip style={[styles.nonMatching, styles.chip]}>Marketing</Chip>
           </Layout>
+        </Layout>
+        <Layout>
+          <Button style={styles.reportButton} disabled={success} onPress={() => setVisible(true)}>
+            {success ? "Successfully Reported User!" : "Report User"}
+          </Button>
+          <Modal
+            visible={visible}
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => setVisible(false)}
+          >
+            <ReportUserModal
+              onSuccess={() => {
+                setVisible(false);
+                setSuccess(true);
+              }}
+              onPressReport={(body:string) => handleReport(body)}
+            />
+          </Modal>
         </Layout>
       </Layout>
     </Layout>
@@ -146,6 +226,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  reportButton: {
+    margin: 10,
+    // width: "80%",
+    backgroundColor: "red",
+    borderWidth: 1,
+    borderColor: "red",
+    // color: "#000",
+  },
+  reportText: {
+    marginBottom: 20,
+    fontSize: 25,
+  },
+  reportButtonText: {
+    color: "red",
   },
 });
 

@@ -22,7 +22,11 @@ export const UserProvider = (props: {children?: ReactNode }) => {
         const u = await Auth.currentAuthenticatedUser();
         setUser(u);
       } catch (e) {
+        console.log(e);
+
         setUser(undefined);
+      } finally {
+        console.log("USER");
       }
     };
     if (!user) { f(); }
