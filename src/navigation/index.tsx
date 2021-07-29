@@ -176,6 +176,7 @@ const AuthorizedApp = () => {
   }
 
   return (
+    // <UserProvider>
     <CourseGroupsProvider>
       <FriendGroupsProvider>
         <Stack.Navigator
@@ -263,6 +264,7 @@ const AuthorizedApp = () => {
         </Stack.Navigator>
       </FriendGroupsProvider>
     </CourseGroupsProvider>
+    // </UserProvider>
   );
 };
 

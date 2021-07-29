@@ -9,6 +9,7 @@ import { ChatMessage, ProfilePictureSize } from "../../types";
 import ProfilePicture from "../ProfilePicture";
 import styles from "../styles/MessageStyles";
 import InspectProfile from "../InspectProfile";
+import { UserProvider } from "../../context/UserContext";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
   const [visible, setVisible] = React.useState(false);
@@ -33,7 +34,9 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
               }}
               style={otherStyles.modal}
             >
-              <InspectProfile user={message.author!} />
+              <UserProvider>
+                <InspectProfile user={message.author!} />
+              </UserProvider>
             </Modal>
 
             <ProfilePicture
