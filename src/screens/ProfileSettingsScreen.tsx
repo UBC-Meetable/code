@@ -12,10 +12,8 @@ import UserContext from "../context/UserContext";
 import { RootStackParamList } from "../types";
 
 const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
-  const { setUser } = useContext(UserContext);
   const handleLogout = async () => {
     Auth.signOut();
-    setUser(undefined);
     navigation.reset({
       index: 0,
       routes: [{ name: "Tabs" }],
