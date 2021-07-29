@@ -1,5 +1,12 @@
 /* eslint-disable camelcase */
-import { Layout, Text } from "@ui-kitten/components";
+import {
+  Layout,
+  Text,
+  Modal,
+  Button,
+  Card,
+  Input,
+} from "@ui-kitten/components";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
@@ -8,8 +15,11 @@ import Colors from "../constants/Colors";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 import ProfilePicture from "./ProfilePicture";
 
-const InspectProfile = ({ user }:{user: User}) => {
+const InspectProfile = ({ user }: { user: User }) => {
   const g = "h";
+  const [visible, setVisible] = React.useState(false);
+  const [value, setValue] = React.useState("");
+
   return (
     <Layout style={styles.card}>
       <Layout style={styles.profileContainer}>
@@ -26,9 +36,7 @@ const InspectProfile = ({ user }:{user: User}) => {
         <Layout style={styles.bioContainer}>
           <Text style={styles.header}>Bio</Text>
           <ScrollView style={styles.scroll}>
-            <Text style={styles.bio}>
-              {`${user.bio}`}
-            </Text>
+            <Text style={styles.bio}>{`${user.bio}`}</Text>
           </ScrollView>
         </Layout>
         <Layout style={styles.interestContainer}>
@@ -40,6 +48,33 @@ const InspectProfile = ({ user }:{user: User}) => {
             <Chip style={[styles.nonMatching, styles.chip]}>Basketball</Chip>
             <Chip style={[styles.nonMatching, styles.chip]}>Marketing</Chip>
           </Layout>
+        </Layout>
+        <Layout>
+          <Button onPress={() => setVisible(true)}>Report User</Button>
+          <Modal
+            visible={visible}
+            backdropStyle={styles.backdrop}
+            onBackdropPress={() => setVisible(false)}
+          >
+            <Card disabled>
+              <Text style={styles.reportText}>
+                Why are you reporting this user?
+              </Text>
+              <Input
+                placeholder="Write your reason here..."
+                value={value}
+                onChangeText={(nextValue) => setValue(nextValue)}
+                multiline
+                textStyle={{ minHeight: 100 }}
+              />
+              <Button
+                style={styles.reportButton}
+                onPress={() => setVisible(false)}
+              >
+                Report User
+              </Button>
+            </Card>
+          </Modal>
         </Layout>
       </Layout>
     </Layout>
@@ -146,6 +181,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
+  },
+  backdrop: {
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  reportButton: {
+    margin: 10,
+  },
+  reportText: {
+    marginBottom: 20,
+    fontSize: 25,
   },
 });
 
