@@ -24,11 +24,8 @@ const LoginFlowController = () => {
   const user = useAuthenticatedUser();
 
   React.useEffect(() => {
-    console.log(user);
-
     SecureStore.getItemAsync("firstLaunch").then(
       (firstLaunch) => {
-        console.log(firstLaunch);
         if (!firstLaunch) {
           SecureStore.setItemAsync("firstLaunch", "true").then(() => {
             setAuthState(() => AuthState.TUTORIAL);

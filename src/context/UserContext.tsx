@@ -25,8 +25,6 @@ export const UserProvider = (props: {children?: ReactNode }) => {
         console.log(e);
 
         setUser(undefined);
-      } finally {
-        console.log("USER");
       }
     };
     if (!user) { f(); }
