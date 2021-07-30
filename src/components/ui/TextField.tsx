@@ -1,20 +1,21 @@
 import { Input, InputProps } from "@ui-kitten/components";
-import React from "react";
+import React, { forwardRef, RefObject } from "react";
 import { StyleSheet } from "react-native";
 
 type TextFieldProps = {} & InputProps;
 
-const TextField = (props:TextFieldProps) => {
+const TextField = forwardRef((props:TextFieldProps, ref: React.ForwardedRef<Input>) => {
   const { style: propStyles, textStyle } = props;
   return (
     <Input
       {...props}
+      ref={ref}
       textStyle={[textStyle, styles.textBase]}
       style={[propStyles, styles.base]}
       placeholderTextColor="#C5C5C5"
     />
   );
-};
+});
 
 const styles = StyleSheet.create({
   base: {

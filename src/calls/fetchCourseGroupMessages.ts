@@ -17,11 +17,8 @@ const fetchCourseGroupMessages = async ({ groupChatID, limit, nextToken }:
       sortDirection: "DESC",
     },
   }) as GraphQLResult<MessagesByCourseGroupChatIdQuery>;
-  console.log("BIG RES***", { res });
 
   if (res.data?.messagesByCourseGroupChatID) {
-    console.log("Success");
-
     return {
       messages: res.data.messagesByCourseGroupChatID.items as ChatMessage[],
       token: res.data.messagesByCourseGroupChatID.nextToken,

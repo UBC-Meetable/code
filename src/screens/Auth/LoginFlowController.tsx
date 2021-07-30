@@ -1,4 +1,3 @@
-import { Layout, Text } from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
 import { Dimensions } from "react-native";
@@ -13,10 +12,6 @@ import LoginScreen from "./LoginScreen";
 import SignUpFormScreen from "./SignUpFormScreen";
 import SignupScreen from "./SignupScreen";
 import TutorialScreen from "./TutorialScreen";
-import ForgotBubble from "../../assets/images/forgot-bubble.svg";
-
-const window = Dimensions.get("window");
-// eslint-disable-next-line no-shadow
 
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
@@ -25,7 +20,6 @@ const LoginFlowController = () => {
   const [authState, setAuthState] = useState<AuthState>(
     AuthState.LANDING_SCREEN,
   );
-  const user = useAuthenticatedUser();
 
   React.useEffect(() => {
     SecureStore.getItemAsync("firstLaunch").then(
@@ -60,7 +54,7 @@ const LoginFlowController = () => {
     case AuthState.CONFIRM_EMAIL:
       return (
         <ConfirmEmailScreen
-          onBack={() => setAuthState(AuthState.LANDING_SCREEN)}
+          onBack={() => setAuthState(AuthState.SIGN_UP)}
           initialEmail={email}
           onConfirmCode={() => setAuthState(AuthState.LOGIN)}
         />
@@ -82,13 +76,14 @@ const LoginFlowController = () => {
             setEmail(() => initEmail);
             setAuthState(AuthState.CONFIRM_EMAIL);
           }}
+          onForgot={() => setAuthState(AuthState.FORGOT_PASSWORD)}
           onSignUp={() => setAuthState(AuthState.SIGN_UP)}
         />
       );
     case AuthState.FORGOT_PASSWORD:
       return (
         <ForgotPassword
-          onBack={() => setAuthState(AuthState.LANDING_SCREEN)}
+          onBack={() => setAuthState(AuthState.LOGIN)}
           afterSubmit={(confirmedEmail:string) => {
             setConfirmEmail(confirmedEmail);
             setAuthState(AuthState.FORGOT_PASSWORD_CONFIRM);
