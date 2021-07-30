@@ -33,6 +33,7 @@ const ProfilePicture = ({
         setImageLoading(() => false);
         return;
       }
+      console.log("Got from s3");
 
       const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 }) as string;
 

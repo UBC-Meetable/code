@@ -2,7 +2,7 @@ import Auth from "@aws-amplify/auth";
 import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
@@ -20,16 +20,24 @@ type SignUpFormScreenProps = {
   onConfirmCode: () => void;
   onBack: () => void;
   initialEmail?: string;
+  fromSignUp: boolean;
 };
 
 const SignUpFormScreen = ({
   onConfirmCode,
   onBack,
   initialEmail,
+  fromSignUp,
 }: SignUpFormScreenProps) => {
   const [code, setCode] = useState("");
   const [errors, setError] = useState<string[]>([]);
   const units = useSafeAreaInsets();
+
+  useEffect(() => {
+    if (initialEmail && !fromSignUp) {
+      Auth.resendSignUp(initialEmail);
+    }
+  }, [initialEmail]);
   const confirmForm = () => {
     setError(() => []);
     let flag = true;

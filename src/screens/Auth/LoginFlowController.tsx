@@ -16,7 +16,7 @@ import TutorialScreen from "./TutorialScreen";
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
-
+  const [fromSignUp, setFromSignUp] = useState(false);
   const [authState, setAuthState] = useState<AuthState>(
     AuthState.LANDING_SCREEN,
   );
@@ -54,6 +54,7 @@ const LoginFlowController = () => {
     case AuthState.CONFIRM_EMAIL:
       return (
         <ConfirmEmailScreen
+          fromSignUp={fromSignUp}
           onBack={() => setAuthState(AuthState.SIGN_UP)}
           initialEmail={email}
           onConfirmCode={() => setAuthState(AuthState.LOGIN)}
@@ -64,6 +65,7 @@ const LoginFlowController = () => {
         <SignUpFormScreen
           onCreate={(initEmail: string) => {
             setEmail(() => initEmail);
+            setFromSignUp(() => true);
             setAuthState(AuthState.CONFIRM_EMAIL);
           }}
           onLogIn={() => setAuthState(AuthState.LOGIN)}
