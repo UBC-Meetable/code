@@ -20,7 +20,7 @@ const BottomText = ({ onPressText }:BottomTextProps) => {
     case AuthState.CONFIRM_EMAIL:
     case AuthState.FORGOT_PASSWORD:
     case AuthState.FORGOT_PASSWORD_CONFIRM:
-      return ["", "Back"];
+      return ["", "Cancel"];
     default:
       return ["", ""];
     }

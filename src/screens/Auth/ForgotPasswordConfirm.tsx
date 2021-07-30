@@ -3,12 +3,16 @@ import {
 } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Auth } from "aws-amplify";
 import Colors from "../../constants/Colors";
 import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
 import BottomText from "./BottomText";
 import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
+import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
+import ForgotBubble from "../../assets/images/forgot-bubble.svg";
+import PrimaryButton from "../../components/ui/PrimaryButton";
+import TextField from "../../components/ui/TextField";
 
 const window = Dimensions.get("window");
 
@@ -23,6 +27,8 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [errors, setError] = React.useState<string[]>([]);
+  const [currEmail, setCurrEmail] = React.useState(email);
+  const units = useSafeAreaInsets();
 
   const submit = async () => {
     setError([]);
@@ -41,87 +47,80 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
       setError([`Error: ${error.message}`]);
     }
   };
+  if (!email) {
+    onBack();
+    return <Layout />;
+  }
 
   return (
-    <SafeAreaView style={styles.root}>
+    <LoginControllerRoot>
+      <ForgotBubble
+        style={{
+          position: "absolute",
+          top: 0,
+        }}
+        width={window.width}
+      />
       <KeyboardSwipeLayout>
-        <LoginPageBubbleTop
-          style={{
-            position: "absolute", top: 0,
+        <Layout style={{
+          backgroundColor: "#0000",
+          width: "100%",
+          flex: 1,
+          marginTop: units.top,
+          padding: 30,
+          height: "100%",
+        }}
+        >
+          <Text style={styles.emoji}> </Text>
+          <Text style={{
+            fontSize: 34, fontFamily: "Poppins_500Medium",
           }}
-          width={window.width}
-          height={window.height}
-        />
-        <KeyboardAvoidingView behavior="position" style={styles.formContainer}>
-          <Layout style={styles.emailContainer}>
-            <Input
-              disabled
-              value={email}
-              placeholder="Your Email"
-              keyboardType="email-address"
-              autoCompleteType="email"
-              style={styles.email}
-            />
-            <Input
-              value={code}
-              placeholder="Authorization Code"
-              onChangeText={setCode}
-              keyboardType="default"
-              autoCompleteType="off"
-              style={styles.email}
-            />
-            <Input
-              value={password}
-              placeholder="New Password"
-              keyboardType="visible-password"
-              onChangeText={setPassword}
-              autoCompleteType="password"
-              secureTextEntry
-              style={styles.email}
-            />
-            <Input
-              value={confirmPassword}
-              placeholder="Confirm New Password"
-              onChangeText={setConfirmPassword}
-              keyboardType="visible-password"
-              autoCompleteType="password"
-              secureTextEntry
-              style={styles.email}
-            />
-          </Layout>
+          >
+            Change
+            {"\n"}
+            Password
+          </Text>
+          <Text style={styles.codeLabel}>
+            Please verify that it is your account by
+            entering the code sent to your email.
 
-        </KeyboardAvoidingView>
-        <KeyboardAvoidingView behavior="position" style={styles.buttonContainer}>
-          {errors.length > 0
-          && errors.map((error, i) => (
-            <Text key={i} style={styles.error}>
-              {error}
-            </Text>
-          ))}
-          <Button
-            style={styles.button}
-            onPress={() => {
-              submit();
+          </Text>
+
+          <KeyboardAvoidingView
+            behavior="padding"
+            keyboardVerticalOffset={units.bottom}
+            style={{
+              borderWidth: 1,
+              flex: 0.9,
+              marginTop: 10,
+              backgroundColor: "#0000",
+              justifyContent: "space-evenly",
             }}
           >
-            {(evaProps: any) => (
-              <Text
-                {...evaProps}
-                style={{ ...evaProps.style, ...styles.buttonText }}
-              >
-                Forgot Password
-              </Text>
-            )}
-          </Button>
-        </KeyboardAvoidingView>
-
-        <BottomText onPressText={() => onBack()} />
+            <TextField placeholder="Confirmation Code" onChangeText={(text) => setCode(text)} />
+            <TextField secureTextEntry placeholder="New Password" onChangeText={(text) => setPassword(text)} />
+            <TextField secureTextEntry placeholder="Confirm New Password" onChangeText={(text) => setConfirmPassword(text)} />
+          </KeyboardAvoidingView>
+        </Layout>
       </KeyboardSwipeLayout>
-    </SafeAreaView>
+      <PrimaryButton onPress={() => submit()}>
+        Change Password
+      </PrimaryButton>
+      <BottomText onPressText={onBack} />
+    </LoginControllerRoot>
   );
 };
 
 const styles = StyleSheet.create({
+  codeLabel: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: 14,
+    marginVertical: 10,
+    fontWeight: "bold",
+    color: "#C5BEB9",
+    width: "80%",
+  },
+  emoji: { fontSize: 50 },
   buttonContainer: { width: "80%" },
   root: {
     flex: 1,

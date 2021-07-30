@@ -6,6 +6,8 @@ import { ChatMessage } from "../types";
 
 const fetchCourseGroupMessages = async ({ groupChatID, limit, nextToken }:
     MessagesByCourseGroupChatIdQueryVariables) => {
+  console.log("Fetching Messages");
+
   const res = await API.graphql({
     query: messagesByCourseGroupChatId,
     variables: {
@@ -15,8 +17,11 @@ const fetchCourseGroupMessages = async ({ groupChatID, limit, nextToken }:
       sortDirection: "DESC",
     },
   }) as GraphQLResult<MessagesByCourseGroupChatIdQuery>;
+  console.log("BIG RES***", { res });
 
   if (res.data?.messagesByCourseGroupChatID) {
+    console.log("Success");
+
     return {
       messages: res.data.messagesByCourseGroupChatID.items as ChatMessage[],
       token: res.data.messagesByCourseGroupChatID.nextToken,

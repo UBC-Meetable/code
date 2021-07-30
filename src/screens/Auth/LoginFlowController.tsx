@@ -1,5 +1,7 @@
+import { Layout, Text } from "@ui-kitten/components";
 import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
+import { Dimensions } from "react-native";
 import AuthStateContext from "../../context/AuthStateContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { AuthState } from "../../types";
@@ -11,7 +13,9 @@ import LoginScreen from "./LoginScreen";
 import SignUpFormScreen from "./SignUpFormScreen";
 import SignupScreen from "./SignupScreen";
 import TutorialScreen from "./TutorialScreen";
+import ForgotBubble from "../../assets/images/forgot-bubble.svg";
 
+const window = Dimensions.get("window");
 // eslint-disable-next-line no-shadow
 
 const LoginFlowController = () => {
@@ -45,12 +49,6 @@ const LoginFlowController = () => {
           onSignUp={() => {
             setAuthState(AuthState.SIGN_UP);
           }}
-          onForgot={() => {
-            setAuthState(AuthState.FORGOT_PASSWORD);
-          }}
-          onConfirm={() => {
-            setAuthState(AuthState.CONFIRM_EMAIL);
-          }}
         />
       );
     case AuthState.TUTORIAL:
@@ -78,7 +76,15 @@ const LoginFlowController = () => {
         />
       );
     case AuthState.LOGIN:
-      return <LoginFormScreen onSignUp={() => setAuthState(AuthState.SIGN_UP)} />;
+      return (
+        <LoginFormScreen
+          onNotConfirmed={(initEmail) => {
+            setEmail(() => initEmail);
+            setAuthState(AuthState.CONFIRM_EMAIL);
+          }}
+          onSignUp={() => setAuthState(AuthState.SIGN_UP)}
+        />
+      );
     case AuthState.FORGOT_PASSWORD:
       return (
         <ForgotPassword
@@ -105,12 +111,6 @@ const LoginFlowController = () => {
           }}
           onSignUp={() => {
             setAuthState(AuthState.SIGN_UP);
-          }}
-          onForgot={() => {
-            setAuthState(AuthState.FORGOT_PASSWORD);
-          }}
-          onConfirm={() => {
-            setAuthState(AuthState.CONFIRM_EMAIL);
           }}
         />
       );

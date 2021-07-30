@@ -35,6 +35,7 @@ import awsconfig from "../aws-exports";
 import createUserProfile from "../calls/createUserProfile";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import ChatBackButton from "../components/Chat/ChatBackButton";
+import rootStyles from "../components/styles/rootStyles";
 import Colors from "../constants/Colors";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
@@ -93,7 +94,6 @@ const App = () => {
     Poppins_600SemiBold,
     Poppins_400Regular,
   });
-  const units = useSafeAreaInsets();
   if (!fontsLoaded) {
     return <Blank />;
   }
@@ -265,6 +265,13 @@ const AuthorizedApp = () => {
       </FriendGroupsProvider>
     </CourseGroupsProvider>
     // </UserProvider>
+  );
+};
+
+const LoginFlowControllerWrapper = () => {
+  const g = "h";
+  return (
+    <LoginFlowController />
   );
 };
 

@@ -1,20 +1,27 @@
 import { Layout } from "@ui-kitten/components";
 import React, { ReactNode } from "react";
-import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import rootStyles from "../../components/styles/rootStyles";
 
 type KeyboardSwipeLayoutProps = {
   children?: ReactNode | ReactNode[]
 };
 
 const KeyboardSwipeLayout = ({ children }:KeyboardSwipeLayoutProps) => (
-  <Layout style={[rootStyles, { height: "100%", width: "100%" }]}>
+  <Layout style={[{
+    flex: 1,
+    width: "100%",
+    backgroundColor: "#0000",
+    display: "flex",
+    flexDirection: "column",
+  }]}
+  >
     <ScrollView
-      style={{ width: "100%" }}
+      style={{
+        display: "flex", flexDirection: "column", width: "100%",
+      }}
       scrollEnabled={false}
       keyboardDismissMode="interactive"
-      contentContainerStyle={[rootStyles]}
+      contentContainerStyle={{ flex: 1 }}
       bounces={false}
     >
       {children}

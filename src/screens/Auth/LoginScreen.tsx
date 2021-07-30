@@ -2,9 +2,11 @@ import {
   Button, Layout, Modal, Text,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, Image, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginRocket from "../../assets/images/login-background.svg";
+import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../components/ui/PrimaryButton";
 import BottomText from "./BottomText";
 
 const window = Dimensions.get("window");
@@ -12,82 +14,33 @@ const window = Dimensions.get("window");
 type LoginScreenProps = {
     onSignUp: () => void,
     onLogIn: () => void,
-    onForgot: () => void,
-    onConfirm: () => void,
 }
 
 const LoginScreen = ({
-  onSignUp, onLogIn, onForgot, onConfirm,
+  onSignUp, onLogIn,
 }:LoginScreenProps) => {
   const units = useSafeAreaInsets();
-  const [modalActive, setModalActive] = useState(false);
   return (
-    <Layout style={styles.root}>
+    <LoginControllerRoot>
       <LoginRocket
         style={{
+          opacity: 1,
           position: "absolute",
           top: 0,
           left: 0,
-          zIndex: 1,
+          zIndex: 0,
+          paddingBottom: -units.bottom - units.top,
         }}
         width={window.width}
+        height={window.height}
       />
-      <Layout
-        style={{
-          flex: 1,
-          alignItems: "flex-start",
-          width: "100%",
-          padding: 10,
-        }}
-      >
-        <Button
-          style={styles.iconButton}
-          onPress={() => setModalActive(true)}
-        >
-          Forgot Password + More
-        </Button>
-        <Modal
-          visible={modalActive}
-          backdropStyle={styles.backdrop}
-          onBackdropPress={() => {
-            setModalActive(false);
-          }}
-          style={[styles.modal, { marginTop: units.top + 50 }]}
-        >
-          <Layout style={styles.modalContainer}>
-            <Button
-              style={[styles.modalButton]}
-              onPress={() => onForgot()}
-            >
-              Forgot your Password?
-            </Button>
-            <Button
-              style={styles.modalButton}
-              onPress={() => onConfirm()}
-            >
-              Confirm your Email
-            </Button>
-
-          </Layout>
-        </Modal>
-      </Layout>
       <Layout style={styles.bottomcontainer}>
-        <Button
-          style={styles.button}
-          onPress={() => onSignUp()}
-        >
-          {(evaProps: any) => (
-            <Text
-              {...evaProps}
-              style={{ ...evaProps.style, ...styles.buttonText }}
-            >
-              Sign Up
-            </Text>
-          )}
-        </Button>
+        <PrimaryButton onPress={onSignUp}>
+          Sign Up
+        </PrimaryButton>
         <BottomText onPressText={onLogIn} />
       </Layout>
-    </Layout>
+    </LoginControllerRoot>
   );
 };
 

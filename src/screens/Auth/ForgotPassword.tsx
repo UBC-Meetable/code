@@ -1,13 +1,14 @@
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Layout, Text } from "@ui-kitten/components";
+import { Auth } from "aws-amplify";
 import React from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Auth } from "aws-amplify";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ForgotBubble from "../../assets/images/forgot-bubble.svg";
+import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../components/ui/PrimaryButton";
+import TextField from "../../components/ui/TextField";
 import Colors from "../../constants/Colors";
-import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
-import BottomText from "./BottomText";
+import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
@@ -19,7 +20,7 @@ type ForgotPasswordProps = {
 const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
   const [email, setEmail] = React.useState("");
   const [errors, setError] = React.useState<string[]>([]);
-
+  const units = useSafeAreaInsets();
   const submit = async () => {
     try {
       await Auth.forgotPassword(email);
@@ -31,60 +32,68 @@ const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <LoginPageBubbleTop
+    <LoginControllerRoot>
+      <ForgotBubble
         style={{
-          position: "absolute", top: 0,
+          position: "absolute",
+          top: 0,
         }}
         width={window.width}
-        height={window.height}
       />
-      <KeyboardAvoidingView behavior="height" style={styles.formContainer}>
-        <Layout style={styles.emailContainer}>
-          <Input
-            value={email}
-            placeholder="Your Email"
-            onChangeText={(e) => setEmail(e.toLowerCase())}
-            keyboardType="email-address"
-            autoCompleteType="email"
-            style={styles.email}
-          />
-        </Layout>
-        {errors.length > 0
-          && errors.map((error, i) => (
-            <Text key={i} style={styles.error}>
-              {error}
-            </Text>
-          ))}
-      </KeyboardAvoidingView>
-      <Button
-        style={styles.button}
-        onPress={() => {
-          submit();
+      <KeyboardSwipeLayout>
+        <Layout style={{
+          backgroundColor: "#0000",
+          width: "100%",
+          flex: 1,
+          marginTop: units.top,
+          padding: 30,
         }}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
+        >
+          <Text style={styles.emoji}>🔐</Text>
+          <Text style={{
+            fontSize: 34, fontFamily: "Poppins_500Medium",
+          }}
           >
-            Forgot Password
+            Forgot your password?
           </Text>
-        )}
-      </Button>
+          <Layout style={{ marginTop: 20, backgroundColor: "#0000" }}>
+            <Text style={{ fontSize: 14, fontWeight: "bold" }}>What is your Email Address?</Text>
+          </Layout>
+          <Layout style={styles.emailContainer}>
+            <TextField placeholder="Enter Email Address" value={email} onChangeText={(text) => setEmail(text)} />
+          </Layout>
+        </Layout>
+      </KeyboardSwipeLayout>
+      <PrimaryButton onPress={() => submit()}>
+        Send Confirmation Email
+      </PrimaryButton>
 
-      <BottomText onPressText={() => onBack()} />
-    </SafeAreaView>
+      <Text style={[styles.bold]}>
+        I already have an account!
+      </Text>
+      <Text style={[styles.bold]}>
+        Where can I
+        {" "}
+        <Text onPress={() => onBack()} style={[styles.bold, styles.clickable]}>sign in</Text>
+        ?
+      </Text>
+    </LoginControllerRoot>
   );
 };
 
 const styles = StyleSheet.create({
+  emoji: { fontSize: 50 },
+  clickable: { color: "#02A3F4" },
+  bold: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 14,
+  },
   root: {
     flex: 1,
     display: "flex",
     height: "100%",
     width: "100%",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
     backgroundColor: Colors.theme.background,
   },
@@ -106,6 +115,7 @@ const styles = StyleSheet.create({
     width: "100%",
     minWidth: 200,
     alignItems: "center",
+    fontFamily: "Poppins_500Medium",
   },
   error: {
     color: Colors.dark.error,

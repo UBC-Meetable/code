@@ -16,9 +16,10 @@ const window = Dimensions.get("window");
 
 type LoginFormScreenProps = {
   onSignUp: () => void;
+  onNotConfirmed: (email: string) => void;
 };
 
-const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
+const LoginFormScreen = ({ onSignUp, onNotConfirmed }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setError] = useState<string[]>([]);
@@ -49,6 +50,11 @@ const LoginFormScreen = ({ onSignUp }: LoginFormScreenProps) => {
       });
       setUser(user);
     } catch (e) {
+      console.log(e);
+      if (e.code === "UserNotConfirmedException") {
+        onNotConfirmed(email);
+      }
+
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
     }
