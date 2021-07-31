@@ -89,7 +89,7 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
             Welcome to Meetable
           </Text>
           <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-            <Text style={{ fontSize: 14, color: "#C5BEB9", fontFamily: "Poppins_500Medium" }}>Email Address</Text>
+            <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
           </Layout>
           <TextField
             placeholder="hello@getmeetable.com"
@@ -101,7 +101,7 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
             autoCompleteType="email"
           />
           <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-            <Text style={{ fontSize: 14, color: "#C5BEB9", fontFamily: "Poppins_500Medium" }}>Password</Text>
+            <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
           </Layout>
           <TextField
             secureTextEntry

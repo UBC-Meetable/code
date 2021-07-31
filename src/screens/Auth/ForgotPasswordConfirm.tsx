@@ -90,7 +90,6 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
             behavior="padding"
             keyboardVerticalOffset={units.bottom}
             style={{
-              borderWidth: 1,
               flex: 0.9,
               marginTop: 10,
               backgroundColor: "#0000",

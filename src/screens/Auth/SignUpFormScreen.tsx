@@ -79,13 +79,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         width={window.width}
       />
       <KeyboardSwipeLayout>
-        <Layout style={{
-          backgroundColor: "#0000",
-          width: "100%",
-          flex: 1,
-          marginTop: units.top,
-          padding: 30,
-        }}
+        <KeyboardAvoidingView
+          behavior="position"
+          style={{
+            backgroundColor: "#0000",
+            width: "100%",
+            flex: 1,
+            height: "100%",
+            marginTop: units.top,
+            padding: 30,
+          }}
         >
           <Text style={styles.emoji}>👋</Text>
           <Text style={{
@@ -93,6 +96,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           }}
           >
             Let's get started!
+            {"\n"}
           </Text>
           <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
             <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
@@ -134,48 +138,27 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             value={confirmPassword}
             ref={confirmPasswordRef}
           />
-          <Layout style={{
-            backgroundColor: "#0000",
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          >
+        </KeyboardAvoidingView>
+        <Layout style={{
+          backgroundColor: "#0000",
+          flex: 0,
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+        >
 
-            <PrimaryButton onPress={createProfile}>Create Profile</PrimaryButton>
-            <Text style={[styles.bold]}>
-              I already have an account!
-            </Text>
-            <Text style={[styles.bold]}>
-              Where can I
-              {" "}
-              <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
-              ?
-            </Text>
-          </Layout>
-
-          {/* <Layout style={{
-            justifyContent: "center", alignItems: "center", backgroundColor: "#0000", flex: 0,
-          }}
-          >
-            <Button
-              style={styles.button}
-              onPress={() => {
-                login();
-              }}
-            >
-              {(evaProps: any) => (
-                <Text
-                  {...evaProps}
-                  style={{ ...evaProps.style, ...styles.buttonText }}
-                >
-                  Log In
-                </Text>
-              )}
-            </Button> */}
-          {/* <BottomText onPressText={onSignUp} /> */}
-          {/* </Layout> */}
+          <PrimaryButton onPress={createProfile}>Create Profile</PrimaryButton>
+          <Text style={[styles.bold]}>
+            I already have an account!
+          </Text>
+          <Text style={[styles.bold]}>
+            Where can I
+            {" "}
+            <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
+            ?
+          </Text>
         </Layout>
+
       </KeyboardSwipeLayout>
     </LoginControllerRoot>
   );
