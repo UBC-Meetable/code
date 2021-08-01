@@ -45,7 +45,7 @@ import { UserProfileProvider } from "../context/UserProfileContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
 import QuizScreen from "../screens/Auth/QuizScreen";
-import EditCourseScreen from "../screens/EditCourseScreen";
+import EditCourseScreen from "../screens/EditCourseScreen"; 
 import GroupScreen from "../screens/GroupScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";

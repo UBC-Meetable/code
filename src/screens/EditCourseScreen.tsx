@@ -142,7 +142,7 @@ const EditCourseScreen = () => {
     <SafeAreaView style={styles.root}>
       <Layout style={[styles.form, styles.noBg]}>
         <Layout style={styles.container2}>
-          <Text style={styles.textStyle}>Course</Text>
+          <Text style={[styles.textStyle, { left: "0%" }]}>Course</Text>
           <Layout style={styles.codeContainer}>
             <Input
               style={[styles.courseCodeInput, styles.courseStyle]}
@@ -188,7 +188,7 @@ const EditCourseScreen = () => {
         </Button>
       </Layout>
 
-      <Layout style={[styles.noBg, styles.middleContainer, { width: "100%", alignItems: "center" }]}>
+      <Layout style={[styles.noBg, styles.middleContainer, { width: "110%" }]}>
         <Text style={styles.textStyle}>Your Courses</Text>
         <ScrollView contentContainerStyle={styles.selectionsContainer}>
           {renderCourses(courses)}
@@ -206,7 +206,7 @@ const EditCourseScreen = () => {
             <Text
               style={styles.buttonText}
             >
-              Save
+              Save Changes
             </Text>
           )}
         </Button>
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     flex: 0,
     flexBasis: 50,
     alignItems: "center",
-    marginBottom: 10,
+    marginBottom: 25,
   },
   addCourseContainer: {
     flex: 0,
@@ -245,15 +245,15 @@ const styles = StyleSheet.create({
   },
   form: {
     alignItems: "center",
-    width: "80%",
+    width: "90%",
   },
   addCoursebutton: {
     backgroundColor: "#FBBA82",
   },
   button: {
     marginBottom: 30,
-    width: "75%",
-    borderRadius: 100,
+    width: "100%",
+    borderRadius: 15,
     borderWidth: 0,
     minHeight: 50,
     flex: 1,
@@ -266,18 +266,28 @@ const styles = StyleSheet.create({
   },
   selectionsContainer: {
     flexDirection: "column",
-    width: "75%",
+    flex: 1,
+    width: "80.5%",
     marginLeft: 10,
+    left: "7.5%",
   },
   courseContainer: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
     borderRadius: 10,
     width: "100%",
-    marginVertical: 2.5,
+    marginVertical: 5,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   newCourseContainer: {
     backgroundColor: "grey",
@@ -292,10 +302,10 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontFamily: "Poppins_600SemiBold",
-    textAlign: "left",
     fontSize: 20,
     fontWeight: "500",
     lineHeight: 24,
+    left: "10%",
   },
   deleteContainer: {
     flexBasis: 60,
@@ -320,22 +330,27 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000",
   },
   courseStyle: {
-    flex: 0.4,
+    flex: 0.5,
   },
   codeStyle: {
-    flex: 0.3,
+    flex: 0.5,
   },
   courseCodeInput: {
-    borderRadius: 100,
+    borderRadius: 15,
     margin: 5,
     backgroundColor: "#ffff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
   container2: {
     width: "100%",
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
+    margin: 5,
     backgroundColor: Colors.theme.lightCreme,
     justifyContent: "center",
   },
