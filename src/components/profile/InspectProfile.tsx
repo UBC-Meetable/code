@@ -7,12 +7,13 @@ import {
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
-import { User } from "../API";
-import reportUser from "../calls/reportUser";
-import Colors from "../constants/Colors";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
-import ProfilePicture from "./ProfilePicture";
+import { User } from "../../API";
+import reportUser from "../../calls/reportUser";
+import Colors from "../../constants/Colors";
+import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import { ProfilePictureDimensions, ProfilePictureSize } from "../../types";
+import ProfilePicture from "../ProfilePicture";
+import Interests from "./Interests";
 
 type ReportUserProps = {
   onPressReport: (value: string) => Promise<boolean>;
@@ -95,13 +96,9 @@ const InspectProfile = ({ user }: { user: User }) => {
         </Layout>
         <Layout style={styles.interestContainer}>
           <Text style={styles.header}>Matching Interests</Text>
-          <Layout style={styles.chips}>
-            <Chip style={[styles.matching, styles.chip]}>Coding</Chip>
-            <Chip style={[styles.matching, styles.chip]}>Music</Chip>
-            <Chip style={[styles.matching, styles.chip]}>Biology</Chip>
-            <Chip style={[styles.nonMatching, styles.chip]}>Basketball</Chip>
-            <Chip style={[styles.nonMatching, styles.chip]}>Marketing</Chip>
-          </Layout>
+          <ScrollView bounces={false} contentContainerStyle={styles.chips}>
+            <Interests user={user} />
+          </ScrollView>
         </Layout>
         <Layout>
           <Button style={styles.reportButton} disabled={success} onPress={() => setVisible(true)}>
@@ -159,16 +156,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "flex-start",
     alignItems: "baseline",
-    flex: 1,
     backgroundColor: "#0000",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    paddingVertical: 0,
   },
   matching: {
     backgroundColor: "#94DBCE",
-  },
-  nonMatching: {
-    backgroundColor: Colors.theme.creme,
   },
   chip: {
     display: "flex",
@@ -176,6 +170,9 @@ const styles = StyleSheet.create({
     maxWidth: 120,
     margin: 3,
     flexGrow: 1,
+  },
+  nonMatching: {
+    backgroundColor: Colors.theme.creme,
   },
   bio: {
     margin: 5,

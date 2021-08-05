@@ -8,7 +8,7 @@ import { Avatar } from "react-native-paper";
 import { ChatMessage, ProfilePictureSize } from "../../types";
 import ProfilePicture from "../ProfilePicture";
 import styles from "../styles/MessageStyles";
-import InspectProfile from "../InspectProfile";
+import InspectProfile from "../profile/InspectProfile";
 import { UserProvider } from "../../context/UserContext";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
@@ -26,6 +26,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
             style={styles.avatarButton}
             activeOpacity={0.5}
           >
+
             <Modal
               visible={visible}
               backdropStyle={otherStyles.backdrop}
@@ -37,6 +38,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
               <UserProvider>
                 <InspectProfile user={message.author!} />
               </UserProvider>
+
             </Modal>
 
             <ProfilePicture
