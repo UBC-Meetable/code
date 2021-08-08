@@ -30,7 +30,10 @@ import {
   Platform,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Notifications, Constants } from "expo";
+import * as Notifications from "expo-notifications";
+import { Constants } from "expo-constants";
+import * as Permissions from "expo-permissions";
+import { ExpoPushToken } from "expo-notifications";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
@@ -110,7 +113,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
-  const [expoPushToken, setExpoPushToken] = React.useState();
+  const [expoPushToken, setExpoPushToken] = React.useState({ data: "" } as ExpoPushToken);
   let user = useAuthenticatedUser();
 
   const handleFinish = () => {
@@ -119,34 +122,31 @@ const AuthorizedApp = () => {
 
   React.useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
-      if (Constants.isDevice) {
-        const { status: existingStatus } = await Notifications.getPermissionsAsync();
-        let finalStatus = existingStatus;
-        if (existingStatus !== 'granted') {
-          const { status } = await Notifications.requestPermissionsAsync();
-          finalStatus = status;
-        }
-        if (finalStatus !== 'granted') {
-          alert('Failed to get push token for push notification!');
-          return;
-        }
-        const token = (await Notifications.getExpoPushTokenAsync()).data;
-        console.log(token);
-        setExpoPushToken(token); // this.setState({ expoPushToken: token });
-      } else {
-        alert('Must use physical device for Push Notifications');
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
       }
-
-      if (Platform.OS === 'android') {
-        Notifications.setNotificationChannelAsync('default', {
-          name: 'default',
+      if (finalStatus !== "granted") {
+        alert("Failed to get push token for push notification!");
+        return;
+      }
+      const token = await Notifications.getExpoPushTokenAsync();
+      console.log(token);
+      setExpoPushToken(token);
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
           importance: Notifications.AndroidImportance.MAX,
           vibrationPattern: [0, 250, 250, 250],
-          lightColor: '#FF231F7C',
+          lightColor: "#FF231F7C",
         });
       }
-      updateUserProfile({ id: user.attributes.sub, expoPushToken })
-        .then((res) => console.log(res)).catch((err) => console.log(err));
+      if (expoPushToken.data !== "") {
+        updateUserProfile({ id: user.attributes.sub, expoPushToken: expoPushToken.data })
+          .then((res) => console.log(res)).catch((err) => console.log(err));
+      }
     };
     const f = async (loggedInUser: CognitoUser) => {
       if (!loggedInUser) return;
@@ -175,8 +175,10 @@ const AuthorizedApp = () => {
     };
 
     if (user) {
-      f(user);
-      registerForPushNotificationsAsync();
+      (async () => {
+        await registerForPushNotificationsAsync();
+        f(user);
+      })();
     }
   }, [user]);
 
