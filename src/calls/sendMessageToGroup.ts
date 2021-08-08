@@ -1,6 +1,8 @@
 import { API } from "aws-amplify";
+import { Expo } from "expo-server-sdk";
 import { CreateChatMessageInput, GroupType } from "../API";
 import { createChatMessage } from "../graphql/mutations";
+import fetchFriendGroup from "./fetchFriendGroup";
 
 type SendMessageToCourseGroupInput = {
   groupID?: string;
@@ -15,6 +17,7 @@ const sendMessageToGroup = async ({
   userID,
   groupType,
 }: SendMessageToCourseGroupInput) => {
+  // const expo = new Expo();
   if (!groupID || !body || !userID || !groupType) {
     console.error("Null Inputs");
     throw new Error("An input to sendMessageToCourseGroup was undefined");

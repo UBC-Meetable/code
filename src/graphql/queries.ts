@@ -105,6 +105,7 @@ export const getUser = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -194,6 +195,7 @@ export const getUser = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -251,6 +253,7 @@ export const getUser = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -265,6 +268,7 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      expoPushToken
       createdAt
       updatedAt
       owner
@@ -337,6 +341,7 @@ export const listUsers = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -385,6 +390,7 @@ export const listUsers = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -419,6 +425,7 @@ export const listUsers = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -433,6 +440,7 @@ export const listUsers = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -525,6 +533,7 @@ export const getCourseGroup = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -587,6 +596,7 @@ export const getCourseGroup = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -661,6 +671,7 @@ export const listCourseGroups = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -700,6 +711,7 @@ export const listCourseGroups = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -802,6 +814,7 @@ export const getFriendGroup = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -862,6 +875,7 @@ export const getFriendGroup = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -934,6 +948,7 @@ export const listFriendGroups = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -971,6 +986,7 @@ export const listFriendGroups = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1035,6 +1051,7 @@ export const getReport = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1068,6 +1085,7 @@ export const getReport = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1093,6 +1111,7 @@ export const getReport = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1107,6 +1126,7 @@ export const getReport = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -1172,6 +1192,7 @@ export const getReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1220,6 +1241,7 @@ export const getReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1254,6 +1276,7 @@ export const getReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1268,6 +1291,7 @@ export const getReport = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -1323,6 +1347,7 @@ export const getReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1371,6 +1396,7 @@ export const getReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1405,6 +1431,7 @@ export const getReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1419,6 +1446,7 @@ export const getReport = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -1485,6 +1513,7 @@ export const listReports = /* GraphQL */ `
               }
               nextToken
             }
+            expoPushToken
             createdAt
             updatedAt
             owner
@@ -1535,6 +1564,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1568,6 +1598,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1593,6 +1624,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1607,6 +1639,7 @@ export const listReports = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -1647,6 +1680,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1680,6 +1714,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1705,6 +1740,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1719,6 +1755,7 @@ export const listReports = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -1788,6 +1825,7 @@ export const getChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1836,6 +1874,7 @@ export const getChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1870,6 +1909,7 @@ export const getChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -1884,6 +1924,7 @@ export const getChatMessage = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -1943,6 +1984,7 @@ export const listChatMessages = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -1976,6 +2018,7 @@ export const listChatMessages = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2001,6 +2044,7 @@ export const listChatMessages = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2015,6 +2059,7 @@ export const listChatMessages = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -2076,6 +2121,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2115,6 +2161,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2182,6 +2229,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2230,6 +2278,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2264,6 +2313,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2278,6 +2328,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -2329,6 +2380,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2359,6 +2411,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2411,6 +2464,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2444,6 +2498,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2469,6 +2524,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2483,6 +2539,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -2540,6 +2597,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2577,6 +2635,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2644,6 +2703,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2692,6 +2752,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2726,6 +2787,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -2740,6 +2802,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -2789,6 +2852,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2817,6 +2881,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2869,6 +2934,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2902,6 +2968,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2927,6 +2994,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -2941,6 +3009,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -3009,6 +3078,7 @@ export const getQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -3057,6 +3127,7 @@ export const getQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -3091,6 +3162,7 @@ export const getQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -3105,6 +3177,7 @@ export const getQuiz = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -3165,6 +3238,7 @@ export const listQuizs = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3198,6 +3272,7 @@ export const listQuizs = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3223,6 +3298,7 @@ export const listQuizs = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3237,6 +3313,7 @@ export const listQuizs = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -3321,6 +3398,7 @@ export const userByUniYear = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -3369,6 +3447,7 @@ export const userByUniYear = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -3403,6 +3482,7 @@ export const userByUniYear = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              expoPushToken
               createdAt
               updatedAt
               owner
@@ -3417,6 +3497,7 @@ export const userByUniYear = /* GraphQL */ `
           }
           nextToken
         }
+        expoPushToken
         createdAt
         updatedAt
         owner
@@ -3482,6 +3563,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3515,6 +3597,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3540,6 +3623,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3554,6 +3638,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -3615,6 +3700,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3645,6 +3731,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3697,6 +3784,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3730,6 +3818,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3755,6 +3844,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3769,6 +3859,7 @@ export const courseGroupByUser = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
@@ -3826,6 +3917,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3854,6 +3946,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3906,6 +3999,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3939,6 +4033,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3964,6 +4059,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                expoPushToken
                 createdAt
                 updatedAt
                 owner
@@ -3978,6 +4074,7 @@ export const friendGroupByUser = /* GraphQL */ `
             }
             nextToken
           }
+          expoPushToken
           createdAt
           updatedAt
           owner
