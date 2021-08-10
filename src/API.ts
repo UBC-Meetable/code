@@ -336,7 +336,7 @@ export type UpdateReportInput = {
 };
 
 export type DeleteReportInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateChatMessageInput = {
@@ -376,7 +376,7 @@ export type UpdateChatMessageInput = {
 };
 
 export type DeleteChatMessageInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseGroupConnectionInput = {
@@ -400,7 +400,7 @@ export type UpdateCourseGroupConnectionInput = {
 };
 
 export type DeleteCourseGroupConnectionInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateFriendGroupConnectionInput = {
@@ -424,7 +424,7 @@ export type UpdateFriendGroupConnectionInput = {
 };
 
 export type DeleteFriendGroupConnectionInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateQuizInput = {
@@ -454,7 +454,7 @@ export type UpdateQuizInput = {
 };
 
 export type DeleteQuizInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type joinFriendGroupInput = {
