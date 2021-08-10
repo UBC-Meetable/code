@@ -149,3 +149,20 @@ type joinFriendGroupOutput {
   groupID: String
   relevantUsers: [String!]!
 }
+
+type Mutation {
+  pushNotification(input: pushNotificationInput): pushNotificationOutput @function(name: "pushNotification-${env}")
+}
+
+input pushNotificationInput {
+  groupID: String!
+  userID: String!
+  userName: String!
+  hasFile: Boolean!
+  text: String
+}
+
+type pushNotificationOutput {
+  statusCode: Int!
+  body: String
+}

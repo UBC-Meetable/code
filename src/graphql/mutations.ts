@@ -2,6 +2,14 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const pushNotification = /* GraphQL */ `
+  mutation PushNotification($input: pushNotificationInput) {
+    pushNotification(input: $input) {
+      statusCode
+      body
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!

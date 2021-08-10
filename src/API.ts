@@ -139,6 +139,20 @@ export type QAPair = {
   a?: string,
 };
 
+export type pushNotificationInput = {
+  groupID: string,
+  userID: string,
+  userName: string,
+  hasFile: boolean,
+  text?: string | null,
+};
+
+export type pushNotificationOutput = {
+  __typename: "pushNotificationOutput",
+  statusCode?: number,
+  body?: string | null,
+};
+
 export type CreateUserInput = {
   id: string,
   email: string,
@@ -770,6 +784,18 @@ export type GetUserQuizzesQuery = {
         id: string,
       } | null > | null,
     } | null,
+  } | null,
+};
+
+export type PushNotificationMutationVariables = {
+  input?: pushNotificationInput | null,
+};
+
+export type PushNotificationMutation = {
+  pushNotification?:  {
+    __typename: "pushNotificationOutput",
+    statusCode: number,
+    body?: string | null,
   } | null,
 };
 

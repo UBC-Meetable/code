@@ -1,14 +1,17 @@
 import { API } from "aws-amplify";
-import { Expo } from "expo-server-sdk";
-import { CreateChatMessageInput, GroupType } from "../API";
-import { createChatMessage } from "../graphql/mutations";
-import fetchFriendGroup from "./fetchFriendGroup";
+import { GraphQLResult } from "@aws-amplify/api";
+import {
+  CreateChatMessageInput, GroupType, pushNotificationInput, pushNotificationOutput,
+} from "../API";
+import { createChatMessage, pushNotification } from "../graphql/mutations";
 
 type SendMessageToCourseGroupInput = {
   groupID?: string;
   body?: string;
   userID?: string;
   groupType: GroupType;
+  userName: string;
+  hasFile: boolean;
 };
 
 const sendMessageToGroup = async ({
@@ -16,9 +19,10 @@ const sendMessageToGroup = async ({
   body,
   userID,
   groupType,
+  userName,
+  hasFile,
 }: SendMessageToCourseGroupInput) => {
-  // const expo = new Expo();
-  if (!groupID || !body || !userID || !groupType) {
+  if (!groupID || !body || !userID || !groupType || !userName || !hasFile) {
     console.error("Null Inputs");
     throw new Error("An input to sendMessageToCourseGroup was undefined");
   }
@@ -33,6 +37,23 @@ const sendMessageToGroup = async ({
       } as CreateChatMessageInput,
     },
   });
+  try {
+    const lambdaRes = await API.graphql({
+      query: pushNotification,
+      variables: {
+        input: {
+          groupID,
+          userID,
+          userName,
+          hasFile,
+          text: body,
+        } as pushNotificationInput,
+      },
+    }) as Promise<GraphQLResult<pushNotificationOutput>>;
+  } catch (err) {
+    console.error("failed to send push notifications");
+    throw err;
+  }
 };
 
 export default sendMessageToGroup;
