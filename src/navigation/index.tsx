@@ -113,28 +113,32 @@ const Stack = createStackNavigator<RootStackParamList>();
 const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
-  const [expoPushToken, setExpoPushToken] = React.useState({ data: "" } as ExpoPushToken);
   let user = useAuthenticatedUser();
+  const [fetchedToken, setFetchedToken] = React.useState<string | null | undefined>("");
 
   const handleFinish = () => {
     setUserState(UserState.DONE);
   };
 
+  // Register for push notifications
   React.useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
-      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      const {
+        status: existingStatus,
+      } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         finalStatus = status;
+        console.log(status);
       }
+
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
         return;
       }
       const token = await Notifications.getExpoPushTokenAsync();
-      console.log(token);
-      setExpoPushToken(token);
       if (Platform.OS === "android") {
         Notifications.setNotificationChannelAsync("default", {
           name: "default",
@@ -143,12 +147,21 @@ const AuthorizedApp = () => {
           lightColor: "#FF231F7C",
         });
       }
-      if (expoPushToken.data !== "") {
-        updateUserProfile({ id: user.attributes.sub, expoPushToken: expoPushToken.data })
+      if (token.data !== "" && token.data !== fetchedToken) {
+        updateUserProfile({ id: user.attributes.sub, expoPushToken: token.data })
           .then((res) => console.log(res)).catch((err) => console.log(err));
       }
     };
-    const f = async (loggedInUser: CognitoUser) => {
+    if (user && !loading) {
+      (async () => {
+        await registerForPushNotificationsAsync();
+      })();
+    }
+  }, [loading, user]);
+
+  // Finish Creating User Profile on First Sign In
+  React.useEffect(() => {
+    const getUserStatus = async (loggedInUser: CognitoUser) => {
       if (!loggedInUser) return;
       try {
         const { email, sub: id } = loggedInUser.attributes;
@@ -164,11 +177,14 @@ const AuthorizedApp = () => {
           ).data?.createUser;
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
-        const { userState: fetchedUserState } = userProfile;
+        const { userState: fetchedUserState, expoPushToken } = userProfile;
+        console.log("expoPushToken", expoPushToken);
+
+        setFetchedToken(() => expoPushToken);
         if (fetchedUserState) {
           setUserState(fetchedUserState);
         }
-        setLoading(false);
+        setLoading(() => false);
       } catch (e) {
         console.error(e);
       }
@@ -176,8 +192,7 @@ const AuthorizedApp = () => {
 
     if (user) {
       (async () => {
-        await registerForPushNotificationsAsync();
-        f(user);
+        await getUserStatus(user);
       })();
     }
   }, [user]);

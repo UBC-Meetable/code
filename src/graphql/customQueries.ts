@@ -98,6 +98,7 @@ export const getUserProfile = /* GraphQL */ `
       createdAt
       updatedAt
       owner
+      expoPushToken
     }
   }
 `;
