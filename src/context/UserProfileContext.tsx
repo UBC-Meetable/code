@@ -7,8 +7,17 @@ import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 
+export type UserInfoType = joinFriendGroupInput & {
+  user: {
+    id: string | undefined;
+    email: string | undefined;
+    firstName: string | null | undefined;
+    lastName: string | null | undefined;
+    expoPushToken: string | null | undefined,
+  };
+};
 export type UserSchoolInfoContextType = {
-    info: joinFriendGroupInput | undefined;
+    info: UserInfoType | undefined;
     loading: boolean;
 }
 
@@ -17,7 +26,7 @@ const UserSchoolInfoContext = React.createContext({
 
 export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
   const user = useAuthenticatedUser();
-  const [info, setInfo] = useState<joinFriendGroupInput>();
+  const [info, setInfo] = useState<UserInfoType>();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,8 +37,15 @@ export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
           const userInfo = userProfile.data.getUser;
           setInfo(
             {
+              user: {
+                id: userInfo.id,
+                email: userInfo.email,
+                firstName: userInfo.firstName,
+                lastName: userInfo.lastName,
+                expoPushToken: userInfo.expoPushToken,
+              },
               id: userInfo.id,
-              university: userInfo.university,
+              university: userInfo.university || "",
               year: userInfo.year,
             },
           );
