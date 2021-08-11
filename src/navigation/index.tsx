@@ -178,7 +178,6 @@ const AuthorizedApp = () => {
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
         const { userState: fetchedUserState, expoPushToken } = userProfile;
-        console.log("expoPushToken", expoPushToken);
 
         setFetchedToken(() => expoPushToken);
         if (fetchedUserState) {
