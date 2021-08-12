@@ -1,6 +1,6 @@
 import { Layout } from "@ui-kitten/components";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Colors from "../../constants/Colors";
 
@@ -13,7 +13,7 @@ const LoginControllerRoot = ({ children }:LoginControllerRootProps) => {
       position: "relative",
       top: -units.top,
       marginBottom: -units.bottom - units.top,
-      paddingBottom: units.bottom + units.top,
+      paddingBottom: units.bottom,
     }]}
     >
       {children}

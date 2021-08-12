@@ -41,13 +41,12 @@ const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
         width={window.width}
       />
       <KeyboardSwipeLayout>
-        <Layout style={{
-          backgroundColor: "#0000",
-          width: "100%",
-          flex: 1,
-          marginTop: units.top,
-          padding: 30,
-        }}
+        <KeyboardAvoidingView
+          behavior="position"
+          style={{
+            padding: 30,
+            flex: 1,
+          }}
         >
           <Text style={styles.emoji}>🔐</Text>
           <Text style={{
@@ -60,23 +59,37 @@ const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
             <Text style={{ fontSize: 14, fontWeight: "bold" }}>What is your Email Address?</Text>
           </Layout>
           <Layout style={styles.emailContainer}>
-            <TextField placeholder="Enter Email Address" value={email} onChangeText={(text) => setEmail(text)} />
+            <TextField
+              placeholder="Enter Email Address"
+              value={email}
+              onChangeText={(e) => setEmail(e)}
+              keyboardType="email-address"
+              autoCompleteType="email"
+            />
           </Layout>
+        </KeyboardAvoidingView>
+        <Layout style={{
+          backgroundColor: "#0000",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+        >
+          <PrimaryButton onPress={() => submit()}>
+            Send Confirmation Email
+          </PrimaryButton>
+
+          <Text style={[styles.bold]}>
+            I already have an account!
+          </Text>
+          <Text style={[styles.bold]}>
+            Where can I
+            {" "}
+            <Text onPress={() => onBack()} style={[styles.bold, styles.clickable]}>sign in</Text>
+            ?
+          </Text>
         </Layout>
       </KeyboardSwipeLayout>
-      <PrimaryButton onPress={() => submit()}>
-        Send Confirmation Email
-      </PrimaryButton>
 
-      <Text style={[styles.bold]}>
-        I already have an account!
-      </Text>
-      <Text style={[styles.bold]}>
-        Where can I
-        {" "}
-        <Text onPress={() => onBack()} style={[styles.bold, styles.clickable]}>sign in</Text>
-        ?
-      </Text>
     </LoginControllerRoot>
   );
 };
@@ -121,7 +134,7 @@ const styles = StyleSheet.create({
     color: Colors.dark.error,
   },
   emailContainer: {
-    height: "20%",
+    // height: "100%",
     marginVertical: 20,
     backgroundColor: "#0000",
   },

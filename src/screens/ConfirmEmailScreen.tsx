@@ -79,13 +79,11 @@ const SignUpFormScreen = ({
         width={window.width}
       />
       <KeyboardSwipeLayout>
-        <Layout style={{
-          backgroundColor: "#0000",
-          width: "100%",
-          flex: 1,
-          marginTop: units.top,
-          padding: 30,
-        }}
+        <KeyboardAvoidingView
+          behavior="position"
+          style={{
+            padding: 30,
+          }}
         >
           <Text style={styles.emoji}> </Text>
           <Text style={{
@@ -112,12 +110,19 @@ const SignUpFormScreen = ({
             <Text style={[styles.baseText, { color: "#02A3F4" }]} onPress={resendCode}>Resend it</Text>
             .
           </Text>
+        </KeyboardAvoidingView>
+        <Layout style={{
+          backgroundColor: "#0000",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+        >
+          <PrimaryButton onPress={createProfile}>
+            Create Profile
+          </PrimaryButton>
+          <BottomText onPressText={onBack} />
         </Layout>
       </KeyboardSwipeLayout>
-      <PrimaryButton onPress={createProfile}>
-        Create Profile
-      </PrimaryButton>
-      <BottomText onPressText={onBack} />
     </LoginControllerRoot>
   );
 };

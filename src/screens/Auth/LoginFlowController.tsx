@@ -1,8 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
-import { Dimensions } from "react-native";
 import AuthStateContext from "../../context/AuthStateContext";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { AuthState } from "../../types";
 import ConfirmEmailScreen from "../ConfirmEmailScreen";
 import ForgotPassword from "./ForgotPassword";
@@ -47,6 +45,7 @@ const LoginFlowController = () => {
       );
     case AuthState.TUTORIAL:
       return <TutorialScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />;
+    // Unused
     case AuthState.CREATE:
       return (
         <SignupScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />
