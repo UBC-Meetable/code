@@ -1,4 +1,15 @@
 /* Amplify Params - DO NOT EDIT
+	API_MEETABLE_COURSEGROUPCONNECTIONTABLE_ARN
+	API_MEETABLE_COURSEGROUPCONNECTIONTABLE_NAME
+	API_MEETABLE_COURSEGROUPTABLE_ARN
+	API_MEETABLE_COURSEGROUPTABLE_NAME
+	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_ARN
+	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME
+	API_MEETABLE_FRIENDGROUPTABLE_ARN
+	API_MEETABLE_FRIENDGROUPTABLE_NAME
+	API_MEETABLE_GRAPHQLAPIIDOUTPUT
+	API_MEETABLE_USERTABLE_ARN
+	API_MEETABLE_USERTABLE_NAME
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
@@ -9,9 +20,10 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 
 const tables = {
   user: process.env.API_MEETABLE_USERTABLE_NAME,
-  friendGroupConnectionModel: process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME,
+  friendGroupConnection: process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME,
+  courseGroupConnection:process.env.API_MEETABLE_COURSEGROUPCONNECTIONTABLE_NAME,
+  courseGroup: process.env.API_MEETABLE_COURSEGROUPTABLE_NAME,
   friendGroup: process.env.API_MEETABLE_FRIENDGROUPTABLE_NAME,
-  quiz: process.env.API_MEETABLE_QUIZTABLE_NAME,
 };
 
 exports.handler = async (event) => {
@@ -20,22 +32,36 @@ exports.handler = async (event) => {
   const userName = event.arguments.userName;
   const hasFile = event.arguments.hasFile;
   const text = event.arguments.text;
+  const groupType = event.arguments.groupType;
   // Create a new Expo SDK client
   // optionally providing an access token if you have enabled push security
   let expo = new Expo();
 
   try {
     // find push tokens
-    let userIDs = await docClient.query({
-      TableName: tables.friendGroupConnectionModel,
-      IndexName: "byFriendGroup",
-      KeyConditionExpression: "groupID = :groupID",
-      ExpressionAttributeValues: {
-        ":groupID": groupID
+    const groupQueryParams;
+    if (groupType === "FRIEND") {
+      groupQueryParams = {
+        TableName: tables.friendGroupConnection,
+        IndexName: "byFriendGroup",
+        KeyConditionExpression: "groupID = :groupID",
+        ExpressionAttributeValues: {
+          ":groupID": groupID
+        }
       }
-    }).promise().then(
+    } else {
+      groupQueryParams = groupQueryParams = {
+        TableName: tables.courseGroupConnection,
+        IndexName: "byCourseGroup",
+        KeyConditionExpression: "groupID = :groupID",
+        ExpressionAttributeValues: {
+          ":groupID": groupID
+        }
+      }
+    }
+    let userIDs = await docClient.query(groupQueryParams).promise().then(
       function(data) {
-        return data.Items.map(fgc => fgc.userID);
+        return data.Items.map(gc => gc.userID);
       },
       function(error) {
         console.error("An error occurred:",error);
@@ -54,7 +80,7 @@ exports.handler = async (event) => {
         );
       }
     }));
-    
+    pushTokens.filter(item => item); // filter out undefined
     // Create the messages that you want to send to clients
     let messages = [];
     for (let pushToken of pushTokens) {

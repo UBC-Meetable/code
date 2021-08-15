@@ -145,6 +145,7 @@ export type pushNotificationInput = {
   userName: string,
   hasFile: boolean,
   text?: string | null,
+  groupType?: GroupType | null,
 };
 
 export type pushNotificationOutput = {
@@ -350,7 +351,7 @@ export type UpdateReportInput = {
 };
 
 export type DeleteReportInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateChatMessageInput = {
@@ -390,7 +391,7 @@ export type UpdateChatMessageInput = {
 };
 
 export type DeleteChatMessageInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateCourseGroupConnectionInput = {
@@ -414,7 +415,7 @@ export type UpdateCourseGroupConnectionInput = {
 };
 
 export type DeleteCourseGroupConnectionInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateFriendGroupConnectionInput = {
@@ -438,7 +439,7 @@ export type UpdateFriendGroupConnectionInput = {
 };
 
 export type DeleteFriendGroupConnectionInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type CreateQuizInput = {
@@ -468,7 +469,7 @@ export type UpdateQuizInput = {
 };
 
 export type DeleteQuizInput = {
-  id: string,
+  id?: string | null,
 };
 
 export type joinFriendGroupInput = {
@@ -758,6 +759,7 @@ export type GetUserProfileQuery = {
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
+    expoPushToken?: string | null,
   } | null,
 };
 

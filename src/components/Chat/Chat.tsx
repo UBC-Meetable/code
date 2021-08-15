@@ -80,8 +80,8 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
       body: message,
       userID: user.attributes.sub,
       groupType,
-      userName: user.attributes.email, // how do you get firstname, lastname?
-      hasFile: false,
+      userName: userProfile.info!.user!.firstName!,
+      hasFile: false, // TODO: change
     });
 
     res.then(() => {

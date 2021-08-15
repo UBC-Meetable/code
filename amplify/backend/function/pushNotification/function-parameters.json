@@ -1,4 +1,22 @@
 {
-  "permissions": {},
+  "permissions": {
+    "storage": {
+      "User:@model(appsync)": [
+        "read"
+      ],
+      "CourseGroup:@model(appsync)": [
+        "read"
+      ],
+      "FriendGroup:@model(appsync)": [
+        "read"
+      ],
+      "CourseGroupConnection:@model(appsync)": [
+        "read"
+      ],
+      "FriendGroupConnection:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
   "lambdaLayers": []
 }

@@ -160,6 +160,7 @@ input pushNotificationInput {
   userName: String!
   hasFile: Boolean!
   text: String
+  groupType: GroupType
 }
 
 type pushNotificationOutput {
