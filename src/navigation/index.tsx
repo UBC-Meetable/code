@@ -131,8 +131,8 @@ const AuthorizedApp = () => {
       if (existingStatus !== "granted") {
         const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
         finalStatus = status;
-        console.log(status);
       }
+      console.log(finalStatus);
 
       if (finalStatus !== "granted") {
         alert("Failed to get push token for push notification!");
@@ -148,6 +148,7 @@ const AuthorizedApp = () => {
         });
       }
       if (token.data !== "" && token.data !== fetchedToken) {
+        console.log("registering");
         updateUserProfile({ id: user.attributes.sub, expoPushToken: token.data })
           .then((res) => console.log(res)).catch((err) => console.log(err));
       }
@@ -178,6 +179,7 @@ const AuthorizedApp = () => {
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
         const { userState: fetchedUserState, expoPushToken } = userProfile;
+        console.log(expoPushToken);
 
         setFetchedToken(() => expoPushToken);
         if (fetchedUserState) {
