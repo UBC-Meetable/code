@@ -290,10 +290,10 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   newCourseContainer: {
-    backgroundColor: "grey",
+    backgroundColor: "#FFEEDE",
   },
   newCourseText: {
-    color: "white",
+    color: "#FBBA82",
   },
   courseTextContainer: {
     flex: 1,
@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     fontSize: 20,
-    color: "red",
+    color: "#FBBA82",
   },
   headerStyle: {
     textAlign: "left",
