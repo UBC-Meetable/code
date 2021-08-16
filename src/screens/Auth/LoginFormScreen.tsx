@@ -73,13 +73,12 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
         width={window.width}
       />
       <KeyboardSwipeLayout>
-        <Layout style={{
-          backgroundColor: "#0000",
-          width: "100%",
-          flex: 1,
-          marginTop: units.top,
-          padding: 30,
-        }}
+
+        <KeyboardAvoidingView
+          behavior="position"
+          style={{
+            padding: 30,
+          }}
         >
           <Text style={styles.emoji}>👋</Text>
           <Text style={{
@@ -96,7 +95,7 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
             value={email}
             ref={emailRef}
             onSubmitEditing={() => passwordRef.current?.focus()}
-            onChangeText={(e) => setEmail(e.toLowerCase())}
+            onChangeText={(e) => setEmail(e)}
             keyboardType="email-address"
             autoCompleteType="email"
           />
@@ -111,65 +110,41 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
             value={password}
             ref={passwordRef}
           />
+        </KeyboardAvoidingView>
+        <Layout style={{
+          backgroundColor: "#0000",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+        >
+          <Text
+            style={[styles.bold, { marginTop: 10 }]}
+            onPress={() => onForgot()}
+          >
+            Forgot Password?
+          </Text>
           <Layout style={{
             backgroundColor: "#0000",
-            flex: 1,
+            flex: 0,
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "flex-end",
           }}
           >
-            <Text
-              style={[styles.bold, { marginTop: 10 }]}
-              onPress={() => onForgot()}
-            >
-              Forgot Password?
-
-            </Text>
-            <Layout style={{
-              backgroundColor: "#0000",
-              flex: 0,
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-            >
-              <PrimaryButton onPress={() => login()}>Sign In</PrimaryButton>
-              <Text style={[styles.bold]}>
-                I'm new!
-                Where can I
-                {" "}
-                <Text
-                  onPress={() => onSignUp()}
-                  style={[styles.bold, styles.clickable]}
-                >
-                  sign up
-
-                </Text>
-                ?
+            <PrimaryButton onPress={() => login()}>Sign In</PrimaryButton>
+            <Text style={[styles.bold]}>
+              I'm new!
+              Where can I
+              {" "}
+              <Text
+                onPress={() => onSignUp()}
+                style={[styles.bold, styles.clickable]}
+              >
+                sign up
               </Text>
-            </Layout>
+              ?
+            </Text>
           </Layout>
-
-          {/* <Layout style={{
-            justifyContent: "center", alignItems: "center", backgroundColor: "#0000", flex: 0,
-          }}
-          >
-            <Button
-              style={styles.button}
-              onPress={() => {
-                login();
-              }}
-            >
-              {(evaProps: any) => (
-                <Text
-                  {...evaProps}
-                  style={{ ...evaProps.style, ...styles.buttonText }}
-                >
-                  Log In
-                </Text>
-              )}
-            </Button> */}
-          {/* <BottomText onPressText={onSignUp} /> */}
-          {/* </Layout> */}
         </Layout>
       </KeyboardSwipeLayout>
     </LoginControllerRoot>

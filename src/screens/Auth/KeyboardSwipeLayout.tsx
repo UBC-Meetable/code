@@ -20,7 +20,7 @@ const KeyboardSwipeLayout = ({ children }:KeyboardSwipeLayoutProps) => (
         display: "flex", flexDirection: "column", width: "100%",
       }}
       scrollEnabled={false}
-      keyboardDismissMode="interactive"
+      keyboardDismissMode="none"
       contentContainerStyle={{ flex: 1 }}
       bounces={false}
     >

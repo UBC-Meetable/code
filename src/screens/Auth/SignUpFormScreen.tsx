@@ -4,7 +4,7 @@ import {
 } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import {
-  Dimensions, KeyboardAvoidingView, StyleSheet,
+  Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SignUpBubble from "../../assets/images/verify-bubble.svg";
@@ -34,6 +34,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const confirmPasswordRef = useRef<Input>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const units = useSafeAreaInsets();
+
   const confirmForm = () => {
     setError(() => []);
     let flag = true;
@@ -82,11 +83,6 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         <KeyboardAvoidingView
           behavior="position"
           style={{
-            backgroundColor: "#0000",
-            width: "100%",
-            flex: 1,
-            height: "100%",
-            marginTop: units.top,
             padding: 30,
           }}
         >
@@ -96,17 +92,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           }}
           >
             Let's get started!
-            {"\n"}
           </Text>
           <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
             <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
           </Layout>
           <TextField
             placeholder="Email Address"
-            value={email}
+            defaultValue={email}
             ref={emailRef}
             onSubmitEditing={() => confirmEmailRef.current?.focus()}
-            onChangeText={(e) => setEmail(e.toLowerCase())}
+            onChangeText={(e) => setEmail(e)}
             keyboardType="email-address"
             autoCompleteType="email"
           />
@@ -115,7 +110,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             value={confirmEmail}
             ref={confirmEmailRef}
             onSubmitEditing={() => passwordRef.current?.focus()}
-            onChangeText={(e) => setConfirmEmail(e.toLowerCase())}
+            onChangeText={(e) => setConfirmEmail(e)}
             keyboardType="email-address"
             autoCompleteType="email"
           />
@@ -146,19 +141,30 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           justifyContent: "flex-end",
         }}
         >
+          <Layout style={{
+            backgroundColor: "#0000",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+          >
+            <PrimaryButton onPress={createProfile}>Create Profile</PrimaryButton>
+            <Text style={[styles.bold]}>
+              I already have an account!
+            </Text>
+            <Text style={[styles.bold]}>
+              Where can I
+              {" "}
+              <Text
+                onPress={() => onLogIn()}
+                style={[styles.bold, styles.clickable]}
+              >
+                sign in
 
-          <PrimaryButton onPress={createProfile}>Create Profile</PrimaryButton>
-          <Text style={[styles.bold]}>
-            I already have an account!
-          </Text>
-          <Text style={[styles.bold]}>
-            Where can I
-            {" "}
-            <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
-            ?
-          </Text>
+              </Text>
+              ?
+            </Text>
+          </Layout>
         </Layout>
-
       </KeyboardSwipeLayout>
     </LoginControllerRoot>
   );

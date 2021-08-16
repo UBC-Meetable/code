@@ -2,7 +2,9 @@ import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React from "react";
-import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
+import {
+  Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
+} from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Auth } from "aws-amplify";
 import Colors from "../../constants/Colors";
@@ -62,14 +64,12 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
         width={window.width}
       />
       <KeyboardSwipeLayout>
-        <Layout style={{
-          backgroundColor: "#0000",
-          width: "100%",
-          flex: 1,
-          marginTop: units.top,
-          padding: 30,
-          height: "100%",
-        }}
+        <KeyboardAvoidingView
+          behavior="position"
+          style={{
+            padding: 30,
+            flex: 1,
+          }}
         >
           <Text style={styles.emoji}> </Text>
           <Text style={{
@@ -85,27 +85,23 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
             entering the code sent to your email.
 
           </Text>
-
-          <KeyboardAvoidingView
-            behavior="padding"
-            keyboardVerticalOffset={units.bottom}
-            style={{
-              flex: 0.9,
-              marginTop: 10,
-              backgroundColor: "#0000",
-              justifyContent: "space-evenly",
-            }}
-          >
-            <TextField placeholder="Confirmation Code" onChangeText={(text) => setCode(text)} />
-            <TextField secureTextEntry placeholder="New Password" onChangeText={(text) => setPassword(text)} />
-            <TextField secureTextEntry placeholder="Confirm New Password" onChangeText={(text) => setConfirmPassword(text)} />
-          </KeyboardAvoidingView>
+          <TextField placeholder="Confirmation Code" onChangeText={(text) => setCode(text)} />
+          <TextField secureTextEntry placeholder="New Password" onChangeText={(text) => setPassword(text)} />
+          <TextField secureTextEntry placeholder="Confirm New Password" onChangeText={(text) => setConfirmPassword(text)} />
+        </KeyboardAvoidingView>
+        <Layout style={{
+          backgroundColor: "#0000",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginBottom: Platform.OS === "ios" ? 0 : 20,
+        }}
+        >
+          <PrimaryButton onPress={() => submit()}>
+            Change Password
+          </PrimaryButton>
+          <BottomText onPressText={onBack} />
         </Layout>
       </KeyboardSwipeLayout>
-      <PrimaryButton onPress={() => submit()}>
-        Change Password
-      </PrimaryButton>
-      <BottomText onPressText={onBack} />
     </LoginControllerRoot>
   );
 };
