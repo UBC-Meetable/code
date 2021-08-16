@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   selectionsContainer: {
     flexDirection: "column",
     flex: 1,
-    width: "80.5%",
+    width: "80.75%",
     marginLeft: 10,
     left: "7.5%",
   },
