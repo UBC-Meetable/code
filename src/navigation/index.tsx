@@ -135,7 +135,9 @@ const AuthorizedApp = () => {
       console.log(finalStatus);
 
       if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
+        console.log("Push notifications not enabled");
+        //  TODO error? Prompt?
+        // alert("Failed to get push token for push notification!");
         return;
       }
       const token = await Notifications.getExpoPushTokenAsync();
