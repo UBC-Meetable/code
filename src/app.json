@@ -3,7 +3,7 @@
     "name": "Meetable",
     "slug": "meetable-app",
     "description": "Meetable Mobile Application",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./assets/images/apple-icon.png",
     "scheme": "meetable",

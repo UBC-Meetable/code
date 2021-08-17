@@ -27,8 +27,13 @@ import {
   Dimensions,
   StyleSheet,
   useColorScheme,
+  Platform,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as Notifications from "expo-notifications";
+import { Constants } from "expo-constants";
+import * as Permissions from "expo-permissions";
+import { ExpoPushToken } from "expo-notifications";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
@@ -55,6 +60,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import generateOptions from "./generateOptions";
 import { GearIcon } from "./ProfileStackNavigator";
 import SignUpStackNavigator from "./SignUpStackNavigator";
+import updateUserProfile from "../calls/updateUserCourses";
 
 Amplify.configure({
   ...awsconfig,
@@ -108,13 +114,57 @@ const AuthorizedApp = () => {
   const [loading, setLoading] = React.useState(true);
   const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
   let user = useAuthenticatedUser();
+  const [fetchedToken, setFetchedToken] = React.useState<string | null | undefined>("");
 
   const handleFinish = () => {
     setUserState(UserState.DONE);
   };
 
+  // Register for push notifications
   React.useEffect(() => {
-    const f = async (loggedInUser: CognitoUser) => {
+    const registerForPushNotificationsAsync = async () => {
+      const {
+        status: existingStatus,
+      } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      console.log(finalStatus);
+
+      if (finalStatus !== "granted") {
+        console.log("Push notifications not enabled");
+        //  TODO error? Prompt?
+        // alert("Failed to get push token for push notification!");
+        return;
+      }
+      const token = await Notifications.getExpoPushTokenAsync();
+      if (Platform.OS === "android") {
+        Notifications.setNotificationChannelAsync("default", {
+          name: "default",
+          importance: Notifications.AndroidImportance.MAX,
+          vibrationPattern: [0, 250, 250, 250],
+          lightColor: "#FF231F7C",
+        });
+      }
+      if (token.data !== "" && token.data !== fetchedToken) {
+        console.log("registering");
+        updateUserProfile({ id: user.attributes.sub, expoPushToken: token.data })
+          .then((res) => console.log(res)).catch((err) => console.log(err));
+      }
+    };
+    if (user && !loading) {
+      (async () => {
+        await registerForPushNotificationsAsync();
+      })();
+    }
+  }, [loading, user]);
+
+  // Finish Creating User Profile on First Sign In
+  React.useEffect(() => {
+    const getUserStatus = async (loggedInUser: CognitoUser) => {
       if (!loggedInUser) return;
       try {
         const { email, sub: id } = loggedInUser.attributes;
@@ -130,18 +180,23 @@ const AuthorizedApp = () => {
           ).data?.createUser;
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
-        const { userState: fetchedUserState } = userProfile;
+        const { userState: fetchedUserState, expoPushToken } = userProfile;
+        console.log(expoPushToken);
+
+        setFetchedToken(() => expoPushToken);
         if (fetchedUserState) {
           setUserState(fetchedUserState);
         }
-        setLoading(false);
+        setLoading(() => false);
       } catch (e) {
         console.error(e);
       }
     };
 
     if (user) {
-      f(user);
+      (async () => {
+        await getUserStatus(user);
+      })();
     }
   }, [user]);
 

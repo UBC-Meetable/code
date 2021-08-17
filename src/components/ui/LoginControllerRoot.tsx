@@ -12,8 +12,8 @@ const LoginControllerRoot = ({ children }:LoginControllerRootProps) => {
     <Layout style={[styles.root, {
       position: "relative",
       top: -units.top,
-      marginBottom: -units.bottom - units.top,
-      paddingBottom: units.bottom,
+      marginBottom: -units.top * 2 - units.bottom,
+      paddingBottom: units.bottom + units.top,
     }]}
     >
       {children}
