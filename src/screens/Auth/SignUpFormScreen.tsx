@@ -112,7 +112,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               value={email}
               ref={emailRef}
               onSubmitEditing={() => confirmEmailRef.current?.focus()}
-              onChangeText={(e) => setEmail(e.toLowerCase())}
+              onChangeText={(e) => {
+                setEmail(e);
+              }}
               keyboardType="email-address"
               autoCompleteType="email"
               scrollEnabled={false}
@@ -122,7 +124,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               value={confirmEmail}
               ref={confirmEmailRef}
               onSubmitEditing={() => passwordRef.current?.focus()}
-              onChangeText={(e) => setConfirmEmail(e.toLowerCase())}
+              onChangeText={(e) => setConfirmEmail(e)}
               keyboardType="email-address"
               autoCompleteType="email"
               scrollEnabled={false}
