@@ -18,6 +18,7 @@ type User
   courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
+  expoPushToken: String
 }
 
 type CourseGroup
@@ -147,4 +148,22 @@ type joinFriendGroupOutput {
   statusCode: Int!
   groupID: String
   relevantUsers: [String!]!
+}
+
+type Mutation {
+  pushNotification(input: pushNotificationInput): pushNotificationOutput @function(name: "pushNotification-${env}")
+}
+
+input pushNotificationInput {
+  groupID: String!
+  userID: String!
+  userName: String!
+  hasFile: Boolean!
+  text: String
+  groupType: GroupType
+}
+
+type pushNotificationOutput {
+  statusCode: Int!
+  body: String
 }
