@@ -32,7 +32,6 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Notifications from "expo-notifications";
 import { Constants } from "expo-constants";
-import * as Permissions from "expo-permissions";
 import { ExpoPushToken } from "expo-notifications";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
@@ -50,7 +49,7 @@ import { UserProfileProvider } from "../context/UserProfileContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/LoginFlowController";
 import QuizScreen from "../screens/Auth/QuizScreen";
-import EditCourseScreen from "../screens/EditCourseScreen"; 
+import EditCourseScreen from "../screens/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
@@ -125,11 +124,11 @@ const AuthorizedApp = () => {
     const registerForPushNotificationsAsync = async () => {
       const {
         status: existingStatus,
-      } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      } = await Notifications.requestPermissionsAsync();
 
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
       console.log(finalStatus);

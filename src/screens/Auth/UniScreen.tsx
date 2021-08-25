@@ -13,25 +13,29 @@ import React, { useState } from "react";
 import {
   Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../../API";
 import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
 import updateUserProfile from "../../calls/updateUserProfile";
 import Colors from "../../constants/Colors";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SignUpParamList } from "../../types";
+import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
 const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParamList, "UniScreen"> }) => {
   const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
   const [major, setMajor] = useState("");
+  const [year, setYear] = useState("");
   const universities = ["The University of British Columbia", "The University of Toronto", "Simon Fraser University", "Queen's University"];
   const university = universities[selectedIndex.row];
   const user = useAuthenticatedUser();
+  const units = useSafeAreaInsets();
   const onSubmit = async () => {
+    const yearInt = parseInt(year, 10);
     const res = await updateUserProfile({
-      id: user.attributes.sub, major, university, userState: UserState.UNI_SELECTED,
+      id: user.attributes.sub, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
     });
 
     if (res.data) {
@@ -41,56 +45,73 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
   };
 
   return (
-    <SafeAreaView style={styles.root} onTouchStart={Keyboard.dismiss}>
-      <BubbleBackground
-        width={window.width}
-        height={window.height}
-        style={{ position: "absolute" }}
-      />
-      <Layout style={stylesTwo.container}>
-        <Text style={styles.textStyle}>
-          What university are you currently attending?
-        </Text>
-        <Select
-          selectedIndex={selectedIndex}
-          onSelect={(i) => setSelectedIndex(i as React.SetStateAction<IndexPath>)}
-          style={styles.dropDownStyle}
-          value={university}
-        >
-          {universities.map((uni) => <SelectItem title={uni} key={uni} />)}
-        </Select>
-      </Layout>
+    <KeyboardSwipeLayout>
       <KeyboardAvoidingView
         behavior="padding"
         keyboardVerticalOffset={100}
-        style={stylesTwo.container}
+        style={[styles.root, { paddingTop: units.top }]}
       >
-        <Text style={styles.textStyle}>What is your major?</Text>
-        <Input
-          placeholder="Business"
-          value={major}
-          onChangeText={(myMajor) => setMajor(myMajor)}
-          style={styles.inputStyle}
+        <BubbleBackground
+          width={window.width}
+          height={window.height}
+          style={{ position: "absolute" }}
         />
-      </KeyboardAvoidingView>
-      <Button
-        style={major ? styles.button : styles.disabledButton}
-        onPress={() => {
-          onSubmit();
-        }}
-        disabled={!major}
-      >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Next
-          </Text>
-        )}
 
-      </Button>
-    </SafeAreaView>
+        <Layout style={stylesTwo.container}>
+          <Text style={styles.textStyle}>
+            What university are you currently attending?
+          </Text>
+          <Select
+            selectedIndex={selectedIndex}
+            onSelect={(i) => setSelectedIndex(i as React.SetStateAction<IndexPath>)}
+            style={styles.dropDownStyle}
+            value={university}
+          >
+            {universities.map((uni) => <SelectItem title={uni} key={uni} />)}
+          </Select>
+        </Layout>
+
+        <Layout style={stylesTwo.container}>
+          <Text style={styles.textStyle}>What is your major?</Text>
+          <Input
+            placeholder="Business"
+            value={major}
+            onChangeText={(myMajor) => setMajor(myMajor)}
+            style={styles.inputStyle}
+          />
+        </Layout>
+
+        <Layout style={stylesTwo.container}>
+          <Text style={styles.textStyle}>What academic year are you in?</Text>
+          <Input
+            placeholder="1"
+            keyboardType="number-pad"
+            value={year}
+            onChangeText={(myYear) => setYear(myYear)}
+            style={styles.inputStyle}
+          />
+        </Layout>
+        <Button
+          style={major ? styles.button : styles.disabledButton}
+          onPress={() => {
+            onSubmit();
+          }}
+          disabled={!major || !year}
+        >
+          {(evaProps: any) => (
+            <Text
+              {...evaProps}
+              style={{ ...evaProps.style, ...styles.buttonText }}
+            >
+              Next
+            </Text>
+          )}
+
+        </Button>
+      </KeyboardAvoidingView>
+
+    </KeyboardSwipeLayout>
+
   );
 };
 
@@ -102,7 +123,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Colors.theme.lightCreme,
-    paddingTop: 100,
   },
   button: {
     marginBottom: 20,
@@ -173,6 +193,9 @@ const styles = StyleSheet.create({
     marginRight: 30,
     marginTop: 10,
     backgroundColor: "#ffff",
+  },
+  yearStyle: {
+    width: 20,
   },
   textStyle: {
     fontFamily: "Poppins_600SemiBold",

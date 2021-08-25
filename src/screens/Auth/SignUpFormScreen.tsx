@@ -108,6 +108,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
             </Layout>
             <TextField
+              style={styles.field}
               placeholder="Email Address"
               value={email}
               ref={emailRef}
@@ -120,6 +121,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               scrollEnabled={false}
             />
             <TextField
+              style={styles.field}
               placeholder="Confirm Email Address"
               value={confirmEmail}
               ref={confirmEmailRef}
@@ -133,6 +135,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
             </Layout>
             <TextField
+              style={styles.field}
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
@@ -142,6 +145,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={passwordRef}
             />
             <TextField
+              style={styles.field}
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
@@ -205,6 +209,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  field: {
+    marginVertical: 5,
+  },
   checkbox: {
     color: "#FBBA82",
     marginRight: 20,
