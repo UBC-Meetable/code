@@ -60,6 +60,19 @@ type Report
     reportingUser: User @connection(fields: ["reportingUserID"])
     reportedUser: User @connection(fields: ["reportedUserID"])
   } 
+
+type DirectChat
+  @model
+  @key(name: "byUsers", fields: ["userID1, userID2"])
+  @auth(rules: [{ allow: owner, operations: [create, update, delete, read]}])
+  {
+    id: ID!
+    userID1: String!
+    userID2: String!
+    user1: User @connection(fields: ["userID1"])
+    user2: User @connection(fields: ["userID2"])
+    messages: [ChatMessage!]! @connection(keyName: "byID", fields: ["id"])
+  }
  
 # [CONNECTIONS]
 
@@ -155,7 +168,8 @@ type Mutation {
 }
 
 input pushNotificationInput {
-  groupID: String!
+  groupID: String # either groupID or userID2 is included, but not both
+  userID2: String
   userID: String!
   userName: String!
   hasFile: Boolean!
