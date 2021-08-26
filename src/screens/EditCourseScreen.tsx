@@ -8,6 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { CourseGroup, CreateCourseGroupConnectionMutation } from "../API";
 import joinCourseGroup from "../calls/joinCourseGroup";
+import editCourseStyles from "../components/styles/editCourseStyles";
 import Colors from "../constants/Colors";
 import CourseGroupsContext from "../context/CourseGroupsContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
@@ -64,7 +65,7 @@ const EditCourseScreen = () => {
 
     const newGroup = generateNewGroup({
       code: currCode,
-      title: currTitle,
+      title: currTitle.trim().toUpperCase(),
       section: currSection,
     });
 
@@ -101,22 +102,22 @@ const EditCourseScreen = () => {
   ) => groups.map((group, index) => (
     <Layout
       key={index}
-      style={[styles.courseContainer, isNew && styles.newCourseContainer]}
+      style={[editCourseStyles.courseContainer, isNew && editCourseStyles.newCourseContainer]}
     >
       <Layout
         style={[
-          styles.courseTextContainer,
-          isNew && styles.newCourseContainer,
+          editCourseStyles.courseTextContainer,
+          isNew && editCourseStyles.newCourseContainer,
         ]}
       >
-        <Text style={[styles.courseTextStyle, isNew && styles.newCourseText]}>
+        <Text style={[editCourseStyles.courseTextStyle, isNew && editCourseStyles.newCourseText]}>
           {`${group.title} ${group.code}, Section ${group.section}`}
         </Text>
       </Layout>
 
       {isNew && (
         <Layout
-          style={[styles.deleteContainer, isNew && styles.newCourseContainer]}
+          style={[editCourseStyles.deleteContainer, isNew && editCourseStyles.newCourseContainer]}
         >
           <Button
             appearance="ghost"
@@ -127,7 +128,7 @@ const EditCourseScreen = () => {
             {(evaProps: any) => (
               <Text
                 {...evaProps}
-                style={{ ...evaProps.style, ...styles.deleteButtonText }}
+                style={{ ...evaProps.style, ...editCourseStyles.deleteButtonText }}
               >
                 X
               </Text>
@@ -139,21 +140,21 @@ const EditCourseScreen = () => {
   ));
 
   return (
-    <SafeAreaView style={styles.root}>
-      <Layout style={[styles.form, styles.noBg]}>
-        <Layout style={styles.container2}>
-          <Text style={styles.textStyle}>Course</Text>
-          <Layout style={styles.codeContainer}>
+    <SafeAreaView style={editCourseStyles.root}>
+      <Layout style={[editCourseStyles.form, editCourseStyles.noBg]}>
+        <Layout style={editCourseStyles.container2}>
+          <Text style={[editCourseStyles.textStyle, { left: "0%" }]}>Course</Text>
+          <Layout style={editCourseStyles.codeContainer}>
             <Input
-              style={[styles.courseCodeInput, styles.courseStyle]}
+              style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle]}
               placeholder="COMM"
               value={currTitle}
               onChangeText={(newTitle) => {
-                setTitle(newTitle.trim().toUpperCase());
+                setTitle(newTitle);
               }}
             />
             <Input
-              style={[styles.courseCodeInput, styles.codeStyle]}
+              style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}
               placeholder="101"
               value={currCode}
               onChangeText={(newCode) => {
@@ -161,7 +162,7 @@ const EditCourseScreen = () => {
               }}
             />
             <Input
-              style={[styles.courseCodeInput, styles.codeStyle]}
+              style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}
               placeholder="Section"
               value={currSection}
               onChangeText={(newSection) => {
@@ -171,16 +172,18 @@ const EditCourseScreen = () => {
           </Layout>
         </Layout>
       </Layout>
-      <Layout style={[styles.noBg, styles.form, styles.bottomContainer]}>
+      <Layout style={[editCourseStyles.noBg,
+        editCourseStyles.form, editCourseStyles.bottomContainer]}
+      >
         <Button
-          style={[styles.button, styles.addCoursebutton]}
+          style={[editCourseStyles.button, editCourseStyles.addCoursebutton]}
           onPress={() => {
             addCourse();
           }}
         >
           {() => (
             <Text
-              style={styles.buttonText}
+              style={editCourseStyles.buttonText}
             >
               Add Course
             </Text>
@@ -188,25 +191,27 @@ const EditCourseScreen = () => {
         </Button>
       </Layout>
 
-      <Layout style={[styles.noBg, styles.middleContainer, { width: "100%", alignItems: "center" }]}>
-        <Text style={styles.textStyle}>Your Courses</Text>
-        <ScrollView contentContainerStyle={styles.selectionsContainer}>
+      <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }]}>
+        <Text style={editCourseStyles.textStyle}>Your Courses</Text>
+        <ScrollView contentContainerStyle={editCourseStyles.selectionsContainer}>
           {renderCourses(courses)}
           {renderCourses(newCourses, true)}
         </ScrollView>
       </Layout>
-      <Layout style={[styles.noBg, styles.form, styles.bottomContainer]}>
+      <Layout style={[editCourseStyles.noBg,
+        editCourseStyles.form, editCourseStyles.bottomContainer]}
+      >
         <Button
-          style={styles.button}
+          style={editCourseStyles.button}
           onPress={() => {
             handleSave();
           }}
         >
           {() => (
             <Text
-              style={styles.buttonText}
+              style={editCourseStyles.buttonText}
             >
-              Save
+              Save Changes
             </Text>
           )}
         </Button>
@@ -214,131 +219,5 @@ const EditCourseScreen = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  middleContainer: {
-    flex: 1,
-    flexGrow: 1,
-  },
-  bottomContainer: {
-    flex: 0,
-    flexBasis: 50,
-    alignItems: "center",
-    marginBottom: 10,
-  },
-  addCourseContainer: {
-    flex: 0,
-    flexBasis: 50,
-    marginVertical: 10,
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  noBg: {
-    backgroundColor: "#0000",
-  },
-  root: {
-    backgroundColor: Colors.theme.lightCreme,
-    height: "100%",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  form: {
-    alignItems: "center",
-    width: "80%",
-  },
-  addCoursebutton: {
-    backgroundColor: "#FBBA82",
-  },
-  button: {
-    marginBottom: 30,
-    width: "75%",
-    borderRadius: 100,
-    borderWidth: 0,
-    minHeight: 50,
-    flex: 1,
-    backgroundColor: "#7ED1EF",
-  },
-  buttonText: {
-    fontFamily: "Poppins_600SemiBold",
-    color: "#fff",
-    textAlign: "center",
-  },
-  selectionsContainer: {
-    flexDirection: "column",
-    width: "75%",
-    marginLeft: 10,
-  },
-  courseContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-    width: "100%",
-    marginVertical: 2.5,
-  },
-  newCourseContainer: {
-    backgroundColor: "grey",
-  },
-  newCourseText: {
-    color: "white",
-  },
-  courseTextContainer: {
-    flex: 1,
-    borderRadius: 10,
-    padding: 20,
-  },
-  textStyle: {
-    fontFamily: "Poppins_600SemiBold",
-    textAlign: "left",
-    fontSize: 20,
-    fontWeight: "500",
-    lineHeight: 24,
-  },
-  deleteContainer: {
-    flexBasis: 60,
-    borderRadius: 10,
-  },
-  courseTextStyle: {
-    fontFamily: "Poppins_400Regular",
-    fontSize: 15,
-  },
-  deleteButtonText: {
-    fontSize: 20,
-    color: "red",
-  },
-  headerStyle: {
-    textAlign: "left",
-    fontSize: 25,
-    fontWeight: "600",
-    marginRight: 165,
-  },
-  codeContainer: {
-    flexDirection: "row",
-    backgroundColor: "#0000",
-  },
-  courseStyle: {
-    flex: 0.4,
-  },
-  codeStyle: {
-    flex: 0.3,
-  },
-  courseCodeInput: {
-    borderRadius: 100,
-    margin: 5,
-    backgroundColor: "#ffff",
-  },
-  container2: {
-    width: "100%",
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    backgroundColor: Colors.theme.lightCreme,
-    justifyContent: "center",
-  },
-});
 
 export default EditCourseScreen;

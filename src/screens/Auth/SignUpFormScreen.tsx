@@ -1,17 +1,19 @@
 import Auth from "@aws-amplify/auth";
 import {
-  Button, Input, Layout, Text,
+  Button, CheckBox, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import {
   Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import SignUpBubble from "../../assets/images/verify-bubble.svg";
 import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import TextField from "../../components/ui/TextField";
 import Colors from "../../constants/Colors";
+import TosModal, { PrivacyModal } from "../../navigation/TosModal";
 import BottomText from "./BottomText";
 import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
 
@@ -22,6 +24,7 @@ type SignUpFormScreenProps = {
     onCreate: (email: string) => void,
 }
 
+// TODO error messages, disabled styles, theme
 const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
@@ -32,7 +35,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const passwordRef = useRef<Input>(null);
   const confirmEmailRef = useRef<Input>(null);
   const confirmPasswordRef = useRef<Input>(null);
-  const [passwordFocused, setPasswordFocused] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [tosModal, setTosModal] = useState(false);
+  const [privacyModal, setPrivacyModal] = useState(false);
   const units = useSafeAreaInsets();
 
   const confirmForm = () => {
@@ -80,102 +85,145 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         width={window.width}
       />
       <KeyboardSwipeLayout>
-        <KeyboardAvoidingView
-          behavior="position"
-          style={{
-            padding: 30,
-          }}
-        >
-          <Text style={styles.emoji}>👋</Text>
-          <Text style={{
-            fontSize: 34, fontFamily: "Poppins_500Medium",
-          }}
+        <ScrollView>
+          <KeyboardAvoidingView
+            behavior="position"
+            style={{
+              backgroundColor: "#0000",
+              width: "100%",
+              flex: 1,
+              height: "100%",
+              marginTop: units.top,
+              padding: 30,
+            }}
           >
-            Let's get started!
-          </Text>
-          <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-            <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
-          </Layout>
-          <TextField
-            placeholder="Email Address"
-            defaultValue={email}
-            ref={emailRef}
-            onSubmitEditing={() => confirmEmailRef.current?.focus()}
-            onChangeText={(e) => setEmail(e)}
-            keyboardType="email-address"
-            autoCompleteType="email"
-          />
-          <TextField
-            placeholder="Confirm Email Address"
-            value={confirmEmail}
-            ref={confirmEmailRef}
-            onSubmitEditing={() => passwordRef.current?.focus()}
-            onChangeText={(e) => setConfirmEmail(e)}
-            keyboardType="email-address"
-            autoCompleteType="email"
-          />
-          <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-            <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
-          </Layout>
-          <TextField
-            secureTextEntry
-            placeholder="•••••••••••"
-            onChangeText={(e) => setPassword(e)}
-            onSubmitEditing={() => confirmPasswordRef.current?.focus()}
-            value={password}
-            ref={passwordRef}
-          />
-          <TextField
-            secureTextEntry
-            placeholder="•••••••••••"
-            onChangeText={(e) => setConfirmPassword(e)}
-            onSubmitEditing={() => createProfile()}
-            value={confirmPassword}
-            ref={confirmPasswordRef}
-          />
-        </KeyboardAvoidingView>
-        <Layout style={{
-          backgroundColor: "#0000",
-          flex: 0,
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-        >
+            <Text style={styles.emoji}>👋</Text>
+            <Text style={{
+              fontSize: 34, fontFamily: "Poppins_500Medium",
+            }}
+            >
+              Let's get started!
+            </Text>
+            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
+            </Layout>
+            <TextField
+              placeholder="Email Address"
+              value={email}
+              ref={emailRef}
+              onSubmitEditing={() => confirmEmailRef.current?.focus()}
+              onChangeText={(e) => {
+                setEmail(e);
+              }}
+              keyboardType="email-address"
+              autoCompleteType="email"
+              scrollEnabled={false}
+            />
+            <TextField
+              placeholder="Confirm Email Address"
+              value={confirmEmail}
+              ref={confirmEmailRef}
+              onSubmitEditing={() => passwordRef.current?.focus()}
+              onChangeText={(e) => setConfirmEmail(e)}
+              keyboardType="email-address"
+              autoCompleteType="email"
+              scrollEnabled={false}
+            />
+            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
+            </Layout>
+            <TextField
+              scrollEnabled={false}
+              secureTextEntry
+              placeholder="•••••••••••"
+              onChangeText={(e) => setPassword(e)}
+              onSubmitEditing={() => confirmPasswordRef.current?.focus()}
+              value={password}
+              ref={passwordRef}
+            />
+            <TextField
+              scrollEnabled={false}
+              secureTextEntry
+              placeholder="•••••••••••"
+              onChangeText={(e) => setConfirmPassword(e)}
+              onSubmitEditing={() => createProfile()}
+              value={confirmPassword}
+              ref={confirmPasswordRef}
+            />
+          </KeyboardAvoidingView>
           <Layout style={{
             backgroundColor: "#0000",
+            flex: 0,
             alignItems: "center",
             justifyContent: "flex-end",
           }}
           >
-            <PrimaryButton onPress={createProfile}>Create Profile</PrimaryButton>
+            <Layout style={styles.tosContainer}>
+              {/* Theme needs to be setup for this to be colored correctly */}
+              <CheckBox
+                style={styles.checkbox}
+                checked={acceptedTerms}
+                onChange={() => setAcceptedTerms(!acceptedTerms)}
+              />
+              <Text>
+                I've read and accepted the
+                {"\n"}
+                <Text onPress={() => setTosModal(true)} style={[styles.bold, styles.clickable]}>
+                  Terms and Conditions
+                </Text>
+                {" "}
+                and
+                {" "}
+                <Text onPress={() => setPrivacyModal(true)} style={[styles.bold, styles.clickable]}>
+                  Privacy Policy
+                </Text>
+              </Text>
+            </Layout>
+            <PrimaryButton
+              disabled={!acceptedTerms}
+              onPress={createProfile}
+            >
+              Create Profile
+            </PrimaryButton>
             <Text style={[styles.bold]}>
               I already have an account!
             </Text>
             <Text style={[styles.bold]}>
               Where can I
               {" "}
-              <Text
-                onPress={() => onLogIn()}
-                style={[styles.bold, styles.clickable]}
-              >
-                sign in
-
-              </Text>
+              <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
               ?
             </Text>
           </Layout>
-        </Layout>
+        </ScrollView>
       </KeyboardSwipeLayout>
+      <TosModal open={tosModal} setOpen={setTosModal} title="Terms of Service" />
+      <PrivacyModal open={privacyModal} setOpen={setPrivacyModal} title="Privacy Policy" />
     </LoginControllerRoot>
+
   );
 };
 
 const styles = StyleSheet.create({
+  checkbox: {
+    color: "#FBBA82",
+    marginRight: 20,
+  },
   emoji: { fontSize: 50 },
   clickable: { color: "#02A3F4" },
   bold: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
+  },
+  tosContainer: {
+    flexDirection: "row",
+    width: "70%",
+    marginHorizontal: 10,
+    textAlign: "center",
+    backgroundColor: "#0000",
+    marginBottom: 10,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   button: {
     marginBottom: 20,

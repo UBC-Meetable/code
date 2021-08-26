@@ -6,7 +6,7 @@ const useUserProfile = () => {
   const context = useContext(UserProfileContext);
   if (!context) throw new Error("useAuthenticatedUser must be used within a UserProvider");
   const loading = context.loading as boolean;
-  const info = context.info as joinFriendGroupInput;
+  const { info } = context; // remove as joinFriendGroupInput since cast removes first/last name
   return { info, loading };
 };
 

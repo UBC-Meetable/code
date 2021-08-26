@@ -80,6 +80,8 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
       body: message,
       userID: user.attributes.sub,
       groupType,
+      userName: userProfile.info!.user!.firstName!,
+      hasFile: false, // TODO: change
     });
 
     res.then(() => {

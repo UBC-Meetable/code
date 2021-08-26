@@ -23,6 +23,10 @@
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
           "s3Key": "amplify-builds/joinFriendGroup-424b633233766e734434-build.zip"
+        },
+        "pushNotification": {
+          "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
+          "s3Key": "amplify-builds/pushNotification-336453454d4e4d634159-build.zip"
         }
       }
     }
@@ -51,6 +55,10 @@
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
           "s3Key": "amplify-builds/joinFriendGroup-424b633233766e734434-build.zip"
+        },
+        "pushNotification": {
+          "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
+          "s3Key": "amplify-builds/pushNotification-51516b534c5450563071-build.zip"
         }
       }
     }
@@ -129,6 +137,10 @@
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-testflight-02242-deployment",
           "s3Key": "amplify-builds/joinFriendGroup-424b633233766e734434-build.zip"
+        },
+        "pushNotification": {
+          "deploymentBucketName": "amplify-meetable-testflight-02242-deployment",
+          "s3Key": "amplify-builds/pushNotification-51516b534c5450563071-build.zip"
         }
       }
     }
