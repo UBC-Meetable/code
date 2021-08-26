@@ -190,6 +190,8 @@ async function fillGroupSet(userid, set) {
   );
 }
 
+const LIKED = "liked";
+const LOVED = "loved";
 // [QAPair], [QAPair] -> int
 function compatibilityScore(q1, q2) {
   console.log("Compatability Score");
@@ -199,7 +201,9 @@ function compatibilityScore(q1, q2) {
   const user2Responses = new Map(q2.map(i => [i.q,i.a]));
   let score = 0;
   for (const [q, a] of user1Responses) {
-    if (a === user2Responses.get(q)) score += 1;
+    if ((a === LIKED || a === LOVED) && (user2Responses.get(q) === LIKED || user2Responses.get(q) === LOVED)) {
+      score += 1;
+    }
   }
   return score;
 }
