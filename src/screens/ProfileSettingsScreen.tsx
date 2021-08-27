@@ -1,15 +1,12 @@
 import Auth from "@aws-amplify/auth";
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  Button, Layout, Text,
-} from "@ui-kitten/components";
-import React, { useContext } from "react";
+import { Layout } from "@ui-kitten/components";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Colors from "../constants/Colors";
-import UserContext from "../context/UserContext";
 import { RootStackParamList } from "../types";
 
 const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
