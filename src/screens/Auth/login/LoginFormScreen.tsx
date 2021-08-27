@@ -1,20 +1,15 @@
 import Auth from "@aws-amplify/auth";
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Input, Layout, Text } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
-import rootStyles from "../../components/styles/rootStyles";
-import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
-import PrimaryButton from "../../components/ui/PrimaryButton";
-import TextField from "../../components/ui/TextField";
-import Colors from "../../constants/Colors";
-import UserContext from "../../context/UserContext";
-import BottomText from "./BottomText";
-import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
+import LoginPageBubbleTop from "../../../assets/images/login-page-bubble-top.svg";
+import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../../components/ui/PrimaryButton";
+import TextField from "../../../components/ui/TextField";
+import Colors from "../../../constants/Colors";
+import UserContext from "../../../context/UserContext";
+import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 

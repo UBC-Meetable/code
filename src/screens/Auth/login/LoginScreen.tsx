@@ -4,10 +4,10 @@ import {
 import React, { useState } from "react";
 import { Dimensions, Image, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import LoginRocket from "../../assets/images/login-background.svg";
-import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
-import PrimaryButton from "../../components/ui/PrimaryButton";
-import BottomText from "./BottomText";
+import LoginRocket from "../../../assets/images/login-background.svg";
+import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../../components/ui/PrimaryButton";
+import BottomText from "../ui/BottomText";
 
 const window = Dimensions.get("window");
 

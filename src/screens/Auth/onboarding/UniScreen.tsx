@@ -1,26 +1,23 @@
-import Auth from "@aws-amplify/auth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button,
   IndexPath,
-
   Input, Layout,
-
   Select,
   SelectItem, Text,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import {
-  Dimensions, Keyboard, KeyboardAvoidingView, StyleSheet,
+  Dimensions, KeyboardAvoidingView, StyleSheet,
 } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserState } from "../../API";
-import BubbleBackground from "../../assets/images/tutorial-bubble.svg";
-import updateUserProfile from "../../calls/updateUserProfile";
-import Colors from "../../constants/Colors";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { SignUpParamList } from "../../types";
-import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { UserState } from "../../../API";
+import updateUserProfile from "../../../calls/updateUserCourses";
+import Colors from "../../../constants/Colors";
+import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import { SignUpParamList } from "../../../types";
+import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
+import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 

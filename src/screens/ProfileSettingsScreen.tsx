@@ -7,6 +7,7 @@ import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import PrimaryButton from "../components/ui/PrimaryButton";
 import Colors from "../constants/Colors";
 import UserContext from "../context/UserContext";
 import { RootStackParamList } from "../types";
@@ -24,19 +25,11 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
     <SafeAreaView style={styles.root}>
       <Layout style={stylesTwo.container} />
       <ScrollView contentContainerStyle={styles.selectionsContainer} />
-      <Button
-        style={styles.button}
+      <PrimaryButton
         onPress={handleLogout}
       >
-        {(evaProps: any) => (
-          <Text
-            {...evaProps}
-            style={{ ...evaProps.style, ...styles.buttonText }}
-          >
-            Log Out
-          </Text>
-        )}
-      </Button>
+        Log Out
+      </PrimaryButton>
     </SafeAreaView>
   );
 };

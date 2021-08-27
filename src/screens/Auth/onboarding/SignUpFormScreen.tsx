@@ -13,7 +13,7 @@ import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
 import Colors from "../../../constants/Colors";
 import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
-import SignUpBubble from "../../assets/images/verify-bubble.svg";
+import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
