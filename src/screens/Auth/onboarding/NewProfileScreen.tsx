@@ -14,13 +14,13 @@ import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserState } from "../../API";
-import fetchUserProfile from "../../calls/fetchUserProfile";
-import updateUserProfile from "../../calls/updateUserProfile";
-import ProfilePicture from "../../components/ProfilePicture";
-import Colors from "../../constants/Colors";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { SignUpParamList, UserProfile } from "../../types";
+import { UserState } from "../../../API";
+import fetchUserProfile from "../../../calls/fetchUserProfile";
+import updateUserProfile from "../../../calls/updateUserProfile";
+import ProfilePicture from "../../../components/ProfilePicture";
+import Colors from "../../../constants/Colors";
+import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import { SignUpParamList, UserProfile } from "../../../types";
 
 const NewProfileScreen = ({
   navigation,

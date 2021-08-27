@@ -94,5 +94,11 @@
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }
+  },
+  "analytics": {
+    "meetable": {
+      "service": "Pinpoint",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

@@ -9,29 +9,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { CourseGroup, CreateCourseGroupConnectionMutation, UserState } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import updateUserProfile from "../../calls/updateUserProfile";
-import editCourseStyles from "../../components/styles/editCourseStyles";
+import editCourseStyles from "./editCourseStyles";
 import Colors from "../../constants/Colors";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import EditCourseBody from "./EditCourseBody";
+import { SimpleCourseGroup } from "../../types";
+import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 
-type SimpleCourseGroup = {
-  title: string;
-  code: string;
-  section: string;
-  groupID: string;
-};
-
-const simplifyCourseGroup = (group: CourseGroup) => {
-  const newGroup: SimpleCourseGroup = {
-    groupID: group.groupID!,
-    title: group.title!,
-    section: group.section!,
-    code: group.code!,
-  };
-  return newGroup;
-};
-
-const simplifyCourseGroups = (groups: CourseGroup[]) => groups.map(simplifyCourseGroup);
 /** TODO: make styling more dynamic */
 // Todo: componentize file
 /** TODO: Cache user courses so we don't need to fetch so often. */
@@ -60,11 +45,6 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
     section,
     title: title.toUpperCase(),
   } as SimpleCourseGroup);
-
-  function isCourseGroup(item: CourseGroup
-    | GraphQLResult<CreateCourseGroupConnectionMutation>): item is CourseGroup {
-    return (item as CourseGroup).groupID !== undefined;
-  }
 
   function addCourse() {
     if (!currTitle || !currCode || !currSection) return;
@@ -153,94 +133,19 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
   ));
 
   return (
-    <SafeAreaView style={editCourseStyles.root}>
-      <Layout style={[editCourseStyles.form, editCourseStyles.noBg]}>
-        <Layout style={editCourseStyles.container2}>
-          <Text style={[editCourseStyles.textStyle, { left: "0%" }]}>Course</Text>
-          <Layout style={editCourseStyles.codeContainer}>
-            <Input
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle]}
-              placeholder="COMM"
-              value={currTitle}
-              onChangeText={(newTitle) => {
-                setTitle(newTitle);
-              }}
-            />
-            <Input
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}
-              placeholder="101"
-              value={currCode}
-              onChangeText={(newCode) => {
-                setCode(newCode.trim());
-              }}
-            />
-            <Input
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}
-              placeholder="Section"
-              value={currSection}
-              onChangeText={(newSection) => {
-                setSection(newSection.trim());
-              }}
-            />
-          </Layout>
-        </Layout>
-      </Layout>
-      <Layout style={[editCourseStyles.noBg,
-        editCourseStyles.form, editCourseStyles.bottomContainer]}
-      >
-        <Button
-          style={[editCourseStyles.button, editCourseStyles.addCoursebutton]}
-          onPress={() => {
-            addCourse();
-          }}
-        >
-          {() => (
-            <Text
-              style={editCourseStyles.buttonText}
-            >
-              Add Course
-            </Text>
-          )}
-        </Button>
-      </Layout>
-
-      <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }]}>
-        <Text style={editCourseStyles.textStyle}>Your Courses</Text>
-        <ScrollView contentContainerStyle={editCourseStyles.selectionsContainer}>
-          {renderCourses(courses)}
-          {renderCourses(newCourses, true)}
-        </ScrollView>
-      </Layout>
-
-      <Layout style={[editCourseStyles.noBg, editCourseStyles.form]}>
-        <Button
-          style={styles.saveButton}
-          onPress={() => {
-            handleSave();
-          }}
-        >
-          {(evaProps: any) => (
-            <Text
-              {...evaProps}
-              style={{ ...evaProps.style, ...editCourseStyles.buttonText }}
-            >
-              {newCourses.length > 0 ? "Save and Continue" : "Continue Later"}
-            </Text>
-          )}
-        </Button>
-      </Layout>
-    </SafeAreaView>
+    <EditCourseBody
+      addCourse={addCourse}
+      setTitle={setTitle}
+      setCode={setCode}
+      newCourses={newCourses}
+      courses={courses}
+      renderCourses={renderCourses}
+      currCode={currCode}
+      currTitle={currTitle}
+      handleSave={handleSave}
+      isNew
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  saveButton: {
-    marginBottom: 30,
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#7ED1EF",
-    height: 50,
-  },
-});
 
 export default NewEditCoursesScreen;
