@@ -5,7 +5,7 @@ import AuthStateContext from "../../../context/AuthStateContext";
 import { AuthState } from "../../../types";
 
 type BottomTextProps = {
-  onPressText: () => void;
+  onPressText?: () => void;
 };
 
 const BottomText = ({ onPressText }:BottomTextProps) => {
@@ -33,7 +33,7 @@ const BottomText = ({ onPressText }:BottomTextProps) => {
       {" "}
       <Text
         style={{ ...styles.buttonText, color: "#02A3F4" }}
-        onPress={() => onPressText()}
+        onPress={onPressText}
       >
         {buttonText}
       </Text>

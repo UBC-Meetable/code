@@ -1,21 +1,25 @@
 import {
-  Button, ButtonProps, Text, TextProps,
+  Button, ButtonProps, Layout, Spinner, Text, TextProps,
 } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
 
 type PrimaryButtonProps = {
   textStyle?: TextProps
+  loading?: boolean
 } & ButtonProps;
 
 const PrimaryButton = (props:PrimaryButtonProps) => {
   const {
-    onPress = () => {}, textStyle, children, style,
+    onPress = () => {}, textStyle, children, style, loading = false,
   } = props;
   return (
     <Button
-      style={[styles.button, style]}
+      style={[styles.button, style,
+        { opacity: loading ? 0.5 : 1 }]}
       onPress={(e) => onPress(e)}
+      accessoryLeft={() => (loading ? <Spinner /> : <Layout />)}
+      disabled={loading}
     >
       { (evaProps: any) => (
         <Text
@@ -35,9 +39,9 @@ const styles = StyleSheet.create({
     width: "90%",
     borderRadius: 20,
     borderWidth: 0,
-    backgroundColor: "#02A3F4",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#02A3F4",
     display: "flex",
   },
   buttonText: {

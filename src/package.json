@@ -52,12 +52,14 @@
     "expo-status-bar": "~1.0.4",
     "expo-web-browser": "~9.2.0",
     "jwt-decode": "^2.2.0",
+    "lighten-darken-color": "^1.0.0",
     "lodash": ">=4.17.21",
     "metro-config": "^0.58.0",
     "pino": "^6.7.0",
     "pino-pretty": "^4.3.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-auth0": "^2.6.0",
     "react-native-deck-swiper": "^2.0.5",
     "react-native-elements": "^3.1.0",
@@ -71,8 +73,7 @@
     "react-native-svg-image": "^2.0.1",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
-    "react-native-web": "~0.13.12",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz"
+    "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@types/react": "~16.9.35",

@@ -52,8 +52,11 @@ import SignUpStackNavigator from "./SignUpStackNavigator";
 
 Amplify.configure({
   ...awsconfig,
+  Analytics: {
+    disabled: true,
+  },
 });
-Analytics.record("Initialization");
+// Analytics.record("Initialization");
 
 const window = Dimensions.get("window");
 
