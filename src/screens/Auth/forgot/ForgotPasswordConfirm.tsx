@@ -1,20 +1,17 @@
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Layout, Text } from "@ui-kitten/components";
+import { Auth } from "aws-amplify";
 import React from "react";
 import {
   Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
 } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import { Auth } from "aws-amplify";
-import Colors from "../../constants/Colors";
-import LoginPageBubbleTop from "../../assets/images/login-page-bubble-top.svg";
-import BottomText from "./BottomText";
-import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
-import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
-import ForgotBubble from "../../assets/images/forgot-bubble.svg";
-import PrimaryButton from "../../components/ui/PrimaryButton";
-import TextField from "../../components/ui/TextField";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ForgotBubble from "../../../assets/images/forgot-bubble.svg";
+import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../../components/ui/PrimaryButton";
+import TextField from "../../../components/ui/TextField";
+import Colors from "../../../constants/Colors";
+import BottomText from "../ui/BottomText";
+import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 

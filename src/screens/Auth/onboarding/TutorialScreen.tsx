@@ -5,12 +5,12 @@ import React, { createRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Carousel from "react-native-snap-carousel";
-import QuizBubbleTop from "../../assets/images/tutorial-bubble.svg";
-import rootStyles from "../../components/styles/rootStyles";
-import End from "../../components/tutorial_slides/End";
-import Intro from "../../components/tutorial_slides/Intro";
-import Middle from "../../components/tutorial_slides/Middle";
-import MeetableCarousel from "../../navigation/MeetableCarousel";
+import QuizBubbleTop from "../../../assets/images/tutorial-bubble.svg";
+import rootStyles from "../../../components/styles/rootStyles";
+import End from "../../../components/tutorial_slides/End";
+import Intro from "../../../components/tutorial_slides/Intro";
+import Middle from "../../../components/tutorial_slides/Middle";
+import MeetableCarousel from "../../../navigation/MeetableCarousel";
 
 const window = Dimensions.get("window");
 

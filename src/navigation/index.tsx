@@ -15,32 +15,23 @@ import {
   StackNavigationProp,
 } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider,
-  Button,
-  Layout,
+  ApplicationProvider as UiProvider, Layout,
 } from "@ui-kitten/components";
-import Amplify from "aws-amplify";
+import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
+import * as Notifications from "expo-notifications";
 import * as React from "react";
 import {
   ColorSchemeName,
-  Dimensions,
-  StyleSheet,
-  useColorScheme,
-  Platform,
+  Dimensions, Platform, useColorScheme,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as Notifications from "expo-notifications";
-import { Constants } from "expo-constants";
-import * as Permissions from "expo-permissions";
-import { ExpoPushToken } from "expo-notifications";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
 import createUserProfile from "../calls/createUserProfile";
 import fetchUserProfile from "../calls/fetchUserProfile";
+import updateUserProfile from "../calls/updateUserCourses";
 import ChatBackButton from "../components/Chat/ChatBackButton";
-import rootStyles from "../components/styles/rootStyles";
 import Colors from "../constants/Colors";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
@@ -48,26 +39,21 @@ import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
 import { UserProfileProvider } from "../context/UserProfileContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import LoginFlowController from "../screens/Auth/LoginFlowController";
-import QuizScreen from "../screens/Auth/QuizScreen";
-import EditCourseScreen from "../screens/EditCourseScreen"; 
+import LoginFlowController from "../screens/Auth/login/LoginFlowController";
+import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
+import EditCourseScreen from "../screens/edit/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
-import NotFoundScreen from "../screens/NotFoundScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
 import BottomTabNavigator from "./BottomTabNavigator";
 import generateOptions from "./generateOptions";
-import { GearIcon } from "./ProfileStackNavigator";
 import SignUpStackNavigator from "./SignUpStackNavigator";
-import updateUserProfile from "../calls/updateUserCourses";
 
 Amplify.configure({
   ...awsconfig,
-  Analytics: {
-    disabled: true,
-  },
 });
+Analytics.record("Initialization");
 
 const window = Dimensions.get("window");
 
@@ -125,21 +111,23 @@ const AuthorizedApp = () => {
     const registerForPushNotificationsAsync = async () => {
       const {
         status: existingStatus,
-      } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      } = await Notifications.requestPermissionsAsync();
 
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
       console.log(finalStatus);
 
       if (finalStatus !== "granted") {
+        Analytics.record({ name: "Push Notifications Failed" });
         console.log("Push notifications not enabled");
         //  TODO error? Prompt?
         // alert("Failed to get push token for push notification!");
         return;
       }
+
       const token = await Notifications.getExpoPushTokenAsync();
       if (Platform.OS === "android") {
         Notifications.setNotificationChannelAsync("default", {
@@ -149,8 +137,8 @@ const AuthorizedApp = () => {
           lightColor: "#FF231F7C",
         });
       }
+      if (token.data) { Analytics.record({ name: "Push Notifications Success" }); }
       if (token.data !== "" && token.data !== fetchedToken) {
-        console.log("registering");
         updateUserProfile({ id: user.attributes.sub, expoPushToken: token.data })
           .then((res) => console.log(res)).catch((err) => console.log(err));
       }
@@ -178,10 +166,10 @@ const AuthorizedApp = () => {
               year: -1,
             })
           ).data?.createUser;
+          Analytics.record({ name: "Create User" });
         }
         if (!userProfile) throw new Error("Error Creating User Profile");
         const { userState: fetchedUserState, expoPushToken } = userProfile;
-        console.log(expoPushToken);
 
         setFetchedToken(() => expoPushToken);
         if (fetchedUserState) {
@@ -309,6 +297,7 @@ const AuthorizedApp = () => {
             {(props) => (
               <QuizScreen
                 onFinish={(q) => {
+                  Analytics.record({ name: "Finish Quiz" });
                   props.navigation.pop();
                   props.route.params.return(q);
                 }}
@@ -320,13 +309,6 @@ const AuthorizedApp = () => {
       </FriendGroupsProvider>
     </CourseGroupsProvider>
     // </UserProvider>
-  );
-};
-
-const LoginFlowControllerWrapper = () => {
-  const g = "h";
-  return (
-    <LoginFlowController />
   );
 };
 

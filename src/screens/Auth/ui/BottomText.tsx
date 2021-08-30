@@ -1,8 +1,8 @@
 import { Text } from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
-import AuthStateContext from "../../context/AuthStateContext";
-import { AuthState } from "../../types";
+import AuthStateContext from "../../../context/AuthStateContext";
+import { AuthState } from "../../../types";
 
 type BottomTextProps = {
   onPressText: () => void;

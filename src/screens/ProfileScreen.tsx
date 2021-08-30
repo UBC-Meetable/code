@@ -20,7 +20,7 @@ import updateUserProfile from "../calls/updateUserProfile";
 import ProfilePicture from "../components/ProfilePicture";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { UserProfile } from "../types";
-import { profileStyles } from "./Auth/NewProfileScreen";
+import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import Colors from "../constants/Colors";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 const ProfileScreen = () => {

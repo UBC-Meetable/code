@@ -8,11 +8,11 @@ import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context"
 import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
 import LoginControllerRoot from "../components/ui/LoginControllerRoot";
 import Colors from "../constants/Colors";
-import BottomText from "./Auth/BottomText";
+import BottomText from "./Auth/ui/BottomText";
 import VerifyBubble from "../assets/images/verify-bubble.svg";
-import KeyboardSwipeLayout from "./Auth/KeyboardSwipeLayout";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import TextField from "../components/ui/TextField";
+import KeyboardSwipeLayout from "./Auth/ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 

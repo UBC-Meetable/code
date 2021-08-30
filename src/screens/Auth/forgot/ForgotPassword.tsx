@@ -3,12 +3,12 @@ import { Auth } from "aws-amplify";
 import React from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import ForgotBubble from "../../assets/images/forgot-bubble.svg";
-import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
-import PrimaryButton from "../../components/ui/PrimaryButton";
-import TextField from "../../components/ui/TextField";
-import Colors from "../../constants/Colors";
-import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
+import ForgotBubble from "../../../assets/images/forgot-bubble.svg";
+import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../../components/ui/PrimaryButton";
+import TextField from "../../../components/ui/TextField";
+import Colors from "../../../constants/Colors";
+import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
