@@ -168,7 +168,7 @@ type Mutation {
 }
 
 input pushNotificationInput {
-  groupID: String # either groupID or userID2 is included, but not both
+  groupID: String # either groupID or userID2 is included, but not both (indicating DM or group)
   userID2: String
   userID: String!
   userName: String!
