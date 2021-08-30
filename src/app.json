@@ -27,7 +27,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/android-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.trevorflanigan.meetable"
     },
     "packagerOpts": {
       "config": "metro.config.js",

@@ -9,10 +9,12 @@ type PrimaryButtonProps = {
 } & ButtonProps;
 
 const PrimaryButton = (props:PrimaryButtonProps) => {
-  const { onPress = () => {}, textStyle, children } = props;
+  const {
+    onPress = () => {}, textStyle, children, style,
+  } = props;
   return (
     <Button
-      style={styles.button}
+      style={[styles.button, style]}
       onPress={(e) => onPress(e)}
     >
       { (evaProps: any) => (

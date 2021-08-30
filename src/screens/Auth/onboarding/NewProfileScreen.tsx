@@ -1,12 +1,10 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useNavigationState } from "@react-navigation/native";
-import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button,
-  Input, Layout, Spinner, Text,
+  Input, Layout, Text,
 } from "@ui-kitten/components";
 import { Storage } from "aws-amplify";
-import * as FileSystem from "expo-file-system";
 import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
@@ -14,13 +12,12 @@ import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { UserState } from "../../API";
-import fetchUserProfile from "../../calls/fetchUserProfile";
-import updateUserProfile from "../../calls/updateUserProfile";
-import ProfilePicture from "../../components/ProfilePicture";
-import Colors from "../../constants/Colors";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { SignUpParamList, UserProfile } from "../../types";
+import { UserState } from "../../../API";
+import updateUserProfile from "../../../calls/updateUserProfile";
+import ProfilePicture from "../../../components/ProfilePicture";
+import Colors from "../../../constants/Colors";
+import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import { SignUpParamList } from "../../../types";
 
 const NewProfileScreen = ({
   navigation,

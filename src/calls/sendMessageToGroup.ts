@@ -22,8 +22,6 @@ const sendMessageToGroup = async ({
   userName,
   hasFile,
 }: SendMessageToCourseGroupInput) => {
-  console.log(groupID, body, userID, groupType, userName, hasFile);
-
   if (!groupID || !body || !userID || !groupType || !userName) {
     console.error("Null Inputs");
     throw new Error("An input to sendMessageToCourseGroup was undefined");
@@ -39,16 +37,10 @@ const sendMessageToGroup = async ({
       } as CreateChatMessageInput,
     },
   });
-  try {
-    console.log({
-      groupID,
-      userID,
-      userName,
-      hasFile,
-      text: body,
-    });
+  console.log("Res done");
 
-    const lambdaRes = await API.graphql({
+  try {
+    const lambdaRes = API.graphql({
       query: pushNotification,
       variables: {
         input: {
@@ -60,7 +52,7 @@ const sendMessageToGroup = async ({
         } as pushNotificationInput,
       },
     }) as Promise<GraphQLResult<pushNotificationOutput>>;
-    console.log(lambdaRes);
+    console.log("LambdaRes done");
   } catch (err) {
     console.error("failed to send push notifications");
     throw err;

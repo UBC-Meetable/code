@@ -2,7 +2,7 @@ import { Layout, Spinner } from "@ui-kitten/components";
 import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Storage } from "aws-amplify";
+import { Analytics, Storage } from "aws-amplify";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
@@ -34,6 +34,7 @@ const ProfilePicture = ({
         return;
       }
       console.log("Got from s3");
+      Analytics.record({ name: "Fetch Picture from S3" });
 
       const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 }) as string;
 

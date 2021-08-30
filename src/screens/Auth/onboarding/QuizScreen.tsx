@@ -7,14 +7,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { CreateQuizInput, QAPair, QAPairInput } from "../../API";
-import BubbleBackground from "../../assets/images/quizBubble.svg";
-import QuizButtons from "../../components/QuizButtons";
-import QuizSwipe from "../../components/QuizSwipe";
-import questions from "../../data/data";
-import sampleData from "../../data/sampleQuiz.json";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import { QuestionType, SwipeActions } from "../../types";
+import QuizButtons from "../../../components/QuizButtons";
+import QuizSwipe from "../../../components/QuizSwipe";
+import { QuestionType, SwipeActions } from "../../../types";
+import sampleData from "../../../data/sampleQuiz.json";
+import BubbleBackground from "../../../assets/images/quizBubble.svg";
+import questions from "../../../data/data";
 
 const window = Dimensions.get("window");
 

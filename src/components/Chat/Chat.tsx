@@ -1,4 +1,5 @@
 import { Layout, Spinner } from "@ui-kitten/components";
+import { Analytics } from "aws-amplify";
 import React, {
   useContext,
   useEffect, useRef, useState,
@@ -19,35 +20,6 @@ import MessageInput from "./MessageInput";
 import OtherMessage from "./OtherMessage";
 import PendingMessage from "./PendingMessage";
 import SelfMessage from "./SelfMessage";
-
-const SendIcon = ({ onPress, name }: {onPress?: Function, name: string}) => (
-  <Layout
-    style={{
-      position: "absolute",
-      right: 30,
-      bottom: 25,
-      alignSelf: "center",
-    }}
-  >
-    <TouchableOpacity
-      onPress={(e) => {
-        if (typeof onPress === "function") {
-          onPress(e);
-        }
-      }}
-    >
-      <Icon
-        name={name}
-        size={25}
-        style={{
-          color: "#FBBA82",
-          backgroundColor: "#0000",
-          marginLeft: -35,
-        }}
-      />
-    </TouchableOpacity>
-  </Layout>
-);
 
 const Chat = ({ groupType }: {groupType: GroupType}) => {
   const [message, setMessage] = useState("");
@@ -85,6 +57,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     });
 
     res.then(() => {
+      Analytics.record({ name: "Send Message" });
       pendingMessages.pop();
       setPendingMessages(() => [...pendingMessages]);
     }).catch((e) => console.warn(e));

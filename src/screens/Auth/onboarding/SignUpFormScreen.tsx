@@ -8,14 +8,13 @@ import {
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SignUpBubble from "../../assets/images/verify-bubble.svg";
-import LoginControllerRoot from "../../components/ui/LoginControllerRoot";
-import PrimaryButton from "../../components/ui/PrimaryButton";
-import TextField from "../../components/ui/TextField";
-import Colors from "../../constants/Colors";
-import TosModal, { PrivacyModal } from "../../navigation/TosModal";
-import BottomText from "./BottomText";
-import KeyboardSwipeLayout from "./KeyboardSwipeLayout";
+import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
+import PrimaryButton from "../../../components/ui/PrimaryButton";
+import TextField from "../../../components/ui/TextField";
+import Colors from "../../../constants/Colors";
+import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
+import SignUpBubble from "../../../assets/images/verify-bubble.svg";
+import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
@@ -108,6 +107,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
             </Layout>
             <TextField
+              style={styles.field}
               placeholder="Email Address"
               value={email}
               ref={emailRef}
@@ -120,6 +120,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               scrollEnabled={false}
             />
             <TextField
+              style={styles.field}
               placeholder="Confirm Email Address"
               value={confirmEmail}
               ref={confirmEmailRef}
@@ -133,6 +134,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
             </Layout>
             <TextField
+              style={styles.field}
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
@@ -142,6 +144,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={passwordRef}
             />
             <TextField
+              style={styles.field}
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
@@ -205,6 +208,9 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  field: {
+    marginVertical: 5,
+  },
   checkbox: {
     color: "#FBBA82",
     marginRight: 20,

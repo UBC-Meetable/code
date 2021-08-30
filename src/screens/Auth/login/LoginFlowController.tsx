@@ -1,15 +1,15 @@
 import * as SecureStore from "expo-secure-store";
 import React, { useState } from "react";
-import AuthStateContext from "../../context/AuthStateContext";
-import { AuthState } from "../../types";
-import ConfirmEmailScreen from "../ConfirmEmailScreen";
-import ForgotPassword from "./ForgotPassword";
-import ForgotPasswordConfirm from "./ForgotPasswordConfirm";
+import AuthStateContext from "../../../context/AuthStateContext";
+import { AuthState } from "../../../types";
+import ConfirmEmailScreen from "../../ConfirmEmailScreen";
+import ForgotPassword from "../forgot/ForgotPassword";
 import LoginFormScreen from "./LoginFormScreen";
 import LoginScreen from "./LoginScreen";
-import SignUpFormScreen from "./SignUpFormScreen";
-import SignupScreen from "./SignupScreen";
-import TutorialScreen from "./TutorialScreen";
+import ForgotPasswordConfirm from "../forgot/ForgotPasswordConfirm";
+import SignupScreen from "../onboarding/SignupScreen";
+import TutorialScreen from "../onboarding/TutorialScreen";
+import SignUpFormScreen from "../onboarding/SignUpFormScreen";
 
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");

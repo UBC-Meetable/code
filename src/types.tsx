@@ -186,3 +186,10 @@ export enum AuthState {
   FORGOT_PASSWORD,
   FORGOT_PASSWORD_CONFIRM
 }
+
+export type SimpleCourseGroup = {
+  title: string;
+  code: string;
+  section: string;
+  groupID: string;
+};

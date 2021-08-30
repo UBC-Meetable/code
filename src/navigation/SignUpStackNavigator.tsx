@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import NewProfileScreen from "../screens/Auth/NewProfileScreen";
-import UniScreen from "../screens/Auth/UniScreen";
-import NewEditCourseScreen from "../screens/Auth/NewEditCoursesScreen";
+import NewProfileScreen from "../screens/Auth/onboarding/NewProfileScreen";
+import UniScreen from "../screens/Auth/onboarding/UniScreen";
+import NewEditCourseScreen from "../screens/edit/NewEditCoursesScreen";
 import { SignUpParamList } from "../types";
 
 const SignUpStack = createStackNavigator<SignUpParamList>();
