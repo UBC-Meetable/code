@@ -63,15 +63,15 @@ type Report
 
 type DirectChat
   @model
-  @key(name: "byUsers", fields: ["userID1, userID2"])
+  @key(name: "byUsers", fields: ["userID1", "userID2"], queryField: "chatByUsers")
   @auth(rules: [{ allow: owner, operations: [create, update, delete, read]}])
   {
-    id: ID!
+    id: String!
     userID1: String!
     userID2: String!
     user1: User @connection(fields: ["userID1"])
     user2: User @connection(fields: ["userID2"])
-    messages: [ChatMessage!]! @connection(keyName: "byID", fields: ["id"])
+    messages: [ChatMessage!]! @connection(keyName: "byDirectChatID", fields: ["id"])
   }
  
 # [CONNECTIONS]
@@ -80,14 +80,16 @@ type DirectChat
 type ChatMessage
   @model
   @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
+  @key(name: "byDirectChatID", fields: ["directChatID", "createdAt"], queryField: "messagesByDirectChatID")
   @auth(rules: [{allow: owner, operations: [create]}]) {
-    groupChatID: String!
+    groupChatID: String # removing ! to allow ChatMessages in DMs
+    directChatID: String
     userID: String!
     author: User! @connection(fields: ["userID"])
     body: String!
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
-    groupType: GroupType!
+    groupType: GroupType # removing ! to allow ChatMessages in DMs, could be a bad soln though
   }
 
 enum GroupType {
