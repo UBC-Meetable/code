@@ -49,6 +49,7 @@ import Blank from "./Blank";
 import BottomTabNavigator from "./BottomTabNavigator";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
+import theme from "../constants/theme.json";
 
 Amplify.configure({
   ...awsconfig,
@@ -68,7 +69,7 @@ export default function Navigation({
   const dark = useColorScheme() === "dark";
   return (
     <>
-      <UiProvider {...eva} theme={dark ? eva.light : eva.light}>
+      <UiProvider {...eva} theme={{ ...eva.light, ...theme }}>
         <NavigationContainer
           theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
         >

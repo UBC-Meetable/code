@@ -1,10 +1,14 @@
 import React, { ReactNode } from "react";
-import { Text, Layout, Input } from "@ui-kitten/components";
+import {
+  Text, Layout, Input, ApplicationProvider,
+} from "@ui-kitten/components";
 import { SafeAreaView, ScrollView } from "react-native";
+import * as eva from "@eva-design/eva";
 import editCourseStyles from "./editCourseStyles";
 import TextField from "../../components/ui/TextField";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { SimpleCourseGroup } from "../../types";
+import customOrangeTheme from "./customOrangeTheme.json";
 
 type EditCourseBodyProps = {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
@@ -57,8 +61,9 @@ const EditCourseBody = ({
         </Layout>
       </Layout>
 
-      <PrimaryButton onPress={addCourse} style={{ backgroundColor: "#FBBA82" }}>Add Course</PrimaryButton>
-
+      <ApplicationProvider {...eva} theme={{ ...eva.light, ...customOrangeTheme }}>
+        <PrimaryButton onPress={addCourse}>Add Course</PrimaryButton>
+      </ApplicationProvider>
       <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }]}>
         <Text style={editCourseStyles.textStyle}>Your Courses</Text>
         <ScrollView contentContainerStyle={editCourseStyles.selectionsContainer}>
@@ -67,7 +72,7 @@ const EditCourseBody = ({
         </ScrollView>
       </Layout>
       {isNew
-        ? <PrimaryButton>{newCourses.length > 0 ? "Save and Continue" : "Continue Later"}</PrimaryButton>
+        ? <PrimaryButton onPress={handleSave}>{newCourses.length > 0 ? "Save and Continue" : "Continue Later"}</PrimaryButton>
         : <PrimaryButton onPress={handleSave}>Save Changes</PrimaryButton>}
     </SafeAreaView>
   );
