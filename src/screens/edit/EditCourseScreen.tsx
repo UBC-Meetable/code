@@ -122,9 +122,6 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     </Layout>
   ));
 
-  const titleRef = useRef<Input>(null);
-  const codeRef = useRef<Input>(null);
-
   return (
     <EditCourseBody
       addCourse={addCourse}

@@ -53,11 +53,11 @@ import theme from "../constants/theme.json";
 
 Amplify.configure({
   ...awsconfig,
-  Analytics: {
-    disabled: true,
-  },
+  // Analytics: {
+  //   disabled: true,
+  // },
 });
-// Analytics.record("Initialization");
+Analytics.record("Initialization");
 
 const window = Dimensions.get("window");
 

@@ -28,7 +28,8 @@
         "foregroundImage": "./assets/images/android-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.trevorflanigan.meetable"
+      "package": "com.trevorflanigan.meetable",
+      "versionCode": 2
     },
     "packagerOpts": {
       "config": "metro.config.js",
