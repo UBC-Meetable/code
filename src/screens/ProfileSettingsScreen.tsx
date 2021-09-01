@@ -23,6 +23,7 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
       <Layout style={stylesTwo.container} />
       <ScrollView contentContainerStyle={styles.selectionsContainer} />
       <PrimaryButton
+        status="info"
         onPress={handleLogout}
       >
         Log Out

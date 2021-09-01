@@ -3,7 +3,7 @@
     "name": "Meetable",
     "slug": "meetable-app",
     "description": "Meetable Mobile Application",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "orientation": "portrait",
     "icon": "./assets/images/apple-icon.png",
     "scheme": "meetable",
@@ -28,7 +28,8 @@
         "foregroundImage": "./assets/images/android-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.trevorflanigan.meetable"
+      "package": "com.trevorflanigan.meetable",
+      "versionCode": 3
     },
     "packagerOpts": {
       "config": "metro.config.js",

@@ -8,7 +8,7 @@ const PendingMessage = ({ message }:{message: ChatMessageWithPending}) => (
   <Layout style={[styles.messageContainer, selfStyles.messageContainer]}>
     <Layout style={[styles.bubble, selfStyles.bubble]}>
       <Text style={[styles.message, selfStyles.message]}>{message.body}</Text>
-      <Spinner />
+      <Spinner status="info" />
     </Layout>
   </Layout>
 );

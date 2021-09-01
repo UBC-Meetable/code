@@ -1,15 +1,12 @@
 /* eslint-disable camelcase */
-import {
-  Button, Card, Layout, Modal, Text,
-} from "@ui-kitten/components";
+import { Layout, Modal, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { Avatar } from "react-native-paper";
+import { UserProvider } from "../../context/UserContext";
 import { ChatMessage, ProfilePictureSize } from "../../types";
+import InspectProfile from "../profile/InspectProfile";
 import ProfilePicture from "../ProfilePicture";
 import styles from "../styles/MessageStyles";
-import InspectProfile from "../profile/InspectProfile";
-import { UserProvider } from "../../context/UserContext";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
   const [visible, setVisible] = React.useState(false);

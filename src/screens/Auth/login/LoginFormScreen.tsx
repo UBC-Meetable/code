@@ -130,7 +130,14 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
             justifyContent: "flex-end",
           }}
           >
-            <PrimaryButton onPress={() => login()} loading={loading}>Sign In</PrimaryButton>
+            <PrimaryButton
+              status="info"
+              onPress={() => login()}
+              loading={loading}
+            >
+              Sign In
+
+            </PrimaryButton>
             <Text style={[styles.bold]}>
               I'm new!
               Where can I

@@ -36,7 +36,10 @@ const LandingScreen = ({
         height={window.height}
       />
       <Layout style={styles.bottomcontainer}>
-        <PrimaryButton onPress={onSignUp}>
+        <PrimaryButton
+          status="info"
+          onPress={onSignUp}
+        >
           Sign Up
         </PrimaryButton>
         <BottomText onPressText={onLogIn} />

@@ -117,7 +117,7 @@ const SignUpFormScreen = ({
           justifyContent: "flex-end",
         }}
         >
-          <PrimaryButton onPress={createProfile}>
+          <PrimaryButton status="info" onPress={createProfile}>
             Create Profile
           </PrimaryButton>
           <BottomText onPressText={onBack} />
