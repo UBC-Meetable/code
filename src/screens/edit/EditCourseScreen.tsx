@@ -2,17 +2,13 @@ import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
-import editCourseStyles from "./editCourseStyles";
-import PrimaryButton from "../../components/ui/PrimaryButton";
-import TextField from "../../components/ui/TextField";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
-import EditCourseBody from "./EditCourseBody";
 import { SimpleCourseGroup } from "../../types";
+import EditCourseBody from "./EditCourseBody";
+import editCourseStyles from "./editCourseStyles";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 
 /** TODO: make styling more dynamic */

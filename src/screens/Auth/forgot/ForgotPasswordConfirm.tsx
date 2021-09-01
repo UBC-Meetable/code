@@ -93,7 +93,10 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
           marginBottom: Platform.OS === "ios" ? 0 : 20,
         }}
         >
-          <PrimaryButton onPress={() => submit()}>
+          <PrimaryButton
+            status="info"
+            onPress={() => submit()}
+          >
             Change Password
           </PrimaryButton>
           <BottomText onPressText={onBack} />

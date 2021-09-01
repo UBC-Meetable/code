@@ -187,6 +187,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               </Text>
             </Layout>
             <PrimaryButton
+              status="info"
               loading={loading}
               disabled={!acceptedTerms}
               onPress={createProfile}

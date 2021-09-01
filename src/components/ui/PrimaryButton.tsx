@@ -15,9 +15,10 @@ const PrimaryButton = (props:PrimaryButtonProps) => {
   } = props;
   return (
     <Button
+      {...props}
       style={[styles.button, style]}
       onPress={(e) => onPress(e)}
-      accessoryLeft={() => (loading ? <Spinner /> : <Layout />)}
+      accessoryLeft={() => (loading ? <Spinner status={props.status} /> : <Layout />)}
       disabled={loading}
     >
       { (evaProps: any) => (

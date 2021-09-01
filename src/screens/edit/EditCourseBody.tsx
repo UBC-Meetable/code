@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import {
   Text, Layout, Input, ApplicationProvider,
 } from "@ui-kitten/components";
@@ -15,7 +15,7 @@ type EditCourseBodyProps = {
   setCode: React.Dispatch<React.SetStateAction<string>>;
   addCourse: () => void;
   renderCourses: (courses: SimpleCourseGroup[], isNew?: boolean,) => ReactNode;
-  handleSave: () => void;
+  handleSave: () => Promise<void>;
   currCode: string;
   currTitle: string;
   newCourses: SimpleCourseGroup[];
@@ -29,6 +29,7 @@ const EditCourseBody = ({
 }:EditCourseBodyProps) => {
   const titleRef = React.useRef<Input>(null);
   const codeRef = React.useRef<Input>(null);
+  const [loading, setLoading] = useState(false);
   return (
     <SafeAreaView style={editCourseStyles.root}>
       <Layout style={[editCourseStyles.form, editCourseStyles.noBg]}>
@@ -61,9 +62,7 @@ const EditCourseBody = ({
         </Layout>
       </Layout>
 
-      <ApplicationProvider {...eva} theme={{ ...eva.light, ...customOrangeTheme }}>
-        <PrimaryButton onPress={addCourse}>Add Course</PrimaryButton>
-      </ApplicationProvider>
+      <PrimaryButton onPress={addCourse} status="primary">Add Course</PrimaryButton>
       <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }]}>
         <Text style={editCourseStyles.textStyle}>Your Courses</Text>
         <ScrollView contentContainerStyle={editCourseStyles.selectionsContainer}>
@@ -72,8 +71,27 @@ const EditCourseBody = ({
         </ScrollView>
       </Layout>
       {isNew
-        ? <PrimaryButton onPress={handleSave}>{newCourses.length > 0 ? "Save and Continue" : "Continue Later"}</PrimaryButton>
-        : <PrimaryButton onPress={handleSave}>Save Changes</PrimaryButton>}
+        ? (
+          <PrimaryButton
+            loading={loading}
+            status="info"
+            onPress={handleSave}
+          >
+            {newCourses.length > 0 ? "Save and Continue" : "Continue Later"}
+          </PrimaryButton>
+        )
+        : (
+          <PrimaryButton
+            status="info"
+            loading={loading}
+            onPress={() => {
+              setLoading(() => true);
+              handleSave().then(() => setLoading(() => false));
+            }}
+          >
+            Save Changes
+          </PrimaryButton>
+        )}
     </SafeAreaView>
   );
 };

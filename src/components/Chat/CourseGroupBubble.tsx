@@ -57,16 +57,16 @@ const CourseGroupBubble = ({
             {courseGroup.code}
           </Text>
         </Layout>
-        <Layout style={groupBubbleStyles.sectionContainer}>
+        {/* <Layout style={groupBubbleStyles.sectionContainer}>
           <Chip
             style={groupBubbleStyles.sectionBubble}
             textStyle={groupBubbleStyles.sectionBubbleText}
           >
-            Section
+            Users
             {" "}
-            {courseGroup.section}
+            {courseGroup.users?.items?.length || 1}
           </Chip>
-        </Layout>
+        </Layout> */}
       </Layout>
 
       <Layout style={groupBubbleStyles.bottomContainer}>
