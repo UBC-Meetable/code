@@ -286,9 +286,9 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
   },
   bioInput: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 21,
     position: "relative",
-    marginTop: 10,
+    marginTop: 20,
     fontSize: 16,
     fontWeight: "600",
     textAlignVertical: "top",
