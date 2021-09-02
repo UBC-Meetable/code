@@ -27,7 +27,7 @@ function MyTabBar({ state, descriptors, navigation }: any) {
           height: 50,
           width: "80%",
           borderRadius: 9999,
-          marginBottom: 20,
+          marginBottom: 30,
           backgroundColor: "#FBBA82",
         }}
       >
