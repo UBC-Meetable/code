@@ -1,5 +1,10 @@
 {
-  "key1": "value1",
-  "key2": "value2",
-  "key3": "value3"
+  "arguments": {
+  "groupID": "elec300",
+  "text": "yo",
+  "userID": "29bf1e6d-4186-46a7-9b58-636d2bfc33d7",
+  "groupType": "COURSE",
+  "userName": "Trevor",
+  "hasFile": false
+  }
 }

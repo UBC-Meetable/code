@@ -22,11 +22,11 @@
         },
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-424b633233766e734434-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-575976574e566d54336e-build.zip"
         },
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
-          "s3Key": "amplify-builds/pushNotification-336453454d4e4d634159-build.zip"
+          "s3Key": "amplify-builds/pushNotification-51516b534c5450563071-build.zip"
         }
       }
     }

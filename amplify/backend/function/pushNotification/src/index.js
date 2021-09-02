@@ -27,19 +27,20 @@ const tables = {
 };
 
 exports.handler = async (event) => {
-  const groupID = event.arguments.groupID;
-  const userID = event.arguments.userID;
-  const userName = event.arguments.userName;
-  const hasFile = event.arguments.hasFile;
-  const text = event.arguments.text;
-  const groupType = event.arguments.groupType;
+  console.log(event);
+  const groupID = event.arguments.input.groupID;
+  const userID = event.arguments.input.userID;
+  const userName = event.arguments.input.userName;
+  const hasFile = event.arguments.input.hasFile;
+  const text = event.arguments.input.text;
+  const groupType = event.arguments.input.groupType;
   // Create a new Expo SDK client
   // optionally providing an access token if you have enabled push security
   let expo = new Expo();
 
   try {
     // find push tokens
-    const groupQueryParams;
+    let groupQueryParams;
     if (groupType === "FRIEND") {
       groupQueryParams = {
         TableName: tables.friendGroupConnection,
@@ -50,7 +51,7 @@ exports.handler = async (event) => {
         }
       }
     } else {
-      groupQueryParams = groupQueryParams = {
+      groupQueryParams = {
         TableName: tables.courseGroupConnection,
         IndexName: "byCourseGroup",
         KeyConditionExpression: "groupID = :groupID",
@@ -80,7 +81,8 @@ exports.handler = async (event) => {
         );
       }
     }));
-    pushTokens.filter(item => item); // filter out undefined
+    pushTokens = pushTokens.filter(Boolean); // filter out undefined
+    console.log(pushTokens);
     // Create the messages that you want to send to clients
     let messages = [];
     for (let pushToken of pushTokens) {
@@ -98,7 +100,7 @@ exports.handler = async (event) => {
         body += `${userName} sent a file\n`;
       }
       if (text) {
-        body += `${userName}: ${msg.text}`;
+        body += `${userName}: ${text}`;
       }
       messages.push({
         to: pushToken,
