@@ -4,24 +4,21 @@ import {
   Input, Layout, Spinner, Text,
 } from "@ui-kitten/components";
 import { Storage } from "aws-amplify";
+import * as FileSystem from "expo-file-system";
 import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
-import {
-  Image, KeyboardAvoidingView, StyleSheet, TextInput,
-} from "react-native";
+import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
 // import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
-import * as FileSystem from "expo-file-system";
-import noAvatar from "../assets/images/noavatar.png";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
 import ProfilePicture from "../components/ProfilePicture";
+import Colors from "../constants/Colors";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { UserProfile } from "../types";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
-import Colors from "../constants/Colors";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();

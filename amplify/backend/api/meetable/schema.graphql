@@ -72,10 +72,24 @@ type ChatMessage
     userID: String!
     author: User! @connection(fields: ["userID"])
     body: String!
+    files: [FileAttachment!]
     createdAt: AWSDateTime
     updatedAt: AWSDateTime
     groupType: GroupType!
   }
+
+type FileAttachment {
+  id: ID!
+  fileURI: String!
+  width: Int!
+  height: Int!
+  type: FileType
+}
+
+enum FileType {
+  image
+  video
+}
 
 enum GroupType {
   COURSE

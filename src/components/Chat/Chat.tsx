@@ -1,5 +1,7 @@
-import { Layout, Spinner } from "@ui-kitten/components";
-import { Analytics } from "aws-amplify";
+import { Spinner } from "@ui-kitten/components";
+import { Analytics, Storage } from "aws-amplify";
+import * as ImagePicker from "expo-image-picker";
+import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import React, {
   useContext,
   useEffect, useRef, useState,
@@ -7,9 +9,8 @@ import React, {
 import {
   KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { FileAttachment, FileType } from "../../API";
 import sendMessageToGroup from "../../calls/sendMessageToGroup";
 import Colors from "../../constants/Colors";
 import MessagesContext from "../../context/MessageContext";
@@ -29,20 +30,25 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
   const [pendingMessages, setPendingMessages] = useState<ChatMessageWithPending[]>([]);
   const [textLoading, setTextLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [previewURI, setPreviewURI] = useState<string | null>(null);
   const {
     groupID, messages, loading, getMessages, reachedEnd,
   } = useContext(MessagesContext);
+  const [files, setFiles] = useState<FileAttachment[]>([]);
 
   const safeArea = useSafeAreaInsets();
 
   const sendMessage = () => {
     if (!message) return;
     setTextLoading(true);
+    const fileURIs = files.map((file) => file.fileURI);
+
     const newMessage: ChatMessageWithPending = {
       __typename: "ChatMessage",
       body: message,
       groupChatID: groupID,
       pending: true,
+      files,
     };
     pendingMessages.push(newMessage);
     setPendingMessages(() => [...pendingMessages]);
@@ -53,7 +59,8 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
       userID: user.attributes.sub,
       groupType,
       userName: userProfile.info!.user!.firstName!,
-      hasFile: false, // TODO: change
+      hasFile: !!files?.length,
+      files,
     });
 
     res.then(() => {
@@ -64,6 +71,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     setTextLoading(false);
 
     setMessage("");
+    setFiles([]);
   };
 
   useEffect(() => {
@@ -73,6 +81,51 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
   if (!user || !loaded) {
     return <Spinner />;
   }
+
+  const pickImage = async () => {
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [1, 1],
+      quality: 0.5,
+    });
+
+    if (!result.cancelled) {
+      const newFile: FileAttachment = {
+        __typename: "FileAttachment",
+        fileURI: result.uri,
+        width: result.width,
+        height: result.height,
+        type: result.type as FileType,
+      };
+      setFiles(() => [...files, newFile]);
+    }
+  };
+
+  const uploadImage = (toUpload: ImageInfo) => {
+    const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
+    const imageKey = `${user.attributes.sub}/${imageName}`;
+    fetch(toUpload.uri).then((response) => {
+      response.blob()
+        .then((blob) => {
+          const access = { level: "public", contentType: toUpload.type };
+          Storage.put(imageKey, blob, access)
+            .then(() => {
+              Storage.get(imageKey, { download: false, expires: 604800 }).then((success) => {
+              });
+            })
+            .catch((err) => {
+            });
+        });
+    });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -116,6 +169,9 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
         {pendingMessages.map((m, index) => (<PendingMessage message={m} key={index} />))}
       </ScrollView>
       <MessageInput
+        setFiles={setFiles}
+        files={files}
+        onPressPhoto={pickImage}
         onFocus={() => setTimeout(() => {
           scrollRef.current?.scrollToEnd({ animated: true });
         }, 100)}
@@ -149,7 +205,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000",
   },
   safeArea: {
-    borderWidth: 1,
     flex: 1,
   },
   messageContainer: {

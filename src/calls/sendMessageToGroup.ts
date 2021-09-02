@@ -1,7 +1,7 @@
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import {
-  CreateChatMessageInput, GroupType, pushNotificationInput, pushNotificationOutput,
+  CreateChatMessageInput, FileAttachment, GroupType, pushNotificationInput, pushNotificationOutput,
 } from "../API";
 import { createChatMessage, pushNotification } from "../graphql/mutations";
 
@@ -12,6 +12,7 @@ type SendMessageToCourseGroupInput = {
   groupType: GroupType;
   userName: string;
   hasFile: boolean;
+  files?: FileAttachment[];
 };
 
 const sendMessageToGroup = async ({
@@ -21,6 +22,7 @@ const sendMessageToGroup = async ({
   groupType,
   userName,
   hasFile,
+  files,
 }: SendMessageToCourseGroupInput) => {
   if (!groupID || !body || !userID || !groupType || !userName) {
     console.error("Null Inputs");
@@ -34,6 +36,7 @@ const sendMessageToGroup = async ({
         groupType,
         userID,
         body,
+        files,
       } as CreateChatMessageInput,
     },
   });

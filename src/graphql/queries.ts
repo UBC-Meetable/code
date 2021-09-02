@@ -602,6 +602,13 @@ export const getCourseGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            id
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -717,6 +724,13 @@ export const listCourseGroups = /* GraphQL */ `
               owner
             }
             body
+            files {
+              id
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -881,6 +895,13 @@ export const getFriendGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            id
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -992,6 +1013,13 @@ export const listFriendGroups = /* GraphQL */ `
               owner
             }
             body
+            files {
+              id
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -1132,6 +1160,13 @@ export const getReport = /* GraphQL */ `
           owner
         }
         body
+        files {
+          id
+          fileURI
+          width
+          height
+          type
+        }
         createdAt
         updatedAt
         groupType
@@ -1519,6 +1554,13 @@ export const listReports = /* GraphQL */ `
             owner
           }
           body
+          files {
+            id
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1930,6 +1972,13 @@ export const getChatMessage = /* GraphQL */ `
         owner
       }
       body
+      files {
+        id
+        fileURI
+        width
+        height
+        type
+      }
       createdAt
       updatedAt
       groupType
@@ -2065,6 +2114,13 @@ export const listChatMessages = /* GraphQL */ `
           owner
         }
         body
+        files {
+          id
+          fileURI
+          width
+          height
+          type
+        }
         createdAt
         updatedAt
         groupType
@@ -2167,6 +2223,13 @@ export const getCourseGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              id
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -2417,6 +2480,13 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 owner
               }
               body
+              files {
+                id
+                fileURI
+                width
+                height
+                type
+              }
               createdAt
               updatedAt
               groupType
@@ -2641,6 +2711,13 @@ export const getFriendGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              id
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -2887,6 +2964,13 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 owner
               }
               body
+              files {
+                id
+                fileURI
+                width
+                height
+                type
+              }
               createdAt
               updatedAt
               groupType
@@ -3644,6 +3728,13 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
           owner
         }
         body
+        files {
+          id
+          fileURI
+          width
+          height
+          type
+        }
         createdAt
         updatedAt
         groupType
@@ -3737,6 +3828,13 @@ export const courseGroupByUser = /* GraphQL */ `
                 owner
               }
               body
+              files {
+                id
+                fileURI
+                width
+                height
+                type
+              }
               createdAt
               updatedAt
               groupType
@@ -3952,6 +4050,13 @@ export const friendGroupByUser = /* GraphQL */ `
                 owner
               }
               body
+              files {
+                id
+                fileURI
+                width
+                height
+                type
+              }
               createdAt
               updatedAt
               groupType
