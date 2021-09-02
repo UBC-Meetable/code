@@ -5,11 +5,11 @@ import { AuthState } from "../../../types";
 import ConfirmEmailScreen from "../../ConfirmEmailScreen";
 import ForgotPassword from "../forgot/ForgotPassword";
 import LoginFormScreen from "./LoginFormScreen";
-import LoginScreen from "./LoginScreen";
 import ForgotPasswordConfirm from "../forgot/ForgotPasswordConfirm";
 import SignupScreen from "../onboarding/SignupScreen";
 import TutorialScreen from "../onboarding/TutorialScreen";
 import SignUpFormScreen from "../onboarding/SignUpFormScreen";
+import LandingScreen from "./LandingScreen";
 
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +34,7 @@ const LoginFlowController = () => {
     switch (authState) {
     case AuthState.LANDING_SCREEN:
       return (
-        <LoginScreen
+        <LandingScreen
           onLogIn={() => {
             setAuthState(AuthState.LOGIN);
           }}
@@ -101,7 +101,7 @@ const LoginFlowController = () => {
       );
     default:
       return (
-        <LoginScreen
+        <LandingScreen
           onLogIn={() => {
             setAuthState(AuthState.LOGIN);
           }}

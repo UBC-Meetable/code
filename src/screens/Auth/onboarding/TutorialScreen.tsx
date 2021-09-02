@@ -17,7 +17,7 @@ const window = Dimensions.get("window");
 const Cards = [Intro, Middle, End];
 
 type TutorialProps = {
-  onContinue: () => void;
+  onContinue?: () => void;
 }
 
 const TutorialScreen = ({ onContinue }: TutorialProps) => {
@@ -53,7 +53,7 @@ const TutorialScreen = ({ onContinue }: TutorialProps) => {
           style={styles.button}
           onPress={() => {
             if (activeSlide === Cards.length - 1) {
-              onContinue();
+              if (onContinue) onContinue();
             } else {
               carouselRef.current?.snapToNext();
             }

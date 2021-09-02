@@ -27,6 +27,7 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
   const passwordRef = useRef<Input>(null);
   const { setUser } = useContext(UserContext);
   const units = useSafeAreaInsets();
+  const [loading, setLoading] = useState(false);
   const confirmForm = () => {
     setError(() => []);
     let flag = true;
@@ -45,6 +46,7 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
 
     if (!confirmForm()) return;
     try {
+      setLoading(true);
       const user = await Auth.signIn({
         username: email,
         password,
@@ -58,6 +60,8 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
 
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,7 +130,14 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
             justifyContent: "flex-end",
           }}
           >
-            <PrimaryButton onPress={() => login()}>Sign In</PrimaryButton>
+            <PrimaryButton
+              status="info"
+              onPress={() => login()}
+              loading={loading}
+            >
+              Sign In
+
+            </PrimaryButton>
             <Text style={[styles.bold]}>
               I'm new!
               Where can I

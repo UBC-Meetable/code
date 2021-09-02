@@ -38,6 +38,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [tosModal, setTosModal] = useState(false);
   const [privacyModal, setPrivacyModal] = useState(false);
   const units = useSafeAreaInsets();
+  const [loading, setLoading] = useState(false);
 
   const confirmForm = () => {
     setError(() => []);
@@ -66,6 +67,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
     if (!confirmForm()) return;
     try {
+      setLoading(true);
       const user = await Auth.signUp({
         username: email,
         password,
@@ -74,6 +76,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
     } catch (e) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -183,6 +187,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               </Text>
             </Layout>
             <PrimaryButton
+              status="info"
+              loading={loading}
               disabled={!acceptedTerms}
               onPress={createProfile}
             >

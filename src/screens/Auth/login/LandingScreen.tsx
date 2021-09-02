@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import {
   Button, Layout, Modal, Text,
 } from "@ui-kitten/components";
@@ -12,11 +13,11 @@ import BottomText from "../ui/BottomText";
 const window = Dimensions.get("window");
 
 type LoginScreenProps = {
-    onSignUp: () => void,
-    onLogIn: () => void,
+    onSignUp?: () => void,
+    onLogIn?: () => void,
 }
 
-const LoginScreen = ({
+const LandingScreen = ({
   onSignUp, onLogIn,
 }:LoginScreenProps) => {
   const units = useSafeAreaInsets();
@@ -35,7 +36,10 @@ const LoginScreen = ({
         height={window.height}
       />
       <Layout style={styles.bottomcontainer}>
-        <PrimaryButton onPress={onSignUp}>
+        <PrimaryButton
+          status="info"
+          onPress={onSignUp}
+        >
           Sign Up
         </PrimaryButton>
         <BottomText onPressText={onLogIn} />
@@ -138,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+export default LandingScreen;

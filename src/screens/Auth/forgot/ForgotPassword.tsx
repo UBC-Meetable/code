@@ -74,7 +74,10 @@ const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
           justifyContent: "flex-end",
         }}
         >
-          <PrimaryButton onPress={() => submit()}>
+          <PrimaryButton
+            status="info"
+            onPress={() => submit()}
+          >
             Send Confirmation Email
           </PrimaryButton>
 
