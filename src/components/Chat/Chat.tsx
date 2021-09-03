@@ -106,7 +106,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: false,
       aspect: [1, 1],
       quality: 0.5,

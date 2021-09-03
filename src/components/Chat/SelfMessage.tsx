@@ -6,12 +6,18 @@ import { ChatMessage, ChatMessageWithPending } from "../../types";
 import styles from "../styles/MessageStyles";
 import CachedImage from "./CachedImage";
 
+type PreviewURI = {
+  uri: string;
+  index: number;
+}
 const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
   const [visible, setVisible] = React.useState(false);
-  const [cachedUris, setCachedUris] = useState<string[]>([]);
-  const handleLoad = (uri: string) => {
-    if (cachedUris.includes(uri)) return;
-    setCachedUris((old) => [...old, uri]);
+  const [index, setIndex] = useState(0);
+  const [cachedUris, setCachedUris] = useState<Map<number, string>>(new Map<number, string>());
+  const handleLoad = (uri: string, i: number) => {
+    const oldMap = cachedUris;
+    oldMap.set(i, uri);
+    setCachedUris(() => oldMap);
   };
   return (
     <Layout style={[styles.messageContainer, selfStyles.messageContainer,
@@ -19,20 +25,20 @@ const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
     >
       <Layout style={[styles.bubble, selfStyles.bubble]}>
         <Layout style={[{ flexDirection: "row", backgroundColor: "#0000", justifyContent: "flex-start" }]}>
-          { message.files?.map((file, index) => (
-            <TouchableOpacity onPress={() => setVisible(true)} key={index}>
+          { message.files?.map((file, i) => (
+            <TouchableOpacity onPress={() => { setVisible(true); setIndex(i); }} key={i}>
               <CachedImage
                 load
                 file={file}
-                onLoad={handleLoad}
+                onLoad={(uri: string) => handleLoad(uri, i)}
               />
             </TouchableOpacity>
           )) }
         </Layout>
         {!!message.files?.length && (
           <ImageView
-            images={cachedUris.map((uri) => ({ uri }))}
-            imageIndex={0}
+            images={Array.from(cachedUris!.values()).map((item) => ({ uri: item }))}
+            imageIndex={index}
             visible={visible}
             onRequestClose={() => setVisible(false)}
           />
