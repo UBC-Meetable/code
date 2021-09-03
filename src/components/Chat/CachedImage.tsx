@@ -3,23 +3,25 @@ import * as FileSystem from "expo-file-system";
 import { Analytics, Storage } from "aws-amplify";
 import { Spinner } from "@ui-kitten/components";
 import { Image } from "react-native";
+import ExpoFastImage from "expo-fast-image";
 import { FileAttachment } from "../../API";
 
 type CachedImageProps = {
   file: FileAttachment
   onLoad?: (uri: string) => void;
+  load: boolean
 };
 
-const CachedImage = ({ file, onLoad }:CachedImageProps) => {
-  const [uri, setUri] = useState(file.fileURI);
+const CachedImage = ({ file, onLoad, load }:CachedImageProps) => {
+  const [uri, setUri] = useState("");
   const [imageLoading, setImageLoading] = useState(true);
+  const safePathName = file.fileURI!.replace(/^.*[\\/]/, "");
   useEffect(() => {
     if (!file.fileURI) {
       return;
     }
 
     const checkCache = async () => {
-      const safePathName = file.fileURI!.replace(/^.*[\\/]/, "");
       const path = `${FileSystem.cacheDirectory}${safePathName}`;
 
       setImageLoading(true);
@@ -47,14 +49,15 @@ const CachedImage = ({ file, onLoad }:CachedImageProps) => {
       setImageLoading(false);
     };
 
-    if (file.fileURI) checkCache();
-  }, [file.fileURI]);
+    if (file.fileURI && load && !uri) checkCache();
+  }, [file.fileURI, load]);
 
   if (imageLoading) return <Spinner />;
 
   return (
-    <Image
-      source={{ uri }}
+    <ExpoFastImage
+      uri={uri}
+      cacheKey={safePathName}
       style={{
         height: 100, width: 100, borderRadius: 5, marginHorizontal: 5,
       }}

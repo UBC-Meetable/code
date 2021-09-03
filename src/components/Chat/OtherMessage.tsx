@@ -56,6 +56,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
               { message.files?.map((file, index) => (
                 <TouchableOpacity onPress={() => setVisible(true)} key={index}>
                   <CachedImage
+                    load
                     file={file}
                     onLoad={handleLoad}
                   />
