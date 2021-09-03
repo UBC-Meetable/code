@@ -49,6 +49,7 @@ export const getUser = /* GraphQL */ `
               items {
                 id
                 groupChatID
+                directChatID
                 userID
                 body
                 createdAt
@@ -139,6 +140,7 @@ export const getUser = /* GraphQL */ `
               items {
                 id
                 groupChatID
+                directChatID
                 userID
                 body
                 createdAt
@@ -477,6 +479,7 @@ export const getCourseGroup = /* GraphQL */ `
               items {
                 id
                 groupChatID
+                directChatID
                 userID
                 body
                 createdAt
@@ -552,6 +555,7 @@ export const getCourseGroup = /* GraphQL */ `
         items {
           id
           groupChatID
+          directChatID
           userID
           author {
             id
@@ -690,6 +694,7 @@ export const listCourseGroups = /* GraphQL */ `
           items {
             id
             groupChatID
+            directChatID
             userID
             author {
               id
@@ -758,6 +763,7 @@ export const getFriendGroup = /* GraphQL */ `
               items {
                 id
                 groupChatID
+                directChatID
                 userID
                 body
                 createdAt
@@ -831,6 +837,7 @@ export const getFriendGroup = /* GraphQL */ `
         items {
           id
           groupChatID
+          directChatID
           userID
           author {
             id
@@ -965,6 +972,7 @@ export const listFriendGroups = /* GraphQL */ `
           items {
             id
             groupChatID
+            directChatID
             userID
             author {
               id
@@ -1014,6 +1022,7 @@ export const getReport = /* GraphQL */ `
       message {
         id
         groupChatID
+        directChatID
         userID
         author {
           id
@@ -1469,6 +1478,7 @@ export const listReports = /* GraphQL */ `
         message {
           id
           groupChatID
+          directChatID
           userID
           author {
             id
@@ -1768,11 +1778,686 @@ export const listReports = /* GraphQL */ `
     }
   }
 `;
+export const getDirectChat = /* GraphQL */ `
+  query GetDirectChat($id: ID!) {
+    getDirectChat(id: $id) {
+      id
+      userID1
+      userID2
+      user1 {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              users {
+                nextToken
+              }
+              groupID
+              title
+              messages {
+                nextToken
+              }
+              owner
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        expoPushToken
+        createdAt
+        updatedAt
+        owner
+      }
+      user2 {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              users {
+                nextToken
+              }
+              groupID
+              title
+              messages {
+                nextToken
+              }
+              owner
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        expoPushToken
+        createdAt
+        updatedAt
+        owner
+      }
+      messages {
+        items {
+          id
+          groupChatID
+          directChatID
+          userID
+          author {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            createdAt
+            updatedAt
+            owner
+          }
+          body
+          createdAt
+          updatedAt
+          groupType
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listDirectChats = /* GraphQL */ `
+  query ListDirectChats(
+    $filter: ModelDirectChatFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectChats(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userID1
+        userID2
+        user1 {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          year
+          major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              friendGroup {
+                groupID
+                title
+                owner
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              responses {
+                q
+                a
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          expoPushToken
+          createdAt
+          updatedAt
+          owner
+        }
+        user2 {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          year
+          major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              friendGroup {
+                groupID
+                title
+                owner
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              responses {
+                q
+                a
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          expoPushToken
+          createdAt
+          updatedAt
+          owner
+        }
+        messages {
+          items {
+            id
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getChatMessage = /* GraphQL */ `
   query GetChatMessage($id: ID!) {
     getChatMessage(id: $id) {
       id
       groupChatID
+      directChatID
       userID
       author {
         id
@@ -1947,6 +2632,7 @@ export const listChatMessages = /* GraphQL */ `
       items {
         id
         groupChatID
+        directChatID
         userID
         author {
           id
@@ -2140,6 +2826,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
           items {
             id
             groupChatID
+            directChatID
             userID
             author {
               id
@@ -2399,6 +3086,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
             items {
               id
               groupChatID
+              directChatID
               userID
               author {
                 id
@@ -2614,6 +3302,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
           items {
             id
             groupChatID
+            directChatID
             userID
             author {
               id
@@ -2869,6 +3558,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
             items {
               id
               groupChatID
+              directChatID
               userID
               author {
                 id
@@ -3506,6 +4196,306 @@ export const userByUniYear = /* GraphQL */ `
     }
   }
 `;
+export const chatByUsers = /* GraphQL */ `
+  query ChatByUsers(
+    $userID1: String
+    $userID2: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectChatFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    chatByUsers(
+      userID1: $userID1
+      userID2: $userID2
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID1
+        userID2
+        user1 {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          year
+          major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              friendGroup {
+                groupID
+                title
+                owner
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              responses {
+                q
+                a
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          expoPushToken
+          createdAt
+          updatedAt
+          owner
+        }
+        user2 {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          year
+          major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              friendGroup {
+                groupID
+                title
+                owner
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              responses {
+                q
+                a
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          expoPushToken
+          createdAt
+          updatedAt
+          owner
+        }
+        messages {
+          items {
+            id
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              expoPushToken
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const messagesByCourseGroupChatId = /* GraphQL */ `
   query MessagesByCourseGroupChatId(
     $groupChatID: String
@@ -3526,6 +4516,155 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
       items {
         id
         groupChatID
+        directChatID
+        userID
+        author {
+          id
+          email
+          firstName
+          lastName
+          profilePicture
+          bio
+          userState
+          university
+          year
+          major
+          courseGroups {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          friendGroups {
+            items {
+              id
+              groupID
+              userID
+              friendGroup {
+                groupID
+                title
+                owner
+                createdAt
+                updatedAt
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          quizzes {
+            items {
+              id
+              userID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                expoPushToken
+                createdAt
+                updatedAt
+                owner
+              }
+              responses {
+                q
+                a
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          expoPushToken
+          createdAt
+          updatedAt
+          owner
+        }
+        body
+        createdAt
+        updatedAt
+        groupType
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const messagesByDirectChatId = /* GraphQL */ `
+  query MessagesByDirectChatId(
+    $directChatID: String
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelChatMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByDirectChatID(
+      directChatID: $directChatID
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        groupChatID
+        directChatID
         userID
         author {
           id
@@ -3719,6 +4858,7 @@ export const courseGroupByUser = /* GraphQL */ `
             items {
               id
               groupChatID
+              directChatID
               userID
               author {
                 id
@@ -3934,6 +5074,7 @@ export const friendGroupByUser = /* GraphQL */ `
             items {
               id
               groupChatID
+              directChatID
               userID
               author {
                 id
