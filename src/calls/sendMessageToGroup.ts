@@ -28,6 +28,15 @@ const sendMessageToGroup = async ({
     console.error("Null Inputs");
     throw new Error("An input to sendMessageToCourseGroup was undefined");
   }
+
+  // Removes __typename from the files
+  const formattedFiles = files?.map((file) => ({
+    fileURI: file.fileURI,
+    height: file.height,
+    width: file.width,
+    type: file.type,
+  }));
+
   const res = await API.graphql({
     query: createChatMessage,
     variables: {
@@ -36,11 +45,10 @@ const sendMessageToGroup = async ({
         groupType,
         userID,
         body,
-        files,
+        files: formattedFiles,
       } as CreateChatMessageInput,
     },
   });
-  console.log("Res done");
 
   try {
     const lambdaRes = API.graphql({

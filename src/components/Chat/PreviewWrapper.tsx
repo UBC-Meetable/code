@@ -23,9 +23,9 @@ const PreviewWrapper = ({ files, setFiles }:FilePreviewProps) => {
       backgroundColor: theme["color-primary-200"], borderTopLeftRadius: 5, borderTopRightRadius: 5, flexDirection: "row",
     }}
     >
-      {files.map((file) => {
+      {files.map((file, index) => {
         return (
-          <FilePreview remove={remove} file={file} />
+          <FilePreview key={index} remove={remove} file={file} />
         );
       })}
     </Layout>

@@ -84,7 +84,6 @@ export type ChatMessage = {
 
 export type FileAttachment = {
   __typename: "FileAttachment",
-  id?: string,
   fileURI?: string,
   width?: number,
   height?: number,
@@ -382,7 +381,6 @@ export type CreateChatMessageInput = {
 };
 
 export type FileAttachmentInput = {
-  id: string,
   fileURI: string,
   width: number,
   height: number,
@@ -1931,7 +1929,6 @@ export type CreateCourseGroupMutation = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -2133,7 +2130,6 @@ export type UpdateCourseGroupMutation = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -2335,7 +2331,6 @@ export type DeleteCourseGroupMutation = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -2533,7 +2528,6 @@ export type CreateFriendGroupMutation = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -2731,7 +2725,6 @@ export type UpdateFriendGroupMutation = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -2929,7 +2922,6 @@ export type DeleteFriendGroupMutation = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -3094,7 +3086,6 @@ export type CreateReportMutation = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -3623,7 +3614,6 @@ export type UpdateReportMutation = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -4152,7 +4142,6 @@ export type DeleteReportMutation = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -4730,7 +4719,6 @@ export type CreateChatMessageMutation = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -4938,7 +4926,6 @@ export type UpdateChatMessageMutation = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -5146,7 +5133,6 @@ export type DeleteChatMessageMutation = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -5275,7 +5261,6 @@ export type CreateCourseGroupConnectionMutation = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -5595,7 +5580,6 @@ export type UpdateCourseGroupConnectionMutation = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -5915,7 +5899,6 @@ export type DeleteCourseGroupConnectionMutation = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -6231,7 +6214,6 @@ export type CreateFriendGroupConnectionMutation = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -6547,7 +6529,6 @@ export type UpdateFriendGroupConnectionMutation = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -6863,7 +6844,6 @@ export type DeleteFriendGroupConnectionMutation = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -8370,7 +8350,6 @@ export type GetCourseGroupQuery = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -8505,7 +8484,6 @@ export type ListCourseGroupsQuery = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -8704,7 +8682,6 @@ export type GetFriendGroupQuery = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -8835,7 +8812,6 @@ export type ListFriendGroupsQuery = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -9001,7 +8977,6 @@ export type GetReportQuery = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -9459,7 +9434,6 @@ export type ListReportsQuery = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -9934,7 +9908,6 @@ export type GetChatMessageQuery = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -10093,7 +10066,6 @@ export type ListChatMessagesQuery = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -10223,7 +10195,6 @@ export type GetCourseGroupConnectionQuery = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -10514,7 +10485,6 @@ export type ListCourseGroupConnectionsQuery = {
             body: string,
             files?:  Array< {
               __typename: "FileAttachment",
-              id: string,
               fileURI: string,
               width: number,
               height: number,
@@ -10779,7 +10749,6 @@ export type GetFriendGroupConnectionQuery = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -11066,7 +11035,6 @@ export type ListFriendGroupConnectionsQuery = {
             body: string,
             files?:  Array< {
               __typename: "FileAttachment",
-              id: string,
               fileURI: string,
               width: number,
               height: number,
@@ -11922,7 +11890,6 @@ export type MessagesByCourseGroupChatIdQuery = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -12027,7 +11994,6 @@ export type CourseGroupByUserQuery = {
             body: string,
             files?:  Array< {
               __typename: "FileAttachment",
-              id: string,
               fileURI: string,
               width: number,
               height: number,
@@ -12267,7 +12233,6 @@ export type FriendGroupByUserQuery = {
             body: string,
             files?:  Array< {
               __typename: "FileAttachment",
-              id: string,
               fileURI: string,
               width: number,
               height: number,
@@ -13505,7 +13470,6 @@ export type OnCreateCourseGroupSubscription = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -13702,7 +13666,6 @@ export type OnUpdateCourseGroupSubscription = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -13899,7 +13862,6 @@ export type OnDeleteCourseGroupSubscription = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -14092,7 +14054,6 @@ export type OnCreateFriendGroupSubscription = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -14285,7 +14246,6 @@ export type OnUpdateFriendGroupSubscription = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -14478,7 +14438,6 @@ export type OnDeleteFriendGroupSubscription = {
         body: string,
         files?:  Array< {
           __typename: "FileAttachment",
-          id: string,
           fileURI: string,
           width: number,
           height: number,
@@ -14638,7 +14597,6 @@ export type OnCreateReportSubscription = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -15162,7 +15120,6 @@ export type OnUpdateReportSubscription = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -15686,7 +15643,6 @@ export type OnDeleteReportSubscription = {
       body: string,
       files?:  Array< {
         __typename: "FileAttachment",
-        id: string,
         fileURI: string,
         width: number,
         height: number,
@@ -16259,7 +16215,6 @@ export type OnCreateChatMessageSubscription = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -16462,7 +16417,6 @@ export type OnUpdateChatMessageSubscription = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -16665,7 +16619,6 @@ export type OnDeleteChatMessageSubscription = {
     body: string,
     files?:  Array< {
       __typename: "FileAttachment",
-      id: string,
       fileURI: string,
       width: number,
       height: number,
@@ -16789,7 +16742,6 @@ export type OnCreateCourseGroupConnectionSubscription = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -17104,7 +17056,6 @@ export type OnUpdateCourseGroupConnectionSubscription = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -17419,7 +17370,6 @@ export type OnDeleteCourseGroupConnectionSubscription = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -17730,7 +17680,6 @@ export type OnCreateFriendGroupConnectionSubscription = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -18041,7 +17990,6 @@ export type OnUpdateFriendGroupConnectionSubscription = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,
@@ -18352,7 +18300,6 @@ export type OnDeleteFriendGroupConnectionSubscription = {
           body: string,
           files?:  Array< {
             __typename: "FileAttachment",
-            id: string,
             fileURI: string,
             width: number,
             height: number,

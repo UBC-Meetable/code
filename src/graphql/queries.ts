@@ -603,7 +603,6 @@ export const getCourseGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -725,7 +724,6 @@ export const listCourseGroups = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -896,7 +894,6 @@ export const getFriendGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1014,7 +1011,6 @@ export const listFriendGroups = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -1161,7 +1157,6 @@ export const getReport = /* GraphQL */ `
         }
         body
         files {
-          id
           fileURI
           width
           height
@@ -1555,7 +1550,6 @@ export const listReports = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1973,7 +1967,6 @@ export const getChatMessage = /* GraphQL */ `
       }
       body
       files {
-        id
         fileURI
         width
         height
@@ -2115,7 +2108,6 @@ export const listChatMessages = /* GraphQL */ `
         }
         body
         files {
-          id
           fileURI
           width
           height
@@ -2224,7 +2216,6 @@ export const getCourseGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -2481,7 +2472,6 @@ export const listCourseGroupConnections = /* GraphQL */ `
               }
               body
               files {
-                id
                 fileURI
                 width
                 height
@@ -2712,7 +2702,6 @@ export const getFriendGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -2965,7 +2954,6 @@ export const listFriendGroupConnections = /* GraphQL */ `
               }
               body
               files {
-                id
                 fileURI
                 width
                 height
@@ -3729,7 +3717,6 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
         }
         body
         files {
-          id
           fileURI
           width
           height
@@ -3829,7 +3816,6 @@ export const courseGroupByUser = /* GraphQL */ `
               }
               body
               files {
-                id
                 fileURI
                 width
                 height
@@ -4051,7 +4037,6 @@ export const friendGroupByUser = /* GraphQL */ `
               }
               body
               files {
-                id
                 fileURI
                 width
                 height

@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import * as FileSystem from "expo-file-system";
 import { FileAttachment, FileType } from "../../API";
 import sendMessageToGroup from "../../calls/sendMessageToGroup";
 import Colors from "../../constants/Colors";
@@ -22,6 +23,7 @@ import OtherMessage from "./OtherMessage";
 import PendingMessage from "./PendingMessage";
 import SelfMessage from "./SelfMessage";
 
+// TODO limit size of file that can be uploaded,
 const Chat = ({ groupType }: {groupType: GroupType}) => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
@@ -38,20 +40,36 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
 
   const safeArea = useSafeAreaInsets();
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
+    if (textLoading) return;
     if (!message) return;
     setTextLoading(true);
-    const fileURIs = files.map((file) => file.fileURI);
+
+    const filesToSend = files;
+    const messageToSend = message;
 
     const newMessage: ChatMessageWithPending = {
       __typename: "ChatMessage",
-      body: message,
+      body: messageToSend,
       groupChatID: groupID,
       pending: true,
       files,
     };
+    setMessage(() => "");
+    setFiles(() => []);
     pendingMessages.push(newMessage);
     setPendingMessages(() => [...pendingMessages]);
+
+    const s3Files = await Promise.all(filesToSend.map(async (file) => {
+      const imageName = file.fileURI!.replace(/^.*[\\/]/, "");
+      const s3ImageKey = `${groupID}/${imageName}`;
+      await uploadImage(file);
+      const newFile = {
+        ...file,
+        fileURI: s3ImageKey,
+      };
+      return newFile;
+    }));
 
     const res = sendMessageToGroup({
       groupID,
@@ -60,7 +78,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
       groupType,
       userName: userProfile.info!.user!.firstName!,
       hasFile: !!files?.length,
-      files,
+      files: s3Files,
     });
 
     res.then(() => {
@@ -69,9 +87,6 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
       setPendingMessages(() => [...pendingMessages]);
     }).catch((e) => console.warn(e));
     setTextLoading(false);
-
-    setMessage("");
-    setFiles([]);
   };
 
   useEffect(() => {
@@ -109,22 +124,18 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     }
   };
 
-  const uploadImage = (toUpload: ImageInfo) => {
-    const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
-    const imageKey = `${user.attributes.sub}/${imageName}`;
-    fetch(toUpload.uri).then((response) => {
-      response.blob()
-        .then((blob) => {
-          const access = { level: "public", contentType: toUpload.type };
-          Storage.put(imageKey, blob, access)
-            .then(() => {
-              Storage.get(imageKey, { download: false, expires: 604800 }).then((success) => {
-              });
-            })
-            .catch((err) => {
-            });
-        });
-    });
+  const uploadImage = async (toUpload: FileAttachment) => {
+    if (!toUpload.fileURI) {
+      console.error("File did not have a URI");
+      return;
+    }
+    const imageName = toUpload.fileURI!.replace(/^.*[\\/]/, "");
+    const s3Key = `${groupID}/${imageName}`;
+
+    const res = await fetch(toUpload.fileURI!);
+    const blob = await res.blob();
+    const access = { level: "public", contentType: toUpload.type };
+    await Storage.put(s3Key, blob, access);
   };
 
   return (

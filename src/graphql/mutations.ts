@@ -968,7 +968,6 @@ export const createCourseGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1144,7 +1143,6 @@ export const updateCourseGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1320,7 +1318,6 @@ export const deleteCourseGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1492,7 +1489,6 @@ export const createFriendGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1664,7 +1660,6 @@ export const updateFriendGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1836,7 +1831,6 @@ export const deleteFriendGroup = /* GraphQL */ `
           }
           body
           files {
-            id
             fileURI
             width
             height
@@ -1984,7 +1978,6 @@ export const createReport = /* GraphQL */ `
         }
         body
         files {
-          id
           fileURI
           width
           height
@@ -2444,7 +2437,6 @@ export const updateReport = /* GraphQL */ `
         }
         body
         files {
-          id
           fileURI
           width
           height
@@ -2904,7 +2896,6 @@ export const deleteReport = /* GraphQL */ `
         }
         body
         files {
-          id
           fileURI
           width
           height
@@ -3401,7 +3392,6 @@ export const createChatMessage = /* GraphQL */ `
       }
       body
       files {
-        id
         fileURI
         width
         height
@@ -3580,7 +3570,6 @@ export const updateChatMessage = /* GraphQL */ `
       }
       body
       files {
-        id
         fileURI
         width
         height
@@ -3759,7 +3748,6 @@ export const deleteChatMessage = /* GraphQL */ `
       }
       body
       files {
-        id
         fileURI
         width
         height
@@ -3869,7 +3857,6 @@ export const createCourseGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -4144,7 +4131,6 @@ export const updateCourseGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -4419,7 +4405,6 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -4690,7 +4675,6 @@ export const createFriendGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -4961,7 +4945,6 @@ export const updateFriendGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height
@@ -5232,7 +5215,6 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
             }
             body
             files {
-              id
               fileURI
               width
               height

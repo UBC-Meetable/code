@@ -79,7 +79,6 @@ type ChatMessage
   }
 
 type FileAttachment {
-  id: ID!
   fileURI: String!
   width: Int!
   height: Int!
