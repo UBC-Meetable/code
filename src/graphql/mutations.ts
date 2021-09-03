@@ -975,6 +975,12 @@ export const createCourseGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1146,6 +1152,12 @@ export const updateCourseGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1317,6 +1329,12 @@ export const deleteCourseGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1484,6 +1502,12 @@ export const createFriendGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1651,6 +1675,12 @@ export const updateFriendGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1818,6 +1848,12 @@ export const deleteFriendGroup = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -1960,6 +1996,12 @@ export const createReport = /* GraphQL */ `
           owner
         }
         body
+        files {
+          fileURI
+          width
+          height
+          type
+        }
         createdAt
         updatedAt
         groupType
@@ -2414,6 +2456,12 @@ export const updateReport = /* GraphQL */ `
           owner
         }
         body
+        files {
+          fileURI
+          width
+          height
+          type
+        }
         createdAt
         updatedAt
         groupType
@@ -2868,6 +2916,12 @@ export const deleteReport = /* GraphQL */ `
           owner
         }
         body
+        files {
+          fileURI
+          width
+          height
+          type
+        }
         createdAt
         updatedAt
         groupType
@@ -3567,6 +3621,12 @@ export const createDirectChat = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -3954,6 +4014,12 @@ export const updateDirectChat = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -4341,6 +4407,12 @@ export const deleteDirectChat = /* GraphQL */ `
             owner
           }
           body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
           createdAt
           updatedAt
           groupType
@@ -4520,6 +4592,12 @@ export const createChatMessage = /* GraphQL */ `
         owner
       }
       body
+      files {
+        fileURI
+        width
+        height
+        type
+      }
       createdAt
       updatedAt
       groupType
@@ -4693,6 +4771,12 @@ export const updateChatMessage = /* GraphQL */ `
         owner
       }
       body
+      files {
+        fileURI
+        width
+        height
+        type
+      }
       createdAt
       updatedAt
       groupType
@@ -4866,6 +4950,12 @@ export const deleteChatMessage = /* GraphQL */ `
         owner
       }
       body
+      files {
+        fileURI
+        width
+        height
+        type
+      }
       createdAt
       updatedAt
       groupType
@@ -4970,6 +5060,12 @@ export const createCourseGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -5239,6 +5335,12 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -5508,6 +5610,12 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -5773,6 +5881,12 @@ export const createFriendGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -6038,6 +6152,12 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType
@@ -6303,6 +6423,12 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               owner
             }
             body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
             createdAt
             updatedAt
             groupType

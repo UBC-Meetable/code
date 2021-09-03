@@ -18,6 +18,8 @@ module.exports = {
     quotes: ["warn", "double"],
     "react/no-array-index-key": "off",
     "no-unused-vars": "warn",
+    "arrow-body-style": "off",
+    "react/self-closing-comp": "warn",
     "react/jsx-filename-extension": [
       2,
       { extensions: [".js", ".jsx", ".ts", ".tsx"] },

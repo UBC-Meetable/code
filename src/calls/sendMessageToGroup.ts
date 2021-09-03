@@ -1,7 +1,7 @@
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import {
-  CreateChatMessageInput, GroupType, pushNotificationInput, pushNotificationOutput,
+  CreateChatMessageInput, FileAttachment, GroupType, pushNotificationInput, pushNotificationOutput,
 } from "../API";
 import { createChatMessage, pushNotification } from "../graphql/mutations";
 
@@ -12,6 +12,7 @@ type SendMessageToCourseGroupInput = {
   groupType: GroupType;
   userName: string;
   hasFile: boolean;
+  files?: FileAttachment[];
 };
 
 const sendMessageToGroup = async ({
@@ -21,11 +22,21 @@ const sendMessageToGroup = async ({
   groupType,
   userName,
   hasFile,
+  files,
 }: SendMessageToCourseGroupInput) => {
   if (!groupID || !body || !userID || !groupType || !userName) {
     console.error("Null Inputs");
     throw new Error("An input to sendMessageToCourseGroup was undefined");
   }
+
+  // Removes __typename from the files
+  const formattedFiles = files?.map((file) => ({
+    fileURI: file.fileURI,
+    height: file.height,
+    width: file.width,
+    type: file.type,
+  }));
+
   const res = await API.graphql({
     query: createChatMessage,
     variables: {
@@ -34,10 +45,10 @@ const sendMessageToGroup = async ({
         groupType,
         userID,
         body,
+        files: formattedFiles,
       } as CreateChatMessageInput,
     },
   });
-  console.log("Res done");
 
   try {
     const lambdaRes = API.graphql({

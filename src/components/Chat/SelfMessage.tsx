@@ -1,18 +1,53 @@
 import { Layout, Text } from "@ui-kitten/components";
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import ImageView from "react-native-image-viewing";
 import { ChatMessage, ChatMessageWithPending } from "../../types";
 import styles from "../styles/MessageStyles";
+import CachedImage from "./CachedImage";
 
-const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => (
-  <Layout style={[styles.messageContainer, selfStyles.messageContainer,
-    message.pending ? selfStyles.pending : {}]}
-  >
-    <Layout style={[styles.bubble, selfStyles.bubble]}>
-      <Text style={[styles.message, selfStyles.message]}>{message.body}</Text>
+type PreviewURI = {
+  uri: string;
+  index: number;
+}
+const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
+  const [visible, setVisible] = React.useState(false);
+  const [index, setIndex] = useState(0);
+  const [cachedUris, setCachedUris] = useState<Map<number, string>>(new Map<number, string>());
+  const handleLoad = (uri: string, i: number) => {
+    const oldMap = cachedUris;
+    oldMap.set(i, uri);
+    setCachedUris(() => oldMap);
+  };
+  return (
+    <Layout style={[styles.messageContainer, selfStyles.messageContainer,
+      message.pending ? selfStyles.pending : {}]}
+    >
+      <Layout style={[styles.bubble, selfStyles.bubble]}>
+        <Layout style={[{ flexDirection: "row", backgroundColor: "#0000", justifyContent: "flex-start" }]}>
+          { message.files?.map((file, i) => (
+            <TouchableOpacity onPress={() => { setVisible(true); setIndex(i); }} key={i}>
+              <CachedImage
+                load
+                file={file}
+                onLoad={(uri: string) => handleLoad(uri, i)}
+              />
+            </TouchableOpacity>
+          )) }
+        </Layout>
+        {!!message.files?.length && (
+          <ImageView
+            images={Array.from(cachedUris!.values()).map((item) => ({ uri: item }))}
+            imageIndex={index}
+            visible={visible}
+            onRequestClose={() => setVisible(false)}
+          />
+        )}
+        <Text style={[styles.message, selfStyles.message]}>{ message.body }</Text>
+      </Layout>
     </Layout>
-  </Layout>
-);
+  );
+};
 
 const selfStyles = StyleSheet.create({
   bubble: {
