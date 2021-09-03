@@ -5,6 +5,8 @@
   "main": "index.js",
   "license": "Apache-2.0",
   "dependencies": {
-    "aws-sdk": "^2.912.0"
+    "@aws-sdk/client-lambda": "^3.29.0",
+    "aws-sdk": "^2.912.0",
+    "axios": "^0.21.1"
   }
 }
