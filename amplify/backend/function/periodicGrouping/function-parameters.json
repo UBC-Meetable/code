@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "api": {
+      "meetable": [
+        "Query",
+        "Mutation"
+      ]
+    },
+    "function": {
+      "joinFriendGroup": [
+        "read"
+      ]
+    },
+    "storage": {
+      "User:@model(appsync)": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

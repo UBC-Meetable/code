@@ -19,6 +19,7 @@ type User
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
   expoPushToken: String
+  multipleGroupsOptIn: Boolean # undefined interpreted same as false
 }
 
 type CourseGroup
@@ -164,6 +165,15 @@ input pushNotificationInput {
 }
 
 type pushNotificationOutput {
+  statusCode: Int!
+  body: String
+}
+
+type Mutation {
+  periodicGrouping(): periodicGroupingOutput @function(name: "periodicGrouping-${env}")
+}
+
+type periodicGroupingOutput {
   statusCode: Int!
   body: String
 }
