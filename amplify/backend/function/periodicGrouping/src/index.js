@@ -108,7 +108,7 @@ exports.handler = async (event) => {
       try {
         await createFriendGroupConnection(trueGroupID, pair[0]);
 
-        return foundGroup;
+        //return foundGroup;
       } catch (e) {
         console.error("Failed to join friend group, ", e);
         // throw new Error(e);
