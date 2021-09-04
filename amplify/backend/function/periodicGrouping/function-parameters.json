@@ -14,6 +14,14 @@
     "storage": {
       "User:@model(appsync)": [
         "read"
+      ],
+      "FriendGroup:@model(appsync)": [
+        "create",
+        "read"
+      ],
+      "FriendGroupConnection:@model(appsync)": [
+        "create",
+        "read"
       ]
     }
   },

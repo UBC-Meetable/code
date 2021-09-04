@@ -97,6 +97,7 @@ export const onCreateUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -187,6 +188,7 @@ export const onCreateUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -245,6 +247,7 @@ export const onCreateUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -260,6 +263,7 @@ export const onCreateUser = /* GraphQL */ `
         nextToken
       }
       expoPushToken
+      multipleGroupsOptIn
       createdAt
       updatedAt
       owner
@@ -361,6 +365,7 @@ export const onUpdateUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -451,6 +456,7 @@ export const onUpdateUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -509,6 +515,7 @@ export const onUpdateUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -524,6 +531,7 @@ export const onUpdateUser = /* GraphQL */ `
         nextToken
       }
       expoPushToken
+      multipleGroupsOptIn
       createdAt
       updatedAt
       owner
@@ -625,6 +633,7 @@ export const onDeleteUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -715,6 +724,7 @@ export const onDeleteUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -773,6 +783,7 @@ export const onDeleteUser = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -788,6 +799,7 @@ export const onDeleteUser = /* GraphQL */ `
         nextToken
       }
       expoPushToken
+      multipleGroupsOptIn
       createdAt
       updatedAt
       owner
@@ -879,6 +891,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -942,6 +955,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1045,6 +1059,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1108,6 +1123,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1211,6 +1227,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1274,6 +1291,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1375,6 +1393,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1436,6 +1455,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1537,6 +1557,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1598,6 +1619,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1699,6 +1721,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1760,6 +1783,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
               nextToken
             }
             expoPushToken
+            multipleGroupsOptIn
             createdAt
             updatedAt
             owner
@@ -1823,6 +1847,7 @@ export const onCreateReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -1857,6 +1882,7 @@ export const onCreateReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -1883,6 +1909,7 @@ export const onCreateReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -1898,6 +1925,7 @@ export const onCreateReport = /* GraphQL */ `
             nextToken
           }
           expoPushToken
+          multipleGroupsOptIn
           createdAt
           updatedAt
           owner
@@ -1964,6 +1992,7 @@ export const onCreateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2013,6 +2042,7 @@ export const onCreateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2048,6 +2078,7 @@ export const onCreateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2063,6 +2094,7 @@ export const onCreateReport = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -2119,6 +2151,7 @@ export const onCreateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2168,6 +2201,7 @@ export const onCreateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2203,6 +2237,7 @@ export const onCreateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2218,6 +2253,7 @@ export const onCreateReport = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -2273,6 +2309,7 @@ export const onUpdateReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -2307,6 +2344,7 @@ export const onUpdateReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -2333,6 +2371,7 @@ export const onUpdateReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -2348,6 +2387,7 @@ export const onUpdateReport = /* GraphQL */ `
             nextToken
           }
           expoPushToken
+          multipleGroupsOptIn
           createdAt
           updatedAt
           owner
@@ -2414,6 +2454,7 @@ export const onUpdateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2463,6 +2504,7 @@ export const onUpdateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2498,6 +2540,7 @@ export const onUpdateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2513,6 +2556,7 @@ export const onUpdateReport = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -2569,6 +2613,7 @@ export const onUpdateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2618,6 +2663,7 @@ export const onUpdateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2653,6 +2699,7 @@ export const onUpdateReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2668,6 +2715,7 @@ export const onUpdateReport = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -2723,6 +2771,7 @@ export const onDeleteReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -2757,6 +2806,7 @@ export const onDeleteReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -2783,6 +2833,7 @@ export const onDeleteReport = /* GraphQL */ `
                 year
                 major
                 expoPushToken
+                multipleGroupsOptIn
                 createdAt
                 updatedAt
                 owner
@@ -2798,6 +2849,7 @@ export const onDeleteReport = /* GraphQL */ `
             nextToken
           }
           expoPushToken
+          multipleGroupsOptIn
           createdAt
           updatedAt
           owner
@@ -2864,6 +2916,7 @@ export const onDeleteReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2913,6 +2966,7 @@ export const onDeleteReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2948,6 +3002,7 @@ export const onDeleteReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -2963,6 +3018,7 @@ export const onDeleteReport = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -3019,6 +3075,7 @@ export const onDeleteReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3068,6 +3125,7 @@ export const onDeleteReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3103,6 +3161,7 @@ export const onDeleteReport = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3118,6 +3177,7 @@ export const onDeleteReport = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -3186,6 +3246,7 @@ export const onCreateChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3235,6 +3296,7 @@ export const onCreateChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3270,6 +3332,7 @@ export const onCreateChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3285,6 +3348,7 @@ export const onCreateChatMessage = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -3355,6 +3419,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3404,6 +3469,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3439,6 +3505,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3454,6 +3521,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -3524,6 +3592,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3573,6 +3642,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3608,6 +3678,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3623,6 +3694,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -3683,6 +3755,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3723,6 +3796,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3791,6 +3865,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3840,6 +3915,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3875,6 +3951,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3890,6 +3967,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -3948,6 +4026,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -3988,6 +4067,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4056,6 +4136,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4105,6 +4186,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4140,6 +4222,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4155,6 +4238,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -4213,6 +4297,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4253,6 +4338,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4321,6 +4407,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4370,6 +4457,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4405,6 +4493,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4420,6 +4509,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -4476,6 +4566,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4514,6 +4605,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4582,6 +4674,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4631,6 +4724,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4666,6 +4760,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4681,6 +4776,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -4737,6 +4833,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4775,6 +4872,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4843,6 +4941,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4892,6 +4991,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4927,6 +5027,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -4942,6 +5043,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -4998,6 +5100,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5036,6 +5139,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5104,6 +5208,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5153,6 +5258,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5188,6 +5294,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5203,6 +5310,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -5270,6 +5378,7 @@ export const onCreateQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5319,6 +5428,7 @@ export const onCreateQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5354,6 +5464,7 @@ export const onCreateQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5369,6 +5480,7 @@ export const onCreateQuiz = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -5440,6 +5552,7 @@ export const onUpdateQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5489,6 +5602,7 @@ export const onUpdateQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5524,6 +5638,7 @@ export const onUpdateQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5539,6 +5654,7 @@ export const onUpdateQuiz = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner
@@ -5610,6 +5726,7 @@ export const onDeleteQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5659,6 +5776,7 @@ export const onDeleteQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5694,6 +5812,7 @@ export const onDeleteQuiz = /* GraphQL */ `
                 nextToken
               }
               expoPushToken
+              multipleGroupsOptIn
               createdAt
               updatedAt
               owner
@@ -5709,6 +5828,7 @@ export const onDeleteQuiz = /* GraphQL */ `
           nextToken
         }
         expoPushToken
+        multipleGroupsOptIn
         createdAt
         updatedAt
         owner

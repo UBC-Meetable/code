@@ -1,4 +1,8 @@
 /* Amplify Params - DO NOT EDIT
+	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_ARN
+	API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME
+	API_MEETABLE_FRIENDGROUPTABLE_ARN
+	API_MEETABLE_FRIENDGROUPTABLE_NAME
 	API_MEETABLE_GRAPHQLAPIENDPOINTOUTPUT
 	API_MEETABLE_GRAPHQLAPIIDOUTPUT
 	API_MEETABLE_USERTABLE_ARN
@@ -12,7 +16,7 @@ Amplify Params - DO NOT EDIT */
 //import { v4 as uuid } from "uuid";
 const { v4 } = require("uuid");
 const uuid = v4;
-const axios = require('axios');
+// const axios = require('axios');
 const AWS = require('aws-sdk');
 const docClient = new AWS.DynamoDB.DocumentClient();
 
