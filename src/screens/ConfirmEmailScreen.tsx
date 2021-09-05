@@ -23,7 +23,7 @@ type SignUpFormScreenProps = {
   fromSignUp: boolean;
 };
 
-const SignUpFormScreen = ({
+const ConfirmEmailScreen = ({
   onConfirmCode,
   onBack,
   initialEmail,
@@ -63,7 +63,7 @@ const SignUpFormScreen = ({
     try {
       await Auth.confirmSignUp(initialEmail, code);
       onConfirmCode();
-    } catch (e) {
+    } catch (e:any) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
     }
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUpFormScreen;
+export default ConfirmEmailScreen;

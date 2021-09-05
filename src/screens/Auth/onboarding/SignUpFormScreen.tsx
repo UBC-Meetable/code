@@ -73,7 +73,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         password,
       });
       onCreate(email);
-    } catch (e) {
+    } catch (e:any) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
     } finally {
