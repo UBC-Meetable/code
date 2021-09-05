@@ -124,7 +124,7 @@
       "function": {
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-testflight-02242-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-424b633233766e734434-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-47426352667742327469-build.zip"
         },
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-testflight-02242-deployment",
