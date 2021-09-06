@@ -27,6 +27,10 @@
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
           "s3Key": "amplify-builds/pushNotification-336453454d4e4d634159-build.zip"
+        },
+        "periodicGrouping": {
+          "deploymentBucketName": "amplify-meetable-dev-134616-deployment",
+          "s3Key": "amplify-builds/periodicGrouping-51766762314836775767-build.zip"
         }
       }
     }

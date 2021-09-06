@@ -36,8 +36,11 @@ exports.handler = async (event) => {
 
     const scanParams = {
         TableName: tables.user,
-        ProjectionExpression: "id, university, year",
+        ProjectionExpression: "id, university, #year",
         FilterExpression: " attribute_exists(multipleGroupsOptIn) AND multipleGroupsOptIn = :bool",
+        ExpressionAttributeNames: {
+          "#year": "year"
+        },
         ExpressionAttributeValues: {
             ":bool": true,
         }
@@ -45,7 +48,7 @@ exports.handler = async (event) => {
 
     // get opted-in users through paginated scan
     const users = [];
-    let page;
+    let page = {};
     do {
         if (page.LastEvaluatedKey !== undefined) {
             scanParams.ExclusiveStartKey = page.LastEvaluatedKey;
@@ -103,15 +106,18 @@ exports.handler = async (event) => {
       //   return foundGroup
       // }
 
-      let trueGroupID = foundGroup?.groupID ? foundGroup.groupID : uniqueID;
+      //let trueGroupID = foundGroup?.groupID ? foundGroup.groupID : uniqueID; // syntax error apparently
+      let trueGroupID;
+      if (foundGroup && foundGroup.groupID) {
+        trueGroupID = foundGroup.groupID;
+      } else {
+        trueGroupID = uniqueID;
+      }
 
       try {
         await createFriendGroupConnection(trueGroupID, pair[0]);
-
-        //return foundGroup;
       } catch (e) {
         console.error("Failed to join friend group, ", e);
-        // throw new Error(e);
       }
     }
 
