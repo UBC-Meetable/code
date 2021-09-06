@@ -67,7 +67,7 @@ exports.handler = async (event) => {
     console.log(users);
 
     // iterate over opted-in users and find their group id to be grouped into (in parallel (?))
-    // grgroupWithExisting: resolve to array of [user, groupID]
+    // groupWithExisting: array of [user, groupID]
     const groupWithExisting = [];
     const groupWithNew = [];
     await Promise.all(users.map((user) => { // resolved array itself is thrown away
@@ -113,13 +113,13 @@ exports.handler = async (event) => {
         console.error(e);
       }
     }
-    for (const pair of groupWithNew) {
+    for (const user of groupWithNew) {
       try {
         let uniqueID = uuid();
         console.log(uniqueID);
         let foundGroup = await createFriendGroup(uniqueID);
         console.log("Created Friend Group:", foundGroup);
-        await createFriendGroupConnection(uniqueID, pair[0]);
+        await createFriendGroupConnection(uniqueID, user);
       } catch (e) {
         console.error(e);
       }
