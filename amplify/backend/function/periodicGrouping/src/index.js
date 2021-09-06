@@ -47,9 +47,11 @@ exports.handler = async (event) => {
     }
 
     // get opted-in users through paginated scan
+    // TODO: verify this logic
     const users = [];
     let page = {};
     do {
+        console.log("iteration");
         if (page.LastEvaluatedKey !== undefined) {
             scanParams.ExclusiveStartKey = page.LastEvaluatedKey;
         }
@@ -62,8 +64,13 @@ exports.handler = async (event) => {
         Array.prototype.push.apply(users, page.Items);
     } while (page.LastEvaluatedKey !== undefined)
 
+    console.log(users);
+
     // iterate over opted-in users and find their group id to be grouped into (in parallel (?))
-    const groups = await Promise.all(users.map((user) => {
+    // grgroupWithExisting: resolve to array of [user, groupID]
+    const groupWithExisting = [];
+    const groupWithNew = [];
+    await Promise.all(users.map((user) => { // resolved array itself is thrown away
       const lambdaParams = {
         FunctionName: "joinFriendGroup",
         Payload: JSON.stringify({
@@ -77,49 +84,84 @@ exports.handler = async (event) => {
       return lambda.invoke(lambdaParams)
       .promise()
       .then(
-        (data) => [user, JSON.parse(data.Payload).groupID], // note: lambda could return response without groupID, in which case second value of pair is undefined
-        (err) => console.error(err)
+        (data) => { // note that lambda could be successfully called but return a 500 response with no groupID, in that case put the user into a new empty group also
+          if (JSON.parse(data.Payload).groupID) {
+            groupWithExisting.push([user, JSON.parse(data.Payload).groupID])
+          } else {
+            groupWithNew.push(user);
+          }
+        },
+        (err) => { // lambda not successfully called, put user into a new empty group
+          console.error(err)
+          groupWithNew.push(user);
+        }
       );
     }));
 
-    // group the users (sequentially, but could be done in parallel potentially)
-    for (const pair of groups) {
-      let foundGroup;
-      let uniqueID = uuid();
+    console.log(groupWithNew);
+    console.log(groupWithExisting);
 
+    // group the users (sequentially, but could be done in parallel potentially)
+
+    for (const pair of groupWithExisting) {
+      let foundGroup;
       try {
         foundGroup = (await fetchFriendGroup(pair[1]));
         console.log("Found Friend Group:", foundGroup.groupID);
+        await createFriendGroupConnection(foundGroup.groupID, pair[0]);
       } catch (e) {
-        console.log("GroupID was not provided");
-        try {
-          foundGroup = await createFriendGroup(uniqueID);
-          console.log("Created Friend Group:", foundGroup);
-        } catch (err) {
-          console.error("Failed to create friend group for" + pair[0]);
-          // throw new Error(err);
-        }
-      }
-    
-      //if (foundGroup!.users!.items!.find((user) => user?.userID === userID)) return foundGroup; // friend grouping lambda already has some prevention for users getting put into the same group twice, but this doesn't hurt
-      // if (foundGroup && foundGroup.users && foundGroup.users.items && foundGroup.users.items.find((user) => user?.userID === userID)) {
-      //   return foundGroup
-      // }
-
-      //let trueGroupID = foundGroup?.groupID ? foundGroup.groupID : uniqueID; // syntax error apparently
-      let trueGroupID;
-      if (foundGroup && foundGroup.groupID) {
-        trueGroupID = foundGroup.groupID;
-      } else {
-        trueGroupID = uniqueID;
-      }
-
-      try {
-        await createFriendGroupConnection(trueGroupID, pair[0]);
-      } catch (e) {
-        console.error("Failed to join friend group, ", e);
+        console.error(e);
       }
     }
+    for (const pair of groupWithNew) {
+      try {
+        let uniqueID = uuid();
+        console.log(uniqueID);
+        let foundGroup = await createFriendGroup(uniqueID);
+        console.log("Created Friend Group:", foundGroup);
+        await createFriendGroupConnection(uniqueID, pair[0]);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    // for (const pair of groups) {
+    //   let foundGroup;
+    //   let uniqueID = uuid();
+    //   console.log(uniqueID);
+
+    //   try {
+    //     foundGroup = (await fetchFriendGroup(pair[1]));
+    //     console.log("Found Friend Group:", foundGroup.groupID);
+    //   } catch (e) {
+    //     console.log("GroupID was not provided");
+    //     try {
+    //       foundGroup = await createFriendGroup(uniqueID);
+    //       console.log("Created Friend Group:", foundGroup);
+    //     } catch (err) {
+    //       console.error("Failed to create friend group for" + pair[0]);
+    //       // throw new Error(err);
+    //     }
+    //   }
+    
+    //   //if (foundGroup!.users!.items!.find((user) => user?.userID === userID)) return foundGroup; // friend grouping lambda already has some prevention for users getting put into the same group twice, but this doesn't hurt
+    //   // if (foundGroup && foundGroup.users && foundGroup.users.items && foundGroup.users.items.find((user) => user?.userID === userID)) {
+    //   //   return foundGroup
+    //   // }
+
+    //   //let trueGroupID = foundGroup?.groupID ? foundGroup.groupID : uniqueID; // syntax error apparently
+    //   let trueGroupID;
+    //   if (foundGroup && foundGroup.groupID) {
+    //     trueGroupID = foundGroup.groupID;
+    //   } else {
+    //     trueGroupID = uniqueID;
+    //   }
+
+    //   try {
+    //     await createFriendGroupConnection(trueGroupID, pair[0]);
+    //   } catch (e) {
+    //     console.error("Failed to join friend group, ", e);
+    //   }
+    // }
 
     const response = {
         statusCode: 200,
@@ -139,12 +181,13 @@ async function createFriendGroupConnection(groupID, userID) {
     Item: { // not sure if just these attributes is enough
        groupID,
        userID,
+       id: uuid(),
     }
   };
   return docClient.put(params)
   .promise()
   .then(
-    ()=>{},
+    (data)=> data.Attributes,
     (err) => console.error(err)
   );
 }
@@ -172,7 +215,7 @@ async function createFriendGroup(id) {
   return docClient.put(params)
   .promise()
   .then(
-    (data) => data.Attributes,
+    (data) => data,
     (err) => console.error(err)
   );
 
