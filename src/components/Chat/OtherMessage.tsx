@@ -1,17 +1,24 @@
 /* eslint-disable camelcase */
 import { Layout, Modal, Text } from "@ui-kitten/components";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
+import ImageView from "react-native-image-viewing";
 import { UserProvider } from "../../context/UserContext";
 import { ChatMessage, ProfilePictureSize } from "../../types";
 import InspectProfile from "../profile/InspectProfile";
 import ProfilePicture from "../ProfilePicture";
 import styles from "../styles/MessageStyles";
+import CachedImage from "./CachedImage";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
   const [visible, setVisible] = React.useState(false);
   const imageKey = message.author!.profilePicture!;
+  const [cachedUris, setCachedUris] = useState<string[]>([]);
 
+  const handleLoad = (uri: string) => {
+    if (cachedUris.includes(uri)) return;
+    setCachedUris((old) => [...old, uri]);
+  };
   return (
     <Layout style={otherStyles.messageContainer}>
       <Layout style={otherStyles.messageAndAuthor}>
@@ -45,6 +52,25 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
             />
           </TouchableOpacity>
           <Layout style={styles.bubble}>
+            <Layout style={[{ flexDirection: "row", backgroundColor: "#0000", justifyContent: "flex-end" }]}>
+              { message.files?.map((file, index) => (
+                <TouchableOpacity onPress={() => setVisible(true)} key={index}>
+                  <CachedImage
+                    load
+                    file={file}
+                    onLoad={handleLoad}
+                  />
+                </TouchableOpacity>
+              )) }
+            </Layout>
+            {!!message.files?.length && (
+              <ImageView
+                images={cachedUris.map((uri) => ({ uri }))}
+                imageIndex={0}
+                visible={visible}
+                onRequestClose={() => setVisible(false)}
+              />
+            )}
             <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>
           </Layout>
         </Layout>

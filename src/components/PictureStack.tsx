@@ -18,7 +18,7 @@ const PictureStack = ({ users }:PictureStackProps) => {
     <Layout style={styles.pics}>
       {
         pictureIds?.map((id, index) => {
-          if (index >= 4) return <Layout />;
+          if (index >= 4) return <Layout key={index} />;
           return (
             <Layout
               style={{ position: "absolute", right: 0 + index * 23, backgroundColor: "#0000" }}

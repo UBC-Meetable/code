@@ -34,12 +34,14 @@ const ProfilePicture = ({
         return;
       }
       console.log("Got from s3");
-      const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 }) as string;
-      const newImage = await FileSystem.downloadAsync(s3Uri, path);
-      const imageInfo = await FileSystem.getInfoAsync(path);
-      Analytics.record({ name: "Fetch Picture from S3", attributes: { size: imageInfo.size } });
-      setUri(newImage.uri);
-      setImageLoading(false);
+      setTimeout(async () => {
+        const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 }) as string;
+        const newImage = await FileSystem.downloadAsync(s3Uri, path);
+        const imageInfo = await FileSystem.getInfoAsync(path);
+        Analytics.record({ name: "Fetch Picture from S3", attributes: { size: imageInfo.size } });
+        setUri(newImage.uri);
+        setImageLoading(false);
+      }, 1000);
     };
 
     if (imageKey) { checkCache(); }
@@ -71,6 +73,7 @@ const ProfilePicture = ({
   );
 
   if (!uri) return <DefaultAvatar />;
+
   return (
     imageLoading ? (
       <Layout style={styles.profileContainer}>

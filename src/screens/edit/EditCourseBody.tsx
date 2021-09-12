@@ -75,7 +75,10 @@ const EditCourseBody = ({
           <PrimaryButton
             loading={loading}
             status="info"
-            onPress={handleSave}
+            onPress={() => {
+              setLoading(() => true);
+              handleSave().then(() => setLoading(() => false));
+            }}
           >
             {newCourses.length > 0 ? "Save and Continue" : "Continue Later"}
           </PrimaryButton>

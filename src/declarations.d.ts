@@ -8,3 +8,4 @@ declare module "*.jpg"
 declare module "*.svg"
 declare module "aws-amplify-react-native";
 declare module "lighten-darken-color";
+declare module "expo-fast-image";

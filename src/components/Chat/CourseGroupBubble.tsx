@@ -1,6 +1,7 @@
 import { Layout } from "@ui-kitten/components";
 import React, { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Avatar, Chip } from "react-native-paper";
 import { CourseGroupConnection, User } from "../../API";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
@@ -74,9 +75,14 @@ const CourseGroupBubble = ({
           <MessagePreview messages={messages} />
         </Layout>
         <Layout style={groupBubbleStyles.bottomPhotoContainer}>
-          <Layout style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}>
+          {/* <Layout style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}> */}
+          <TouchableWithoutFeedback
+            onPress={moveToGroupScreen}
+            style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}
+          >
             <PictureStack users={userPile} />
-          </Layout>
+          </TouchableWithoutFeedback>
+          {/* </Layout> */}
         </Layout>
 
       </Layout>

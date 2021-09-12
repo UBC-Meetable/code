@@ -178,7 +178,6 @@ const modalStyles = StyleSheet.create({
     height: "100%",
     width: "100%",
     flex: 1,
-    borderWidth: 10,
     fontFamily: "Poppins_500Medium",
   },
   backdrop: {

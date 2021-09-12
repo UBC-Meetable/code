@@ -47,7 +47,7 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
   } as SimpleCourseGroup);
 
   function addCourse() {
-    if (!currTitle || !currCode || !currSection) return;
+    if (!currTitle || !currCode) return;
 
     const newGroup = generateNewGroup({
       code: currCode,
@@ -104,7 +104,7 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
         ]}
       >
         <Text style={[editCourseStyles.courseTextStyle, isNew && editCourseStyles.newCourseText]}>
-          {`${group.title} ${group.code}, Section ${group.section}`}
+          {`${group.title} ${group.code}`}
         </Text>
       </Layout>
 

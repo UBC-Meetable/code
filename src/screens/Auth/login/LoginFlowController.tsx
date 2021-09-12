@@ -54,7 +54,7 @@ const LoginFlowController = () => {
       return (
         <ConfirmEmailScreen
           fromSignUp={fromSignUp}
-          onBack={() => setAuthState(AuthState.SIGN_UP)}
+          onBack={() => setAuthState(AuthState.LOGIN)}
           initialEmail={email}
           onConfirmCode={() => setAuthState(AuthState.LOGIN)}
         />
