@@ -32,6 +32,8 @@ const tables = {
     friendGroupConnection: process.env.API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME,
   };
 
+const joinFriendGroupLambdaName = process.env.FUNCTION_JOINFRIENDGROUP_NAME;
+
 exports.handler = async (event) => {
 
     const scanParams = {
@@ -72,7 +74,7 @@ exports.handler = async (event) => {
     const groupWithNew = [];
     await Promise.all(users.map((user) => { // resolved array itself is thrown away
       const lambdaParams = {
-        FunctionName: "joinFriendGroup",
+        FunctionName: joinFriendGroupLambdaName,
         Payload: JSON.stringify({
           user: {
             id: user.id,
@@ -81,6 +83,7 @@ exports.handler = async (event) => {
           }
         })
       }
+      console.log("calling lambda");
       return lambda.invoke(lambdaParams)
       .promise()
       .then(
@@ -175,12 +178,13 @@ exports.handler = async (event) => {
     return response;
 };
 
-async function createFriendGroupConnection(groupID, userID) {
+async function createFriendGroupConnection(groupID, user) {
+  console.log(groupID, "userID", user);
   const params = {
     TableName: tables.friendGroupConnection,
     Item: { // not sure if just these attributes is enough
        groupID,
-       userID,
+       userID: user.id,
        id: uuid(),
     }
   };
@@ -206,18 +210,23 @@ async function fetchFriendGroup(id) {
 
 // not sure if correct
 async function createFriendGroup(id) {
+  const dateTime = new Date().toISOString();
   const params = {
     TableName: tables.friendGroup,
     Item: {
+       __typename: "FriendGroup",
+       title: "",
+       createdAt: dateTime,
+       updatedAt: dateTime,
        groupID: id,
     }
   };
-  return docClient.put(params)
+  return await (docClient.put(params)
   .promise()
   .then(
     (data) => data,
     (err) => console.error(err)
-  );
+  ));
 
 }
 

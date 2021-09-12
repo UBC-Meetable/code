@@ -56,7 +56,10 @@
           "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
           "s3Key": "amplify-builds/pushNotification-51516b534c5450563071-build.zip"
         },
-        "periodicGrouping": {}
+        "periodicGrouping": {
+          "deploymentBucketName": "amplify-meetable-trevor-153234-deployment",
+          "s3Key": "amplify-builds/periodicGrouping-4b344e48384e794b5943-build.zip"
+        }
       }
     }
   },
