@@ -19,6 +19,7 @@ type User
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
   expoPushToken: String
+  multipleGroupsOptIn: Boolean # undefined interpreted same as false
 }
 
 type CourseGroup
@@ -196,3 +197,15 @@ type pushNotificationOutput {
   statusCode: Int!
   body: String
 }
+
+
+# this fn may not need to exist in the schema if it's not called by the frontend directly (?)
+# also I think the fn having no input causes a syntax error
+# type Mutation {
+#   periodicGrouping(): periodicGroupingOutput @function(name: "periodicGrouping-${env}")
+# }
+
+# type periodicGroupingOutput {
+#   statusCode: Int!
+#   body: String
+# }

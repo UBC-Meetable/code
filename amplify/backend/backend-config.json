@@ -52,6 +52,28 @@
           ]
         }
       ]
+    },
+    "periodicGrouping": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "meetable",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "joinFriendGroup",
+          "attributes": [
+            "Name"
+          ]
+        }
+      ]
     }
   },
   "storage": {
