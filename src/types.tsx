@@ -39,6 +39,7 @@ export type RootStackParamList = {
   ProfileSettings: undefined;
   NewProfileScreen: undefined;
   FriendOptions: undefined;
+  DMNavigator: undefined;
 };
 
 export type BottomTabParamList = {

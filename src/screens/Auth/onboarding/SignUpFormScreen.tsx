@@ -47,10 +47,10 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
       flag = false;
     }
-    if (email !== confirmEmail) {
-      setError((prevErrors) => [...prevErrors, "Emails do not match"]);
-      flag = false;
-    }
+    // if (email !== confirmEmail) {
+    //   setError((prevErrors) => [...prevErrors, "Emails do not match"]);
+    //   flag = false;
+    // }
     if (!email) {
       setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
@@ -123,7 +123,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               autoCompleteType="email"
               scrollEnabled={false}
             />
-            <TextField
+            {/* <TextField
               style={styles.field}
               placeholder="Confirm Email Address"
               value={confirmEmail}
@@ -133,7 +133,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               keyboardType="email-address"
               autoCompleteType="email"
               scrollEnabled={false}
-            />
+            /> */}
             <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
               <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
             </Layout>

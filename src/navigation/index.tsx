@@ -50,6 +50,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
+import DMStackNavigator from "../screens/dms/DMStackNavigator";
 
 Amplify.configure({
   ...awsconfig,
@@ -307,6 +308,11 @@ const AuthorizedApp = () => {
                 }}
                 {...props}
               />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="DMNavigator">
+            {(props) => (
+              <DMStackNavigator />
             )}
           </Stack.Screen>
         </Stack.Navigator>

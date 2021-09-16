@@ -71,8 +71,8 @@ const FriendGroups = ({
           setLoading((old) => ({ ...old, quizzes: false }));
           const groupOutput = await getBestFriendGroup({
             id: user.attributes.sub,
-            university: userProfile.university,
-            year: userProfile.year,
+            university: userProfile!.university,
+            year: userProfile!.year,
           });
           const returnVal = groupOutput.data?.joinFriendGroup;
 
