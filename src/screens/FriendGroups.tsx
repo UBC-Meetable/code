@@ -5,7 +5,9 @@ import {
   Layout, List, Spinner, Text,
 } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
-import { GestureResponderEvent, RefreshControl, StyleSheet } from "react-native";
+import {
+  GestureResponderEvent, RefreshControl, StyleSheet, Switch,
+} from "react-native";
 import {
   FriendGroup, GroupType, QAPairInput, Quiz,
 } from "../API";
@@ -14,6 +16,7 @@ import getUserQuizzes from "../calls/fetchUserQuizzes";
 import getBestFriendGroup from "../calls/getBestFriendGroup";
 import joinFriendGroup from "../calls/joinFriendGroup";
 import submitQuiz from "../calls/submitQuiz";
+import updateUserProfile from "../calls/updateUserProfile";
 import FriendGroupBubble from "../components/friend_group/FriendGroupBubble";
 import NoQuizzes from "../components/friend_group/NoQuizzes";
 import Returned from "../components/friend_group/Returned";
@@ -49,6 +52,8 @@ const FriendGroups = ({
   const user = useAuthenticatedUser();
   const { info: userProfile } = useUserProfile();
   const headerHeight = useHeaderHeight();
+  const [isEnabled, setIsEnabled] = useState(Boolean);
+  setIsEnabled(userProfile!.user.multipleGroupsOptIn!);
 
   // this is the ugliest thing ever
   useEffect(() => {
@@ -96,6 +101,8 @@ const FriendGroups = ({
         }
       }
     };
+    // const getOptInStatus = async () => {
+    // };
 
     getFriendGroupState()
       .then(() => setLoading((old) => ({ ...old, quizzes: false })))
@@ -165,8 +172,27 @@ const FriendGroups = ({
     navigation.push("Quiz", { return: handleReturn });
   };
 
+  const toggleSwitch = async () => {
+    try {
+      await updateUserProfile({
+        id: useUserProfile().info!.id,
+        multipleGroupsOptIn: !isEnabled,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+    setIsEnabled((previousState) => !previousState);
+  };
+
   const renderGroups = () => (
     <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
+      <Switch
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
+        ios_backgroundColor="#3e3e3e"
+        onValueChange={toggleSwitch}
+        value={isEnabled}
+      />
       <List
         refreshControl={
           <RefreshControl refreshing={isLoading(loading)} onRefresh={fakeLoad} />
