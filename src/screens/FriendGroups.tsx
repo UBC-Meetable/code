@@ -17,7 +17,7 @@ import getUserQuizzes from "../calls/fetchUserQuizzes";
 import getBestFriendGroup from "../calls/getBestFriendGroup";
 import joinFriendGroup from "../calls/joinFriendGroup";
 import submitQuiz from "../calls/submitQuiz";
-import updateUserProfile from "../calls/updateUserProfile";
+import updateUserProfile from "../calls/updateUserCourses";
 import FriendGroupBubble from "../components/friend_group/FriendGroupBubble";
 import NoQuizzes from "../components/friend_group/NoQuizzes";
 import Returned from "../components/friend_group/Returned";
@@ -54,8 +54,9 @@ const FriendGroups = ({
   const user = useAuthenticatedUser();
   const { info: userProfile } = useUserProfile();
   const headerHeight = useHeaderHeight();
-  const [isEnabled, setIsEnabled] = useState(Boolean);
-  setIsEnabled(userProfile!.user.multipleGroupsOptIn!); // does this have the latest value upon loading?
+  const [isEnabled, setIsEnabled] = useState(Boolean(userProfile!.user.multipleGroupsOptIn)); // multipleGroupsOptIn undefined gets cast to false
+  // setIsEnabled(userProfile!.user.multipleGroupsOptIn); // note: this results in infinite re-render loop
+  console.log(isEnabled);
 
   // this is the ugliest thing ever
   useEffect(() => {
@@ -176,6 +177,7 @@ const FriendGroups = ({
 
   const toggleSwitch = async () => {
     try {
+      console.log(isEnabled);
       if (isEnabled) {
         Alert.alert(
           "Weekly Groups",
@@ -192,7 +194,7 @@ const FriendGroups = ({
               text: "Disable",
               onPress: async () => {
                 await updateUserProfile({
-                  id: useUserProfile().info!.id,
+                  id: userProfile!.id,
                   multipleGroupsOptIn: !isEnabled,
                 });
                 setIsEnabled((previousState) => !previousState);
@@ -211,7 +213,7 @@ const FriendGroups = ({
               text: "Enable",
               onPress: async () => {
                 await updateUserProfile({
-                  id: useUserProfile().info!.id,
+                  id: userProfile!.id,
                   multipleGroupsOptIn: !isEnabled,
                 });
                 setIsEnabled((previousState) => !previousState);
