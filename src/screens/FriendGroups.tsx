@@ -55,7 +55,7 @@ const FriendGroups = ({
   const { info: userProfile } = useUserProfile();
   const headerHeight = useHeaderHeight();
   const [isEnabled, setIsEnabled] = useState(Boolean);
-  setIsEnabled(userProfile!.user.multipleGroupsOptIn!);
+  setIsEnabled(userProfile!.user.multipleGroupsOptIn!); // does this have the latest value upon loading?
 
   // this is the ugliest thing ever
   useEffect(() => {
