@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable no-shadow */
 import { CommonActions, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
@@ -6,7 +7,7 @@ import {
 } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
 import {
-  GestureResponderEvent, RefreshControl, StyleSheet, Switch,
+  GestureResponderEvent, RefreshControl, StyleSheet, Switch, Alert,
 } from "react-native";
 import {
   FriendGroup, GroupType, QAPairInput, Quiz,
@@ -29,6 +30,7 @@ import {
 } from "../types";
 
 const MAX_GROUP_SIZE = 5; // todo make global parameter w/ aws.
+const WEEKLY_GROUP_DAY = "Saturday";
 
 export enum UIStateOptions {
   NO_QUIZZES,
@@ -174,14 +176,58 @@ const FriendGroups = ({
 
   const toggleSwitch = async () => {
     try {
-      await updateUserProfile({
-        id: useUserProfile().info!.id,
-        multipleGroupsOptIn: !isEnabled,
-      });
+      if (isEnabled) {
+        Alert.alert(
+          "Weekly Groups",
+          `This ${WEEKLY_GROUP_DAY} you'll be added into a group chat with a new group of students
+          in your year. If you want to opt out, you can disable weekly grouping below. You'll be able
+          to toggle it back on again at any time you like.`,
+          [
+            {
+              text: "Leave Enabled",
+              onPress: () => {},
+              style: "cancel",
+            },
+            {
+              text: "Disable",
+              onPress: async () => {
+                await updateUserProfile({
+                  id: useUserProfile().info!.id,
+                  multipleGroupsOptIn: !isEnabled,
+                });
+                setIsEnabled((previousState) => !previousState);
+              },
+            },
+          ],
+        );
+      } else {
+        Alert.alert(
+          "Weekly Groups",
+          `If you'd like to be added to a group chat with a new group of students every ${WEEKLY_GROUP_DAY},
+          you can toggle on weekly grouping below. You'll be able to opt out any time by hitting the toggle button
+          again on the "Friend Groups" page.`,
+          [
+            {
+              text: "Enable",
+              onPress: async () => {
+                await updateUserProfile({
+                  id: useUserProfile().info!.id,
+                  multipleGroupsOptIn: !isEnabled,
+                });
+                setIsEnabled((previousState) => !previousState);
+              },
+              style: "cancel",
+            },
+            {
+              text: "Leave Disabled",
+              onPress: () => {},
+            },
+          ],
+        );
+      }
     } catch (err) {
       console.error(err);
     }
-    setIsEnabled((previousState) => !previousState);
   };
 
   const renderGroups = () => (
