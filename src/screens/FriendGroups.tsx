@@ -199,6 +199,7 @@ const FriendGroups = ({
                 } catch (err) {
                   console.log(err);
                   Alert.alert("Failed to Toggle", "Please try again");
+                  return;
                 }
                 setIsEnabled((previousState) => !previousState);
               },
@@ -221,6 +222,7 @@ const FriendGroups = ({
                 } catch (err) {
                   console.log(err);
                   Alert.alert("Failed to Toggle", "Please try again");
+                  return;
                 }
                 setIsEnabled((previousState) => !previousState);
               },
