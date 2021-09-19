@@ -181,9 +181,7 @@ const FriendGroups = ({
       if (isEnabled) {
         Alert.alert(
           "Weekly Groups",
-          `This ${WEEKLY_GROUP_DAY} you'll be added into a group chat with a new group of students
-          in your year. If you want to opt out, you can disable weekly grouping below. You'll be able
-          to toggle it back on again at any time you like.`,
+          `This ${WEEKLY_GROUP_DAY} you'll be added into a group chat with a new group of students in your year. If you want to opt out, you can disable weekly grouping below. You'll be able to toggle it back on again at any time you like.`,
           [
             {
               text: "Leave Enabled",
@@ -193,10 +191,15 @@ const FriendGroups = ({
             {
               text: "Disable",
               onPress: async () => {
-                await updateUserProfile({
-                  id: userProfile!.id,
-                  multipleGroupsOptIn: !isEnabled,
-                });
+                try {
+                  await updateUserProfile({
+                    id: userProfile!.id,
+                    multipleGroupsOptIn: !isEnabled,
+                  });
+                } catch (err) {
+                  console.log(err);
+                  Alert.alert("Failed to Toggle", "Please try again");
+                }
                 setIsEnabled((previousState) => !previousState);
               },
             },
@@ -205,17 +208,20 @@ const FriendGroups = ({
       } else {
         Alert.alert(
           "Weekly Groups",
-          `If you'd like to be added to a group chat with a new group of students every ${WEEKLY_GROUP_DAY},
-          you can toggle on weekly grouping below. You'll be able to opt out any time by hitting the toggle button
-          again on the "Friend Groups" page.`,
+          `If you'd like to be added to a group chat with a new group of students every ${WEEKLY_GROUP_DAY}, you can toggle on weekly grouping below. You'll be able to opt out any time by hitting the toggle button again on the "Friend Groups" page.`,
           [
             {
               text: "Enable",
               onPress: async () => {
-                await updateUserProfile({
-                  id: userProfile!.id,
-                  multipleGroupsOptIn: !isEnabled,
-                });
+                try {
+                  await updateUserProfile({
+                    id: userProfile!.id,
+                    multipleGroupsOptIn: !isEnabled,
+                  });
+                } catch (err) {
+                  console.log(err);
+                  Alert.alert("Failed to Toggle", "Please try again");
+                }
                 setIsEnabled((previousState) => !previousState);
               },
               style: "cancel",
