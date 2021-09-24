@@ -53,7 +53,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
         </Text>
         <Select
           selectedIndex={selectedIndex}
-          onSelect={(i) => setSelectedIndex(i as React.SetStateAction<IndexPath>)}
+          onSelect={(index) => setSelectedIndex(index as React.SetStateAction<IndexPath>)}
           style={styles.dropDownStyle}
           value={university}
         >
