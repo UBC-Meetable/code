@@ -2,8 +2,10 @@ import {
   Button, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
+import { Alert } from "react-native";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
+import leaveCourseGroup from "../../calls/leaveCourseGroup";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SimpleCourseGroup } from "../../types";
@@ -65,6 +67,24 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== course.groupID));
   }
 
+  function deleteExistingCourse(group: SimpleCourseGroup) {
+    Alert.alert("Leave Course Group?", "Are you sure you want to leave this course group?",
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            await leaveCourseGroup({ id: group.groupID });
+          },
+        },
+        {
+          text: "No",
+          onPress: () => {},
+          style: "cancel",
+        },
+      ]);
+    console.log("deleteExistingCourse called");
+  }
+
   const handleSave = async () => {
     const promises = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
       generateNewGroup(course))) as
@@ -97,6 +117,31 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
           {`${group.title} ${group.code}`}
         </Text>
       </Layout>
+
+      {!isNew && (
+        <Layout
+          style={[
+            editCourseStyles.courseTextContainer,
+            isNew && editCourseStyles.newCourseContainer,
+          ]}
+        >
+          <Button
+            appearance="ghost"
+            onPress={() => {
+              deleteExistingCourse(group);
+            }}
+          >
+            {(evaProps: any) => (
+              <Text
+                {...evaProps}
+                style={{ ...evaProps.style, ...editCourseStyles.deleteButtonText }}
+              >
+                X
+              </Text>
+            )}
+          </Button>
+        </Layout>
+      )}
 
       {isNew && (
         <Layout
