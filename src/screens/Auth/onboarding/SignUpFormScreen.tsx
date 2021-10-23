@@ -1,10 +1,11 @@
 import Auth from "@aws-amplify/auth";
-import {
-  Button, CheckBox, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Button, CheckBox, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import {
-  Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,13 +16,22 @@ import Colors from "../../../constants/Colors";
 import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
+import AppLoading from "expo-app-loading";
+import {
+  useFonts,
+  Quicksand_300Light,
+  Quicksand_400Regular,
+  Quicksand_500Medium,
+  Quicksand_600SemiBold,
+  Quicksand_700Bold,
+} from "@expo-google-fonts/quicksand";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-    onLogIn: () => void,
-    onCreate: (email: string) => void,
-}
+  onLogIn: () => void;
+  onCreate: (email: string) => void;
+};
 
 // TODO error messages, disabled styles, theme
 const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
@@ -39,6 +49,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [privacyModal, setPrivacyModal] = useState(false);
   const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
+  const [fontsLoaded, error] = useFonts({
+    Quicksand_300Light,
+    Quicksand_400Regular,
+    Quicksand_500Medium,
+    Quicksand_600SemiBold,
+    Quicksand_700Bold,
+  });
 
   const confirmForm = () => {
     setError(() => []);
@@ -73,13 +90,17 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         password,
       });
       onCreate(email);
-    } catch (e:any) {
+    } catch (e: any) {
       const message = e.message as string;
       setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
     }
   };
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
 
   return (
     <LoginControllerRoot>
@@ -101,14 +122,24 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             }}
           >
             <Text style={styles.emoji}>👋</Text>
-            <Text style={{
-              fontSize: 34, fontFamily: "Poppins_500Medium",
-            }}
+            <Text
+              style={{
+                fontSize: 34,
+                fontFamily: "Quicksand_500Medium",
+              }}
             >
               Let's get started!
             </Text>
-            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
+            <Layout
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                backgroundColor: "#0000",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontFamily: "Quicksand_500Medium" }}>
+                Email Address
+              </Text>
             </Layout>
             <TextField
               style={styles.field}
@@ -134,8 +165,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               autoCompleteType="email"
               scrollEnabled={false}
             />
-            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
+            <Layout
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                backgroundColor: "#0000",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontFamily: "Quicksand_500Medium" }}>
+                Password
+              </Text>
             </Layout>
             <TextField
               style={styles.field}
@@ -158,12 +197,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={confirmPasswordRef}
             />
           </KeyboardAvoidingView>
-          <Layout style={{
-            backgroundColor: "#0000",
-            flex: 0,
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
+          <Layout
+            style={{
+              backgroundColor: "#0000",
+              flex: 0,
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
           >
             <Layout style={styles.tosContainer}>
               {/* Theme needs to be setup for this to be colored correctly */}
@@ -175,13 +215,17 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text>
                 I've read and accepted the
                 {"\n"}
-                <Text onPress={() => setTosModal(true)} style={[styles.bold, styles.clickable]}>
+                <Text
+                  onPress={() => setTosModal(true)}
+                  style={[styles.bold, styles.clickable]}
+                >
                   Terms and Conditions
-                </Text>
-                {" "}
-                and
-                {" "}
-                <Text onPress={() => setPrivacyModal(true)} style={[styles.bold, styles.clickable]}>
+                </Text>{" "}
+                and{" "}
+                <Text
+                  onPress={() => setPrivacyModal(true)}
+                  style={[styles.bold, styles.clickable]}
+                >
                   Privacy Policy
                 </Text>
               </Text>
@@ -194,22 +238,31 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             >
               Create Profile
             </PrimaryButton>
+            <Text style={[styles.bold]}>I already have an account!</Text>
             <Text style={[styles.bold]}>
-              I already have an account!
-            </Text>
-            <Text style={[styles.bold]}>
-              Where can I
-              {" "}
-              <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
+              Where can I{" "}
+              <Text
+                onPress={() => onLogIn()}
+                style={[styles.bold, styles.clickable]}
+              >
+                sign in
+              </Text>
               ?
             </Text>
           </Layout>
         </ScrollView>
       </KeyboardSwipeLayout>
-      <TosModal open={tosModal} setOpen={setTosModal} title="Terms of Service" />
-      <PrivacyModal open={privacyModal} setOpen={setPrivacyModal} title="Privacy Policy" />
+      <TosModal
+        open={tosModal}
+        setOpen={setTosModal}
+        title="Terms of Service"
+      />
+      <PrivacyModal
+        open={privacyModal}
+        setOpen={setPrivacyModal}
+        title="Privacy Policy"
+      />
     </LoginControllerRoot>
-
   );
 };
 
@@ -224,7 +277,7 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 50 },
   clickable: { color: "#02A3F4" },
   bold: {
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Quicksand_600SemiBold",
     fontSize: 14,
   },
   tosContainer: {
