@@ -11,6 +11,7 @@ import { deleteCourseGroupConnection } from "../graphql/mutations";
 
 const leaveCourseGroup = async (input: DeleteCourseGroupConnectionInput):
 Promise<GraphQLResult<DeleteCourseGroupConnectionMutation>> => {
+  console.log("called");
   return API.graphql({
     query: deleteCourseGroupConnection,
     variables: {

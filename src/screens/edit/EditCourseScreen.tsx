@@ -27,6 +27,7 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
   const [currCode, setCode] = useState("");
   const [currSection, setSection] = useState("");
   const user = useAuthenticatedUser();
+  const markedForDeletion = {};
 
   const generateNewGroup = ({
     code,
@@ -67,22 +68,25 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== course.groupID));
   }
 
-  function deleteExistingCourse(group: SimpleCourseGroup) {
-    Alert.alert("Leave Course Group?", "Are you sure you want to leave this course group?",
-      [
-        {
-          text: "Yes",
-          onPress: async () => {
-            await leaveCourseGroup({ id: group.groupID });
+  async function deleteExistingCourse(group: SimpleCourseGroup) {
+    return new Promise((resolve) => {
+      Alert.alert("Leave Course Group?", "Are you sure you want to leave this course group?",
+        [
+          {
+            text: "Yes",
+            onPress: () => {
+              console.log("button pressed");
+              resolve(true);
+            },
           },
-        },
-        {
-          text: "No",
-          onPress: () => {},
-          style: "cancel",
-        },
-      ]);
-    console.log("deleteExistingCourse called");
+          {
+            text: "No",
+            onPress: () => { resolve(false); },
+            style: "cancel",
+          },
+        ]);
+      console.log("deleteExistingCourse called");
+    });
   }
 
   const handleSave = async () => {
@@ -127,8 +131,10 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
         >
           <Button
             appearance="ghost"
-            onPress={() => {
-              deleteExistingCourse(group);
+            onPress={async () => {
+              console.log("before awaiting");
+              const leave = await deleteExistingCourse(group);
+              if (leave) await leaveCourseGroup({ id: group.groupID });
             }}
           >
             {(evaProps: any) => (
