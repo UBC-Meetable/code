@@ -1,10 +1,9 @@
 import Auth from "@aws-amplify/auth";
-import { Button, CheckBox, Input, Layout, Text } from "@ui-kitten/components";
+import { CheckBox, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import {
   Dimensions,
   KeyboardAvoidingView,
-  Platform,
   StyleSheet,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
