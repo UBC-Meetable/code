@@ -77,18 +77,28 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   };
 
   const createProfile = async () => {
+    console.log("Attempting create profile");
+
     setError([]);
 
     if (!confirmForm()) return;
+    console.log("Confirmed form");
+
     try {
       setLoading(true);
+      console.log("Creating user");
+
       const user = await Auth.signUp({
         username: email,
         password,
       });
+      console.log(user);
+
       onCreate(email);
     } catch (e: any) {
       const message = e.message as string;
+      console.log(e);
+
       setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
