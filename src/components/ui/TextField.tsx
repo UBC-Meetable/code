@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderWidth: 0,
     fontSize: 18,
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
 
   },
 });

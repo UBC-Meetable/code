@@ -21,7 +21,6 @@ import {
   Quicksand_300Light,
   Quicksand_400Regular,
   Quicksand_500Medium,
-  Quicksand_600SemiBold,
   Quicksand_700Bold,
 } from "@expo-google-fonts/quicksand";
 
@@ -52,7 +51,6 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
     Quicksand_300Light,
     Quicksand_400Regular,
     Quicksand_500Medium,
-    Quicksand_600SemiBold,
     Quicksand_700Bold,
   });
 
@@ -136,7 +134,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
                 backgroundColor: "#0000",
               }}
             >
-              <Text style={{ fontSize: 14, fontFamily: "Quicksand_500Medium" }}>
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>
                 Email Address
               </Text>
             </Layout>
@@ -171,7 +169,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
                 backgroundColor: "#0000",
               }}
             >
-              <Text style={{ fontSize: 14, fontFamily: "Quicksand_500Medium" }}>
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>
                 Password
               </Text>
             </Layout>
@@ -276,7 +274,7 @@ const styles = StyleSheet.create({
   emoji: { fontSize: 50 },
   clickable: { color: "#02A3F4" },
   bold: {
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
   },
   tosContainer: {
