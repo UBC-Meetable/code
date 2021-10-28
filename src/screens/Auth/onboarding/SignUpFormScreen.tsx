@@ -204,13 +204,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             >
               Create Profile
             </PrimaryButton>
-            <Text style={[styles.bold]}>
+            <Text>
               I already have an account!
             </Text>
-            <Text style={[styles.bold]}>
+            <Text>
               Where can I
               {" "}
-              <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
+              <Text onPress={() => onLogIn()} style={[styles.clickable]}>sign in</Text>
               ?
             </Text>
           </Layout>
