@@ -1,4 +1,36 @@
 {
+  "devr": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-meetable-devr-31247-authRole",
+      "UnauthRoleArn": "arn:aws:iam::145470991472:role/amplify-meetable-devr-31247-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::145470991472:role/amplify-meetable-devr-31247-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-meetable-devr-31247-deployment",
+      "UnauthRoleName": "amplify-meetable-devr-31247-unauthRole",
+      "StackName": "amplify-meetable-devr-31247",
+      "StackId": "arn:aws:cloudformation:us-east-1:145470991472:stack/amplify-meetable-devr-31247/6fb31470-308a-11ec-8495-12200d6c7a0f",
+      "AmplifyAppId": "dreemc78qbl81"
+    },
+    "categories": {
+      "auth": {
+        "meetablea02db50ea02db50e": {}
+      },
+      "function": {
+        "joinFriendGroup": {
+          "deploymentBucketName": "amplify-meetable-devr-31247-deployment",
+          "s3Key": "amplify-builds/joinFriendGroup-465a724c44756a386c5a-build.zip"
+        },
+        "pushNotification": {
+          "deploymentBucketName": "amplify-meetable-devr-31247-deployment",
+          "s3Key": "amplify-builds/pushNotification-62373065365a69556867-build.zip"
+        },
+        "periodicGrouping": {
+          "deploymentBucketName": "amplify-meetable-devr-31247-deployment",
+          "s3Key": "amplify-builds/periodicGrouping-4a59376265374a784867-build.zip"
+        }
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-meetable-dev-203202-authRole",
@@ -28,38 +60,6 @@
         "periodicGrouping": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
           "s3Key": "amplify-builds/periodicGrouping-504e376431584947576e-build.zip"
-        }
-      }
-    }
-  },
-  "devr": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-meetable-devr-31247-authRole",
-      "UnauthRoleArn": "arn:aws:iam::145470991472:role/amplify-meetable-devr-31247-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::145470991472:role/amplify-meetable-devr-31247-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-meetable-devr-31247-deployment",
-      "UnauthRoleName": "amplify-meetable-devr-31247-unauthRole",
-      "StackName": "amplify-meetable-devr-31247",
-      "StackId": "arn:aws:cloudformation:us-east-1:145470991472:stack/amplify-meetable-devr-31247/6fb31470-308a-11ec-8495-12200d6c7a0f",
-      "AmplifyAppId": "dreemc78qbl81"
-    },
-    "categories": {
-      "auth": {
-        "meetablea02db50ea02db50e": {}
-      },
-      "function": {
-        "joinFriendGroup": {
-          "deploymentBucketName": "amplify-meetable-devr-31247-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-465a724c44756a386c5a-build.zip"
-        },
-        "pushNotification": {
-          "deploymentBucketName": "amplify-meetable-devr-31247-deployment",
-          "s3Key": "amplify-builds/pushNotification-62373065365a69556867-build.zip"
-        },
-        "periodicGrouping": {
-          "deploymentBucketName": "amplify-meetable-devr-31247-deployment",
-          "s3Key": "amplify-builds/periodicGrouping-4a59376265374a784867-build.zip"
         }
       }
     }
