@@ -8,6 +8,15 @@ import {
   Poppins_600SemiBold,
   useFonts,
 } from "@expo-google-fonts/poppins";
+
+import {
+  Quicksand_300Light,
+  Quicksand_400Regular,
+  Quicksand_500Medium,
+  Quicksand_600SemiBold,
+  Quicksand_700Bold,
+} from "@expo-google-fonts/quicksand";
+
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -89,6 +98,11 @@ const App = () => {
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_400Regular,
+    Quicksand_300Light,
+    Quicksand_400Regular,
+    Quicksand_500Medium,
+    Quicksand_600SemiBold,
+    Quicksand_700Bold,
   });
   if (!fontsLoaded) {
     return <Blank />;

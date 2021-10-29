@@ -1,11 +1,7 @@
 import Auth from "@aws-amplify/auth";
 import { CheckBox, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
-import {
-  Dimensions,
-  KeyboardAvoidingView,
-  StyleSheet,
-} from "react-native";
+import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
@@ -16,14 +12,7 @@ import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 import AppLoading from "expo-app-loading";
-import {
-  useFonts,
-  Quicksand_300Light,
-  Quicksand_400Regular,
-  Quicksand_500Medium,
-  Quicksand_600SemiBold,
-  Quicksand_700Bold,
-} from "@expo-google-fonts/quicksand";
+import { syncClasses } from "@aws-amplify/datastore/lib-esm/datastore/datastore";
 
 const window = Dimensions.get("window");
 
@@ -48,13 +37,6 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [privacyModal, setPrivacyModal] = useState(false);
   const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
-  const [fontsLoaded, error] = useFonts({
-    Quicksand_300Light,
-    Quicksand_400Regular,
-    Quicksand_500Medium,
-    Quicksand_600SemiBold,
-    Quicksand_700Bold,
-  });
 
   const confirmForm = () => {
     setError(() => []);
@@ -106,10 +88,6 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       setLoading(false);
     }
   };
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
-  }
 
   return (
     <LoginControllerRoot>
@@ -196,7 +174,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={passwordRef}
             />
             <TextField
-              style={styles.field}
+             style={styles.field}
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
@@ -247,13 +225,12 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             >
               Create Profile
             </PrimaryButton>
+            <Text>I already have an account!</Text>
             <Text>
-              I already have an account!
-            </Text>
-            <Text>
-              Where can I
-              {" "}
-              <Text onPress={() => onLogIn()} style={[styles.clickable]}>sign in</Text>
+              Where can I{" "}
+              <Text onPress={() => onLogIn()} style={[styles.clickable]}>
+                sign in
+              </Text>
               ?
             </Text>
           </Layout>
@@ -281,6 +258,7 @@ const styles = StyleSheet.create({
     color: "#FBBA82",
     marginRight: 20,
   },
+
   emoji: { fontSize: 50 },
   clickable: { color: "#02A3F4" },
   bold: {
