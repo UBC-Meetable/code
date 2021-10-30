@@ -45,11 +45,6 @@ const LoginFlowController = () => {
       );
     case AuthState.TUTORIAL:
       return <TutorialScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />;
-    // Unused
-    case AuthState.CREATE:
-      return (
-        <SignupScreen onContinue={() => setAuthState(AuthState.SIGN_UP)} />
-      );
     case AuthState.CONFIRM_EMAIL:
       return (
         <ConfirmEmailScreen
