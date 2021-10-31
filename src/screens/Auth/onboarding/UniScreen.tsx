@@ -43,11 +43,12 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
 
   return (
     <KeyboardSwipeLayout>
-      <KeyboardAvoidingView
-        behavior="padding"
-        keyboardVerticalOffset={100}
-        style={[styles.root, { paddingTop: units.top }]}
-      >
+      {/* // <KeyboardAvoidingView
+    //   behavior="padding"
+    //   keyboardVerticalOffset={100}
+    //   style={[styles.root, { paddingTop: units.top }]}
+    // > */}
+      <>
         <BubbleBackground
           width={window.width}
           height={window.height}
@@ -72,6 +73,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           <Text style={styles.textStyle}>What is your major?</Text>
           <Input
             placeholder="Business"
+            keyboardType="default"
             value={major}
             onChangeText={(myMajor) => setMajor(myMajor)}
             style={styles.inputStyle}
@@ -105,9 +107,11 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           )}
 
         </Button>
-      </KeyboardAvoidingView>
+        {/* </KeyboardAvoidingView> */}
 
+      </>
     </KeyboardSwipeLayout>
+
 
   );
 };
