@@ -12,10 +12,12 @@ import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
 import Colors from "../../../constants/Colors";
-import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
+import TosModal, { PrivacyModal, ErrorModal } from "../../../navigation/TosModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
+//Additions
+import { Alert, Modal, Pressable, View } from "react-native";
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
@@ -37,6 +39,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [tosModal, setTosModal] = useState(false);
   const [privacyModal, setPrivacyModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
   const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
 
@@ -64,10 +67,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
   const createProfile = async () => {
     console.log("Attempting create profile");
+    setError([]); //function of type Void
+// const errorMessage =  setError([]);
 
-    setError([]);
-
-    if (!confirmForm()) return;
+    if (!confirmForm()) {
+      console.log("Errors!")
+      console.log(errors);     
+      // const [modalVisible, setErrorModal] = useState(true); 
+      setErrorModal(true);
+      return;
+    }
     console.log("Confirmed form");
 
     try {
@@ -218,6 +227,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       </KeyboardSwipeLayout>
       <TosModal open={tosModal} setOpen={setTosModal} title="Terms of Service" />
       <PrivacyModal open={privacyModal} setOpen={setPrivacyModal} title="Privacy Policy" />
+      <ErrorModal open={errorModal} setOpen={setErrorModal} title="Error signing up" errors={errors} />
     </LoginControllerRoot>
 
   );
@@ -298,5 +308,52 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
+
+const stylesAdd = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center"
+  }
+});
+
+
+
 
 export default SignUpFormScreen;

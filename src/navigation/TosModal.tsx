@@ -4,6 +4,7 @@ import {
 import React from "react";
 import { Button, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import Colors from "../constants/Colors";
 import {
   PRIV_BODY_1, PRIV_BODY_10,
   PRIV_BODY_11, PRIV_BODY_12, PRIV_BODY_2,
@@ -43,6 +44,12 @@ const Body = ({ body }: {body: string}) => (
   </Text>
 );
 
+const List = ({ list }: {list: []}) => (
+  <Text style={modalStyles.legalBody}>
+    {list}
+  </Text>
+);
+
 type HeaderProps = {
   title: string;
 }
@@ -68,6 +75,14 @@ type TosModalProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string;
 };
+
+type ErrorsModalProps = {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  title: string;
+  errors: string[]; 
+};
+
 const TosModal = ({ open, setOpen, title = "" }:TosModalProps) => (
   <Modal
     visible={open}
@@ -165,6 +180,30 @@ const PrivacyModal = ({ open, setOpen, title = "" }:TosModalProps) => (
   </Modal>
 );
 
+export const ErrorModal = ({ open, setOpen, title = "", errors}:ErrorsModalProps) => (
+  <Modal
+    visible={open}
+    backdropStyle={modalStyles.backdrop}
+    style={modalStyles.error_innerModal}
+    onBackdropPress={() => {
+      setOpen(false);
+    }}
+  >
+    <Card
+      disabled
+      style={modalStyles.container}
+      footer={() => <Footer onPress={() => setOpen(false)} />}
+      header={() => <Header title={title} />}
+    >
+      <ScrollView style={modalStyles.scroll}>
+        <Title title="Please check the following errors" />
+        { errors.map((item, key)=>( <Text style={{color: "red"}} key={key}> **{ item } </Text>))}
+
+      </ScrollView>
+    </Card>
+  </Modal>
+);
+
 const modalStyles = StyleSheet.create({
   scroll: {
     height: "90%",
@@ -174,12 +213,19 @@ const modalStyles = StyleSheet.create({
     width: "90%",
     height: "60%",
   },
+
+  error_innerModal: {
+    width: "90%",
+    height: "40%",
+  },
+
   container: {
     height: "100%",
     width: "100%",
     flex: 1,
     fontFamily: "Poppins_500Medium",
   },
+
   backdrop: {
     flex: 1,
     flexDirection: "column",
@@ -199,6 +245,7 @@ const modalStyles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
   },
 });
+
 
 export default TosModal;
 export { PrivacyModal };
