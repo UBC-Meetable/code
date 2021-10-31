@@ -16,8 +16,6 @@ import TosModal, { PrivacyModal, ErrorModal } from "../../../navigation/TosModal
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
-//Additions
-import { Alert, Modal, Pressable, View } from "react-native";
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
@@ -67,13 +65,11 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
   const createProfile = async () => {
     console.log("Attempting create profile");
-    setError([]); //function of type Void
-// const errorMessage =  setError([]);
+    setError([]);
 
     if (!confirmForm()) {
       console.log("Errors!")
       console.log(errors);     
-      // const [modalVisible, setErrorModal] = useState(true); 
       setErrorModal(true);
       return;
     }
