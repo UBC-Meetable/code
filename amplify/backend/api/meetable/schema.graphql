@@ -15,12 +15,14 @@ type User
   university: String!
   year: Int!
   major: String
+  interests: [String]
   courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
   expoPushToken: String
   multipleGroupsOptIn: Boolean # undefined interpreted same as false
 }
+
 
 # Course Groups
 type CourseGroup
