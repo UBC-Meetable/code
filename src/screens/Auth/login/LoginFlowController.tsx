@@ -13,6 +13,7 @@ import LandingScreen from "./LandingScreen";
 
 const LoginFlowController = () => {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");
   const [fromSignUp, setFromSignUp] = useState(false);
   const [authState, setAuthState] = useState<AuthState>(
@@ -55,15 +56,17 @@ const LoginFlowController = () => {
         <ConfirmEmailScreen
           fromSignUp={fromSignUp}
           onBack={() => setAuthState(AuthState.LOGIN)}
-          initialEmail={email}
+          email={email}
+          password={password}
           onConfirmCode={() => setAuthState(AuthState.LOGIN)}
         />
       );
     case AuthState.SIGN_UP:
       return (
         <SignUpFormScreen
-          onCreate={(initEmail: string) => {
+          onCreate={(initEmail: string, initPassword: string) => {
             setEmail(() => initEmail);
+            setPassword(() => initPassword);
             setFromSignUp(() => true);
             setAuthState(AuthState.CONFIRM_EMAIL);
           }}
