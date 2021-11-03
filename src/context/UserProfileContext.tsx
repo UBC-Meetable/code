@@ -14,6 +14,7 @@ export type UserInfoType = joinFriendGroupInput & {
     firstName: string | null | undefined;
     lastName: string | null | undefined;
     expoPushToken: string | null | undefined,
+    multipleGroupsOptIn: boolean | null | undefined,
   };
 };
 export type UserSchoolInfoContextType = {
@@ -43,6 +44,7 @@ export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
                 firstName: userInfo.firstName,
                 lastName: userInfo.lastName,
                 expoPushToken: userInfo.expoPushToken,
+                multipleGroupsOptIn: userInfo.multipleGroupsOptIn,
               },
               id: userInfo.id,
               university: userInfo.university || "",
