@@ -8,8 +8,8 @@ defaults:
   run:
     working-directory: src
 jobs:
-  test:
-    name: Lint
+  deploy:
+    name: Deploy Amplify Preview
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -61,6 +61,7 @@ jobs:
           cat aws-exports.js
 
   app_deploy_preview:
+    needs: deploy
     name: App Deploy Preview
     runs-on: ubuntu-latest
     steps:
