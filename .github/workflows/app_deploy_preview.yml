@@ -69,7 +69,7 @@ jobs:
           BackendEnvARN: ${{ secrets.BACKENDENVARN }}
           AWS_REGION: us-east-1
       - name: App Deploy Preview
-      - uses: expo/expo-github-action@v5
+        uses: expo/expo-github-action@v5
         with:
           expo-packager: npm
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
