@@ -26,7 +26,8 @@ jobs:
             ${{ runner.os }}-build-	
             ${{ runner.os }}-
       - name: Install Packages
-        run: npm install
+      - run: npm install
+      - run: npm install @aws-amplify/cli
       - name: Check Lint
         run: npm run lint
 
@@ -54,9 +55,33 @@ jobs:
         AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
         BackendEnvARN: ${{ secrets.BACKENDENVARN }}
         AWS_REGION: 'us-east-1'
+  
+  generate_aws_exports:
+    name: Generate AWS Exports
+    needs: init_amplify
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: set branchname env
+      id: setenvname
+      run: |
+        # use GITHUB_HEAD_REF that is set to PR source branch
+        echo "##[set-output name=setbranchname;]$(echo ${GITHUB_HEAD_REF})"
+
+    - name: get_aws_exports
+      run: amplify env checkout ${{ steps.setenvname.outputs.setbranchname }}
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+        BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+        AWS_REGION: 'us-east-1'
 
   app_deploy_preview:
     name: App Deploy Preview
+    needs: generate_aws_exports
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
