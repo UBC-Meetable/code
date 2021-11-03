@@ -46,10 +46,34 @@ jobs:
       #     AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
       #     BackendEnvARN: ${{ secrets.BACKENDENVARN }}
       #     AWS_REGION: 'us-east-1'
-      - name: Configure Amplify Backend
+      - name: Create Amplify Backend
         uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: add_env
+          amplify_env: test
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+          BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+          AWS_REGION: us-east-1
+      - name: Configure Amplify Backend
+        uses: ambientlight/amplify-cli-action@0.3.0
+        with:
+          amplify_command: configure
+          amplify_env: test
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+          BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+          AWS_REGION: us-east-1
+      - name: Push Amplify Backend
+        uses: ambientlight/amplify-cli-action@0.3.0
+        with:
+          amplify_command: push
           amplify_env: test
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
