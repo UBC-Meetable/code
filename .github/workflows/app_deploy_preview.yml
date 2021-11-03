@@ -34,6 +34,7 @@ jobs:
           echo "##[set-output name=setbranchname;]$(echo ${GITHUB_HEAD_REF})"
       - name: Create Amplify Backend
         uses: ambientlight/amplify-cli-action@0.3.0
+        continue-on-error: true
         with:
           amplify_command: add_env
           amplify_env: test
