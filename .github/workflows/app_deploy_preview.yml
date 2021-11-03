@@ -27,8 +27,8 @@ jobs:
             ${{ runner.os }}-
       - name: Install Packages
         run: npm install
-      - name: Install Amplify CLI
-        run: npm install @aws-amplify/cli
+      # - name: Install Amplify CLI
+      #   run: npm install @aws-amplify/cli
       - name: Get Environment Name
         id: setenvname
         run: |
@@ -50,7 +50,7 @@ jobs:
         uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: add_env
-          amplify_env: ${{ steps.setenvname.outputs.setbranchname }}
+          amplify_env: test
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
