@@ -48,7 +48,7 @@ jobs:
       - name: Install Amplify CLI & Deploying Project
         run: |
           npm install -g @aws-amplify/cli --unsafe-perm=true
-          amplify init --appId ${{ secrets.AMPLIFYAPPID }} --envName test --region us-east-1 --yes
+          amplify checkout test --region us-east-1
           amplify push --appId ${{ secrets.AMPLIFYAPPID }} --envName test --region us-east-1 --yes
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
