@@ -45,11 +45,11 @@ jobs:
           AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
           BackendEnvARN: ${{ secrets.BACKENDENVARN }}
           AWS_REGION: us-east-1
-      - name: Install Amplify CLI & Deploying Project
-        run: |
-          npm install -g @aws-amplify/cli --unsafe-perm=true
-          amplify env checkout test --region us-east-1
-          amplify push --appId ${{ secrets.AMPLIFYAPPID }} --envName test --region us-east-1 --yes
+      - name: Configure Amplify Backend
+        uses: ambientlight/amplify-cli-action@0.3.0
+        with:
+          amplify_command: configure
+          amplify_env: test
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -57,30 +57,18 @@ jobs:
           AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
           BackendEnvARN: ${{ secrets.BACKENDENVARN }}
           AWS_REGION: us-east-1
-      # - name: Configure Amplify Backend
-      #   uses: ambientlight/amplify-cli-action@0.3.0
-      #   with:
-      #     amplify_command: configure
-      #     amplify_env: test
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
-      #     BackendEnvARN: ${{ secrets.BACKENDENVARN }}
-      #     AWS_REGION: us-east-1
-      # - name: Push Amplify Backend
-      #   uses: ambientlight/amplify-cli-action@0.3.0
-      #   with:
-      #     amplify_command: push
-      #     amplify_env: test
-      #   env:
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
-      #     BackendEnvARN: ${{ secrets.BACKENDENVARN }}
-      #     AWS_REGION: us-east-1
+      - name: Push Amplify Backend
+        uses: ambientlight/amplify-cli-action@0.3.0
+        with:
+          amplify_command: push
+          amplify_env: test
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+          BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+          AWS_REGION: us-east-1
       - name: App Deploy Preview
         uses: expo/expo-github-action@v5
         with:
