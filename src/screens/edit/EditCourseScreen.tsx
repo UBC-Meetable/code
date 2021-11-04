@@ -1,11 +1,11 @@
 import {
-  Button, Input, Layout, Text,
+  Button, Layout, Text,
 } from "@ui-kitten/components";
-import React, { useContext, useRef, useState } from "react";
-import { Alert } from "react-native";
+import React, { useContext, useState } from "react";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
-import leaveCourseGroup from "../../calls/leaveCourseGroup";
+import callDeleteCourseGroupConnection from "../../calls/leaveCourseGroup";
+import fetchCourseGroupConnection from "../../calls/getCourseGroupConnection";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SimpleCourseGroup } from "../../types";
@@ -27,7 +27,7 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
   const [currCode, setCode] = useState("");
   const [currSection, setSection] = useState("");
   const user = useAuthenticatedUser();
-  const markedForDeletion = {};
+  let markedForDeletion = new Set<SimpleCourseGroup>();
 
   const generateNewGroup = ({
     code,
@@ -68,39 +68,24 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== course.groupID));
   }
 
-  async function deleteExistingCourse(group: SimpleCourseGroup) {
-    return new Promise((resolve) => {
-      Alert.alert("Leave Course Group?", "Are you sure you want to leave this course group?",
-        [
-          {
-            text: "Yes",
-            onPress: () => {
-              console.log("button pressed");
-              resolve(true);
-            },
-          },
-          {
-            text: "No",
-            onPress: () => { resolve(false); },
-            style: "cancel",
-          },
-        ]);
-      console.log("deleteExistingCourse called");
-    });
-  }
-
   const handleSave = async () => {
-    const promises = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
+    const joinCourses = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
       generateNewGroup(course))) as
       Promise<CourseGroup>[];
-
-    const results = await Promise.all(promises);
-
+    const results = await Promise.all(joinCourses);
     const handleCourseGroup = (result: CourseGroup) => {
       setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== result.groupID));
       setCourses([...courses, simplifyCourseGroup(result)]);
     };
     results.forEach(handleCourseGroup);
+
+    // leave courses
+    setCourses(courses.filter((course) => !markedForDeletion.has(course)));
+    const connectionsToDelete = await Promise.all([...markedForDeletion]
+      .map((group) => fetchCourseGroupConnection(user.attributes.sub, group.groupID)));
+    await Promise.all(connectionsToDelete
+      .map((connection) => callDeleteCourseGroupConnection({ id: connection.id! })));
+    markedForDeletion = new Set(); // clear data
   };
 
   const renderCourses = (
@@ -131,10 +116,14 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
         >
           <Button
             appearance="ghost"
-            onPress={async () => {
-              console.log("before awaiting");
-              const leave = await deleteExistingCourse(group);
-              if (leave) await leaveCourseGroup({ id: group.groupID });
+            onPress={() => {
+              if (markedForDeletion.has(group)) {
+                markedForDeletion.delete(group);
+              } else {
+                markedForDeletion.add(group);
+              }
+              // const leave = await deleteExistingCourse(group);
+              // if (leave) await leaveCourseGroup({ id: group.groupID });
             }}
           >
             {(evaProps: any) => (

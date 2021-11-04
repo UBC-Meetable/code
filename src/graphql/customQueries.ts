@@ -121,3 +121,11 @@ query GetUserQuizzes($id: String!) {
   }
 }
 `;
+
+export const getCourseGroupConnectionByUserAndGroup = /* GraphQL */ `
+  query CourseGroupByUser($userID: String!, $groupID: String!) {
+    CourseGroupByUser(userID: $userID, groupID: $groupID) {
+      id
+    }
+  }
+`;

@@ -1,15 +1,12 @@
 import { API } from "aws-amplify";
 import { GraphQLResult } from "@aws-amplify/api";
 import {
-  CourseGroup,
-  CourseGroupConnection,
   DeleteCourseGroupConnectionInput,
-  GetCourseGroupConnectionQueryVariables,
   DeleteCourseGroupConnectionMutation,
 } from "../API";
 import { deleteCourseGroupConnection } from "../graphql/mutations";
 
-const leaveCourseGroup = async (input: DeleteCourseGroupConnectionInput):
+const callDeleteCourseGroupConnection = async (input: DeleteCourseGroupConnectionInput):
 Promise<GraphQLResult<DeleteCourseGroupConnectionMutation>> => {
   console.log("called");
   return API.graphql({
@@ -20,4 +17,4 @@ Promise<GraphQLResult<DeleteCourseGroupConnectionMutation>> => {
   }) as Promise<GraphQLResult<DeleteCourseGroupConnectionMutation>>;
 };
 
-export default leaveCourseGroup;
+export default callDeleteCourseGroupConnection;
