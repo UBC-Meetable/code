@@ -80,7 +80,9 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
           expo-cache: true
       - name: Expo Publish Channel
-        run: expo publish --non-interactive --release-channel pr${{ github.event.number }}
+        run: |
+          export NODE_OPTIONS=--max_old_space_size=4096
+          expo publish --non-interactive --release-channel pr${{ github.event.number }}
       - name: Add Comment To PR
         uses: mshick/add-pr-comment@v1
         env:
