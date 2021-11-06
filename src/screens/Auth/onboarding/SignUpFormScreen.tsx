@@ -12,15 +12,16 @@ import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
 import Colors from "../../../constants/Colors";
-import TosModal, { PrivacyModal, ErrorModal } from "../../../navigation/TosModal";
+import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
+import { ErrorModal } from "../../../navigation/ErrorsModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-    onLogIn: () => void,
-    onCreate: (email: string) => void,
+  onLogIn: () => void,
+  onCreate: (email: string) => void,
 }
 
 // TODO error messages, disabled styles, theme
@@ -59,7 +60,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
     if (!password) {
       setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
-    }  
+    }
     return flag;
   };
 
@@ -68,7 +69,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
     setError([]);
 
     if (!confirmForm()) {
-      console.error(errors);     
+      console.error(errors);
       setErrorModal(true);
       return;
     }
@@ -85,7 +86,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       console.log(user);
 
       onCreate(email);
-    } catch (e:any) {
+    } catch (e: any) {
       const message = e.message as string;
       console.log(e);
 
