@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Button, Layout } from "@ui-kitten/components";
 import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import CourseGroups from "../screens/CourseGroups";
 import { GroupStackParamList } from "../types";
@@ -17,8 +17,6 @@ const BooksIcon = () => (
     <Icon name="book" size={30} style={{ margin: -30 }} />
   </Layout>
 );
-
-const window = Dimensions.get("window");
 
 const CourseGroupStackNavigator = () => (
   <GroupTabStack.Navigator

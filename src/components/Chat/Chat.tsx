@@ -1,7 +1,6 @@
 import { Spinner } from "@ui-kitten/components";
 import { Analytics, Storage } from "aws-amplify";
 import * as ImagePicker from "expo-image-picker";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import React, {
   useContext,
   useEffect, useRef, useState,
@@ -10,7 +9,6 @@ import {
   KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as FileSystem from "expo-file-system";
 import { FileAttachment, FileType } from "../../API";
 import sendMessageToGroup from "../../calls/sendMessageToGroup";
 import Colors from "../../constants/Colors";
@@ -32,7 +30,6 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
   const [pendingMessages, setPendingMessages] = useState<ChatMessageWithPending[]>([]);
   const [textLoading, setTextLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [previewURI, setPreviewURI] = useState<string | null>(null);
   const {
     groupID, messages, loading, getMessages, reachedEnd,
   } = useContext(MessagesContext);
@@ -101,7 +98,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      console.warn("Permission to access camera roll is required!");
       return;
     }
 

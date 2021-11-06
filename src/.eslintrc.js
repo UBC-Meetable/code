@@ -17,7 +17,7 @@ module.exports = {
     "no-use-before-define": "off",
     quotes: ["warn", "double"],
     "react/no-array-index-key": "off",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "arrow-body-style": "off",
     "react/self-closing-comp": "warn",
     "react/jsx-filename-extension": [
@@ -36,6 +36,7 @@ module.exports = {
     "react/no-unescaped-entities": "off",
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "global-require": "off",
+    "@typescript-eslint/no-unused-vars": "warn",
   },
   settings: {
     "import/resolver": {

@@ -1,7 +1,5 @@
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
-import React, { useContext, useRef, useState } from "react";
+import { Button, Layout, Text } from "@ui-kitten/components";
+import React, { useContext, useState } from "react";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
@@ -15,15 +13,12 @@ import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 // Todo: componentize file
 /** TODO: Cache user courses so we don't need to fetch so often. */
 
-type EditCourseScreenProps = {}
-
-const EditCourseScreen = (props: EditCourseScreenProps) => {
+const EditCourseScreen = () => {
   const courseGroups = useContext(CourseGroupsContext);
   const [courses, setCourses] = useState(simplifyCourseGroups(courseGroups));
   const [newCourses, setNewCourses] = useState([] as SimpleCourseGroup[]);
   const [currTitle, setTitle] = useState("");
   const [currCode, setCode] = useState("");
-  const [currSection, setSection] = useState("");
   const user = useAuthenticatedUser();
 
   const generateNewGroup = ({
@@ -57,7 +52,6 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     setNewCourses([...newCourses, newGroup]);
     setCode("");
     setTitle("");
-    setSection("");
   }
 
   function deleteCourse(course: SimpleCourseGroup) {

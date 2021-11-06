@@ -1,12 +1,10 @@
 /* eslint-disable no-array-constructor */
 /* eslint-disable no-param-reassign */
 import { Layout } from "@ui-kitten/components";
-import * as FileSystem from "expo-file-system";
 import _ from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import QuizButtons from "../../../components/QuizButtons";
 import QuizSwipe from "../../../components/QuizSwipe";
 import { QuestionType, SwipeActions } from "../../../types";
@@ -26,12 +24,10 @@ const QuizScreen = ({
   const [responses, setResponses] = useState(
     DEV_SKIP ? sampleData.responses : ([] as QuestionType[]),
   );
-  const quizPath = `${FileSystem.documentDirectory}quiz`;
   const swiperRef = useRef<Swiper<QuestionType>>(null);
   const [cardIndex, setCardIndex] = useState(0);
   const [remainingLoves, setRemainingLoves] = useState(3);
-  const [responseStack, setResponseStack] = useState([] as SwipeActions[]);
-  const units = useSafeAreaInsets();
+  const [responseStack] = useState([] as SwipeActions[]);
   const debouncedSwipeHandler = _.debounce(
     (action: SwipeActions) => {
       switch (action) {
@@ -45,7 +41,7 @@ const QuizScreen = ({
         swiperRef.current?.swipeLeft();
         break;
       case SwipeActions.UNDO:
-        swiperRef.current?.swipeBack((i) => {
+        swiperRef.current?.swipeBack(() => {
           const prevResponse = responseStack.pop() as SwipeActions;
 
           if (prevResponse === SwipeActions.LOVE) {

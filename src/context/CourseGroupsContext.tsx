@@ -4,7 +4,6 @@ import React, {
 } from "react";
 import Observable from "zen-observable-ts";
 import { GroupType, OnCreateChatMessageSubscription, OnCreateCourseGroupConnectionSubscription } from "../API";
-import fetchCourseGroup from "../calls/fetchCourseGroup";
 import fetchUserCourses from "../calls/fetchUserCourses";
 import { onCreateChatMessage, onCreateCourseGroupConnection } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";

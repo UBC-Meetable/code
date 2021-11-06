@@ -1,11 +1,7 @@
 import Auth from "@aws-amplify/auth";
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
-import LoginPageBubbleTop from "../assets/images/login-page-bubble-top.svg";
 import LoginControllerRoot from "../components/ui/LoginControllerRoot";
 import Colors from "../constants/Colors";
 import BottomText from "./Auth/ui/BottomText";
@@ -30,8 +26,7 @@ const ConfirmEmailScreen = ({
   fromSignUp,
 }: SignUpFormScreenProps) => {
   const [code, setCode] = useState("");
-  const [errors, setError] = useState<string[]>([]);
-  const units = useSafeAreaInsets();
+  // const [errors, setError] = useState<string[]>([]);
 
   useEffect(() => {
     if (initialEmail && !fromSignUp) {
@@ -39,10 +34,10 @@ const ConfirmEmailScreen = ({
     }
   }, [initialEmail]);
   const confirmForm = () => {
-    setError(() => []);
+    // setError(() => []);
     let flag = true;
     if (!code) {
-      setError((prevErrors) => [...prevErrors, "Code cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Code cannot be blank"]);
       flag = false;
     }
     return flag;
@@ -58,14 +53,14 @@ const ConfirmEmailScreen = ({
   };
 
   const createProfile = async () => {
-    setError([]);
+    // setError([]);
     if (!confirmForm()) return;
     try {
       await Auth.confirmSignUp(initialEmail, code);
       onConfirmCode();
     } catch (e:any) {
-      const message = e.message as string;
-      setError((prevErrors) => [...prevErrors, message]);
+      // const message = e.message as string;
+      // setError((prevErrors) => [...prevErrors, message]);
     }
   };
 

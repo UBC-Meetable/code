@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import * as FileSystem from "expo-file-system";
 import { Analytics, Storage } from "aws-amplify";
 import { Spinner } from "@ui-kitten/components";
-import { Image } from "react-native";
 import ExpoFastImage from "expo-fast-image";
 import { FileAttachment } from "../../API";
 

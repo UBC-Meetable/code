@@ -1,9 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Layout } from "@ui-kitten/components";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import React from "react";
 import { Image, View } from "react-native";
-import { Icon } from "react-native-elements";
 import { FileAttachment } from "../../API";
 
 type FilePreviewProps = {

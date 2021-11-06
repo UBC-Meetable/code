@@ -6,7 +6,6 @@ import {
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Chip } from "react-native-paper";
 import { User } from "../../API";
 import reportUser from "../../calls/reportUser";
 import Colors from "../../constants/Colors";
