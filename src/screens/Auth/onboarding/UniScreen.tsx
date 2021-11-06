@@ -19,6 +19,9 @@ import { SignUpParamList } from "../../../types";
 import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
+// imported platform to use it to specify ios in avoidkeyboardview
+import {Platform} from 'react-native';
+
 const window = Dimensions.get("window");
 
 const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParamList, "UniScreen"> }) => {
@@ -43,12 +46,12 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
 
   return (
     <KeyboardSwipeLayout>
-      {/* // <KeyboardAvoidingView
-    //   behavior="padding"
-    //   keyboardVerticalOffset={100}
-    //   style={[styles.root, { paddingTop: units.top }]}
-    // > */}
-      <>
+      
+      <KeyboardAvoidingView
+       behavior={Platform.OS === "ios" ? "padding" : "height"}
+       keyboardVerticalOffset={100}
+       style={[styles.root, { paddingTop: units.top }]}>
+
         <BubbleBackground
           width={window.width}
           height={window.height}
@@ -107,9 +110,8 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           )}
 
         </Button>
-        {/* </KeyboardAvoidingView> */}
-
-      </>
+        </KeyboardAvoidingView> 
+      
     </KeyboardSwipeLayout>
 
 
