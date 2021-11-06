@@ -122,12 +122,26 @@ query GetUserQuizzes($id: String!) {
 }
 `;
 
-// export const getCourseGroupConnectionByUserAndGroup = /* GraphQL */ `
-//   query getCourseGroupConnectionByUserAndGroup($userID: ModelStringKeyConditionInput, $groupID: ModelStringKeyConditionInput) {
-//     CourseGroupByUser(userID: $userID, groupID: $groupID) {
-//       CourseGroupConnection {
-//         id
-//       }
-//     }
-//   }
-// `;
+export const getCourseGroupConnectionIdOnly = /* GraphQL */ `
+  query CourseGroupByUserIdOnly(
+    $userID: String
+    $groupID: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelCourseGroupConnectionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    CourseGroupByUser(
+      userID: $userID
+      groupID: $groupID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+      }
+    }
+  }
+`;

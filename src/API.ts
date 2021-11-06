@@ -156,6 +156,87 @@ export type QAPair = {
   a?: string,
 };
 
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelCourseGroupConnectionFilterInput = {
+  id?: ModelIDInput | null,
+  groupID?: ModelStringInput | null,
+  userID?: ModelStringInput | null,
+  and?: Array< ModelCourseGroupConnectionFilterInput | null > | null,
+  or?: Array< ModelCourseGroupConnectionFilterInput | null > | null,
+  not?: ModelCourseGroupConnectionFilterInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export enum ModelAttributeTypes {
+  binary = "binary",
+  binarySet = "binarySet",
+  bool = "bool",
+  list = "list",
+  map = "map",
+  number = "number",
+  numberSet = "numberSet",
+  string = "string",
+  stringSet = "stringSet",
+  _null = "_null",
+}
+
+
+export type ModelSizeInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
+export type ModelStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type pushNotificationInput = {
   groupID?: string | null,
   userID2?: string | null,
@@ -202,46 +283,6 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
-};
-
-export type ModelStringInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
-export enum ModelAttributeTypes {
-  binary = "binary",
-  binarySet = "binarySet",
-  bool = "bool",
-  list = "list",
-  map = "map",
-  number = "number",
-  numberSet = "numberSet",
-  string = "string",
-  stringSet = "stringSet",
-  _null = "_null",
-}
-
-
-export type ModelSizeInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
 };
 
 export type ModelUserStateInput = {
@@ -580,12 +621,6 @@ export type ModelUserFilterInput = {
   not?: ModelUserFilterInput | null,
 };
 
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
-
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items?:  Array<User | null > | null,
@@ -634,22 +669,6 @@ export type ModelReportFilterInput = {
   not?: ModelReportFilterInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelReportConnection = {
   __typename: "ModelReportConnection",
   items?:  Array<Report | null > | null,
@@ -684,15 +703,6 @@ export type ModelChatMessageFilterInput = {
   not?: ModelChatMessageFilterInput | null,
 };
 
-export type ModelCourseGroupConnectionFilterInput = {
-  id?: ModelIDInput | null,
-  groupID?: ModelStringInput | null,
-  userID?: ModelStringInput | null,
-  and?: Array< ModelCourseGroupConnectionFilterInput | null > | null,
-  or?: Array< ModelCourseGroupConnectionFilterInput | null > | null,
-  not?: ModelCourseGroupConnectionFilterInput | null,
-};
-
 export type ModelFriendGroupConnectionFilterInput = {
   id?: ModelIDInput | null,
   groupID?: ModelStringInput | null,
@@ -717,16 +727,6 @@ export type ModelIntKeyConditionInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
 };
 
 export type GetUserCoursesQueryVariables = {
@@ -880,6 +880,25 @@ export type GetUserQuizzesQuery = {
         id: string,
       } | null > | null,
     } | null,
+  } | null,
+};
+
+export type CourseGroupByUserIdOnlyQueryVariables = {
+  userID?: string | null,
+  groupID?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCourseGroupConnectionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CourseGroupByUserIdOnlyQuery = {
+  CourseGroupByUser?:  {
+    __typename: "ModelCourseGroupConnectionConnection",
+    items?:  Array< {
+      __typename: "CourseGroupConnection",
+      id: string,
+    } | null > | null,
   } | null,
 };
 

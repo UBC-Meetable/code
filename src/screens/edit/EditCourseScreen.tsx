@@ -87,8 +87,9 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     setCourses(courses.filter((course) => !markedForDeletion.has(course)));
     for (const group of [...markedForDeletion]) {
       try {
-        const connectionToDelete = await fetchCourseGroupConnection(user.attributes.sub, group.groupID);
-        await callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
+        const connectionToDelete = await fetchCourseGroupConnection(user.attributes.sub, { eq: group.groupID });
+        console.log(connectionToDelete);
+        const res = await callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
       } catch (err) {
         console.log("failed to leave course", err);
       }
