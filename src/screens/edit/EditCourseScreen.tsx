@@ -1,8 +1,11 @@
+/* eslint-disable max-len */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
 import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
-import { CourseGroup } from "../../API";
+import { CourseGroup, CourseGroupConnection } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import callDeleteCourseGroupConnection from "../../calls/leaveCourseGroup";
 import fetchCourseGroupConnection from "../../calls/getCourseGroupConnection";
@@ -12,6 +15,7 @@ import { SimpleCourseGroup } from "../../types";
 import EditCourseBody from "./EditCourseBody";
 import editCourseStyles from "./editCourseStyles";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
+import { getCourseGroupConnection } from "../../graphql/queries";
 
 /** TODO: make styling more dynamic */
 // Todo: componentize file
@@ -81,10 +85,14 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
 
     // leave courses
     setCourses(courses.filter((course) => !markedForDeletion.has(course)));
-    const connectionsToDelete = await Promise.all([...markedForDeletion]
-      .map((group) => fetchCourseGroupConnection(user.attributes.sub, group.groupID)));
-    await Promise.all(connectionsToDelete
-      .map((connection) => callDeleteCourseGroupConnection({ id: connection.id! })));
+    for (const group of [...markedForDeletion]) {
+      try {
+        const connectionToDelete = await fetchCourseGroupConnection(user.attributes.sub, group.groupID);
+        await callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
+      } catch (err) {
+        console.log("failed to leave course", err);
+      }
+    }
     markedForDeletion = new Set(); // clear data
   };
 
