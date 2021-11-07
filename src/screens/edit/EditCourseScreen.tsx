@@ -131,8 +131,6 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
               } else {
                 markedForDeletion.add(group);
               }
-              // const leave = await deleteExistingCourse(group);
-              // if (leave) await leaveCourseGroup({ id: group.groupID });
             }}
           >
             {(evaProps: any) => (
