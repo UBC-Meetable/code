@@ -1,9 +1,8 @@
 import { Layout } from "@ui-kitten/components";
-import React, { ReactNode, useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Avatar, Chip } from "react-native-paper";
-import { CourseGroupConnection, User } from "../../API";
+import { User } from "../../API";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../../types";
 import PictureStack from "../PictureStack";

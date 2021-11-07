@@ -1,6 +1,7 @@
+import "react-native-get-random-values";
 import { API } from "aws-amplify";
 import { v4 as uuid } from "uuid";
-import { CreateFriendGroupInput, FriendGroup } from "../API";
+import { FriendGroup } from "../API";
 import { createFriendGroupConnection } from "../graphql/mutations";
 import createFriendGroup from "./createFriendGroup";
 import fetchFriendGroup from "./fetchFriendGroup";

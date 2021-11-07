@@ -7,7 +7,6 @@ import Observable from "zen-observable-ts";
 import {
   GroupType, OnCreateChatMessageSubscription, OnCreateCourseGroupConnectionSubscription, OnDeleteCourseGroupConnectionSubscription,
 } from "../API";
-import fetchCourseGroup from "../calls/fetchCourseGroup";
 import fetchUserCourses from "../calls/fetchUserCourses";
 import { onCreateChatMessage, onCreateCourseGroupConnection, onDeleteCourseGroupConnection } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
@@ -112,6 +111,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
       },
       error: (error:any) => console.warn(error),
     });
+    return () => subscription.unsubscribe();
   });
 
   const { children } = props;

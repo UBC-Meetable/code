@@ -1,7 +1,5 @@
-import { Layout, Text, useTheme } from "@ui-kitten/components";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
+import { Layout, useTheme } from "@ui-kitten/components";
 import React from "react";
-import { Image } from "react-native";
 import { FileAttachment } from "../../API";
 import FilePreview from "./FilePreview";
 

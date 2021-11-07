@@ -1,20 +1,16 @@
 import React, { ReactNode, useState } from "react";
-import {
-  Text, Layout, Input, ApplicationProvider,
-} from "@ui-kitten/components";
+import { Text, Layout, Input } from "@ui-kitten/components";
 import { SafeAreaView, ScrollView } from "react-native";
-import * as eva from "@eva-design/eva";
 import editCourseStyles from "./editCourseStyles";
 import TextField from "../../components/ui/TextField";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { SimpleCourseGroup } from "../../types";
-import customOrangeTheme from "./customOrangeTheme.json";
 
 type EditCourseBodyProps = {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setCode: React.Dispatch<React.SetStateAction<string>>;
   addCourse: () => void;
-  renderCourses: (courses: SimpleCourseGroup[], isNew?: boolean,) => ReactNode;
+  renderCourses: (courses: SimpleCourseGroup[], isNew?: boolean) => ReactNode;
   handleSave: () => Promise<void>;
   currCode: string;
   currTitle: string;

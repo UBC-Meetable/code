@@ -1,15 +1,11 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useState } from "react";
-import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import ImageView from "react-native-image-viewing";
-import { ChatMessage, ChatMessageWithPending } from "../../types";
+import { ChatMessageWithPending } from "../../types";
 import styles from "../styles/MessageStyles";
 import CachedImage from "./CachedImage";
 
-type PreviewURI = {
-  uri: string;
-  index: number;
-}
 const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
   const [visible, setVisible] = React.useState(false);
   const [index, setIndex] = useState(0);

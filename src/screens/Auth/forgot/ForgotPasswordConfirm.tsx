@@ -4,7 +4,6 @@ import React from "react";
 import {
   Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
 } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ForgotBubble from "../../../assets/images/forgot-bubble.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
@@ -25,25 +24,23 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
   const [code, setCode] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [errors, setError] = React.useState<string[]>([]);
-  const [currEmail, setCurrEmail] = React.useState(email);
-  const units = useSafeAreaInsets();
+  // const [errors, setError] = React.useState<string[]>([]);
 
   const submit = async () => {
-    setError([]);
+    // setError([]);
     if (!password || !confirmPassword) {
-      setError(["Password and Confirm Password are required"]);
+      // setError(["Password and Confirm Password are required"]);
       return;
     }
     if (confirmPassword !== password) {
-      setError((prevErrors) => [...prevErrors, "Passwords don't match"]);
+      // setError((prevErrors) => [...prevErrors, "Passwords don't match"]);
       return;
     }
     try {
       await Auth.forgotPasswordSubmit(email, code, password);
       afterSubmit();
     } catch (error) {
-      setError([`Error: ${error.message}`]);
+      // setError([`Error: ${error.message}`]);
     }
   };
   if (!email) {

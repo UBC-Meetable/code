@@ -5,7 +5,7 @@ import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
-import { CourseGroup, CourseGroupConnection } from "../../API";
+import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import callDeleteCourseGroupConnection from "../../calls/leaveCourseGroup";
 import fetchCourseGroupConnection from "../../calls/getCourseGroupConnection";
@@ -15,21 +15,17 @@ import { SimpleCourseGroup } from "../../types";
 import EditCourseBody from "./EditCourseBody";
 import editCourseStyles from "./editCourseStyles";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
-import { getCourseGroupConnection } from "../../graphql/queries";
 
 /** TODO: make styling more dynamic */
 // Todo: componentize file
 /** TODO: Cache user courses so we don't need to fetch so often. */
 
-type EditCourseScreenProps = {}
-
-const EditCourseScreen = (props: EditCourseScreenProps) => {
+const EditCourseScreen = () => {
   const courseGroups = useContext(CourseGroupsContext);
   const [courses, setCourses] = useState(simplifyCourseGroups(courseGroups));
   const [newCourses, setNewCourses] = useState([] as SimpleCourseGroup[]);
   const [currTitle, setTitle] = useState("");
   const [currCode, setCode] = useState("");
-  const [currSection, setSection] = useState("");
   const user = useAuthenticatedUser();
   let markedForDeletion = new Set<SimpleCourseGroup>();
 
@@ -64,7 +60,6 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
     setNewCourses([...newCourses, newGroup]);
     setCode("");
     setTitle("");
-    setSection("");
   }
 
   function deleteCourse(course: SimpleCourseGroup) {
@@ -89,7 +84,7 @@ const EditCourseScreen = (props: EditCourseScreenProps) => {
       try {
         const connectionToDelete = await fetchCourseGroupConnection(user.attributes.sub, { eq: group.groupID });
         console.log(connectionToDelete);
-        const res = await callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
+        await callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
       } catch (err) {
         console.log("failed to leave course", err);
       }

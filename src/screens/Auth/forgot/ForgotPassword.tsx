@@ -2,7 +2,6 @@ import { Layout, Text } from "@ui-kitten/components";
 import { Auth } from "aws-amplify";
 import React from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ForgotBubble from "../../../assets/images/forgot-bubble.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
@@ -19,15 +18,14 @@ type ForgotPasswordProps = {
 
 const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
   const [email, setEmail] = React.useState("");
-  const [errors, setError] = React.useState<string[]>([]);
-  const units = useSafeAreaInsets();
+  // const [errors, setError] = React.useState<string[]>([]);
   const submit = async () => {
     try {
       await Auth.forgotPassword(email);
       afterSubmit(email);
     } catch (e) {
-      const message = e.message as string;
-      setError((prevErrors) => [...prevErrors, message]);
+      // const message = e.message as string;
+      // setError((prevErrors) => [...prevErrors, message]);
     }
   };
 

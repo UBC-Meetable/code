@@ -1,6 +1,5 @@
 import { useContext } from "react";
-import { joinFriendGroupInput } from "../API";
-import UserProfileContext, { UserSchoolInfoContextType } from "../context/UserProfileContext";
+import UserProfileContext from "../context/UserProfileContext";
 
 const useUserProfile = () => {
   const context = useContext(UserProfileContext);

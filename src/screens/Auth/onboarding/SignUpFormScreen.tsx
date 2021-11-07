@@ -1,11 +1,9 @@
 import Auth from "@aws-amplify/auth";
 import {
-  Button, CheckBox, Input, Layout, Text,
+  CheckBox, Input, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
-import {
-  Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
-} from "react-native";
+import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
@@ -20,7 +18,7 @@ const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
     onLogIn: () => void,
-    onCreate: (email: string) => void,
+    onCreate: (email: string, password: string) => void,
 }
 
 // TODO error messages, disabled styles, theme
@@ -29,7 +27,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setError] = useState<string[]>([]);
+  // const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const confirmEmailRef = useRef<Input>(null);
@@ -41,41 +39,51 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [loading, setLoading] = useState(false);
 
   const confirmForm = () => {
-    setError(() => []);
+    // setError(() => []);
     let flag = true;
     if (password !== confirmPassword) {
-      setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
+      // setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
       flag = false;
     }
     if (email !== confirmEmail) {
-      setError((prevErrors) => [...prevErrors, "Emails do not match"]);
+      // setError((prevErrors) => [...prevErrors, "Emails do not match"]);
       flag = false;
     }
     if (!email) {
-      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
   };
 
   const createProfile = async () => {
-    setError([]);
+    console.log("Attempting create profile");
+
+    // setError([]);
 
     if (!confirmForm()) return;
+    console.log("Confirmed form");
+
     try {
       setLoading(true);
+      console.log("Creating user");
+
       const user = await Auth.signUp({
         username: email,
         password,
       });
-      onCreate(email);
+      console.log(user);
+
+      onCreate(email, password);
     } catch (e:any) {
-      const message = e.message as string;
-      setError((prevErrors) => [...prevErrors, message]);
+      // const message = e.message as string;
+      console.log(e);
+
+      // setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
     }
@@ -101,14 +109,24 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             }}
           >
             <Text style={styles.emoji}>👋</Text>
-            <Text style={{
-              fontSize: 34, fontFamily: "Poppins_500Medium",
-            }}
+            <Text
+              style={{
+                fontSize: 34,
+                fontFamily: "Quicksand_500Medium",
+              }}
             >
               Let's get started!
             </Text>
-            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
+            <Layout
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                backgroundColor: "#0000",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>
+                Email Address
+              </Text>
             </Layout>
             <TextField
               style={styles.field}
@@ -134,8 +152,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               autoCompleteType="email"
               scrollEnabled={false}
             />
-            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
+            <Layout
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                backgroundColor: "#0000",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>
+                Password
+              </Text>
             </Layout>
             <TextField
               style={styles.field}
@@ -158,12 +184,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={confirmPasswordRef}
             />
           </KeyboardAvoidingView>
-          <Layout style={{
-            backgroundColor: "#0000",
-            flex: 0,
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
+          <Layout
+            style={{
+              backgroundColor: "#0000",
+              flex: 0,
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
           >
             <Layout style={styles.tosContainer}>
               {/* Theme needs to be setup for this to be colored correctly */}
@@ -175,13 +202,19 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text>
                 I've read and accepted the
                 {"\n"}
-                <Text onPress={() => setTosModal(true)} style={[styles.bold, styles.clickable]}>
+                <Text
+                  onPress={() => setTosModal(true)}
+                  style={[styles.bold, styles.clickable]}
+                >
                   Terms and Conditions
                 </Text>
                 {" "}
                 and
                 {" "}
-                <Text onPress={() => setPrivacyModal(true)} style={[styles.bold, styles.clickable]}>
+                <Text
+                  onPress={() => setPrivacyModal(true)}
+                  style={[styles.bold, styles.clickable]}
+                >
                   Privacy Policy
                 </Text>
               </Text>
@@ -194,22 +227,29 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             >
               Create Profile
             </PrimaryButton>
-            <Text style={[styles.bold]}>
-              I already have an account!
-            </Text>
-            <Text style={[styles.bold]}>
+            <Text>I already have an account!</Text>
+            <Text>
               Where can I
               {" "}
-              <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
+              <Text onPress={() => onLogIn()} style={[styles.clickable]}>
+                sign in
+              </Text>
               ?
             </Text>
           </Layout>
         </ScrollView>
       </KeyboardSwipeLayout>
-      <TosModal open={tosModal} setOpen={setTosModal} title="Terms of Service" />
-      <PrivacyModal open={privacyModal} setOpen={setPrivacyModal} title="Privacy Policy" />
+      <TosModal
+        open={tosModal}
+        setOpen={setTosModal}
+        title="Terms of Service"
+      />
+      <PrivacyModal
+        open={privacyModal}
+        setOpen={setPrivacyModal}
+        title="Privacy Policy"
+      />
     </LoginControllerRoot>
-
   );
 };
 
@@ -221,6 +261,7 @@ const styles = StyleSheet.create({
     color: "#FBBA82",
     marginRight: 20,
   },
+
   emoji: { fontSize: 50 },
   clickable: { color: "#02A3F4" },
   bold: {

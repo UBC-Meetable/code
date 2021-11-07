@@ -4,16 +4,8 @@ import {
   Text,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  View,
-} from "react-native";
-import { Badge, Icon } from "react-native-elements";
-import { IconButton } from "react-native-paper";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
+import { StyleSheet } from "react-native";
+import { Icon } from "react-native-elements";
 
 type QuizButtonsProps = {
     onLike: () => void;

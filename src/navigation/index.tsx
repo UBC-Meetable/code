@@ -8,6 +8,15 @@ import {
   Poppins_600SemiBold,
   useFonts,
 } from "@expo-google-fonts/poppins";
+
+import {
+  Quicksand_300Light,
+  Quicksand_400Regular,
+  Quicksand_500Medium,
+  Quicksand_600SemiBold,
+  Quicksand_700Bold,
+} from "@expo-google-fonts/quicksand";
+
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -21,10 +30,7 @@ import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
-import {
-  ColorSchemeName,
-  Dimensions, Platform, useColorScheme,
-} from "react-native";
+import { Dimensions, Platform } from "react-native";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
@@ -61,17 +67,12 @@ Analytics.record("Initialization");
 
 const window = Dimensions.get("window");
 
-export default function Navigation({
-  colorScheme,
-}: {
-  colorScheme: ColorSchemeName;
-}) {
-  const dark = useColorScheme() === "dark";
+export default function Navigation() {
   return (
     <>
       <UiProvider {...eva} theme={{ ...eva.light, ...theme }}>
         <NavigationContainer
-          theme={colorScheme === "dark" ? DefaultTheme : DefaultTheme}
+          theme={DefaultTheme}
         >
           <UserProvider>
             <UserProfileProvider>
@@ -89,6 +90,11 @@ const App = () => {
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_400Regular,
+    Quicksand_300Light,
+    Quicksand_400Regular,
+    Quicksand_500Medium,
+    Quicksand_600SemiBold,
+    Quicksand_700Bold,
   });
   if (!fontsLoaded) {
     return <Blank />;
