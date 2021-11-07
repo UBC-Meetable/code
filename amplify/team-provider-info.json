@@ -19,15 +19,15 @@
       "function": {
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-465a724c44756a386c5a-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-473071342f36566f374e-build.zip"
         },
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/pushNotification-62373065365a69556867-build.zip"
+          "s3Key": "amplify-builds/pushNotification-4e337967677773725247-build.zip"
         },
         "periodicGrouping": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/periodicGrouping-4a59376265374a784867-build.zip"
+          "s3Key": "amplify-builds/periodicGrouping-6c325859366855652b6e-build.zip"
         }
       }
     }
