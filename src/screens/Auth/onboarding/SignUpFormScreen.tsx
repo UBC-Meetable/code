@@ -17,9 +17,9 @@ import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-  onLogIn: () => void;
-  onCreate: (email: string) => void;
-};
+    onLogIn: () => void,
+    onCreate: (email: string, password: string) => void,
+}
 
 // TODO error messages, disabled styles, theme
 const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
@@ -78,8 +78,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       });
       console.log(user);
 
-      onCreate(email);
-    } catch (e: any) {
+      onCreate(email, password);
+    } catch (e:any) {
       // const message = e.message as string;
       console.log(e);
 

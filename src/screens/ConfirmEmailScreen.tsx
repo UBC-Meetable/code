@@ -1,6 +1,6 @@
 import Auth from "@aws-amplify/auth";
 import { Layout, Text } from "@ui-kitten/components";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import LoginControllerRoot from "../components/ui/LoginControllerRoot";
 import Colors from "../constants/Colors";
@@ -9,30 +9,36 @@ import VerifyBubble from "../assets/images/verify-bubble.svg";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import TextField from "../components/ui/TextField";
 import KeyboardSwipeLayout from "./Auth/ui/KeyboardSwipeLayout";
+import UserContext from "../context/UserContext";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
   onConfirmCode: () => void;
   onBack: () => void;
-  initialEmail?: string;
+  email?: string;
+  password?: string;
   fromSignUp: boolean;
 };
 
 const ConfirmEmailScreen = ({
   onConfirmCode,
   onBack,
-  initialEmail,
+  email,
+  password,
   fromSignUp,
 }: SignUpFormScreenProps) => {
+  const { setUser } = useContext(UserContext);
   const [code, setCode] = useState("");
+  const [loading, setLoading] = useState(false);
   // const [errors, setError] = useState<string[]>([]);
 
   useEffect(() => {
-    if (initialEmail && !fromSignUp) {
-      Auth.resendSignUp(initialEmail);
+    if (email && !fromSignUp) {
+      Auth.resendSignUp(email);
     }
-  }, [initialEmail]);
+  }, [email]);
+
   const confirmForm = () => {
     // setError(() => []);
     let flag = true;
@@ -43,24 +49,43 @@ const ConfirmEmailScreen = ({
     return flag;
   };
 
-  if (!initialEmail) {
+  if (!email || !password) {
     onBack();
     return <Layout />;
   }
 
   const resendCode = async () => {
-    await Auth.resendSignUp(initialEmail);
+    await Auth.resendSignUp(email);
   };
 
   const createProfile = async () => {
     // setError([]);
     if (!confirmForm()) return;
     try {
-      await Auth.confirmSignUp(initialEmail, code);
-      onConfirmCode();
+      await Auth.confirmSignUp(email, code);
+      await login();
     } catch (e:any) {
       // const message = e.message as string;
       // setError((prevErrors) => [...prevErrors, message]);
+    }
+  };
+
+  const login = async () => {
+    // setError([]);
+
+    if (!confirmForm()) return;
+    try {
+      setLoading(true);
+      const user = await Auth.signIn({
+        username: email,
+        password,
+      });
+      setUser(user);
+    } catch (e) {
+      // const message = e.message as string;
+      // setError((prevErrors) => [...prevErrors, message]);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -112,7 +137,7 @@ const ConfirmEmailScreen = ({
           justifyContent: "flex-end",
         }}
         >
-          <PrimaryButton status="info" onPress={createProfile}>
+          <PrimaryButton status="info" onPress={createProfile} loading={loading}>
             Create Profile
           </PrimaryButton>
           <BottomText onPressText={onBack} />
