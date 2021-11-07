@@ -19,6 +19,75 @@ type MessageInputProps = {
     setFiles: React.Dispatch<SetStateAction<FileAttachment[]>>;
 };
 
+export const PlaneIcon = () => (
+  <Layout style={[styles.icon, { justifyContent: "center", alignItems: "center" }]}>
+    <FontAwesome5 name="paper-plane" size={27} color="#ffd700" />
+  </Layout>
+);
+
+const MessageInput = ({
+  value, onChangeText, onFocus, onSubmitEditing, onPressPhoto, files, setFiles,
+}: MessageInputProps) => {
+  const units = useSafeAreaInsets();
+  const theme = useTheme();
+
+  return (
+    <Layout style={[styles.inputContainer, {
+      paddingHorizontal: units.left + units.right,
+      paddingBottom: units.bottom / 2,
+      marginTop: files?.length ? units.top : 0,
+    }]}
+    >
+      <Layout style={[styles.iconContainer, { height: "0%" }]}>
+        <TouchableOpacity
+          style={[styles.icon,
+            { marginBottom: units.bottom / 2 }]}
+          onPress={onPressPhoto}
+        >
+          <Icon name="photo" />
+        </TouchableOpacity>
+      </Layout>
+      <Layout style={[styles.previewContainer, { marginHorizontal: units.left + units.right, flexDirection: "row" }]}>
+        {!!files?.length && (
+          <>
+            <PreviewWrapper setFiles={setFiles} files={files} />
+            <Divider style={{ backgroundColor: theme["color-primary-default"], marginVertical: 0 }} />
+          </>
+        )}
+        <TextInput
+          value={value}
+          onChangeText={onChangeText}
+          style={[styles.input, {
+            marginHorizontal: units.left + units.right,
+            backgroundColor: theme["color-primary-200"],
+            borderTopLeftRadius: files?.length ? 0 : 5,
+            borderTopRightRadius: files?.length ? 0 : 5,
+          }]}
+          onFocus={
+            onFocus
+          }
+          placeholder="Say Hi!"
+          placeholderTextColor={theme["color-basic-600"]}
+          textBreakStrategy="highQuality"
+          numberOfLines={1}
+          underlineColorAndroid="rgba(0,0,0,0)"
+          blurOnSubmit={false}
+          onSubmitEditing={
+            onSubmitEditing
+          }
+        />
+        <Layout style={[styles.buttonContainer]}>
+          <Button
+            appearance="ghost"
+            onPress={onSubmitEditing}
+            accessoryRight={PlaneIcon}
+          />
+        </Layout>
+      </Layout>
+    </Layout>
+  );
+};
+
 const styles = StyleSheet.create({
   input: {
     minHeight: 60,
@@ -59,74 +128,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-
-export const PlaneIcon = () => (
-  <Layout style={[styles.icon, { justifyContent: "center", alignItems: "center" }]}>
-    <FontAwesome5 name="paper-plane" size={27} color="#ffd700" />
-  </Layout>
-);
-
-const MessageInput = ({
-  value, onChangeText, onFocus, onSubmitEditing, onPressPhoto, files, setFiles,
-}: MessageInputProps) => {
-  const units = useSafeAreaInsets();
-  const theme = useTheme();
-
-  return (
-    <Layout style={[styles.inputContainer, {
-      paddingHorizontal: units.left + units.right,
-      paddingBottom: units.bottom / 2,
-      marginTop: files?.length ? units.top : 0,
-    }]}
-    >
-      <Layout style={[styles.iconContainer, { height: "0%" }]}>
-        <TouchableOpacity
-          style={[styles.icon,
-            { marginBottom: units.bottom / 2 }]}
-          onPress={onPressPhoto}
-        >
-          <Icon name="photo" />
-        </TouchableOpacity>
-      </Layout>
-      <Layout style={[styles.previewContainer, { marginHorizontal: units.left + units.right }, { flexDirection: "row" }]}>
-        {!!files?.length && (
-          <>
-            <PreviewWrapper setFiles={setFiles} files={files} />
-            <Divider style={{ backgroundColor: theme["color-primary-default"], marginVertical: 0 }} />
-          </>
-        )}
-        <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          style={[styles.input, {
-            marginHorizontal: units.left + units.right,
-            backgroundColor: theme["color-primary-200"],
-            borderTopLeftRadius: files?.length ? 0 : 5,
-            borderTopRightRadius: files?.length ? 0 : 5,
-          }]}
-          onFocus={
-            onFocus
-          }
-          placeholder="Say Hi!"
-          placeholderTextColor={theme["color-basic-600"]}
-          textBreakStrategy="highQuality"
-          numberOfLines={1}
-          underlineColorAndroid="rgba(0,0,0,0)"
-          blurOnSubmit={false}
-          onSubmitEditing={
-            onSubmitEditing
-          }
-        />
-        <Layout style={[styles.buttonContainer]}>
-          <Button
-            appearance="ghost"
-            onPress={onSubmitEditing}
-            accessoryRight={PlaneIcon}
-          />
-        </Layout>
-      </Layout>
-    </Layout>
-  );
-};
 
 export default MessageInput;

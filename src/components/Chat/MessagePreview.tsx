@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
   body: {
     fontSize: 10,
     flexShrink: 1,
-    // width: 100,
   },
   author: {
     fontWeight: "bold",

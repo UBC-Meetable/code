@@ -9,7 +9,6 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
 import ErrorModal from "../../../navigation/ErrorsModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
@@ -98,7 +97,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   return (
     <LoginControllerRoot>
       <SignUpBubble
-        style={{ position: "absolute", top: 0 }}
+        style={styles.bubble}
         width={window.width}
       />
       <KeyboardSwipeLayout>
@@ -174,7 +173,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
-              onChangeText={(e) => setPassword(e)}
+              onChangeText={setPassword}
               onSubmitEditing={() => confirmPasswordRef.current?.focus()}
               value={password}
               ref={passwordRef}
@@ -190,14 +189,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={confirmPasswordRef}
             />
           </KeyboardAvoidingView>
-          <Layout
-            style={{
-              backgroundColor: "#0000",
-              flex: 0,
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
+          <Layout style={styles.footer}>
             <Layout style={styles.tosContainer}>
               {/* Theme needs to be setup for this to be colored correctly */}
               <CheckBox
@@ -237,7 +229,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             <Text>
               Where can I
               {" "}
-              <Text onPress={() => onLogIn()} style={[styles.clickable]}>
+              <Text onPress={onLogIn} style={styles.clickable}>
                 sign in
               </Text>
               ?
@@ -266,6 +258,10 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  bubble: {
+    position: "absolute",
+    top: 0,
+  },
   field: {
     marginVertical: 5,
   },
@@ -273,9 +269,12 @@ const styles = StyleSheet.create({
     color: "#FBBA82",
     marginRight: 20,
   },
-
-  emoji: { fontSize: 50 },
-  clickable: { color: "#02A3F4" },
+  emoji: {
+    fontSize: 50,
+  },
+  clickable: {
+    color: "#02A3F4",
+  },
   bold: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
@@ -290,55 +289,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  button: {
-    marginBottom: 20,
-    width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-    flex: 1,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: "80%",
-    minWidth: 200,
+  footer: {
     backgroundColor: "#0000",
-  },
-  error: {
-    color: Colors.dark.error,
-  },
-  emailContainer: {
-    marginVertical: 20,
-    backgroundColor: "#0000",
-  },
-  input: {
-    marginVertical: 2,
-    marginHorizontal: -20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-    borderRadius: 20,
-    backgroundColor: "white",
-  },
-  loginText: {
-    fontSize: 15,
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 30,
+    flex: 0,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });
 
