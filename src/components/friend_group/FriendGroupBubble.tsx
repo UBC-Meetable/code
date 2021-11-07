@@ -3,7 +3,6 @@ import React from "react";
 import {
   GestureResponderEvent, StyleSheet, Text, TouchableOpacity,
 } from "react-native";
-import { Chip } from "react-native-paper";
 import { ChatMessage, FriendGroup } from "../../API";
 import Colors from "../../constants/Colors";
 import { groupBubbleStyles } from "../Chat/CourseGroupBubble";

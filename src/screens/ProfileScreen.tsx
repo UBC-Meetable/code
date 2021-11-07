@@ -10,7 +10,6 @@ import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
-// import { Poppins_500Medium, Poppins_600SemiBold } from "@expo-google-fonts/poppins";
 import { ScrollView } from "react-native-gesture-handler";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
@@ -66,7 +65,7 @@ const ProfileScreen = () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      console.warn("Permission to access camera roll is required!");
       return;
     }
 
@@ -99,12 +98,10 @@ const ProfileScreen = () => {
           const access = { level: "public", contentType: toUpload.type };
           Storage.put(imageKey, blob, access)
             .then(() => {
-              Storage.get(imageKey, { download: false, expires: 604800 }).then((success) => {
+              Storage.get(imageKey, { download: false, expires: 604800 }).then(() => {
                 updateImageKey(imageKey);
                 setKey(imageKey);
               });
-            })
-            .catch((err) => {
             });
         });
     });

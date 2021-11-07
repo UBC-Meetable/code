@@ -1,9 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
-import {
-  Button, Layout, Modal, Text,
-} from "@ui-kitten/components";
-import React, { useState } from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import { Layout } from "@ui-kitten/components";
+import React from "react";
+import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginRocket from "../../../assets/images/login-background.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";

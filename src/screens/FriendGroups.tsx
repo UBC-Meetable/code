@@ -1,18 +1,15 @@
 /* eslint-disable max-len */
 /* eslint-disable no-shadow */
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
-import {
-  Layout, List, Spinner, Text,
-} from "@ui-kitten/components";
+import { Layout, List, Spinner } from "@ui-kitten/components";
 import React, { useContext, useEffect, useState } from "react";
 import {
-  GestureResponderEvent, RefreshControl, StyleSheet, Switch, Alert,
+  RefreshControl, StyleSheet, Switch, Alert,
 } from "react-native";
 import {
   FriendGroup, GroupType, QAPairInput, Quiz,
 } from "../API";
-import fetchUserProfile from "../calls/fetchUserProfile";
 import getUserQuizzes from "../calls/fetchUserQuizzes";
 import getBestFriendGroup from "../calls/getBestFriendGroup";
 import joinFriendGroup from "../calls/joinFriendGroup";
@@ -22,14 +19,13 @@ import FriendGroupBubble from "../components/friend_group/FriendGroupBubble";
 import NoQuizzes from "../components/friend_group/NoQuizzes";
 import Returned from "../components/friend_group/Returned";
 import FriendGroupsContext from "../context/FriendGroupsContext";
-import UserSchoolInfoContext from "../context/UserProfileContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import useUserProfile from "../hooks/useUserProfile";
 import {
-  ChatMessage, FriendGroupStackScreens, GroupStackParamList, QuestionType, RootStackParamList,
+  ChatMessage, QuestionType, RootStackParamList,
 } from "../types";
 
-const MAX_GROUP_SIZE = 5; // todo make global parameter w/ aws.
+// TODO: make global parameter, MAX_GROUP_SIZE = 5, w/ AWS.
 const WEEKLY_GROUP_DAY = "Saturday";
 
 export enum UIStateOptions {

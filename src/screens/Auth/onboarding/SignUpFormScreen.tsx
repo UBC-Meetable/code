@@ -1,5 +1,7 @@
 import Auth from "@aws-amplify/auth";
-import { CheckBox, Input, Layout, Text } from "@ui-kitten/components";
+import {
+  CheckBox, Input, Layout, Text,
+} from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -11,8 +13,6 @@ import Colors from "../../../constants/Colors";
 import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
-import AppLoading from "expo-app-loading";
-import { syncClasses } from "@aws-amplify/datastore/lib-esm/datastore/datastore";
 
 const window = Dimensions.get("window");
 
@@ -27,7 +27,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setError] = useState<string[]>([]);
+  // const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const confirmEmailRef = useRef<Input>(null);
@@ -39,22 +39,22 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [loading, setLoading] = useState(false);
 
   const confirmForm = () => {
-    setError(() => []);
+    // setError(() => []);
     let flag = true;
     if (password !== confirmPassword) {
-      setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
+      // setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
       flag = false;
     }
     if (email !== confirmEmail) {
-      setError((prevErrors) => [...prevErrors, "Emails do not match"]);
+      // setError((prevErrors) => [...prevErrors, "Emails do not match"]);
       flag = false;
     }
     if (!email) {
-      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
@@ -63,7 +63,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const createProfile = async () => {
     console.log("Attempting create profile");
 
-    setError([]);
+    // setError([]);
 
     if (!confirmForm()) return;
     console.log("Confirmed form");
@@ -80,10 +80,10 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
       onCreate(email, password);
     } catch (e:any) {
-      const message = e.message as string;
+      // const message = e.message as string;
       console.log(e);
 
-      setError((prevErrors) => [...prevErrors, message]);
+      // setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
     }
@@ -174,7 +174,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={passwordRef}
             />
             <TextField
-             style={styles.field}
+              style={styles.field}
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
@@ -207,8 +207,10 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
                   style={[styles.bold, styles.clickable]}
                 >
                   Terms and Conditions
-                </Text>{" "}
-                and{" "}
+                </Text>
+                {" "}
+                and
+                {" "}
                 <Text
                   onPress={() => setPrivacyModal(true)}
                   style={[styles.bold, styles.clickable]}
@@ -227,7 +229,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             </PrimaryButton>
             <Text>I already have an account!</Text>
             <Text>
-              Where can I{" "}
+              Where can I
+              {" "}
               <Text onPress={() => onLogIn()} style={[styles.clickable]}>
                 sign in
               </Text>

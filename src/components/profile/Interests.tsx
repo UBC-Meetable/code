@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { Chip } from "react-native-paper";
-import { Tooltip } from "react-native-elements/dist/tooltip/Tooltip";
-import { Layout, Spinner, Text } from "@ui-kitten/components";
+import { Layout, Spinner } from "@ui-kitten/components";
 import { QAPair, User } from "../../API";
 import getMatchingInterests from "../../calls/getMatchingInterests";
 import Colors from "../../constants/Colors";

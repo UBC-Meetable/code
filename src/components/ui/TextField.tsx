@@ -1,5 +1,5 @@
 import { Input, InputProps } from "@ui-kitten/components";
-import React, { forwardRef, RefObject } from "react";
+import React, { forwardRef } from "react";
 import { StyleSheet } from "react-native";
 
 type TextFieldProps = {} & InputProps;

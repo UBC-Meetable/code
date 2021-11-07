@@ -2,7 +2,6 @@ import Auth from "@aws-amplify/auth";
 import { Input, Layout, Text } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginPageBubbleTop from "../../../assets/images/login-page-bubble-top.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
@@ -22,27 +21,26 @@ type LoginFormScreenProps = {
 const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setError] = useState<string[]>([]);
+  // const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const { setUser } = useContext(UserContext);
-  const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
   const confirmForm = () => {
-    setError(() => []);
+    // setError(() => []);
     let flag = true;
     if (!email) {
-      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
   };
   const login = async () => {
-    setError([]);
+    // setError([]);
 
     if (!confirmForm()) return;
     try {
@@ -58,8 +56,8 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
         onNotConfirmed(email);
       }
 
-      const message = e.message as string;
-      setError((prevErrors) => [...prevErrors, message]);
+      // const message = e.message as string;
+      // setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
     }
@@ -136,7 +134,6 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
               loading={loading}
             >
               Sign In
-
             </PrimaryButton>
             <Text style={[styles.bold]}>
               I'm new!

@@ -1,16 +1,9 @@
-import { GraphQLResult } from "@aws-amplify/api";
-import {
-  Button, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { Button, Layout, Text } from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
-import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { CourseGroup, CreateCourseGroupConnectionMutation, UserState } from "../../API";
+import { CourseGroup, UserState } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import updateUserProfile from "../../calls/updateUserProfile";
 import editCourseStyles from "./editCourseStyles";
-import Colors from "../../constants/Colors";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import EditCourseBody from "./EditCourseBody";

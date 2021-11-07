@@ -1,14 +1,11 @@
 import {
   Divider, Layout, useTheme,
 } from "@ui-kitten/components";
-import * as FileSystem from "expo-file-system";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
-import React, { SetStateAction, useState } from "react";
+import React, { SetStateAction } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FileAttachment } from "../../API";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import PreviewWrapper from "./PreviewWrapper";
 
 type MessageInputProps = {
@@ -59,9 +56,6 @@ const MessageInput = ({
   value, onChangeText, onFocus, onSubmitEditing, onPressPhoto, files, setFiles,
 }: MessageInputProps) => {
   const units = useSafeAreaInsets();
-  const [file, setFile] = useState<File | null>(null);
-  const user = useAuthenticatedUser();
-  const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
   const theme = useTheme();
 
   return (
