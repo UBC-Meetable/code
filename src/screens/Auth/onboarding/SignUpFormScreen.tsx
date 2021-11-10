@@ -1,11 +1,7 @@
 import Auth from "@aws-amplify/auth";
-import {
-  Button, CheckBox, Input, Layout, Text,
-} from "@ui-kitten/components";
+import { CheckBox, Input, Layout, Text } from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
-import {
-  Dimensions, KeyboardAvoidingView, Platform, StyleSheet,
-} from "react-native";
+import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
@@ -16,13 +12,15 @@ import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
 import { ErrorModal } from "../../../navigation/ErrorsModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
+import AppLoading from "expo-app-loading";
+import { syncClasses } from "@aws-amplify/datastore/lib-esm/datastore/datastore";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-  onLogIn: () => void,
-  onCreate: (email: string) => void,
-}
+  onLogIn: () => void;
+  onCreate: (email: string) => void;
+};
 
 // TODO error messages, disabled styles, theme
 const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
@@ -117,14 +115,24 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             }}
           >
             <Text style={styles.emoji}>👋</Text>
-            <Text style={{
-              fontSize: 34, fontFamily: "Poppins_500Medium",
-            }}
+            <Text
+              style={{
+                fontSize: 34,
+                fontFamily: "Quicksand_500Medium",
+              }}
             >
               Let's get started!
             </Text>
-            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Email Address</Text>
+            <Layout
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                backgroundColor: "#0000",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>
+                Email Address
+              </Text>
             </Layout>
             <TextField
               style={styles.field}
@@ -150,8 +158,16 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               autoCompleteType="email"
               scrollEnabled={false}
             />
-            <Layout style={{ marginTop: 20, marginBottom: 10, backgroundColor: "#0000" }}>
-              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>Password</Text>
+            <Layout
+              style={{
+                marginTop: 20,
+                marginBottom: 10,
+                backgroundColor: "#0000",
+              }}
+            >
+              <Text style={{ fontSize: 14, fontFamily: "Poppins_500Medium" }}>
+                Password
+              </Text>
             </Layout>
             <TextField
               style={styles.field}
@@ -174,12 +190,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={confirmPasswordRef}
             />
           </KeyboardAvoidingView>
-          <Layout style={{
-            backgroundColor: "#0000",
-            flex: 0,
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
+          <Layout
+            style={{
+              backgroundColor: "#0000",
+              flex: 0,
+              alignItems: "center",
+              justifyContent: "flex-end",
+            }}
           >
             <Layout style={styles.tosContainer}>
               {/* Theme needs to be setup for this to be colored correctly */}
@@ -191,13 +208,17 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               <Text>
                 I've read and accepted the
                 {"\n"}
-                <Text onPress={() => setTosModal(true)} style={[styles.bold, styles.clickable]}>
+                <Text
+                  onPress={() => setTosModal(true)}
+                  style={[styles.bold, styles.clickable]}
+                >
                   Terms and Conditions
-                </Text>
-                {" "}
-                and
-                {" "}
-                <Text onPress={() => setPrivacyModal(true)} style={[styles.bold, styles.clickable]}>
+                </Text>{" "}
+                and{" "}
+                <Text
+                  onPress={() => setPrivacyModal(true)}
+                  style={[styles.bold, styles.clickable]}
+                >
                   Privacy Policy
                 </Text>
               </Text>
@@ -210,23 +231,34 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             >
               Create Profile
             </PrimaryButton>
-            <Text style={[styles.bold]}>
-              I already have an account!
-            </Text>
-            <Text style={[styles.bold]}>
-              Where can I
-              {" "}
-              <Text onPress={() => onLogIn()} style={[styles.bold, styles.clickable]}>sign in</Text>
+            <Text>I already have an account!</Text>
+            <Text>
+              Where can I{" "}
+              <Text onPress={() => onLogIn()} style={[styles.clickable]}>
+                sign in
+              </Text>
               ?
             </Text>
           </Layout>
         </ScrollView>
       </KeyboardSwipeLayout>
-      <TosModal open={tosModal} setOpen={setTosModal} title="Terms of Service" />
-      <PrivacyModal open={privacyModal} setOpen={setPrivacyModal} title="Privacy Policy" />
-      <ErrorModal open={errorModal} setOpen={setErrorModal} title="Error signing up" errors={errors} />
+      <TosModal
+        open={tosModal}
+        setOpen={setTosModal}
+        title="Terms of Service"
+      />
+      <PrivacyModal
+        open={privacyModal}
+        setOpen={setPrivacyModal}
+        title="Privacy Policy"
+      />
+      <ErrorModal
+        open={errorModal}
+        setOpen={setErrorModal}
+        title="Error signing up"
+        errors={errors}
+      />
     </LoginControllerRoot>
-
   );
 };
 
@@ -238,6 +270,7 @@ const styles = StyleSheet.create({
     color: "#FBBA82",
     marginRight: 20,
   },
+
   emoji: { fontSize: 50 },
   clickable: { color: "#02A3F4" },
   bold: {
