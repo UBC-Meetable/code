@@ -1,5 +1,7 @@
 import Auth from "@aws-amplify/auth";
-import { CheckBox, Input, Layout, Text } from "@ui-kitten/components";
+import {
+  CheckBox, Input, Layout, Text,
+} from "@ui-kitten/components";
 import React, { useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -12,15 +14,13 @@ import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
 import { ErrorModal } from "../../../navigation/ErrorsModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
-import AppLoading from "expo-app-loading";
-import { syncClasses } from "@aws-amplify/datastore/lib-esm/datastore/datastore";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-  onLogIn: () => void;
-  onCreate: (email: string) => void;
-};
+  onLogIn: () => void,
+  onCreate: (email: string, password: string) => void,
+}
 
 // TODO error messages, disabled styles, theme
 const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
@@ -83,7 +83,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       });
       console.log(user);
 
-      onCreate(email);
+      onCreate(email, password);
     } catch (e: any) {
       const message = e.message as string;
       console.log(e);
@@ -213,8 +213,10 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
                   style={[styles.bold, styles.clickable]}
                 >
                   Terms and Conditions
-                </Text>{" "}
-                and{" "}
+                </Text>
+                {" "}
+                and
+                {" "}
                 <Text
                   onPress={() => setPrivacyModal(true)}
                   style={[styles.bold, styles.clickable]}
@@ -233,7 +235,8 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             </PrimaryButton>
             <Text>I already have an account!</Text>
             <Text>
-              Where can I{" "}
+              Where can I
+              {" "}
               <Text onPress={() => onLogIn()} style={[styles.clickable]}>
                 sign in
               </Text>

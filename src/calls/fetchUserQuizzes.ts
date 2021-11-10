@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import {
-  GetQuizQuery, GetQuizQueryVariables, GetUserQuizzesQuery, GetUserQuizzesQueryVariables,
+  GetUserQuizzesQuery, GetUserQuizzesQueryVariables,
 } from "../API";
 import { getUserQuizzes as query } from "../graphql/customQueries";
 

@@ -37,7 +37,7 @@ const sendMessageToGroup = async ({
     type: file.type,
   }));
 
-  const res = await API.graphql({
+  await API.graphql({
     query: createChatMessage,
     variables: {
       input: {
@@ -51,7 +51,7 @@ const sendMessageToGroup = async ({
   });
 
   try {
-    const lambdaRes = API.graphql({
+    API.graphql({
       query: pushNotification,
       variables: {
         input: {

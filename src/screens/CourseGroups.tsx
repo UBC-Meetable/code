@@ -6,7 +6,6 @@ import { RefreshControl, StyleSheet } from "react-native";
 import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import CourseGroupsContext from "../context/CourseGroupsContext";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup, GroupStackParamList } from "../types";
 
 const CourseGroups = ({
@@ -14,7 +13,6 @@ const CourseGroups = ({
 }: {
   navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
 }) => {
-  const user = useAuthenticatedUser();
   const groups = useContext(CourseGroupsContext);
   const [loading, setLoading] = useState(false);
 

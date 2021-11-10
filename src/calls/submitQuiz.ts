@@ -1,7 +1,7 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import {
-  CreateQuizInput, CreateQuizMutation, CreateUserInput, CreateUserMutation, UserState,
+  CreateQuizInput, CreateQuizMutation,
 } from "../API";
 import { createQuiz } from "../graphql/mutations";
 

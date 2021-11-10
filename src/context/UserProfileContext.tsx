@@ -1,10 +1,6 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import * as FileSystem from "expo-file-system";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
-import { Storage } from "aws-amplify";
-import { joinFriendGroupInput, User } from "../API";
+import { joinFriendGroupInput } from "../API";
 import fetchUserProfile from "../calls/fetchUserProfile";
-import updateUserProfile from "../calls/updateUserProfile";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 
 export type UserInfoType = joinFriendGroupInput & {

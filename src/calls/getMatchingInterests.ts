@@ -1,11 +1,5 @@
 /* eslint-disable max-len */
 /* eslint-disable no-restricted-syntax */
-import { GraphQLResult } from "@aws-amplify/api";
-import { API } from "aws-amplify";
-import {
-  GetQuizQuery, GetQuizQueryVariables, GetUserQuizzesQuery, GetUserQuizzesQueryVariables,
-} from "../API";
-import { getUserQuizzes as query } from "../graphql/customQueries";
 import fetchUserQuizzes from "./fetchUserQuizzes";
 
 const LIKED = "liked";

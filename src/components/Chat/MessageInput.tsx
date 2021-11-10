@@ -1,14 +1,12 @@
 import {
-  Divider, Layout, useTheme,
+  Divider, Layout, useTheme, Button,
 } from "@ui-kitten/components";
-import * as FileSystem from "expo-file-system";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
-import React, { SetStateAction, useState } from "react";
+import React, { SetStateAction } from "react";
 import { StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { Icon } from "react-native-elements";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { FileAttachment } from "../../API";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import PreviewWrapper from "./PreviewWrapper";
 
 type MessageInputProps = {
@@ -53,15 +51,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000",
     justifyContent: "flex-end",
   },
+  buttonContainer: {
+    flex: 0.17,
+    minHeight: 60,
+    backgroundColor: "#0000",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
+
+export const PlaneIcon = () => (
+  <Layout style={[styles.icon, { justifyContent: "center", alignItems: "center" }]}>
+    <FontAwesome5 name="paper-plane" size={27} color="#ffd700" />
+  </Layout>
+);
 
 const MessageInput = ({
   value, onChangeText, onFocus, onSubmitEditing, onPressPhoto, files, setFiles,
 }: MessageInputProps) => {
   const units = useSafeAreaInsets();
-  const [file, setFile] = useState<File | null>(null);
-  const user = useAuthenticatedUser();
-  const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
   const theme = useTheme();
 
   return (
@@ -80,14 +88,13 @@ const MessageInput = ({
           <Icon name="photo" />
         </TouchableOpacity>
       </Layout>
-      <Layout style={[styles.previewContainer, { marginHorizontal: units.left + units.right }]}>
+      <Layout style={[styles.previewContainer, { marginHorizontal: units.left + units.right }, { flexDirection: "row" }]}>
         {!!files?.length && (
           <>
             <PreviewWrapper setFiles={setFiles} files={files} />
             <Divider style={{ backgroundColor: theme["color-primary-default"], marginVertical: 0 }} />
           </>
         )}
-
         <TextInput
           value={value}
           onChangeText={onChangeText}
@@ -110,6 +117,13 @@ const MessageInput = ({
             onSubmitEditing
           }
         />
+        <Layout style={[styles.buttonContainer]}>
+          <Button
+            appearance="ghost"
+            onPress={onSubmitEditing}
+            accessoryRight={PlaneIcon}
+          />
+        </Layout>
       </Layout>
     </Layout>
   );
