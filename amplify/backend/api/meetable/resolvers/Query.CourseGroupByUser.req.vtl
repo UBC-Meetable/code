@@ -1,0 +1,74 @@
+## [Start] Set query expression for @key **
+#set( $modelQueryExpression = {} )
+## [Start] Validate key arguments. **
+#if( !$util.isNull($ctx.args.groupID) && $util.isNull($ctx.args.userID) )
+  $util.error("When providing argument 'groupID' you must also provide arguments userID", "InvalidArgumentsError")
+#end
+## [End] Validate key arguments. **
+#if( !$util.isNull($ctx.args.userID) )
+  #set( $modelQueryExpression.expression = "#userID = :userID" )
+  #set( $modelQueryExpression.expressionNames = {
+  "#userID": "userID"
+} )
+  #set( $modelQueryExpression.expressionValues = {
+  ":userID": {
+      "S": "$ctx.args.userID"
+  }
+} )
+#end
+## [Start] Applying Key Condition **
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.beginsWith) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND begins_with(#sortKey, :sortKey)" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.groupID.beginsWith" }))
+#end
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.between) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey0", { "S": "$ctx.args.groupID.between[0]" }))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey1", { "S": "$ctx.args.groupID.between[1]" }))
+#end
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.eq) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey = :sortKey" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.groupID.eq" }))
+#end
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.lt) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey < :sortKey" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.groupID.lt" }))
+#end
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.le) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey <= :sortKey" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.groupID.le" }))
+#end
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.gt) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey > :sortKey" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.groupID.gt" }))
+#end
+#if( !$util.isNull($ctx.args.groupID) && !$util.isNull($ctx.args.groupID.ge) )
+  #set( $modelQueryExpression.expression = "$modelQueryExpression.expression AND #sortKey >= :sortKey" )
+  $util.qr($modelQueryExpression.expressionNames.put("#sortKey", "groupID"))
+  $util.qr($modelQueryExpression.expressionValues.put(":sortKey", { "S": "$ctx.args.groupID.ge" }))
+#end
+## [End] Applying Key Condition **
+## [End] Set query expression for @key **
+#set( $limit = $util.defaultIfNull($context.args.limit, 100) )
+#set( $QueryRequest = {
+  "version": "2018-05-29",
+  "operation": "Query",
+  "limit": $limit,
+  "query": $modelQueryExpression,
+  "index": "byUser"
+} )
+#if( !$util.isNull($ctx.args.sortDirection)
+                    && $ctx.args.sortDirection == "DESC" )
+  #set( $QueryRequest.scanIndexForward = false )
+#else
+  #set( $QueryRequest.scanIndexForward = true )
+#end
+#if( $context.args.nextToken ) #set( $QueryRequest.nextToken = $context.args.nextToken ) #end
+#if( $context.args.filter ) #set( $QueryRequest.filter = $util.parseJson("$util.transform.toDynamoDBFilterExpression($ctx.args.filter)") ) #end
+$util.toJson($QueryRequest)

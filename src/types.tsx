@@ -27,7 +27,7 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Quiz: {
-    return: (q: QuestionType[]) => void; 
+    return: (q: QuestionType[]) => void;
   };
   Group: {
     groupID: string;
@@ -165,8 +165,8 @@ export enum ProfilePictureSize {
 export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
-  MESSAGE: { height: 30, width: 30 }
-}
+  MESSAGE: { height: 30, width: 30 },
+};
 
 export enum SwipeActions {
   "LIKE" = "liked",
@@ -192,3 +192,12 @@ export type SimpleCourseGroup = {
   section: string;
   groupID: string;
 };
+
+export interface UBCCourse {
+  _id: string;
+  course: string;
+  subject: string;
+  description: string;
+  name: string;
+  title: string;
+}

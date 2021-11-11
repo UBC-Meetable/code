@@ -50,7 +50,7 @@ const FriendGroups = ({
   const user = useAuthenticatedUser();
   const { info: userProfile } = useUserProfile();
   const headerHeight = useHeaderHeight();
-  const [isEnabled, setIsEnabled] = useState(Boolean(userProfile!.user.multipleGroupsOptIn)); // multipleGroupsOptIn undefined gets cast to false
+  const [isEnabled, setIsEnabled] = useState(Boolean(userProfile?.user.multipleGroupsOptIn)); // multipleGroupsOptIn undefined gets cast to false
   // setIsEnabled(userProfile!.user.multipleGroupsOptIn); // note: this results in infinite re-render loop
   console.log(isEnabled);
 
@@ -73,28 +73,30 @@ const FriendGroups = ({
         } else if (fetchedQuizzes.length && !groups.length) {
           setUIState(UIStateOptions.RETURNED);
           setLoading((old) => ({ ...old, quizzes: false }));
-          const groupOutput = await getBestFriendGroup({
-            id: user.attributes.sub,
-            university: userProfile.university,
-            year: userProfile.year,
-          });
-          const returnVal = groupOutput.data?.joinFriendGroup;
+          if (userProfile) {
+            const groupOutput = await getBestFriendGroup({
+              id: user.attributes.sub,
+              university: userProfile.university,
+              year: userProfile.year,
+            });
+            const returnVal = groupOutput.data?.joinFriendGroup;
 
-          if (!returnVal) {
-            console.error(groupOutput.errors);
-            throw new Error("Failed to call joinFriendGroup");
-          } else {
-            const { groupID } = returnVal;
-            const userID = user.attributes.sub;
-            if (groupID) {
-              // join existing group
-              console.log("Joining existing Group");
-
-              await joinFriendGroup(userID, groupID);
+            if (!returnVal) {
+              console.error(groupOutput.errors);
+              throw new Error("Failed to call joinFriendGroup");
             } else {
-              console.log("Creating new Group");
-              await joinFriendGroup(userID, groupID);
+              const { groupID } = returnVal;
+              const userID = user.attributes.sub;
+              if (groupID) {
+              // join existing group
+                console.log("Joining existing Group");
+
+                await joinFriendGroup(userID, groupID);
+              } else {
+                console.log("Creating new Group");
+                await joinFriendGroup(userID, groupID);
               // create empty group so others will join.
+              }
             }
           }
         }

@@ -1,10 +1,13 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { Text, Layout, Input } from "@ui-kitten/components";
 import { SafeAreaView, ScrollView } from "react-native";
 import editCourseStyles from "./editCourseStyles";
 import TextField from "../../components/ui/TextField";
 import PrimaryButton from "../../components/ui/PrimaryButton";
-import { SimpleCourseGroup } from "../../types";
+import { SimpleCourseGroup, UBCCourse } from "../../types";
+import getAllSubjects from "../../calls/getAllSubjects";
+import useSubjectList from "../../hooks/useSubjectList";
+import SearchableDropdown from "../../components/edit_courses/SearchableDropdown";
 
 type EditCourseBodyProps = {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
@@ -25,6 +28,7 @@ const EditCourseBody = ({
 }:EditCourseBodyProps) => {
   const titleRef = React.useRef<Input>(null);
   const codeRef = React.useRef<Input>(null);
+  const { subjects: subjectList, loading: subjectsLoading } = useSubjectList();
   const [loading, setLoading] = useState(false);
   return (
     <SafeAreaView style={editCourseStyles.root}>
@@ -32,7 +36,7 @@ const EditCourseBody = ({
         <Layout style={editCourseStyles.container2}>
           <Text style={[editCourseStyles.textStyle, { left: "0%" }]}>Course</Text>
           <Layout style={editCourseStyles.codeContainer}>
-            <TextField
+            {/* <TextField
               style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle]}
               placeholder="COMM"
               value={currTitle}
@@ -42,7 +46,8 @@ const EditCourseBody = ({
               onSubmitEditing={() => codeRef.current?.focus()}
               ref={titleRef}
               returnKeyType="next"
-            />
+            /> */}
+            <SearchableDropdown />
             <TextField
               ref={codeRef}
               style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}

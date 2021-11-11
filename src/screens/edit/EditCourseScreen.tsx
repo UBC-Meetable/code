@@ -10,7 +10,6 @@ import editCourseStyles from "./editCourseStyles";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 
 /** TODO: make styling more dynamic */
-// Todo: componentize file
 /** TODO: Cache user courses so we don't need to fetch so often. */
 
 const EditCourseScreen = () => {
