@@ -22,6 +22,7 @@ export type User = {
   createdAt?: string,
   updatedAt?: string,
   owner?: string | null,
+  findFriendsOptionSelected?: boolean | null,
 };
 
 export enum UserState {
@@ -281,6 +282,7 @@ export type UpdateUserInput = {
   major?: string | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
+  findFriendsOptionSelected?: boolean | null,
 };
 
 export type DeleteUserInput = {
