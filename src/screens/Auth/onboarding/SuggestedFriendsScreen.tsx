@@ -7,10 +7,22 @@ const SuggestedFriendsScreen = () => {
   const [findFriendsOption, setFindFriendsOption] = useState<boolean>(false);
   const { info: userProfile } = useUserProfile();
   return (
-    <div>
-      <h1>Would you like for us to help you find some new friends?</h1>
-      <Button>Yes </Button>
-      <Button>No </Button>
+    <Layout>
+      <Text>Would you like for us to help you find some new friends?</Text>
+      <Button
+        onPress={() => {
+          setFindFriendsOption(true);
+        }}
+      >
+        Yes
+      </Button>
+      <Button
+        onPress={() => {
+          setFindFriendsOption(false);
+        }}
+      >
+        No
+      </Button>
       <Button
         onPress={async () => {
           await updateUserProfile({
@@ -21,7 +33,7 @@ const SuggestedFriendsScreen = () => {
       >
         Done
       </Button>
-    </div>
+    </Layout>
   );
 };
 
