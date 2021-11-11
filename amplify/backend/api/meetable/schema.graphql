@@ -21,6 +21,7 @@ type User
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
   expoPushToken: String
   multipleGroupsOptIn: Boolean # undefined interpreted same as false
+  findFriendsOptionSelected: Boolean
 }
 
 # Course Groups
