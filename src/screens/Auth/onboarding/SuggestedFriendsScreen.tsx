@@ -18,11 +18,14 @@ const SuggestedFriendsScreen = () => {
         style={{ position: "absolute" }}
       />
       <Text>Would you like for us to help you find some new friends?</Text>
-    
+
       <PrimaryButton
         status="primary"
         onPress={() => {
           console.log(`yes was clicked: ${findFriendsOption}`);
+          if (userProfile) {
+            console.log(userProfile.id);
+          }
           setFindFriendsOption(true);
         }}
       >
@@ -32,6 +35,9 @@ const SuggestedFriendsScreen = () => {
         status="primary"
         onPress={() => {
           console.log(`no was clicked: ${findFriendsOption}`);
+          if (userProfile) {
+            console.log(userProfile.id);
+          }
           setFindFriendsOption(false);
         }}
       >
@@ -41,6 +47,9 @@ const SuggestedFriendsScreen = () => {
         status="primary"
         onPress={async () => {
           console.log(`done was clicked: ${findFriendsOption}`);
+          if (userProfile) {
+            console.log(userProfile.id);
+          }
           await updateUserProfile({
             id: userProfile!.id,
             findFriendsOptionSelected: findFriendsOption,
@@ -55,10 +64,9 @@ const SuggestedFriendsScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: "#0000",
     marginTop: 250,
-    marginLeft: 30
+    marginLeft: 30,
   },
 });
 
