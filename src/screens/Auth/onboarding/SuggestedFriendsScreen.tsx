@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useWindowDimensions, StyleSheet } from "react-native";
 import { Layout, Text } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
