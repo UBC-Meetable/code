@@ -15,6 +15,7 @@ export const onCreateUser = /* GraphQL */ `
       university
       year
       major
+      interests
       courseGroups {
         items {
           id
@@ -65,6 +66,7 @@ export const onCreateUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -99,6 +101,7 @@ export const onCreateUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -157,6 +160,7 @@ export const onCreateUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -191,6 +195,7 @@ export const onCreateUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -216,6 +221,7 @@ export const onCreateUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -250,6 +256,7 @@ export const onCreateUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -266,6 +273,7 @@ export const onCreateUser = /* GraphQL */ `
       }
       expoPushToken
       multipleGroupsOptIn
+      findFriendsOptionSelected
       createdAt
       updatedAt
       owner
@@ -285,6 +293,7 @@ export const onUpdateUser = /* GraphQL */ `
       university
       year
       major
+      interests
       courseGroups {
         items {
           id
@@ -335,6 +344,7 @@ export const onUpdateUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -369,6 +379,7 @@ export const onUpdateUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -427,6 +438,7 @@ export const onUpdateUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -461,6 +473,7 @@ export const onUpdateUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -486,6 +499,7 @@ export const onUpdateUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -520,6 +534,7 @@ export const onUpdateUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -536,6 +551,7 @@ export const onUpdateUser = /* GraphQL */ `
       }
       expoPushToken
       multipleGroupsOptIn
+      findFriendsOptionSelected
       createdAt
       updatedAt
       owner
@@ -555,6 +571,7 @@ export const onDeleteUser = /* GraphQL */ `
       university
       year
       major
+      interests
       courseGroups {
         items {
           id
@@ -605,6 +622,7 @@ export const onDeleteUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -639,6 +657,7 @@ export const onDeleteUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -697,6 +716,7 @@ export const onDeleteUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -731,6 +751,7 @@ export const onDeleteUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -756,6 +777,7 @@ export const onDeleteUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -790,6 +812,7 @@ export const onDeleteUser = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -806,6 +829,7 @@ export const onDeleteUser = /* GraphQL */ `
       }
       expoPushToken
       multipleGroupsOptIn
+      findFriendsOptionSelected
       createdAt
       updatedAt
       owner
@@ -865,6 +889,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -899,6 +924,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -930,6 +956,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -964,6 +991,7 @@ export const onCreateCourseGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1041,6 +1069,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1075,6 +1104,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1106,6 +1136,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1140,6 +1171,7 @@ export const onUpdateCourseGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1217,6 +1249,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1251,6 +1284,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1282,6 +1316,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1316,6 +1351,7 @@ export const onDeleteCourseGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1391,6 +1427,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1425,6 +1462,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1454,6 +1492,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1488,6 +1527,7 @@ export const onCreateFriendGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1563,6 +1603,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1597,6 +1638,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1626,6 +1668,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1660,6 +1703,7 @@ export const onUpdateFriendGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1735,6 +1779,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1769,6 +1814,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1798,6 +1844,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1832,6 +1879,7 @@ export const onDeleteFriendGroup = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -1876,6 +1924,7 @@ export const onCreateReport = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -1901,8 +1950,10 @@ export const onCreateReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -1936,8 +1987,10 @@ export const onCreateReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -1963,8 +2016,10 @@ export const onCreateReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -1981,6 +2036,7 @@ export const onCreateReport = /* GraphQL */ `
           }
           expoPushToken
           multipleGroupsOptIn
+          findFriendsOptionSelected
           createdAt
           updatedAt
           owner
@@ -2012,6 +2068,7 @@ export const onCreateReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2043,6 +2100,7 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2054,6 +2112,7 @@ export const onCreateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2093,6 +2152,7 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2104,6 +2164,7 @@ export const onCreateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2129,6 +2190,7 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2140,6 +2202,7 @@ export const onCreateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2156,6 +2219,7 @@ export const onCreateReport = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -2171,6 +2235,7 @@ export const onCreateReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2202,6 +2267,7 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2213,6 +2279,7 @@ export const onCreateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2252,6 +2319,7 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2263,6 +2331,7 @@ export const onCreateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2288,6 +2357,7 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2299,6 +2369,7 @@ export const onCreateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2315,6 +2386,7 @@ export const onCreateReport = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -2345,6 +2417,7 @@ export const onUpdateReport = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -2370,8 +2443,10 @@ export const onUpdateReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -2405,8 +2480,10 @@ export const onUpdateReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -2432,8 +2509,10 @@ export const onUpdateReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -2450,6 +2529,7 @@ export const onUpdateReport = /* GraphQL */ `
           }
           expoPushToken
           multipleGroupsOptIn
+          findFriendsOptionSelected
           createdAt
           updatedAt
           owner
@@ -2481,6 +2561,7 @@ export const onUpdateReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2512,6 +2593,7 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2523,6 +2605,7 @@ export const onUpdateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2562,6 +2645,7 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2573,6 +2657,7 @@ export const onUpdateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2598,6 +2683,7 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2609,6 +2695,7 @@ export const onUpdateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2625,6 +2712,7 @@ export const onUpdateReport = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -2640,6 +2728,7 @@ export const onUpdateReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2671,6 +2760,7 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2682,6 +2772,7 @@ export const onUpdateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2721,6 +2812,7 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2732,6 +2824,7 @@ export const onUpdateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2757,6 +2850,7 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2768,6 +2862,7 @@ export const onUpdateReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -2784,6 +2879,7 @@ export const onUpdateReport = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -2814,6 +2910,7 @@ export const onDeleteReport = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -2839,8 +2936,10 @@ export const onDeleteReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -2874,8 +2973,10 @@ export const onDeleteReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -2901,8 +3002,10 @@ export const onDeleteReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
+                findFriendsOptionSelected
                 createdAt
                 updatedAt
                 owner
@@ -2919,6 +3022,7 @@ export const onDeleteReport = /* GraphQL */ `
           }
           expoPushToken
           multipleGroupsOptIn
+          findFriendsOptionSelected
           createdAt
           updatedAt
           owner
@@ -2950,6 +3054,7 @@ export const onDeleteReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2981,6 +3086,7 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2992,6 +3098,7 @@ export const onDeleteReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3031,6 +3138,7 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3042,6 +3150,7 @@ export const onDeleteReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3067,6 +3176,7 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3078,6 +3188,7 @@ export const onDeleteReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3094,6 +3205,7 @@ export const onDeleteReport = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -3109,6 +3221,7 @@ export const onDeleteReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3140,6 +3253,7 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3151,6 +3265,7 @@ export const onDeleteReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3190,6 +3305,7 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3201,6 +3317,7 @@ export const onDeleteReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3226,6 +3343,7 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3237,6 +3355,7 @@ export const onDeleteReport = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3253,6 +3372,7 @@ export const onDeleteReport = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -3280,6 +3400,7 @@ export const onCreateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3311,6 +3432,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3322,6 +3444,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3361,6 +3484,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3372,6 +3496,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3397,6 +3522,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3408,6 +3534,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3424,6 +3551,7 @@ export const onCreateDirectChat = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -3439,6 +3567,7 @@ export const onCreateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3470,6 +3599,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3481,6 +3611,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3520,6 +3651,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3531,6 +3663,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3556,6 +3689,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3567,6 +3701,7 @@ export const onCreateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3583,6 +3718,7 @@ export const onCreateDirectChat = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -3604,6 +3740,7 @@ export const onCreateDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -3638,6 +3775,7 @@ export const onCreateDirectChat = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -3679,6 +3817,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3710,6 +3849,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3721,6 +3861,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3760,6 +3901,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3771,6 +3913,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3796,6 +3939,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3807,6 +3951,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3823,6 +3968,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -3838,6 +3984,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3869,6 +4016,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3880,6 +4028,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3919,6 +4068,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3930,6 +4080,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3955,6 +4106,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3966,6 +4118,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -3982,6 +4135,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -4003,6 +4157,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -4037,6 +4192,7 @@ export const onUpdateDirectChat = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -4078,6 +4234,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -4109,6 +4266,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4120,6 +4278,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4159,6 +4318,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4170,6 +4330,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4195,6 +4356,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4206,6 +4368,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4222,6 +4385,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -4237,6 +4401,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -4268,6 +4433,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4279,6 +4445,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4318,6 +4485,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4329,6 +4497,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4354,6 +4523,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4365,6 +4535,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4381,6 +4552,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -4402,6 +4574,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -4436,6 +4609,7 @@ export const onDeleteDirectChat = /* GraphQL */ `
             }
             expoPushToken
             multipleGroupsOptIn
+            findFriendsOptionSelected
             createdAt
             updatedAt
             owner
@@ -4478,6 +4652,7 @@ export const onCreateChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -4509,6 +4684,7 @@ export const onCreateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4520,6 +4696,7 @@ export const onCreateChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4559,6 +4736,7 @@ export const onCreateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4570,6 +4748,7 @@ export const onCreateChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4595,6 +4774,7 @@ export const onCreateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4606,6 +4786,7 @@ export const onCreateChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4622,6 +4803,7 @@ export const onCreateChatMessage = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -4658,6 +4840,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -4689,6 +4872,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4700,6 +4884,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4739,6 +4924,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4750,6 +4936,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4775,6 +4962,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4786,6 +4974,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4802,6 +4991,7 @@ export const onUpdateChatMessage = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -4838,6 +5028,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -4869,6 +5060,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4880,6 +5072,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4919,6 +5112,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4930,6 +5124,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4955,6 +5150,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4966,6 +5162,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -4982,6 +5179,7 @@ export const onDeleteChatMessage = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -5038,6 +5236,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5049,6 +5248,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5080,6 +5280,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5091,6 +5292,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5124,6 +5326,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -5155,6 +5358,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5166,6 +5370,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5205,6 +5410,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5216,6 +5422,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5241,6 +5448,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5252,6 +5460,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5268,6 +5477,7 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -5316,6 +5526,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5327,6 +5538,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5358,6 +5570,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5369,6 +5582,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5402,6 +5616,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -5433,6 +5648,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5444,6 +5660,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5483,6 +5700,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5494,6 +5712,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5519,6 +5738,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5530,6 +5750,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5546,6 +5767,7 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -5594,6 +5816,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5605,6 +5828,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5636,6 +5860,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5647,6 +5872,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5680,6 +5906,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -5711,6 +5938,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5722,6 +5950,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5761,6 +5990,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5772,6 +6002,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5797,6 +6028,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5808,6 +6040,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5824,6 +6057,7 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -5870,6 +6104,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5881,6 +6116,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5910,6 +6146,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5921,6 +6158,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -5954,6 +6192,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -5985,6 +6224,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -5996,6 +6236,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6035,6 +6276,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6046,6 +6288,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6071,6 +6314,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6082,6 +6326,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6098,6 +6343,7 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -6144,6 +6390,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6155,6 +6402,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6184,6 +6432,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6195,6 +6444,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6228,6 +6478,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -6259,6 +6510,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6270,6 +6522,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6309,6 +6562,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6320,6 +6574,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6345,6 +6600,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6356,6 +6612,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6372,6 +6629,7 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -6418,6 +6676,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6429,6 +6688,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6458,6 +6718,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6469,6 +6730,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6502,6 +6764,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -6533,6 +6796,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6544,6 +6808,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6583,6 +6848,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6594,6 +6860,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6619,6 +6886,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6630,6 +6898,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6646,6 +6915,7 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -6672,6 +6942,7 @@ export const onCreateQuiz = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -6703,6 +6974,7 @@ export const onCreateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6714,6 +6986,7 @@ export const onCreateQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6753,6 +7026,7 @@ export const onCreateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6764,6 +7038,7 @@ export const onCreateQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6789,6 +7064,7 @@ export const onCreateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6800,6 +7076,7 @@ export const onCreateQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6816,6 +7093,7 @@ export const onCreateQuiz = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -6846,6 +7124,7 @@ export const onUpdateQuiz = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -6877,6 +7156,7 @@ export const onUpdateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6888,6 +7168,7 @@ export const onUpdateQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6927,6 +7208,7 @@ export const onUpdateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6938,6 +7220,7 @@ export const onUpdateQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6963,6 +7246,7 @@ export const onUpdateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -6974,6 +7258,7 @@ export const onUpdateQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -6990,6 +7275,7 @@ export const onUpdateQuiz = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
@@ -7020,6 +7306,7 @@ export const onDeleteQuiz = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -7051,6 +7338,7 @@ export const onDeleteQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -7062,6 +7350,7 @@ export const onDeleteQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -7101,6 +7390,7 @@ export const onDeleteQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -7112,6 +7402,7 @@ export const onDeleteQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -7137,6 +7428,7 @@ export const onDeleteQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -7148,6 +7440,7 @@ export const onDeleteQuiz = /* GraphQL */ `
               }
               expoPushToken
               multipleGroupsOptIn
+              findFriendsOptionSelected
               createdAt
               updatedAt
               owner
@@ -7164,6 +7457,7 @@ export const onDeleteQuiz = /* GraphQL */ `
         }
         expoPushToken
         multipleGroupsOptIn
+        findFriendsOptionSelected
         createdAt
         updatedAt
         owner
