@@ -14,6 +14,7 @@ export type User = {
   university?: string,
   year?: number,
   major?: string | null,
+  interests?: Array< string | null > | null,
   courseGroups?: ModelCourseGroupConnectionConnection,
   friendGroups?: ModelFriendGroupConnectionConnection,
   quizzes?: ModelQuizConnection,
@@ -183,6 +184,7 @@ export type CreateUserInput = {
   university: string,
   year: number,
   major?: string | null,
+  interests?: Array< string | null > | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
 };
@@ -197,6 +199,7 @@ export type ModelUserConditionInput = {
   university?: ModelStringInput | null,
   year?: ModelIntInput | null,
   major?: ModelStringInput | null,
+  interests?: ModelStringInput | null,
   expoPushToken?: ModelStringInput | null,
   multipleGroupsOptIn?: ModelBooleanInput | null,
   and?: Array< ModelUserConditionInput | null > | null,
@@ -279,6 +282,7 @@ export type UpdateUserInput = {
   university?: string | null,
   year?: number | null,
   major?: string | null,
+  interests?: Array< string | null > | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
 };
@@ -573,6 +577,7 @@ export type ModelUserFilterInput = {
   university?: ModelStringInput | null,
   year?: ModelIntInput | null,
   major?: ModelStringInput | null,
+  interests?: ModelStringInput | null,
   expoPushToken?: ModelStringInput | null,
   multipleGroupsOptIn?: ModelBooleanInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
@@ -913,6 +918,7 @@ export type CreateUserMutation = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -971,6 +977,7 @@ export type CreateUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1077,6 +1084,7 @@ export type CreateUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1145,6 +1153,7 @@ export type CreateUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1226,6 +1235,7 @@ export type UpdateUserMutation = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -1284,6 +1294,7 @@ export type UpdateUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1390,6 +1401,7 @@ export type UpdateUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1458,6 +1470,7 @@ export type UpdateUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1539,6 +1552,7 @@ export type DeleteUserMutation = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -1597,6 +1611,7 @@ export type DeleteUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1703,6 +1718,7 @@ export type DeleteUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1771,6 +1787,7 @@ export type DeleteUserMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1900,6 +1917,7 @@ export type CreateCourseGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -1974,6 +1992,7 @@ export type CreateCourseGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2105,6 +2124,7 @@ export type UpdateCourseGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2179,6 +2199,7 @@ export type UpdateCourseGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2310,6 +2331,7 @@ export type DeleteCourseGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2384,6 +2406,7 @@ export type DeleteCourseGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2513,6 +2536,7 @@ export type CreateFriendGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2585,6 +2609,7 @@ export type CreateFriendGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2714,6 +2739,7 @@ export type UpdateFriendGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2786,6 +2812,7 @@ export type UpdateFriendGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2915,6 +2942,7 @@ export type DeleteFriendGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -2987,6 +3015,7 @@ export type DeleteFriendGroupMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -3079,6 +3108,7 @@ export type CreateReportMutation = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -3108,6 +3138,7 @@ export type CreateReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -3147,6 +3178,7 @@ export type CreateReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -3177,6 +3209,7 @@ export type CreateReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -3229,6 +3262,7 @@ export type CreateReportMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -3266,6 +3300,7 @@ export type CreateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3325,6 +3360,7 @@ export type CreateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3367,6 +3403,7 @@ export type CreateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3414,6 +3451,7 @@ export type CreateReportMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -3451,6 +3489,7 @@ export type CreateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3510,6 +3549,7 @@ export type CreateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3552,6 +3592,7 @@ export type CreateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3620,6 +3661,7 @@ export type UpdateReportMutation = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -3649,6 +3691,7 @@ export type UpdateReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -3688,6 +3731,7 @@ export type UpdateReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -3718,6 +3762,7 @@ export type UpdateReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -3770,6 +3815,7 @@ export type UpdateReportMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -3807,6 +3853,7 @@ export type UpdateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3866,6 +3913,7 @@ export type UpdateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3908,6 +3956,7 @@ export type UpdateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -3955,6 +4004,7 @@ export type UpdateReportMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -3992,6 +4042,7 @@ export type UpdateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4051,6 +4102,7 @@ export type UpdateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4093,6 +4145,7 @@ export type UpdateReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4161,6 +4214,7 @@ export type DeleteReportMutation = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -4190,6 +4244,7 @@ export type DeleteReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -4229,6 +4284,7 @@ export type DeleteReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -4259,6 +4315,7 @@ export type DeleteReportMutation = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -4311,6 +4368,7 @@ export type DeleteReportMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -4348,6 +4406,7 @@ export type DeleteReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4407,6 +4466,7 @@ export type DeleteReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4449,6 +4509,7 @@ export type DeleteReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4496,6 +4557,7 @@ export type DeleteReportMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -4533,6 +4595,7 @@ export type DeleteReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4592,6 +4655,7 @@ export type DeleteReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4634,6 +4698,7 @@ export type DeleteReportMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4698,6 +4763,7 @@ export type CreateDirectChatMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -4735,6 +4801,7 @@ export type CreateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4794,6 +4861,7 @@ export type CreateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4836,6 +4904,7 @@ export type CreateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4883,6 +4952,7 @@ export type CreateDirectChatMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -4920,6 +4990,7 @@ export type CreateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -4979,6 +5050,7 @@ export type CreateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5021,6 +5093,7 @@ export type CreateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5076,6 +5149,7 @@ export type CreateDirectChatMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -5164,6 +5238,7 @@ export type UpdateDirectChatMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -5201,6 +5276,7 @@ export type UpdateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5260,6 +5336,7 @@ export type UpdateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5302,6 +5379,7 @@ export type UpdateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5349,6 +5427,7 @@ export type UpdateDirectChatMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -5386,6 +5465,7 @@ export type UpdateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5445,6 +5525,7 @@ export type UpdateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5487,6 +5568,7 @@ export type UpdateDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5542,6 +5624,7 @@ export type UpdateDirectChatMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -5630,6 +5713,7 @@ export type DeleteDirectChatMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -5667,6 +5751,7 @@ export type DeleteDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5726,6 +5811,7 @@ export type DeleteDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5768,6 +5854,7 @@ export type DeleteDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5815,6 +5902,7 @@ export type DeleteDirectChatMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -5852,6 +5940,7 @@ export type DeleteDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5911,6 +6000,7 @@ export type DeleteDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -5953,6 +6043,7 @@ export type DeleteDirectChatMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6008,6 +6099,7 @@ export type DeleteDirectChatMutation = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -6097,6 +6189,7 @@ export type CreateChatMessageMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -6134,6 +6227,7 @@ export type CreateChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6193,6 +6287,7 @@ export type CreateChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6235,6 +6330,7 @@ export type CreateChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6309,6 +6405,7 @@ export type UpdateChatMessageMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -6346,6 +6443,7 @@ export type UpdateChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6405,6 +6503,7 @@ export type UpdateChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6447,6 +6546,7 @@ export type UpdateChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6521,6 +6621,7 @@ export type DeleteChatMessageMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -6558,6 +6659,7 @@ export type DeleteChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6617,6 +6719,7 @@ export type DeleteChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6659,6 +6762,7 @@ export type DeleteChatMessageMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6759,6 +6863,7 @@ export type CreateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6807,6 +6912,7 @@ export type CreateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6856,6 +6962,7 @@ export type CreateCourseGroupConnectionMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -6893,6 +7000,7 @@ export type CreateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6952,6 +7060,7 @@ export type CreateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -6994,6 +7103,7 @@ export type CreateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7085,6 +7195,7 @@ export type UpdateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7133,6 +7244,7 @@ export type UpdateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7182,6 +7294,7 @@ export type UpdateCourseGroupConnectionMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -7219,6 +7332,7 @@ export type UpdateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7278,6 +7392,7 @@ export type UpdateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7320,6 +7435,7 @@ export type UpdateCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7411,6 +7527,7 @@ export type DeleteCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7459,6 +7576,7 @@ export type DeleteCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7508,6 +7626,7 @@ export type DeleteCourseGroupConnectionMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -7545,6 +7664,7 @@ export type DeleteCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7604,6 +7724,7 @@ export type DeleteCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7646,6 +7767,7 @@ export type DeleteCourseGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7735,6 +7857,7 @@ export type CreateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7781,6 +7904,7 @@ export type CreateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7830,6 +7954,7 @@ export type CreateFriendGroupConnectionMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -7867,6 +7992,7 @@ export type CreateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7926,6 +8052,7 @@ export type CreateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -7968,6 +8095,7 @@ export type CreateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8057,6 +8185,7 @@ export type UpdateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8103,6 +8232,7 @@ export type UpdateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8152,6 +8282,7 @@ export type UpdateFriendGroupConnectionMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -8189,6 +8320,7 @@ export type UpdateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8248,6 +8380,7 @@ export type UpdateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8290,6 +8423,7 @@ export type UpdateFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8379,6 +8513,7 @@ export type DeleteFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8425,6 +8560,7 @@ export type DeleteFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8474,6 +8610,7 @@ export type DeleteFriendGroupConnectionMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -8511,6 +8648,7 @@ export type DeleteFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8570,6 +8708,7 @@ export type DeleteFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8612,6 +8751,7 @@ export type DeleteFriendGroupConnectionMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8675,6 +8815,7 @@ export type CreateQuizMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -8712,6 +8853,7 @@ export type CreateQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8771,6 +8913,7 @@ export type CreateQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8813,6 +8956,7 @@ export type CreateQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8881,6 +9025,7 @@ export type UpdateQuizMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -8918,6 +9063,7 @@ export type UpdateQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -8977,6 +9123,7 @@ export type UpdateQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9019,6 +9166,7 @@ export type UpdateQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9087,6 +9235,7 @@ export type DeleteQuizMutation = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -9124,6 +9273,7 @@ export type DeleteQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9183,6 +9333,7 @@ export type DeleteQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9225,6 +9376,7 @@ export type DeleteQuizMutation = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9301,6 +9453,7 @@ export type GetUserQuery = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -9359,6 +9512,7 @@ export type GetUserQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -9465,6 +9619,7 @@ export type GetUserQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -9533,6 +9688,7 @@ export type GetUserQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -9619,6 +9775,7 @@ export type ListUsersQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -9656,6 +9813,7 @@ export type ListUsersQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9715,6 +9873,7 @@ export type ListUsersQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9757,6 +9916,7 @@ export type ListUsersQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -9861,6 +10021,7 @@ export type GetCourseGroupQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -9935,6 +10096,7 @@ export type GetCourseGroupQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -10050,6 +10212,7 @@ export type ListCourseGroupsQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10098,6 +10261,7 @@ export type ListCourseGroupsQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10202,6 +10366,7 @@ export type GetFriendGroupQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -10274,6 +10439,7 @@ export type GetFriendGroupQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -10387,6 +10553,7 @@ export type ListFriendGroupsQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10433,6 +10600,7 @@ export type ListFriendGroupsQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10500,6 +10668,7 @@ export type GetReportQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -10529,6 +10698,7 @@ export type GetReportQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -10568,6 +10738,7 @@ export type GetReportQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -10598,6 +10769,7 @@ export type GetReportQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -10650,6 +10822,7 @@ export type GetReportQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -10687,6 +10860,7 @@ export type GetReportQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10746,6 +10920,7 @@ export type GetReportQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10788,6 +10963,7 @@ export type GetReportQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10835,6 +11011,7 @@ export type GetReportQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -10872,6 +11049,7 @@ export type GetReportQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10931,6 +11109,7 @@ export type GetReportQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -10973,6 +11152,7 @@ export type GetReportQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11044,6 +11224,7 @@ export type ListReportsQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -11117,6 +11298,7 @@ export type ListReportsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -11146,6 +11328,7 @@ export type ListReportsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11185,6 +11368,7 @@ export type ListReportsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11215,6 +11399,7 @@ export type ListReportsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11250,6 +11435,7 @@ export type ListReportsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -11279,6 +11465,7 @@ export type ListReportsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11318,6 +11505,7 @@ export type ListReportsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11348,6 +11536,7 @@ export type ListReportsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11401,6 +11590,7 @@ export type GetDirectChatQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -11438,6 +11628,7 @@ export type GetDirectChatQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11497,6 +11688,7 @@ export type GetDirectChatQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11539,6 +11731,7 @@ export type GetDirectChatQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11586,6 +11779,7 @@ export type GetDirectChatQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -11623,6 +11817,7 @@ export type GetDirectChatQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11682,6 +11877,7 @@ export type GetDirectChatQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11724,6 +11920,7 @@ export type GetDirectChatQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -11779,6 +11976,7 @@ export type GetDirectChatQuery = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -11870,6 +12068,7 @@ export type ListDirectChatsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -11899,6 +12098,7 @@ export type ListDirectChatsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11938,6 +12138,7 @@ export type ListDirectChatsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -11968,6 +12169,7 @@ export type ListDirectChatsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12003,6 +12205,7 @@ export type ListDirectChatsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -12032,6 +12235,7 @@ export type ListDirectChatsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12071,6 +12275,7 @@ export type ListDirectChatsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12101,6 +12306,7 @@ export type ListDirectChatsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12144,6 +12350,7 @@ export type ListDirectChatsQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12208,6 +12415,7 @@ export type GetChatMessageQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -12245,6 +12453,7 @@ export type GetChatMessageQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12304,6 +12513,7 @@ export type GetChatMessageQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12346,6 +12556,7 @@ export type GetChatMessageQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12423,6 +12634,7 @@ export type ListChatMessagesQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -12452,6 +12664,7 @@ export type ListChatMessagesQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12491,6 +12704,7 @@ export type ListChatMessagesQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12521,6 +12735,7 @@ export type ListChatMessagesQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12610,6 +12825,7 @@ export type GetCourseGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12658,6 +12874,7 @@ export type GetCourseGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12707,6 +12924,7 @@ export type GetCourseGroupConnectionQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -12744,6 +12962,7 @@ export type GetCourseGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12803,6 +13022,7 @@ export type GetCourseGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12845,6 +13065,7 @@ export type GetCourseGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -12931,6 +13152,7 @@ export type ListCourseGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -12967,6 +13189,7 @@ export type ListCourseGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13004,6 +13227,7 @@ export type ListCourseGroupConnectionsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -13033,6 +13257,7 @@ export type ListCourseGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13072,6 +13297,7 @@ export type ListCourseGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13102,6 +13328,7 @@ export type ListCourseGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13180,6 +13407,7 @@ export type GetFriendGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13226,6 +13454,7 @@ export type GetFriendGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13275,6 +13504,7 @@ export type GetFriendGroupConnectionQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -13312,6 +13542,7 @@ export type GetFriendGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13371,6 +13602,7 @@ export type GetFriendGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13413,6 +13645,7 @@ export type GetFriendGroupConnectionQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13497,6 +13730,7 @@ export type ListFriendGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13531,6 +13765,7 @@ export type ListFriendGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13568,6 +13803,7 @@ export type ListFriendGroupConnectionsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -13597,6 +13833,7 @@ export type ListFriendGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13636,6 +13873,7 @@ export type ListFriendGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13666,6 +13904,7 @@ export type ListFriendGroupConnectionsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13718,6 +13957,7 @@ export type GetQuizQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -13755,6 +13995,7 @@ export type GetQuizQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13814,6 +14055,7 @@ export type GetQuizQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13856,6 +14098,7 @@ export type GetQuizQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -13927,6 +14170,7 @@ export type ListQuizsQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -13956,6 +14200,7 @@ export type ListQuizsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -13995,6 +14240,7 @@ export type ListQuizsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14025,6 +14271,7 @@ export type ListQuizsQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14085,6 +14332,7 @@ export type UserByUniYearQuery = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -14122,6 +14370,7 @@ export type UserByUniYearQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -14181,6 +14430,7 @@ export type UserByUniYearQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -14223,6 +14473,7 @@ export type UserByUniYearQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -14291,6 +14542,7 @@ export type ChatByUsersQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -14320,6 +14572,7 @@ export type ChatByUsersQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14359,6 +14612,7 @@ export type ChatByUsersQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14389,6 +14643,7 @@ export type ChatByUsersQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14424,6 +14679,7 @@ export type ChatByUsersQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -14453,6 +14709,7 @@ export type ChatByUsersQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14492,6 +14749,7 @@ export type ChatByUsersQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14522,6 +14780,7 @@ export type ChatByUsersQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14565,6 +14824,7 @@ export type ChatByUsersQuery = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -14636,6 +14896,7 @@ export type MessagesByCourseGroupChatIdQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -14665,6 +14926,7 @@ export type MessagesByCourseGroupChatIdQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14704,6 +14966,7 @@ export type MessagesByCourseGroupChatIdQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14734,6 +14997,7 @@ export type MessagesByCourseGroupChatIdQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14804,6 +15068,7 @@ export type MessagesByDirectChatIdQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -14833,6 +15098,7 @@ export type MessagesByDirectChatIdQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14872,6 +15138,7 @@ export type MessagesByDirectChatIdQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14902,6 +15169,7 @@ export type MessagesByDirectChatIdQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -14990,6 +15258,7 @@ export type CourseGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15026,6 +15295,7 @@ export type CourseGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15063,6 +15333,7 @@ export type CourseGroupByUserQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -15092,6 +15363,7 @@ export type CourseGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15131,6 +15403,7 @@ export type CourseGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15161,6 +15434,7 @@ export type CourseGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15238,6 +15512,7 @@ export type FriendGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15272,6 +15547,7 @@ export type FriendGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15309,6 +15585,7 @@ export type FriendGroupByUserQuery = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -15338,6 +15615,7 @@ export type FriendGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15377,6 +15655,7 @@ export type FriendGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15407,6 +15686,7 @@ export type FriendGroupByUserQuery = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -15451,6 +15731,7 @@ export type OnCreateUserSubscription = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -15509,6 +15790,7 @@ export type OnCreateUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -15615,6 +15897,7 @@ export type OnCreateUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -15683,6 +15966,7 @@ export type OnCreateUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -15759,6 +16043,7 @@ export type OnUpdateUserSubscription = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -15817,6 +16102,7 @@ export type OnUpdateUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -15923,6 +16209,7 @@ export type OnUpdateUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -15991,6 +16278,7 @@ export type OnUpdateUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16067,6 +16355,7 @@ export type OnDeleteUserSubscription = {
     university: string,
     year: number,
     major?: string | null,
+    interests?: Array< string | null > | null,
     courseGroups?:  {
       __typename: "ModelCourseGroupConnectionConnection",
       items?:  Array< {
@@ -16125,6 +16414,7 @@ export type OnDeleteUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16231,6 +16521,7 @@ export type OnDeleteUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16299,6 +16590,7 @@ export type OnDeleteUserSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16423,6 +16715,7 @@ export type OnCreateCourseGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16497,6 +16790,7 @@ export type OnCreateCourseGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16623,6 +16917,7 @@ export type OnUpdateCourseGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16697,6 +16992,7 @@ export type OnUpdateCourseGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16823,6 +17119,7 @@ export type OnDeleteCourseGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -16897,6 +17194,7 @@ export type OnDeleteCourseGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17021,6 +17319,7 @@ export type OnCreateFriendGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17093,6 +17392,7 @@ export type OnCreateFriendGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17217,6 +17517,7 @@ export type OnUpdateFriendGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17289,6 +17590,7 @@ export type OnUpdateFriendGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17413,6 +17715,7 @@ export type OnDeleteFriendGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17485,6 +17788,7 @@ export type OnDeleteFriendGroupSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -17572,6 +17876,7 @@ export type OnCreateReportSubscription = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -17601,6 +17906,7 @@ export type OnCreateReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -17640,6 +17946,7 @@ export type OnCreateReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -17670,6 +17977,7 @@ export type OnCreateReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -17722,6 +18030,7 @@ export type OnCreateReportSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -17759,6 +18068,7 @@ export type OnCreateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -17818,6 +18128,7 @@ export type OnCreateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -17860,6 +18171,7 @@ export type OnCreateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -17907,6 +18219,7 @@ export type OnCreateReportSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -17944,6 +18257,7 @@ export type OnCreateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18003,6 +18317,7 @@ export type OnCreateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18045,6 +18360,7 @@ export type OnCreateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18108,6 +18424,7 @@ export type OnUpdateReportSubscription = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -18137,6 +18454,7 @@ export type OnUpdateReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -18176,6 +18494,7 @@ export type OnUpdateReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -18206,6 +18525,7 @@ export type OnUpdateReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -18258,6 +18578,7 @@ export type OnUpdateReportSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -18295,6 +18616,7 @@ export type OnUpdateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18354,6 +18676,7 @@ export type OnUpdateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18396,6 +18719,7 @@ export type OnUpdateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18443,6 +18767,7 @@ export type OnUpdateReportSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -18480,6 +18805,7 @@ export type OnUpdateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18539,6 +18865,7 @@ export type OnUpdateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18581,6 +18908,7 @@ export type OnUpdateReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18644,6 +18972,7 @@ export type OnDeleteReportSubscription = {
         university: string,
         year: number,
         major?: string | null,
+        interests?: Array< string | null > | null,
         courseGroups?:  {
           __typename: "ModelCourseGroupConnectionConnection",
           items?:  Array< {
@@ -18673,6 +19002,7 @@ export type OnDeleteReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -18712,6 +19042,7 @@ export type OnDeleteReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -18742,6 +19073,7 @@ export type OnDeleteReportSubscription = {
               university: string,
               year: number,
               major?: string | null,
+              interests?: Array< string | null > | null,
               expoPushToken?: string | null,
               multipleGroupsOptIn?: boolean | null,
               createdAt: string,
@@ -18794,6 +19126,7 @@ export type OnDeleteReportSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -18831,6 +19164,7 @@ export type OnDeleteReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18890,6 +19224,7 @@ export type OnDeleteReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18932,6 +19267,7 @@ export type OnDeleteReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -18979,6 +19315,7 @@ export type OnDeleteReportSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -19016,6 +19353,7 @@ export type OnDeleteReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19075,6 +19413,7 @@ export type OnDeleteReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19117,6 +19456,7 @@ export type OnDeleteReportSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19180,6 +19520,7 @@ export type OnCreateDirectChatSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -19217,6 +19558,7 @@ export type OnCreateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19276,6 +19618,7 @@ export type OnCreateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19318,6 +19661,7 @@ export type OnCreateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19365,6 +19709,7 @@ export type OnCreateDirectChatSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -19402,6 +19747,7 @@ export type OnCreateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19461,6 +19807,7 @@ export type OnCreateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19503,6 +19850,7 @@ export type OnCreateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19558,6 +19906,7 @@ export type OnCreateDirectChatSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -19645,6 +19994,7 @@ export type OnUpdateDirectChatSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -19682,6 +20032,7 @@ export type OnUpdateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19741,6 +20092,7 @@ export type OnUpdateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19783,6 +20135,7 @@ export type OnUpdateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19830,6 +20183,7 @@ export type OnUpdateDirectChatSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -19867,6 +20221,7 @@ export type OnUpdateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19926,6 +20281,7 @@ export type OnUpdateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -19968,6 +20324,7 @@ export type OnUpdateDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20023,6 +20380,7 @@ export type OnUpdateDirectChatSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -20110,6 +20468,7 @@ export type OnDeleteDirectChatSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -20147,6 +20506,7 @@ export type OnDeleteDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20206,6 +20566,7 @@ export type OnDeleteDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20248,6 +20609,7 @@ export type OnDeleteDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20295,6 +20657,7 @@ export type OnDeleteDirectChatSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -20332,6 +20695,7 @@ export type OnDeleteDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20391,6 +20755,7 @@ export type OnDeleteDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20433,6 +20798,7 @@ export type OnDeleteDirectChatSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20488,6 +20854,7 @@ export type OnDeleteDirectChatSubscription = {
           university: string,
           year: number,
           major?: string | null,
+          interests?: Array< string | null > | null,
           courseGroups?:  {
             __typename: "ModelCourseGroupConnectionConnection",
             items?:  Array< {
@@ -20572,6 +20939,7 @@ export type OnCreateChatMessageSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -20609,6 +20977,7 @@ export type OnCreateChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20668,6 +21037,7 @@ export type OnCreateChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20710,6 +21080,7 @@ export type OnCreateChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20779,6 +21150,7 @@ export type OnUpdateChatMessageSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -20816,6 +21188,7 @@ export type OnUpdateChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20875,6 +21248,7 @@ export type OnUpdateChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20917,6 +21291,7 @@ export type OnUpdateChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -20986,6 +21361,7 @@ export type OnDeleteChatMessageSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -21023,6 +21399,7 @@ export type OnDeleteChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21082,6 +21459,7 @@ export type OnDeleteChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21124,6 +21502,7 @@ export type OnDeleteChatMessageSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21219,6 +21598,7 @@ export type OnCreateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21267,6 +21647,7 @@ export type OnCreateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21316,6 +21697,7 @@ export type OnCreateCourseGroupConnectionSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -21353,6 +21735,7 @@ export type OnCreateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21412,6 +21795,7 @@ export type OnCreateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21454,6 +21838,7 @@ export type OnCreateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21540,6 +21925,7 @@ export type OnUpdateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21588,6 +21974,7 @@ export type OnUpdateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21637,6 +22024,7 @@ export type OnUpdateCourseGroupConnectionSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -21674,6 +22062,7 @@ export type OnUpdateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21733,6 +22122,7 @@ export type OnUpdateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21775,6 +22165,7 @@ export type OnUpdateCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21861,6 +22252,7 @@ export type OnDeleteCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21909,6 +22301,7 @@ export type OnDeleteCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -21958,6 +22351,7 @@ export type OnDeleteCourseGroupConnectionSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -21995,6 +22389,7 @@ export type OnDeleteCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22054,6 +22449,7 @@ export type OnDeleteCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22096,6 +22492,7 @@ export type OnDeleteCourseGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22180,6 +22577,7 @@ export type OnCreateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22226,6 +22624,7 @@ export type OnCreateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22275,6 +22674,7 @@ export type OnCreateFriendGroupConnectionSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -22312,6 +22712,7 @@ export type OnCreateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22371,6 +22772,7 @@ export type OnCreateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22413,6 +22815,7 @@ export type OnCreateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22497,6 +22900,7 @@ export type OnUpdateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22543,6 +22947,7 @@ export type OnUpdateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22592,6 +22997,7 @@ export type OnUpdateFriendGroupConnectionSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -22629,6 +23035,7 @@ export type OnUpdateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22688,6 +23095,7 @@ export type OnUpdateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22730,6 +23138,7 @@ export type OnUpdateFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22814,6 +23223,7 @@ export type OnDeleteFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22860,6 +23270,7 @@ export type OnDeleteFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -22909,6 +23320,7 @@ export type OnDeleteFriendGroupConnectionSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -22946,6 +23358,7 @@ export type OnDeleteFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23005,6 +23418,7 @@ export type OnDeleteFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23047,6 +23461,7 @@ export type OnDeleteFriendGroupConnectionSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23105,6 +23520,7 @@ export type OnCreateQuizSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -23142,6 +23558,7 @@ export type OnCreateQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23201,6 +23618,7 @@ export type OnCreateQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23243,6 +23661,7 @@ export type OnCreateQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23306,6 +23725,7 @@ export type OnUpdateQuizSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -23343,6 +23763,7 @@ export type OnUpdateQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23402,6 +23823,7 @@ export type OnUpdateQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23444,6 +23866,7 @@ export type OnUpdateQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23507,6 +23930,7 @@ export type OnDeleteQuizSubscription = {
       university: string,
       year: number,
       major?: string | null,
+      interests?: Array< string | null > | null,
       courseGroups?:  {
         __typename: "ModelCourseGroupConnectionConnection",
         items?:  Array< {
@@ -23544,6 +23968,7 @@ export type OnDeleteQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23603,6 +24028,7 @@ export type OnDeleteQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
@@ -23645,6 +24071,7 @@ export type OnDeleteQuizSubscription = {
             university: string,
             year: number,
             major?: string | null,
+            interests?: Array< string | null > | null,
             courseGroups?:  {
               __typename: "ModelCourseGroupConnectionConnection",
               nextToken?: string | null,
