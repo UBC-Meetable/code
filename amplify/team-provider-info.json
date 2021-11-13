@@ -1,4 +1,37 @@
 {
+  "raf": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-meetable-raf-30812-authRole",
+      "UnauthRoleArn": "arn:aws:iam::145470991472:role/amplify-meetable-raf-30812-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::145470991472:role/amplify-meetable-raf-30812-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-meetable-raf-30812-deployment",
+      "UnauthRoleName": "amplify-meetable-raf-30812-unauthRole",
+      "StackName": "amplify-meetable-raf-30812",
+      "StackId": "arn:aws:cloudformation:us-east-1:145470991472:stack/amplify-meetable-raf-30812/f04ac8a0-442e-11ec-baea-0e8b22d12a1f",
+      "AmplifyAppId": "dreemc78qbl81"
+    },
+    "categories": {
+      "auth": {
+        "meetablea02db50ea02db50e": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "joinFriendGroup": {
+          "deploymentBucketName": "amplify-meetable-raf-30812-deployment",
+          "s3Key": "amplify-builds/joinFriendGroup-5351656c784372487633-build.zip"
+        },
+        "pushNotification": {
+          "deploymentBucketName": "amplify-meetable-raf-30812-deployment",
+          "s3Key": "amplify-builds/pushNotification-434d372f56336f4c386f-build.zip"
+        },
+        "periodicGrouping": {
+          "deploymentBucketName": "amplify-meetable-raf-30812-deployment",
+          "s3Key": "amplify-builds/periodicGrouping-57484d514d39764c6244-build.zip"
+        }
+      }
+    }
+  },
   "dev": {
     "awscloudformation": {
       "AuthRoleName": "amplify-meetable-dev-203202-authRole",
