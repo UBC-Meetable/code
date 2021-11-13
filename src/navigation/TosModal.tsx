@@ -43,12 +43,6 @@ const Body = ({ body }: { body: string }) => (
   </Text>
 );
 
-const List = ({ list }: { list: [] }) => (
-  <Text style={modalStyles.legalBody}>
-    {list}
-  </Text>
-);
-
 type HeaderProps = {
   title: string;
 }
@@ -74,8 +68,6 @@ type TosModalProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string;
 };
-
-
 const TosModal = ({ open, setOpen, title = "" }: TosModalProps) => (
   <Modal
     visible={open}
@@ -173,8 +165,6 @@ const PrivacyModal = ({ open, setOpen, title = "" }: TosModalProps) => (
   </Modal>
 );
 
-
-
 const modalStyles = StyleSheet.create({
   scroll: {
     height: "90%",
@@ -184,19 +174,12 @@ const modalStyles = StyleSheet.create({
     width: "90%",
     height: "60%",
   },
-
-  error_innerModal: {
-    width: "90%",
-    height: "40%",
-  },
-
   container: {
     height: "100%",
     width: "100%",
     flex: 1,
     fontFamily: "Poppins_500Medium",
   },
-
   backdrop: {
     flex: 1,
     flexDirection: "column",
@@ -216,7 +199,6 @@ const modalStyles = StyleSheet.create({
     fontFamily: "Poppins_500Medium",
   },
 });
-
 
 export default TosModal;
 export { PrivacyModal };
