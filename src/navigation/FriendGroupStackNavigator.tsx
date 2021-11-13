@@ -10,7 +10,7 @@ const FriendGroupStackNavigator = () => (
   <GroupTabStack.Navigator
     screenOptions={{
       headerTransparent: true,
-      headerTitle: "Friend Groups",
+      headerTitle: "Chat Session",
       ...HeaderOptions,
     }}
   >

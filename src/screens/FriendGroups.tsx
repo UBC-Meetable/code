@@ -1,5 +1,8 @@
+
 /* eslint-disable max-len */
 /* eslint-disable no-shadow */
+
+/*
 import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
 import { Layout, List, Spinner } from "@ui-kitten/components";
@@ -323,3 +326,80 @@ const styles = StyleSheet.create({
 });
 
 export default FriendGroups;
+
+*/
+
+import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
+import { Layout, List, Spinner } from "@ui-kitten/components";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  StyleSheet, Switch, Alert,
+} from "react-native";
+import Returned from "../components/friend_group/Returned";
+import {
+  ChatMessage, QuestionType, RootStackParamList,
+} from "../types";
+
+import { Text, View } from 'react-native';
+
+
+
+
+
+const FriendGroups = ({
+    navigation,
+  }: {
+    navigation: StackNavigationProp<RootStackParamList, "Quiz">;
+  }) => {
+
+    const headerHeight = useHeaderHeight();
+    const renderReturned = () => (
+
+        /*
+        <Layout style={[{
+          paddingTop: headerHeight,
+          backgroundColor: "#0000",
+          justifyContent: "center",
+          alignItems: "center",
+        }, StyleSheet.absoluteFill]}
+        >
+          <Returned />
+        </Layout>
+        */
+
+        <View style={styles.layout}>
+          <Text style={styles.title}>Chat</Text>
+        </View>
+      );
+
+
+      return (
+        renderReturned()
+      );
+    };
+    
+    /*
+    const styles = StyleSheet.create({
+      card: {
+        height: "100%",
+        overflow: "scroll",
+        backgroundColor: "#0000",
+      },
+    });
+    
+   */
+    const styles = StyleSheet.create({
+      layout: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      title: {
+        fontSize: 32,
+        marginBottom: 16,
+      },
+    });
+    
+    
+    
+    export default FriendGroups;
