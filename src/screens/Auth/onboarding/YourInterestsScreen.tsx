@@ -3,8 +3,7 @@ import { StyleSheet } from "react-native";
 import { Layout, Text, Toggle } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import updateUserProfile from "../../../calls/updateUserCourses";
-
-
+import InterestChipsArray from "../../../components/ui/InterestChipsArray";
 
 const YourInterestsScreen = () => {
   const [interests, setInterests] = useState<string[]>([]);
@@ -12,8 +11,22 @@ const YourInterestsScreen = () => {
 
   return (
     <Layout style={styles.container}>
-      <Text>interests screen. will update this text</Text>
-      
+      <Text>Nerd Stuff</Text>
+      <InterestChipsArray
+        interestsList={["reading", "coding", "singing"]}
+        interestCategory={"nerd stuff"}
+      />
+
+      <Text>Outdoor activities</Text>
+      <InterestChipsArray
+        interestsList={[
+          "swimming",
+          "snowboarding",
+          "hiking",
+          "mountain biking",
+        ]}
+        interestCategory={"Outdoor activities"}
+      />
     </Layout>
   );
 };

@@ -3,6 +3,7 @@ import React from "react";
 import FriendGroups from "../screens/FriendGroups";
 import { FriendGroupStackScreens } from "../types";
 import HeaderOptions from "./HeaderOptions";
+import YourInterestsScreen from "../screens/Auth/onboarding/YourInterestsScreen";
 
 const GroupTabStack = createStackNavigator<FriendGroupStackScreens>();
 
@@ -16,7 +17,8 @@ const FriendGroupStackNavigator = () => (
   >
     <GroupTabStack.Screen
       name="FriendGroups"
-      component={FriendGroups}
+      // component={FriendGroups}
+      component={YourInterestsScreen}
       options={{
         headerShown: true,
       }}
