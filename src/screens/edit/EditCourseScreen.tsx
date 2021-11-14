@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
 import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
@@ -80,15 +77,13 @@ const EditCourseScreen = () => {
 
     // leave courses
     setCourses(courses.filter((course) => !markedForDeletion.has(course)));
-    for (const group of [...markedForDeletion]) {
-      try {
-        const connectionToDelete = await fetchCourseGroupConnection(user.attributes.sub, { eq: group.groupID });
-        console.log(connectionToDelete);
-        await callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
-      } catch (err) {
-        console.log("failed to leave course", err);
-      }
-    }
+    await Promise.all([...markedForDeletion].map((group) => {
+      return fetchCourseGroupConnection(user.attributes.sub, { eq: group.groupID })
+        .then((connectionToDelete) => {
+          return callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
+        })
+        .catch((err) => console.log("failed to leave course", err));
+    }));
     markedForDeletion = new Set(); // clear data
   };
 
