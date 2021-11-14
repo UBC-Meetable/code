@@ -4,27 +4,29 @@ import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 
 interface ChipsArrayProps {
-  interestList: string[];
+  interestsList: string[];
+  interestCategory: string;
+}
+
+interface Interest {
+  key: number;
+  label: string;
 }
 
 const ListItem = styled("li")(({ theme }) => ({
   margin: theme.spacing(0.5),
 }));
 
-export default function ChipsArray({ interestList }: ChipsArrayProps) {
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: "Angular" },
-    { key: 1, label: "jQuery" },
-    { key: 2, label: "Polymer" },
-    { key: 3, label: "React" },
-    { key: 4, label: "Vue.js" },
-  ]);
+export default function ChipsArray({
+  interestsList,
+  interestCategory,
+}: ChipsArrayProps) {
+  const interestObjArray: Interest[] = interestsList.map((interest, index) => ({
+    key: index,
+    label: interest,
+  }));
 
-  const handleDelete = (chipToDelete: any) => () => {
-    setChipData((chips) =>
-      chips.filter((chip) => chip.key !== chipToDelete.key)
-    );
-  };
+  const [chipData, setChipData] = React.useState<Interest[]>(interestObjArray);
 
   return (
     <Paper
