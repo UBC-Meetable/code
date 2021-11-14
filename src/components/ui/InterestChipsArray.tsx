@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Chip } from "react-native-paper";
-import { Layout } from "@ui-kitten/components";
 import { StyleSheet, View, Text } from "react-native";
+import InterestChip from "./InterestChip";
 
 interface ChipsArrayProps {
   interestsList: string[];
@@ -29,17 +28,11 @@ export default function ChipsArray({
       <Text style={styles.title}>{interestCategory} </Text>
       {chipData.map((data) => {
         return (
-          <Chip
-            style={styles.chip}
-            onPress={() => {
-              console.log("hey");
-            }}
+          <InterestChip
+            label={data.label}
             key={data.key}
-            mode={"outlined"}
             textStyle={styles.text}
-          >
-            {data.label}
-          </Chip>
+          />
         );
       })}
     </View>
@@ -49,7 +42,6 @@ export default function ChipsArray({
 const styles = StyleSheet.create({
   chip: {
     width: "25%",
-
     marginLeft: 10,
     marginBottom: 10,
   },
@@ -57,7 +49,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     margin: 10,
   },
-
   text: {
     color: "orange",
     fontSize: 15,
