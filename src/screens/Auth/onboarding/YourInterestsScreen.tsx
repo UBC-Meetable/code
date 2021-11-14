@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
-import { Layout, Text, Toggle } from "@ui-kitten/components";
+import { StyleSheet} from "react-native";
+import { Layout} from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import updateUserProfile from "../../../calls/updateUserCourses";
 import InterestChipsArray from "../../../components/ui/InterestChipsArray";
@@ -11,13 +11,11 @@ const YourInterestsScreen = () => {
 
   return (
     <Layout style={styles.container}>
-      <Text>Nerd Stuff</Text>
       <InterestChipsArray
-        interestsList={["reading", "coding", "singing"]}
+        interestsList={["reading", "coding", "anime", "painting"]}
         interestCategory={"nerd stuff"}
       />
 
-      <Text>Outdoor activities</Text>
       <InterestChipsArray
         interestsList={[
           "swimming",
@@ -25,7 +23,7 @@ const YourInterestsScreen = () => {
           "hiking",
           "mountain biking",
         ]}
-        interestCategory={"Outdoor activities"}
+        interestCategory={"outdoor activities"}
       />
     </Layout>
   );
@@ -34,7 +32,7 @@ const YourInterestsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#0000",
-    marginTop: 250,
+    marginTop: 135,
     marginLeft: 30,
   },
 });
