@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { Layout } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
@@ -10,16 +10,18 @@ const YourInterestsScreen = () => {
   const [interests, setInterests] = useState<string[]>([]);
   const { info: userProfile } = useUserProfile();
 
+  useEffect(() => {
+    console.log(interests);
+  }, [interests]);
+
   const addInterest = (interestToAdd: string) => {
     setInterests((prevState) => prevState.concat(interestToAdd));
-    console.log(interests);
   };
 
   const removeInterest = (interestToRemove: string) => {
     setInterests((prevState) =>
       prevState.filter((interest) => interest !== interestToRemove)
     );
-    console.log(interests);
   };
 
   // Add a Done button at the end of the return. that's where the  user's data gets updated in the back-end
