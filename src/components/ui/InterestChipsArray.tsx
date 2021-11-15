@@ -28,14 +28,14 @@ export default function ChipsArray({
   const [chipData, setChipData] = React.useState<Interest[]>(interestObjArray);
 
   return (
-    <View>
+    <View style={styles.view}>
       <Text style={styles.title}>{interestCategory} </Text>
       {chipData.map((data) => {
         return (
           <InterestChip
             addInterest={addInterest}
             removeInterest={removeInterest}
-            key={data.key}
+            id={data.key}
             label={data.label}
             textStyle={styles.text}
           />
@@ -46,10 +46,8 @@ export default function ChipsArray({
 }
 
 const styles = StyleSheet.create({
-  chip: {
-    width: "25%",
-    marginLeft: 10,
-    marginBottom: 10,
+  view: {
+    marginLeft: 75,
   },
   title: {
     fontSize: 20,

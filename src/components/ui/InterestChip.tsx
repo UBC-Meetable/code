@@ -42,7 +42,7 @@ export default function InterestChip({
 
 const styles = StyleSheet.create({
   chip: {
-    width: "25%",
+    width: "50%",
     marginLeft: 10,
     marginBottom: 10,
   },

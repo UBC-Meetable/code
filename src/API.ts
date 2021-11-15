@@ -281,6 +281,7 @@ export type UpdateUserInput = {
   major?: string | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
+  interests?: string[] | null,
 };
 
 export type DeleteUserInput = {

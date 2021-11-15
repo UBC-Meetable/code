@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 import { Layout } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import InterestChipsArray from "../../../components/ui/InterestChipsArray";
+import { Button } from "@ui-kitten/components";
 import updateUserProfile from "../../../calls/updateUserCourses";
 
 const YourInterestsScreen = () => {
@@ -41,6 +42,20 @@ const YourInterestsScreen = () => {
         ]}
         interestCategory={"outdoor activities"}
       />
+      <Button
+        style={styles.button}
+        onPress={async () => {
+          if (userProfile) {
+            console.log(userProfile.id);
+          }
+          await updateUserProfile({
+            id: userProfile!.id,
+            interests: interests,
+          });
+        }}
+      >
+        Done
+      </Button>
     </Layout>
   );
 };
@@ -50,6 +65,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#0000",
     marginTop: 135,
     marginLeft: 30,
+  },
+  button: {
+    marginTop: 20,
+    marginLeft: 70,
+    width: "50%",
   },
 });
 
