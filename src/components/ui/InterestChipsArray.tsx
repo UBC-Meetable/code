@@ -20,22 +20,20 @@ export default function ChipsArray({
   addInterest,
   removeInterest,
 }: ChipsArrayProps) {
-  const interestObjArray: Interest[] = interestsList.map((interest, index) => ({
+  const interestData: Interest[] = interestsList.map((interest, index) => ({
     key: index,
     label: interest,
   }));
 
-  const [chipData, setChipData] = React.useState<Interest[]>(interestObjArray);
-
   return (
     <View style={styles.view}>
       <Text style={styles.title}>{interestCategory} </Text>
-      {chipData.map((data) => {
+      {interestData.map((data) => {
         return (
           <InterestChip
             addInterest={addInterest}
             removeInterest={removeInterest}
-            id={data.key}
+            id={data.key} // still getting the unique key warning
             label={data.label}
             textStyle={styles.text}
           />
