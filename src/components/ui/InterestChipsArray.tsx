@@ -5,6 +5,8 @@ import InterestChip from "./InterestChip";
 interface ChipsArrayProps {
   interestsList: string[];
   interestCategory: string;
+  addInterest: any;
+  removeInterest: any;
 }
 
 interface Interest {
@@ -15,6 +17,8 @@ interface Interest {
 export default function ChipsArray({
   interestsList,
   interestCategory,
+  addInterest,
+  removeInterest,
 }: ChipsArrayProps) {
   const interestObjArray: Interest[] = interestsList.map((interest, index) => ({
     key: index,
@@ -29,8 +33,10 @@ export default function ChipsArray({
       {chipData.map((data) => {
         return (
           <InterestChip
-            label={data.label}
+            addInterest={addInterest}
+            removeInterest={removeInterest}
             key={data.key}
+            label={data.label}
             textStyle={styles.text}
           />
         );
