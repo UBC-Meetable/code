@@ -9,7 +9,6 @@ import {
   Poppins_700Bold,
   useFonts,
 } from "@expo-google-fonts/poppins";
-
 import {
   Quicksand_300Light,
   Quicksand_400Regular,
@@ -17,7 +16,6 @@ import {
   Quicksand_600SemiBold,
   Quicksand_700Bold,
 } from "@expo-google-fonts/quicksand";
-
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -25,13 +23,15 @@ import {
   StackNavigationProp,
 } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider, Layout,
+  ApplicationProvider as UiProvider, Layout, IconRegistry,
 } from "@ui-kitten/components";
 import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
 import { Dimensions, Platform } from "react-native";
+import { merge } from "lodash";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
@@ -59,20 +59,36 @@ import theme from "../constants/theme.json";
 import GroupsView from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 
-Amplify.configure({
-  ...awsconfig,
-  // Analytics: {
-  //   disabled: true,
-  // },
-});
+Amplify.configure({ ...awsconfig });
 Analytics.record("Initialization");
 
 const window = Dimensions.get("window");
 
+const strictTheme = { "text-font-family": "Quicksand_500Medium" }; // set global default font
+const mapping = {
+  strict: strictTheme,
+  components: {
+    Button: {
+      appearances: {
+        filled: {
+          mapping: {
+            textFontFamily: "Quicksand_600SemiBold",
+          },
+        },
+      },
+    },
+  },
+};
+
 export default function Navigation() {
   return (
     <>
-      <UiProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <IconRegistry icons={EvaIconsPack} />
+      <UiProvider
+        {...eva}
+        theme={{ ...eva.light, ...theme }}
+        customMapping={merge(eva.mapping, mapping)}
+      >
         <NavigationContainer
           theme={DefaultTheme}
         >

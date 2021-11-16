@@ -115,10 +115,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           >
             <Text style={styles.emoji}>👋</Text>
             <Text
-              style={{
-                fontSize: 34,
-                fontFamily: "Quicksand_500Medium",
-              }}
+              style={{ fontSize: 34 }}
             >
               Let's get started!
             </Text>
