@@ -6,7 +6,6 @@ import LoginPageBubbleTop from "../../../assets/images/login-page-bubble-top.svg
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import UserContext from "../../../context/UserContext";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 

@@ -182,7 +182,6 @@ export const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-evenly",
     backgroundColor: Colors.theme.lightCreme,
   },
   bioPencil: {
@@ -200,11 +199,9 @@ export const profileStyles = StyleSheet.create({
     zIndex: 1000,
   },
   bigBioHead: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#7ED1EF",
-    marginHorizontal: 20,
-    top: 10,
+    fontSize: 16,
+    color: "#FBBA82",
+    fontFamily: "Quicksand_700Bold",
   },
   bioInput: {
     paddingHorizontal: 20,
@@ -247,21 +244,18 @@ export const profileStyles = StyleSheet.create({
     flex: 1,
   },
   inputStyle: {
-    borderRadius: 50,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
     backgroundColor: "#ffff",
+    marginVertical: 5,
+    borderRadius: 5,
   },
   inputTextStyle: {
-    fontFamily: "Poppins_600SemiBold",
-    fontSize: 24,
-    textAlign: "center",
+    fontSize: 14,
   },
   nameContainer: {
     backgroundColor: "#0000",
     width: "100%",
     margin: 10,
+    alignItems: "center",
   },
 });
 
