@@ -25,7 +25,7 @@ export default function InterestChip({
         style={styles.chip}
         onPress={() => {
           setSelected(!selected);
-          if (selected) {
+          if (!selected) {
             addInterest(label);
           } else {
             removeInterest(label);

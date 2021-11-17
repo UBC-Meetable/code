@@ -15,7 +15,8 @@ const YourInterestsScreen = () => {
   }, [interests]);
 
   const addInterest = (interestToAdd: string) => {
-    setInterests((prevState) => prevState.concat(interestToAdd));
+    // setInterests((prevState) => prevState.concat(interestToAdd));
+    setInterests([...interests, interestToAdd]);
   };
 
   const removeInterest = (interestToRemove: string) => {
