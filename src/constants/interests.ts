@@ -25,18 +25,18 @@ export const interests = [
 
   {
     name: "swimming",
-    category: "out-door activities",
+    category: "outdoor activities",
     selected: false,
   },
 
   {
     name: "hiking",
-    category: "out-door activities",
+    category: "outdoor activities",
     selected: false,
   },
   {
     name: "rock climbing",
-    category: "out-door activities",
+    category: "outdoor activities",
     selected: false,
   },
 ];

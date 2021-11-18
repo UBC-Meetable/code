@@ -4,15 +4,13 @@ import { Chip } from "react-native-paper";
 import { Interest } from "../../types";
 
 interface InterestChipsProps {
-  selectInterest: any;
-  deselectInterest: any;
+  updateSelectStatus: any;
   userInterests: Interest[];
   interestCategory: string;
 }
 
 export default function InterestChips({
-  selectInterest,
-  deselectInterest,
+  updateSelectStatus,
   userInterests,
   interestCategory,
 }: InterestChipsProps) {
@@ -20,13 +18,16 @@ export default function InterestChips({
     <View style={styles.view}>
       <Text style={styles.title}>{interestCategory}</Text>
       {userInterests.map((interest, index) => {
-        if (interest.category == "nerd stuff") {
+        if (interest.category == interestCategory) {
           return (
             <Chip
               key={index}
               textStyle={styles.text}
               style={styles.chip}
               selected={interest.selected}
+              onPress={() => {
+                updateSelectStatus(index);
+              }}
               mode={"outlined"}
             >
               {interest.name}

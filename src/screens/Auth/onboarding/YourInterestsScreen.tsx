@@ -21,27 +21,23 @@ const YourInterestsScreen = () => {
     console.log(userInterests);
   }, [userInterests]);
 
-  // const selectInterest = (interest) => {
-  //   setUserInterests({ ...userInterests, [interest]: true });
-  // };
-  // const deselectInterest = (interest) => {
-  //   setUserInterests({ ...userInterests, [interest]: false });
-  // };
-
-  const selectInterest = {};
-  const deselectInterest = {};
+  const updateSelectStatus = (index: number) => {
+    let userInterestsCopy = [...userInterests];
+    let userInterest = { ...userInterestsCopy[index] };
+    userInterest.selected = !userInterest.selected;
+    userInterestsCopy[index] = userInterest;
+    setUserInterests(userInterestsCopy);
+  };
 
   return (
     <Layout style={styles.container}>
       <InterestChips
-        selectInterest={selectInterest}
-        deselectInterest={deselectInterest}
+        updateSelectStatus={updateSelectStatus}
         userInterests={userInterests}
         interestCategory={"nerd stuff"}
       />
       <InterestChips
-        selectInterest={selectInterest}
-        deselectInterest={deselectInterest}
+        updateSelectStatus={updateSelectStatus}
         userInterests={userInterests}
         interestCategory={"outdoor activities"}
       />
