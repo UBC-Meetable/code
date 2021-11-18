@@ -8,88 +8,80 @@ defaults:
   run:
     working-directory: src
 jobs:
-  deploy:
-    name: Deploy Amplify Preview
+  publish:
+    name: Install and publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v2
+      - uses: actions/setup-node@v2
         with:
-          node-version: '14'
-      - name: Cache Node Modules
-        uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-	
-            ${{ runner.os }}-build-	
-            ${{ runner.os }}-
-      - name: Install Packages
-        run: npm install
-      - name: Get Environment Name
-        id: setenvname
-        run: |
-          # use GITHUB_HEAD_REF that is set to PR source branch
-          echo "##[set-output name=setbranchname;]$(echo ${GITHUB_HEAD_REF})"
-      - name: Create Amplify Backend
-        uses: ambientlight/amplify-cli-action@0.3.0
-        continue-on-error: true
-        with:
-          amplify_command: add_env
-          amplify_env: test
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
-          BackendEnvARN: ${{ secrets.BACKENDENVARN }}
-          AWS_REGION: us-east-1
-      - name: Configure Amplify Backend
-        uses: ambientlight/amplify-cli-action@0.3.0
+          node-version: 14.x
+      # - name: Cache Node Modules
+      #   uses: actions/cache@v2
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-	
+      #       ${{ runner.os }}-build-	
+      #       ${{ runner.os }}-
+      - run: npm install
+      # - name: Get Environment Name
+      #   id: setenvname
+      #   run: |
+      #     # use GITHUB_HEAD_REF that is set to PR source branch
+      #     echo "##[set-output name=setbranchname;]$(echo ${GITHUB_HEAD_REF})"
+      # - name: Create Amplify Backend
+      #   uses: ambientlight/amplify-cli-action@0.3.0
+      #   continue-on-error: true
+      #   with:
+      #     amplify_command: add_env
+      #     amplify_env: test
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+      #     BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+      #     AWS_REGION: us-east-1
+      - uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: configure
-          amplify_env: test
+          amplify_env: dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
-          BackendEnvARN: ${{ secrets.BACKENDENVARN }}
           AWS_REGION: us-east-1
-      - name: Push Amplify Backend
-        uses: ambientlight/amplify-cli-action@0.3.0
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+          # BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+      - uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: push
-          amplify_env: test
+          amplify_env: dev
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
-          BackendEnvARN: ${{ secrets.BACKENDENVARN }}
           AWS_REGION: us-east-1
-      - name: App Deploy Preview
-        uses: expo/expo-github-action@v5
+          # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # AmplifyAppId: ${{ secrets.AMPLIFYAPPID }}
+          # BackendEnvARN: ${{ secrets.BACKENDENVARN }}
+      - uses: expo/expo-github-action@v6
         with:
-          expo-packager: npm
-          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+          expo-version: 4.x
           expo-cache: true
-      - name: Expo Publish Channel
-        run: |
+          token: ${{ secrets.EXPO_TOKEN }}
+      - run: |
           export NODE_OPTIONS=--max_old_space_size=4096
           expo publish --non-interactive --release-channel pr${{ github.event.number }}
-      - name: Add Comment To PR
-        uses: mshick/add-pr-comment@v1
+      - uses: unsplash/comment-on-pr@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EXPO_PROJECT: "@trevorflanigan/meetable-app"
+          EXPO_PROJECT: "@alice828/meetable-app"
         with:
-          message: |
+          msg: |
             ## Application
             ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }})
-            Published to https://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }}
+            Published to https://expo.dev/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }}
