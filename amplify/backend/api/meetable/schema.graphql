@@ -15,7 +15,7 @@ type User
   university: String!
   year: Int!
   major: String
-  interests: [String]
+  interests: [Interest]
   courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
@@ -102,6 +102,12 @@ type FileAttachment {
   width: Int!
   height: Int!
   type: FileType
+}
+
+type Interest {
+  name: string;
+  category: string;
+  isInterest: boolean;
 }
 
 enum FileType {

@@ -2,6 +2,8 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+import { Interest } from "./types";
+
 export type User = {
   __typename: "User",
   id?: string,
@@ -281,7 +283,7 @@ export type UpdateUserInput = {
   major?: string | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
-  interests?: string[] | null,
+  interests?: Interest[] | null,
 };
 
 export type DeleteUserInput = {
@@ -855,6 +857,7 @@ export type GetUserProfileQuery = {
     updatedAt: string,
     owner?: string | null,
     expoPushToken?: string | null,
+    interests: Interest[] | null,
   } | null,
 };
 
