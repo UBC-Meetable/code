@@ -11,13 +11,14 @@ import {
 } from "react-native";
 import {
   User as UserProfileAPIType,
-  CourseGroup as CourseGroupAPIType, ChatMessage as ChatMessageAPIType,
+  CourseGroup as CourseGroupAPIType,
+  ChatMessage as ChatMessageAPIType,
 } from "./API";
 
 // eslint-disable-next-line no-shadow
 export enum GroupType {
   COURSE = "COURSE",
-  FRIEND = "FRIEND"
+  FRIEND = "FRIEND",
 }
 
 export type RootStackParamList = {
@@ -27,7 +28,7 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Quiz: {
-    return: (q: QuestionType[]) => void; 
+    return: (q: QuestionType[]) => void;
   };
   Group: {
     groupID: string;
@@ -72,45 +73,50 @@ export type TabTwoParamList = {
   ProfileScreen: undefined;
 };
 
-export type User =
-  {
-      at_hash: string;
-      aud: string;
-      exp: number;
-      family_name: string;
-      given_name: string;
-      iat: number;
-      iss: string;
-      locale: string;
-      name: string;
-      nickname: string;
-      nonce: string;
-      picture: string;
-      sub: string;
-      updated_at: string;
-      major?: string;
-      university?: string;
-      bio?: string;
-      token?: ExpoPushToken;
-    }
+export type Interest = {
+  name: string;
+  category: string;
+  selected: boolean;
+};
+
+export type User = {
+  at_hash: string;
+  aud: string;
+  exp: number;
+  family_name: string;
+  given_name: string;
+  iat: number;
+  iss: string;
+  locale: string;
+  name: string;
+  nickname: string;
+  nonce: string;
+  picture: string;
+  sub: string;
+  updated_at: string;
+  major?: string;
+  university?: string;
+  bio?: string;
+  token?: ExpoPushToken;
+};
 
 export type ButtonProps = {
   children: React.ReactChild;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  onPress?: (event:GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
 };
 
 export type MessageProps = {
   message: any;
 };
 
-export type QuestionType= {
-  title: string,
-  id: string,
-  img: number,
-  response?: string,
-}
+export type QuestionType = {
+  title: string;
+  id: string;
+  img: number;
+  response?: string;
+};
 
 export type SignUpParamList = {
   UniScreen: undefined;
@@ -141,17 +147,23 @@ export type CognitoUser = {
 };
 
 export type MessageMap = {
-  [id: string]: ChatMessage[]
-}
+  [id: string]: ChatMessage[];
+};
 
-export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "createdAt" | "owner" | "updatedAt">;
-export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner" >;
-export type ChatMessage = Omit<ChatMessageAPIType, "owner" | "userID" | "id" | "updatedAt">;
-export type ChatMessageWithPending = ChatMessage & { pending?: boolean }
+export type UserProfile = Omit<
+  Exclude<UserProfileAPIType, null>,
+  "createdAt" | "owner" | "updatedAt"
+>;
+export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner">;
+export type ChatMessage = Omit<
+  ChatMessageAPIType,
+  "owner" | "userID" | "id" | "updatedAt"
+>;
+export type ChatMessageWithPending = ChatMessage & { pending?: boolean };
 
 export type ModelChatMessageConnection = {
-  items?: Array<Omit<ChatMessage, "__typename"> | null > | null,
-  nextToken?: string | null,
+  items?: Array<Omit<ChatMessage, "__typename"> | null> | null;
+  nextToken?: string | null;
 };
 
 export type ImageInfoType = ImageInfo & { cancelled: boolean };
@@ -159,14 +171,14 @@ export type ImageInfoType = ImageInfo & { cancelled: boolean };
 export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
-  "MESSAGE"
+  "MESSAGE",
 }
 
 export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
-  MESSAGE: { height: 30, width: 30 }
-}
+  MESSAGE: { height: 30, width: 30 },
+};
 
 export enum SwipeActions {
   "LIKE" = "liked",
@@ -176,14 +188,14 @@ export enum SwipeActions {
 }
 
 export enum AuthState {
-  LANDING_SCREEN="LANDING_SCREEN",
-  TUTORIAL="TUTORIAL",
-  SIGN_UP="SIGN_UP",
-  LOGIN="LOGIN",
-  UNIVERSITY_SCREEN="UNIVERSITY_SCREEN",
-  CONFIRM_EMAIL="CONFIRM_EMAIL",
-  FORGOT_PASSWORD="FORGOT_PASSWORD",
-  FORGOT_PASSWORD_CONFIRM="FORGOT_PASSWORD_CONFIRM"
+  LANDING_SCREEN = "LANDING_SCREEN",
+  TUTORIAL = "TUTORIAL",
+  SIGN_UP = "SIGN_UP",
+  LOGIN = "LOGIN",
+  UNIVERSITY_SCREEN = "UNIVERSITY_SCREEN",
+  CONFIRM_EMAIL = "CONFIRM_EMAIL",
+  FORGOT_PASSWORD = "FORGOT_PASSWORD",
+  FORGOT_PASSWORD_CONFIRM = "FORGOT_PASSWORD_CONFIRM",
 }
 
 export type SimpleCourseGroup = {

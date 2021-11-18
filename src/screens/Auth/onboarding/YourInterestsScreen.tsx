@@ -4,11 +4,12 @@ import { Layout } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { Button } from "@ui-kitten/components";
 import updateUserProfile from "../../../calls/updateUserCourses";
+import InterestChips from "../../../../src/components/ui/InterestChips";
 import { Interest } from "../../../../src/types";
-import { Chip } from "react-native-paper";
+import { interests } from "../../../../src/constants/interests";
 
 const YourInterestsScreen = () => {
-  const [userInterests, setUserInterests] = useState<Interest[]>([]);
+  const [userInterests, setUserInterests] = useState<Interest[]>(interests);
   const { info: userProfile } = useUserProfile();
 
   useEffect(() => {
@@ -21,27 +22,29 @@ const YourInterestsScreen = () => {
   }, [userInterests]);
 
   // const selectInterest = (interest) => {
-  //   setUserInterests({...userInterests, [interest]: true})
-  // }
+  //   setUserInterests({ ...userInterests, [interest]: true });
+  // };
   // const deselectInterest = (interest) => {
-  //   setUserInterests({...userInterests, [interest]: false})
-  // }
+  //   setUserInterests({ ...userInterests, [interest]: false });
+  // };
+
+  const selectInterest = {};
+  const deselectInterest = {};
 
   return (
     <Layout style={styles.container}>
-      <Text style={styles.title}>nerd stuff</Text>
-      {userInterests.map((interest) => {
-        if (interest.category == "nerd stuff") {
-          return <Chip>label={interest.name}</Chip>;
-        }
-      })}
-
-      <Text style={styles.title}>out-door activities</Text>
-      {userInterests.map((interest) => {
-        if (interest.category == "out-door activities") {
-          return <Chip>label={interest.name}</Chip>;
-        }
-      })}
+      <InterestChips
+        selectInterest={selectInterest}
+        deselectInterest={deselectInterest}
+        userInterests={userInterests}
+        interestCategory={"nerd stuff"}
+      />
+      <InterestChips
+        selectInterest={selectInterest}
+        deselectInterest={deselectInterest}
+        userInterests={userInterests}
+        interestCategory={"outdoor activities"}
+      />
 
       <Button
         style={styles.button}
@@ -71,10 +74,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginLeft: 70,
     width: "50%",
-  },
-  title: {
-    fontSize: 20,
-    margin: 10,
   },
 });
 

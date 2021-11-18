@@ -107,7 +107,7 @@ type FileAttachment {
 type Interest {
   name: string;
   category: string;
-  isInterest: boolean;
+  selected: boolean;
 }
 
 enum FileType {
