@@ -7,18 +7,21 @@ import updateUserProfile from "../../../calls/updateUserCourses";
 import InterestChips from "../../../../src/components/ui/InterestChips";
 import { Interest } from "../../../../src/types";
 import { interests } from "../../../../src/constants/interests";
+import fetchUserProfile from "../../../calls/fetchUserProfile";
 
 const YourInterestsScreen = () => {
   const [userInterests, setUserInterests] = useState<Interest[]>(interests);
   const { info: userProfile } = useUserProfile();
 
   useEffect(() => {
-    // load user interests data
-    // setUserInterests
+    // fetch user interests data
+    // setUserInterests to the fetched data
+    // this will allow the user to see which interests they've previously selected!
   }, []);
 
   useEffect(() => {
-    console.log(userInterests);
+    // console.log(userInterests);
+    // console.log(userProfile);
   }, [userInterests]);
 
   const updateSelectStatus = (index: number) => {

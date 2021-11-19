@@ -24,6 +24,7 @@ export type User = {
   createdAt?: string,
   updatedAt?: string,
   owner?: string | null,
+  interests?: Interest[] | null,
 };
 
 export enum UserState {
@@ -187,6 +188,7 @@ export type CreateUserInput = {
   major?: string | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
+  interests?: Interest[] | null,
 };
 
 export type ModelUserConditionInput = {
@@ -9297,6 +9299,7 @@ export type GetUserQuery = {
     __typename: "User",
     id: string,
     email: string,
+    interests?: Interest[] | null,
     firstName?: string | null,
     lastName?: string | null,
     profilePicture?: string | null,
