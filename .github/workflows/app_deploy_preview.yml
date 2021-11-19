@@ -1,6 +1,9 @@
 name: BuildFrontend
 
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - 'frontend/**'
 defaults:
   run:
     working-directory: src
