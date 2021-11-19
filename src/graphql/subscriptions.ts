@@ -15,6 +15,11 @@ export const onCreateUser = /* GraphQL */ `
       university
       year
       major
+      interests {
+        name
+        category
+        selected
+      }
       courseGroups {
         items {
           id
@@ -65,6 +70,11 @@ export const onCreateUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -157,6 +167,11 @@ export const onCreateUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -216,6 +231,11 @@ export const onCreateUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -285,6 +305,11 @@ export const onUpdateUser = /* GraphQL */ `
       university
       year
       major
+      interests {
+        name
+        category
+        selected
+      }
       courseGroups {
         items {
           id
@@ -335,6 +360,11 @@ export const onUpdateUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -427,6 +457,11 @@ export const onUpdateUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -486,6 +521,11 @@ export const onUpdateUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -555,6 +595,11 @@ export const onDeleteUser = /* GraphQL */ `
       university
       year
       major
+      interests {
+        name
+        category
+        selected
+      }
       courseGroups {
         items {
           id
@@ -605,6 +650,11 @@ export const onDeleteUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -697,6 +747,11 @@ export const onDeleteUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -756,6 +811,11 @@ export const onDeleteUser = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -865,6 +925,11 @@ export const onCreateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -930,6 +995,11 @@ export const onCreateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1041,6 +1111,11 @@ export const onUpdateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1106,6 +1181,11 @@ export const onUpdateCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1217,6 +1297,11 @@ export const onDeleteCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1282,6 +1367,11 @@ export const onDeleteCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1391,6 +1481,11 @@ export const onCreateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1454,6 +1549,11 @@ export const onCreateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1563,6 +1663,11 @@ export const onUpdateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1626,6 +1731,11 @@ export const onUpdateFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1735,6 +1845,11 @@ export const onDeleteFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1798,6 +1913,11 @@ export const onDeleteFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -1876,6 +1996,11 @@ export const onCreateReport = /* GraphQL */ `
           university
           year
           major
+          interests {
+            name
+            category
+            selected
+          }
           courseGroups {
             items {
               id
@@ -2012,6 +2137,11 @@ export const onCreateReport = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -2043,6 +2173,11 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2093,6 +2228,11 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2129,6 +2269,11 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2171,6 +2316,11 @@ export const onCreateReport = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -2202,6 +2352,11 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2252,6 +2407,11 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2288,6 +2448,11 @@ export const onCreateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2345,6 +2510,11 @@ export const onUpdateReport = /* GraphQL */ `
           university
           year
           major
+          interests {
+            name
+            category
+            selected
+          }
           courseGroups {
             items {
               id
@@ -2481,6 +2651,11 @@ export const onUpdateReport = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -2512,6 +2687,11 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2562,6 +2742,11 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2598,6 +2783,11 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2640,6 +2830,11 @@ export const onUpdateReport = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -2671,6 +2866,11 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2721,6 +2921,11 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2757,6 +2962,11 @@ export const onUpdateReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -2814,6 +3024,11 @@ export const onDeleteReport = /* GraphQL */ `
           university
           year
           major
+          interests {
+            name
+            category
+            selected
+          }
           courseGroups {
             items {
               id
@@ -2950,6 +3165,11 @@ export const onDeleteReport = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -2981,6 +3201,11 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3031,6 +3256,11 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3067,6 +3297,11 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3109,6 +3344,11 @@ export const onDeleteReport = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -3140,6 +3380,11 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3190,6 +3435,11 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3226,6 +3476,11 @@ export const onDeleteReport = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3280,6 +3535,11 @@ export const onCreateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -3311,6 +3571,11 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3361,6 +3626,11 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3397,6 +3667,11 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3439,6 +3714,11 @@ export const onCreateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -3470,6 +3750,11 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3520,6 +3805,11 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3556,6 +3846,11 @@ export const onCreateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3604,6 +3899,11 @@ export const onCreateDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -3679,6 +3979,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -3710,6 +4015,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3760,6 +4070,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3796,6 +4111,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3838,6 +4158,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -3869,6 +4194,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3919,6 +4249,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -3955,6 +4290,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4003,6 +4343,11 @@ export const onUpdateDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -4078,6 +4423,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -4109,6 +4459,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4159,6 +4514,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4195,6 +4555,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4237,6 +4602,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -4268,6 +4638,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4318,6 +4693,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4354,6 +4734,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4402,6 +4787,11 @@ export const onDeleteDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests {
+              name
+              category
+              selected
+            }
             courseGroups {
               items {
                 id
@@ -4478,6 +4868,11 @@ export const onCreateChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -4509,6 +4904,11 @@ export const onCreateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4559,6 +4959,11 @@ export const onCreateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4595,6 +5000,11 @@ export const onCreateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4658,6 +5068,11 @@ export const onUpdateChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -4689,6 +5104,11 @@ export const onUpdateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4739,6 +5159,11 @@ export const onUpdateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4775,6 +5200,11 @@ export const onUpdateChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4838,6 +5268,11 @@ export const onDeleteChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -4869,6 +5304,11 @@ export const onDeleteChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4919,6 +5359,11 @@ export const onDeleteChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -4955,6 +5400,11 @@ export const onDeleteChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5038,6 +5488,11 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5080,6 +5535,11 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5124,6 +5584,11 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -5155,6 +5620,11 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5205,6 +5675,11 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5241,6 +5716,11 @@ export const onCreateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5316,6 +5796,11 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5358,6 +5843,11 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5402,6 +5892,11 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -5433,6 +5928,11 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5483,6 +5983,11 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5519,6 +6024,11 @@ export const onUpdateCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5594,6 +6104,11 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5636,6 +6151,11 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5680,6 +6200,11 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -5711,6 +6236,11 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5761,6 +6291,11 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5797,6 +6332,11 @@ export const onDeleteCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5870,6 +6410,11 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5910,6 +6455,11 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -5954,6 +6504,11 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -5985,6 +6540,11 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6035,6 +6595,11 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6071,6 +6636,11 @@ export const onCreateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6144,6 +6714,11 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6184,6 +6759,11 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6228,6 +6808,11 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -6259,6 +6844,11 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6309,6 +6899,11 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6345,6 +6940,11 @@ export const onUpdateFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6418,6 +7018,11 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6458,6 +7063,11 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6502,6 +7112,11 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -6533,6 +7148,11 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6583,6 +7203,11 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6619,6 +7244,11 @@ export const onDeleteFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6672,6 +7302,11 @@ export const onCreateQuiz = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -6703,6 +7338,11 @@ export const onCreateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6753,6 +7393,11 @@ export const onCreateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6789,6 +7434,11 @@ export const onCreateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6846,6 +7496,11 @@ export const onUpdateQuiz = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -6877,6 +7532,11 @@ export const onUpdateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6927,6 +7587,11 @@ export const onUpdateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -6963,6 +7628,11 @@ export const onUpdateQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -7020,6 +7690,11 @@ export const onDeleteQuiz = /* GraphQL */ `
         university
         year
         major
+        interests {
+          name
+          category
+          selected
+        }
         courseGroups {
           items {
             id
@@ -7051,6 +7726,11 @@ export const onDeleteQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -7101,6 +7781,11 @@ export const onDeleteQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
@@ -7137,6 +7822,11 @@ export const onDeleteQuiz = /* GraphQL */ `
               university
               year
               major
+              interests {
+                name
+                category
+                selected
+              }
               courseGroups {
                 nextToken
               }
