@@ -2,19 +2,21 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+import { Interest } from "./types";
+
 export type User = {
   __typename: "User",
   id?: string,
   email?: string,
   firstName?: string | null,
   lastName?: string | null,
+  interests?: Interest[] | null,
   profilePicture?: string | null,
   bio?: string | null,
   userState?: UserState | null,
   university?: string,
   year?: number,
   major?: string | null,
-  interests?: Array< string | null > | null,
   courseGroups?: ModelCourseGroupConnectionConnection,
   friendGroups?: ModelFriendGroupConnectionConnection,
   quizzes?: ModelQuizConnection,
@@ -598,6 +600,7 @@ export type joinFriendGroupInput = {
   id: string,
   university: string,
   year: number,
+  interests: Interest[],
 };
 
 export type joinFriendGroupOutput = {
@@ -9463,6 +9466,7 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
+    interests: Interest[],
     email: string,
     firstName?: string | null,
     lastName?: string | null,
