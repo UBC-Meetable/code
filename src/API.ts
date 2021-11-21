@@ -317,6 +317,7 @@ export type ModelBooleanInput = {
 export type UpdateUserInput = {
   id: string,
   email?: string | null,
+  interests?: Interest[] | null,
   firstName?: string | null,
   lastName?: string | null,
   profilePicture?: string | null,

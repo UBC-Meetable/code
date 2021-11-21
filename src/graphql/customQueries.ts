@@ -89,6 +89,11 @@ export const getUserProfile = /* GraphQL */ `
       email
       firstName
       lastName
+      interests {
+        name
+        category
+        selected
+      }
       profilePicture
       bio
       userState
