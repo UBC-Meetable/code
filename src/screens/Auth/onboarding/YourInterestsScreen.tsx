@@ -14,14 +14,14 @@ const YourInterestsScreen = () => {
   const { info: userProfile } = useUserProfile();
 
   useEffect(() => {
-    // fetch user interests data
-    // setUserInterests to the fetched data
-    // this will allow the user to see which interests they've previously selected!
+    if (userProfile) {
+    setUserInterests(userProfile.interests);
+    }
   }, []);
 
   useEffect(() => {
-    // console.log(userInterests);
-    // console.log(userProfile);
+    console.log(userInterests);
+    console.log(userProfile);
   }, [userInterests]);
 
   const updateSelectStatus = (index: number) => {
