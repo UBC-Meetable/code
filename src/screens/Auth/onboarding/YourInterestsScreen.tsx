@@ -4,7 +4,7 @@ import { Layout } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { Button } from "@ui-kitten/components";
 import updateUserProfile from "../../../calls/updateUserCourses";
-import InterestChips from "../../../../src/components/ui/InterestChips";
+import InterestChips from "../../../../src/components/ui/InterestsChips";
 import { Interest } from "../../../../src/types";
 import { interests } from "../../../../src/constants/interests";
 import fetchUserProfile from "../../../calls/fetchUserProfile";
