@@ -6,22 +6,22 @@ import { Button } from "@ui-kitten/components";
 import updateUserProfile from "../../../calls/updateUserCourses";
 import InterestChips from "../../../../src/components/ui/InterestsChips";
 import { Interest } from "../../../../src/types";
-import { interests } from "../../../../src/constants/interests";
+import { interests } from "../../../../src/constants/Interests";
 import fetchUserProfile from "../../../calls/fetchUserProfile";
 
 const YourInterestsScreen = () => {
   const [userInterests, setUserInterests] = useState<Interest[]>(interests);
   const { info: userProfile } = useUserProfile();
 
-  useEffect(() => {
-    if (userProfile) {
-    setUserInterests(userProfile.interests);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userProfile) {
+  //   setUserInterests(userProfile.interests);
+  //   }
+  // }, []);
 
   useEffect(() => {
     console.log(userInterests);
-    console.log(userProfile);
+    // console.log(JSON.stringify(userProfile));
   }, [userInterests]);
 
   const updateSelectStatus = (index: number) => {
