@@ -74,18 +74,11 @@ export const UserProfileProvider = ({ children }: { children?: ReactNode }) => {
   }, [user]);
 
   return (
-<<<<<<< HEAD
     <UserProfileContext.Provider
       value={{
         ...profile,
         loading,
         set,
-=======
-    <UserSchoolInfoContext.Provider
-      value={{
-        info,
-        loading,
->>>>>>> d455bc34 (managed to fetch interests array. however, the attributes of each interest has null value. therefore, the interest chips wont show up)
       }}
     >
       {children}
