@@ -21,7 +21,6 @@ const YourInterestsScreen = () => {
 
   useEffect(() => {
     console.log(userInterests);
-    // console.log(JSON.stringify(userProfile));
   }, [userInterests]);
 
   const updateSelectStatus = (index: number) => {
