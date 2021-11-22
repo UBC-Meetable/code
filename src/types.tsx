@@ -67,7 +67,6 @@ export type GroupStackParamList = {
 export type FriendGroupStackScreens = {
   FriendGroups: undefined;
   Quiz: undefined;
-  YourInterestsScreen: undefined;
 };
 
 export type TabTwoParamList = {
