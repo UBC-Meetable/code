@@ -14,8 +14,8 @@ const YourInterestsScreen = () => {
   const { info: userProfile } = useUserProfile();
 
   useEffect(() => {
-    if (userProfile) {
-    setUserInterests(userProfile.interests);
+    if (userProfile && userProfile.interests) {
+      setUserInterests(userProfile.interests);
     }
   }, []);
 
