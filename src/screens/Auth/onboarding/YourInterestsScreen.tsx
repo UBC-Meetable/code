@@ -13,11 +13,11 @@ const YourInterestsScreen = () => {
   const [userInterests, setUserInterests] = useState<Interest[]>(interests);
   const { info: userProfile } = useUserProfile();
 
-  // useEffect(() => {
-  //   if (userProfile) {
-  //   setUserInterests(userProfile.interests);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (userProfile) {
+    setUserInterests(userProfile.interests);
+    }
+  }, []);
 
   useEffect(() => {
     console.log(userInterests);
