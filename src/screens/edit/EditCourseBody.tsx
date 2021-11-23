@@ -1,13 +1,14 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import { Text, Layout, Input } from "@ui-kitten/components";
-import { SafeAreaView, ScrollView } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import editCourseStyles from "./editCourseStyles";
 import TextField from "../../components/ui/TextField";
 import PrimaryButton from "../../components/ui/PrimaryButton";
-import { SimpleCourseGroup, UBCCourse } from "../../types";
+import { SearchSelectItem, SimpleCourseGroup, UBCCourse } from "../../types";
 import getAllSubjects from "../../calls/getAllSubjects";
 import useSubjectList from "../../hooks/useSubjectList";
 import SearchableDropdown from "../../components/edit_courses/SearchableDropdown";
+import getSubjectSections from "../../calls/getSubjectSections";
 
 type EditCourseBodyProps = {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
@@ -29,6 +30,29 @@ const EditCourseBody = ({
   const titleRef = React.useRef<Input>(null);
   const codeRef = React.useRef<Input>(null);
   const { subjects: subjectList, loading: subjectsLoading } = useSubjectList();
+  const [subjects, setSubjects] = useState<SearchSelectItem[]>([]);
+  const [sections, setSections] = useState<SearchSelectItem[]>([]);
+  const [loadingCourses, setLoadingCourses] = useState<boolean>(false);
+
+  const handleChangeSubject = async (subject: string) => {
+    setLoadingCourses(() => true);
+    const fetchedSections = await getSubjectSections(subject);
+    setSections(fetchedSections);
+    setLoadingCourses(() => false);
+  };
+
+  useEffect(() => {
+    const formattedItems: any[] = [];
+    subjectList.forEach((subject) => {
+      formattedItems.push(
+        {
+          name: subject,
+        },
+      );
+    });
+    setSubjects(() => formattedItems);
+  }, [subjectsLoading]);
+
   const [loading, setLoading] = useState(false);
   return (
     <SafeAreaView style={editCourseStyles.root}>
@@ -36,21 +60,22 @@ const EditCourseBody = ({
         <Layout style={editCourseStyles.container2}>
           <Text style={[editCourseStyles.textStyle, { left: "0%" }]}>Course</Text>
           <Layout style={editCourseStyles.codeContainer}>
+            <SearchableDropdown
+              onChangeSubject={handleChangeSubject}
+              subjects={subjects}
+              loading={subjectsLoading}
+            />
+
+            <SearchableDropdown
+              onChangeSubject={() => {}}
+              subjects={sections}
+              loading={loadingCourses}
+            />
             {/* <TextField
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle]}
-              placeholder="COMM"
-              value={currTitle}
-              onChangeText={(newTitle) => {
-                setTitle(newTitle);
-              }}
-              onSubmitEditing={() => codeRef.current?.focus()}
-              ref={titleRef}
-              returnKeyType="next"
-            /> */}
-            <SearchableDropdown />
-            <TextField
               ref={codeRef}
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}
+              style={[
+                editCourseStyles.courseCodeInput,
+                editCourseStyles.codeStyle]}
               placeholder="101"
               value={currCode}
               onSubmitEditing={() => addCourse()}
@@ -58,14 +83,22 @@ const EditCourseBody = ({
               onChangeText={(newCode) => {
                 setCode(newCode.trim());
               }}
-            />
+            /> */}
+
           </Layout>
+
         </Layout>
       </Layout>
+      <PrimaryButton
+        style={styles.behind}
+        onPress={addCourse}
+        status="primary"
+      >
+        Add Course
+      </PrimaryButton>
+      <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }, styles.behind]}>
 
-      <PrimaryButton onPress={addCourse} status="primary">Add Course</PrimaryButton>
-      <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }]}>
-        <Text style={editCourseStyles.textStyle}>Your Courses</Text>
+        <Text style={[editCourseStyles.textStyle]}>Your Courses</Text>
         <ScrollView contentContainerStyle={editCourseStyles.selectionsContainer}>
           {renderCourses(courses)}
           {renderCourses(newCourses, true)}
@@ -99,5 +132,20 @@ const EditCourseBody = ({
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  behind: {
+    zIndex: -1,
+  },
+  shadow: {
+    shadowColor: "#F0D9C8",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+  },
+});
 
 export default EditCourseBody;

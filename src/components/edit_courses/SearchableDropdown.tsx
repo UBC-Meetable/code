@@ -1,92 +1,130 @@
-import React from "react";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  IndexPath, Layout, Select, SelectItem,
-} from "@ui-kitten/components";
+import { Layout, Spinner } from "@ui-kitten/components";
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
 import MultiSelect from "react-native-multiple-select";
-import TextField from "../ui/TextField";
+import Colors from "../../constants/Colors";
 import editCourseStyles from "../../screens/edit/editCourseStyles";
+import { SearchSelectItem } from "../../types";
 
-type SearchableDropdownProps = {};
+type SearchableDropdownProps = {
+  subjects: SearchSelectItem[];
+  loading: boolean;
+  onChangeSubject: (subject: string) => void;
+};
 
-const items = [{
-  id: "92iijs7yta",
-  name: "Ondo",
-}, {
-  id: "a0s0a8ssbsd",
-  name: "Ogun",
-}, {
-  id: "16hbajsabsd",
-  name: "Calabar",
-}, {
-  id: "nahs75a5sg",
-  name: "Lagos",
-}, {
-  id: "667atsas",
-  name: "Maiduguri",
-}, {
-  id: "hsyasajs",
-  name: "Anambra",
-}, {
-  id: "djsjudksjd",
-  name: "Benue",
-}, {
-  id: "sdhyaysdj",
-  name: "Kaduna",
-}, {
-  id: "suudydjsjd",
-  name: "Abuja",
-},
-];
+const SearchableDropdown = ({
+  subjects, loading, onChangeSubject,
+}:SearchableDropdownProps) => {
+  const [selectedId, setSelectedItem] = React.useState<string>("");
 
-const SearchableDropdown = (props:SearchableDropdownProps) => {
-  const [courseSearch, setCourseSearch] = React.useState("");
-  const [selectedIndex, setSelectedIndex] = React.useState(new IndexPath(0));
-  const renderIcon = () => {
+  if (loading) {
     return (
-      <Ionicons
-        name="caret-down"
-        size={32}
-      />
+      <Layout style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle,
+        styles.shadow, styles.center]}
+      >
+        <Spinner />
+      </Layout>
     );
-  };
+  }
   return (
-    <Layout style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle]}>
+    <Layout style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle,
+      styles.shadow]}
+    >
       <MultiSelect
         hideTags
-        items={items}
-        uniqueKey="id"
+        items={subjects}
+        uniqueKey="name"
         single
-        styleDropdownMenu={{
-          height: 50, borderColor: "#000", borderWidth: 1, borderRadius: 100,
+        styleDropdownMenu={styles.dropdownMenu}
+        styleTextDropdownSelected={[styles.textDropdown, styles.selectedDropdown]}
+        styleDropdownMenuSubsection={styles.dropdownMenuSubsection}
+        styleListContainer={styles.listContainer}
+        styleInputGroup={styles.inputGroup}
+        styleTextDropdown={styles.textDropdown}
+        onSelectedItemsChange={([item]) => {
+          if (item !== selectedId) {
+            onChangeSubject(item);
+          }
+          setSelectedItem(item);
         }}
-        styleMainWrapper={{
-          borderColor: "#000", borderWidth: 1, borderRadius: 100,
-        }}
-        styleInputGroup={{
-          borderColor: "#000", borderWidth: 1, borderRadius: 100,
-        }}
-        styleSelectorContainer={{ borderWidth: 1 }}
-        onSelectedItemsChange={() => console.log("hello")}
-        selectText="Select A Course"
+        selectedItems={[selectedId]}
+        selectText="Select a Course"
         searchInputPlaceholderText="Search Items..."
-        onChangeInput={(text) => console.log(text)}
-        altFontFamily="ProximaNova-Light"
-        tagRemoveIconColor="#CCC"
-        tagBorderColor="#CCC"
-        tagTextColor="#CCC"
-        selectedItemTextColor="#CCC"
-        selectedItemIconColor="#CCC"
+        tagRemoveIconColor={Colors.theme.creme}
+        noItemsText="No Courses Found"
+        styleRowList={styles.rowText}
         itemTextColor="#000"
         displayKey="name"
-        searchInputStyle={{
-          height: "100%", borderWidth: 1, borderColor: "#000", borderRadius: 100,
+        textInputProps={{
+          style: {
+            fontFamily: "Poppins_400Regular",
+          },
         }}
+        searchInputStyle={styles.inputStyle}
         submitButtonText="Submit"
         searchIcon={null}
       />
     </Layout>
   );
 };
+
+const styles = StyleSheet.create({
+  behind: {
+    zIndex: -1,
+  },
+  shadow: {
+    shadowColor: "#F0D9C8",
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+  },
+  dropdownMenu: {
+    height: 50,
+    marginTop: 5,
+    marginBottom: -5,
+  },
+  dropdownMenuSubsection: {
+    borderColor: "#0000",
+    backgroundColor: "#0000",
+  },
+  listContainer: {
+    borderRadius: 5,
+    borderColor: "grey",
+    borderWidth: 1,
+    maxHeight: 200,
+    position: "absolute",
+    width: "100%",
+    backgroundColor: "white",
+  },
+  inputGroup: {
+    marginTop: 5,
+    marginBottom: -5,
+    height: 50,
+    backgroundColor: "#0000",
+  },
+  textDropdown: {
+    marginLeft: 10,
+    color: "#A9A9A9",
+    fontSize: 15,
+    fontFamily: "Poppins_400Regular",
+  },
+  rowText: {
+    height: 34,
+  },
+  selectedDropdown: {
+    color: "#000",
+  },
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  inputStyle: {
+    borderWidth: 0,
+    borderColor: "#0000",
+  },
+});
 
 export default SearchableDropdown;

@@ -201,3 +201,5 @@ export interface UBCCourse {
   name: string;
   title: string;
 }
+
+export type SearchSelectItem = {name: string}[];
