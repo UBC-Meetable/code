@@ -341,65 +341,106 @@ import {
 } from "../types";
 
 import { Text, View } from 'react-native';
+//import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+//import useUserProfile from "../../hooks/useUserProfile";
+import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
+import CourseGroupsContext from "../context/CourseGroupsContext";
+import { CourseGroup, GroupStackParamList } from "../types";
+import UserProfileContext from "../context/UserProfileContext";
+import useUserProfile from "../hooks/useUserProfile";
+import fetchUserCourses from "../calls/fetchUserCourses";
+import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+
+
 
 
 
 
 
 const FriendGroups = ({
-    navigation,
-  }: {
-    navigation: StackNavigationProp<RootStackParamList, "Quiz">;
-  }) => {
+  navigation,
+}: {
+  navigation: StackNavigationProp<RootStackParamList, "Quiz">;
+}) => {
 
-    const headerHeight = useHeaderHeight();
-    const renderReturned = () => (
+  // const headerHeight = useHeaderHeight();
+  // const renderReturned = () => (
 
-        /*
-        <Layout style={[{
-          paddingTop: headerHeight,
-          backgroundColor: "#0000",
-          justifyContent: "center",
-          alignItems: "center",
-        }, StyleSheet.absoluteFill]}
-        >
-          <Returned />
-        </Layout>
-        */
+  //     /*
+  //     <Layout style={[{
+  //       paddingTop: headerHeight,
+  //       backgroundColor: "#0000",
+  //       justifyContent: "center",
+  //       alignItems: "center",
+  //     }, StyleSheet.absoluteFill]}
+  //     >
+  //       <Returned />
+  //     </Layout>
+  //     */
 
-        <View style={styles.layout}>
-          <Text style={styles.title}>Chat</Text>
-        </View>
-      );
+  //     <View style={styles.layout}>
+  //       <Text style={styles.title}>Chat</Text>
+  //     </View>
+  //   );
 
 
-      return (
-        renderReturned()
-      );
-    };
-    
-    /*
-    const styles = StyleSheet.create({
-      card: {
-        height: "100%",
-        overflow: "scroll",
-        backgroundColor: "#0000",
-      },
-    });
-    
-   */
-    const styles = StyleSheet.create({
-      layout: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      title: {
-        fontSize: 32,
-        marginBottom: 16,
-      },
-    });
-    
-    
-    
-    export default FriendGroups;
+  //   return (
+  //     renderReturned()
+  //   );
+
+
+  const Chats = () => { 
+    const [courses, setCourses] = useState<CourseGroup[]>([]);
+
+    const user = useAuthenticatedUser();
+    useEffect(() => {
+      const getCourseGroups = async () => {
+        const res = await fetchUserCourses(user);
+        console.log(res);
+        setCourses(res);
+      };
+      getCourseGroups();
+    }, []);
+    // how to get the body of the message from the courses object
+    return (
+      <View style={styles.layout}>
+        {courses.map(({ messages }) => {
+          const items = messages?.items
+          return (
+            <>
+              {items?.map(({ author, body }) => <Text>{`${author.firstName} says ${body}`}</Text>)}
+            </>
+          )
+        })}
+      </View>
+    );
+  }
+
+  return <Chats />
+};
+
+/*
+const styles = StyleSheet.create({
+  card: {
+    height: "100%",
+    overflow: "scroll",
+    backgroundColor: "#0000",
+  },
+});
+ 
+*/
+const styles = StyleSheet.create({
+  layout: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 32,
+    marginBottom: 16,
+  },
+});
+
+
+
+export default FriendGroups;
