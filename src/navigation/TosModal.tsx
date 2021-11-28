@@ -37,7 +37,7 @@ import {
 } from "./legal/tos";
 
 const Title = ({ title }: HeaderProps) => <Text style={modalStyles.legalTitle}>{title}</Text>;
-const Body = ({ body }: {body: string}) => (
+const Body = ({ body }: { body: string }) => (
   <Text style={modalStyles.legalBody}>
     {body}
   </Text>
@@ -68,7 +68,7 @@ type TosModalProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string;
 };
-const TosModal = ({ open, setOpen, title = "" }:TosModalProps) => (
+const TosModal = ({ open, setOpen, title = "" }: TosModalProps) => (
   <Modal
     visible={open}
     backdropStyle={modalStyles.backdrop}
@@ -115,7 +115,7 @@ const TosModal = ({ open, setOpen, title = "" }:TosModalProps) => (
   </Modal>
 );
 
-const PrivacyModal = ({ open, setOpen, title = "" }:TosModalProps) => (
+const PrivacyModal = ({ open, setOpen, title = "" }: TosModalProps) => (
   <Modal
     visible={open}
     backdropStyle={modalStyles.backdrop}

@@ -11,14 +11,15 @@ import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
 import Colors from "../../../constants/Colors";
 import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
+import ErrorModal from "../../../navigation/ErrorsModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-    onLogIn: () => void,
-    onCreate: (email: string, password: string) => void,
+  onLogIn: () => void,
+  onCreate: (email: string, password: string) => void,
 }
 
 // TODO error messages, disabled styles, theme
@@ -27,7 +28,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
-  // const [errors, setError] = useState<string[]>([]);
+  const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const confirmEmailRef = useRef<Input>(null);
@@ -35,26 +36,27 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [tosModal, setTosModal] = useState(false);
   const [privacyModal, setPrivacyModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
   const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
 
   const confirmForm = () => {
-    // setError(() => []);
+    setError(() => []);
     let flag = true;
     if (password !== confirmPassword) {
-      // setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
+      setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
       flag = false;
     }
     if (email !== confirmEmail) {
-      // setError((prevErrors) => [...prevErrors, "Emails do not match"]);
+      setError((prevErrors) => [...prevErrors, "Emails do not match"]);
       flag = false;
     }
     if (!email) {
-      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
+      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
+      setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
@@ -62,10 +64,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
   const createProfile = async () => {
     console.log("Attempting create profile");
+    setError([]);
 
-    // setError([]);
-
-    if (!confirmForm()) return;
+    if (!confirmForm()) {
+      console.error(errors);
+      setErrorModal(true);
+      return;
+    }
     console.log("Confirmed form");
 
     try {
@@ -79,11 +84,12 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       console.log(user);
 
       onCreate(email, password);
-    } catch (e:any) {
-      // const message = e.message as string;
+    } catch (e: any) {
+      const message = e.message as string;
       console.log(e);
 
-      // setError((prevErrors) => [...prevErrors, message]);
+      setError((prevErrors) => [...prevErrors, message]);
+      setErrorModal(true);
     } finally {
       setLoading(false);
     }
@@ -248,6 +254,12 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         open={privacyModal}
         setOpen={setPrivacyModal}
         title="Privacy Policy"
+      />
+      <ErrorModal
+        open={errorModal}
+        setOpen={setErrorModal}
+        title="Error signing up"
+        errors={errors}
       />
     </LoginControllerRoot>
   );

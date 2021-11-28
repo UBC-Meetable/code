@@ -82,6 +82,10 @@ const editCourseStyles = StyleSheet.create({
     color: "#FBBA82",
   },
   courseTextContainer: {
+    // display: "flex",
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+    flexBasis: 60,
     flex: 1,
     borderRadius: 10,
     padding: 20,

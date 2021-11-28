@@ -1,7 +1,11 @@
-import { Button, Layout, Text } from "@ui-kitten/components";
+import {
+  Button, Layout, Text,
+} from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
+import callDeleteCourseGroupConnection from "../../calls/leaveCourseGroup";
+import fetchCourseGroupConnection from "../../calls/getCourseGroupConnection";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SimpleCourseGroup } from "../../types";
@@ -19,6 +23,7 @@ const EditCourseScreen = () => {
   const [currTitle, setTitle] = useState("");
   const [currCode, setCode] = useState("");
   const user = useAuthenticatedUser();
+  let markedForDeletion = new Set<SimpleCourseGroup>();
 
   const generateNewGroup = ({
     code,
@@ -59,17 +64,26 @@ const EditCourseScreen = () => {
   }
 
   const handleSave = async () => {
-    const promises = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
+    const joinCourses = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
       generateNewGroup(course))) as
       Promise<CourseGroup>[];
-
-    const results = await Promise.all(promises);
-
+    const results = await Promise.all(joinCourses);
     const handleCourseGroup = (result: CourseGroup) => {
       setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== result.groupID));
       setCourses([...courses, simplifyCourseGroup(result)]);
     };
     results.forEach(handleCourseGroup);
+
+    // leave courses
+    setCourses(courses.filter((course) => !markedForDeletion.has(course)));
+    await Promise.all([...markedForDeletion].map((group) => {
+      return fetchCourseGroupConnection(user.attributes.sub, { eq: group.groupID })
+        .then((connectionToDelete) => {
+          return callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
+        })
+        .catch((err) => console.log("failed to leave course", err));
+    }));
+    markedForDeletion = new Set(); // clear data
   };
 
   const renderCourses = (
@@ -90,6 +104,35 @@ const EditCourseScreen = () => {
           {`${group.title} ${group.code}`}
         </Text>
       </Layout>
+
+      {!isNew && (
+        <Layout
+          style={[
+            editCourseStyles.courseTextContainer,
+            isNew && editCourseStyles.newCourseContainer,
+          ]}
+        >
+          <Button
+            appearance="ghost"
+            onPress={() => {
+              if (markedForDeletion.has(group)) {
+                markedForDeletion.delete(group);
+              } else {
+                markedForDeletion.add(group);
+              }
+            }}
+          >
+            {(evaProps: any) => (
+              <Text
+                {...evaProps}
+                style={{ ...evaProps.style, ...editCourseStyles.deleteButtonText }}
+              >
+                X
+              </Text>
+            )}
+          </Button>
+        </Layout>
+      )}
 
       {isNew && (
         <Layout
