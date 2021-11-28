@@ -9,11 +9,12 @@ import { SearchSelectItem } from "../../types";
 type SearchableDropdownProps = {
   subjects: SearchSelectItem[];
   loading: boolean;
-  onChangeSubject: (subject: string) => void;
+  onChange: (subject: string) => void;
+  title: string;
 };
 
 const SearchableDropdown = ({
-  subjects, loading, onChangeSubject,
+  subjects, loading, onChange, title,
 }:SearchableDropdownProps) => {
   const [selectedId, setSelectedItem] = React.useState<string>("");
 
@@ -43,12 +44,12 @@ const SearchableDropdown = ({
         styleTextDropdown={styles.textDropdown}
         onSelectedItemsChange={([item]) => {
           if (item !== selectedId) {
-            onChangeSubject(item);
+            onChange(item);
           }
           setSelectedItem(item);
         }}
         selectedItems={[selectedId]}
-        selectText="Select a Course"
+        selectText={title}
         searchInputPlaceholderText="Search Items..."
         tagRemoveIconColor={Colors.theme.creme}
         noItemsText="No Courses Found"

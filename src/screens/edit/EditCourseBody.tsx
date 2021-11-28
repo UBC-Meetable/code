@@ -37,8 +37,13 @@ const EditCourseBody = ({
   const handleChangeSubject = async (subject: string) => {
     setLoadingCourses(() => true);
     const fetchedSections = await getSubjectSections(subject);
+    setTitle(() => subject);
     setSections(fetchedSections);
     setLoadingCourses(() => false);
+  };
+
+  const handleChangeCode = async (code: string) => {
+    setCode(() => code);
   };
 
   useEffect(() => {
@@ -61,30 +66,17 @@ const EditCourseBody = ({
           <Text style={[editCourseStyles.textStyle, { left: "0%" }]}>Course</Text>
           <Layout style={editCourseStyles.codeContainer}>
             <SearchableDropdown
-              onChangeSubject={handleChangeSubject}
+              title="Subject"
+              onChange={handleChangeSubject}
               subjects={subjects}
               loading={subjectsLoading}
             />
-
             <SearchableDropdown
-              onChangeSubject={() => {}}
+              title="Course Code"
+              onChange={handleChangeCode}
               subjects={sections}
               loading={loadingCourses}
             />
-            {/* <TextField
-              ref={codeRef}
-              style={[
-                editCourseStyles.courseCodeInput,
-                editCourseStyles.codeStyle]}
-              placeholder="101"
-              value={currCode}
-              onSubmitEditing={() => addCourse()}
-              returnKeyType="done"
-              onChangeText={(newCode) => {
-                setCode(newCode.trim());
-              }}
-            /> */}
-
           </Layout>
 
         </Layout>
