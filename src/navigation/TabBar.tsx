@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function MyTabBar({ state, descriptors, navigation }: any) {
@@ -61,7 +60,7 @@ function MyTabBar({ state, descriptors, navigation }: any) {
           };
 
           return (
-            <TouchableWithoutFeedback
+            <TouchableOpacity
               key={index}
               accessibilityRole="button"
               accessibilityState={isFocused ? { selected: true } : {}}
@@ -69,7 +68,7 @@ function MyTabBar({ state, descriptors, navigation }: any) {
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              containerStyle={{
+              style={{
                 flex: 1,
                 height: "100%",
                 justifyContent: "center",
@@ -80,7 +79,7 @@ function MyTabBar({ state, descriptors, navigation }: any) {
               <Text style={{ color: isFocused ? "#CE6206" : "#fff" }}>
                 <Label />
               </Text>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
           );
         })}
       </View>
