@@ -4,6 +4,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import CourseGroups from "../screens/CourseGroups";
+import GroupsView from "../screens/RedesignedCourseGroups";
 import { GroupStackParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
 
@@ -27,16 +28,10 @@ const CourseGroupStackNavigator = () => (
     }}
   >
     <GroupTabStack.Screen
-      name="CourseGroups"
-      options={({ navigation }) => ({
-        headerShown: true,
-        headerRight: () => (
-          <Button onPress={() => navigation.navigate("EditCourses")} style={styles.iconButton} appearance="ghost" accessoryLeft={BooksIcon} />
-        ),
-      })}
+      name=" "
     >
       {(props) => (
-        <CourseGroups {...props} />
+        <GroupsView {...props} />
       )}
     </GroupTabStack.Screen>
   </GroupTabStack.Navigator>

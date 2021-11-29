@@ -21,13 +21,13 @@ export enum GroupType {
 }
 
 export type RootStackParamList = {
-  Tabs: undefined;
+  GroupsView: undefined;
   NotFound: undefined;
   Tutorial: undefined;
   Login: undefined;
   Signup: undefined;
   Quiz: {
-    return: (q: QuestionType[]) => void; 
+    return: (q: QuestionType[]) => void;
   };
   Group: {
     groupID: string;
@@ -39,6 +39,7 @@ export type RootStackParamList = {
   ProfileSettings: undefined;
   NewProfileScreen: undefined;
   FriendOptions: undefined;
+  ProfileStack: undefined;
 };
 
 export type BottomTabParamList = {
@@ -159,14 +160,16 @@ export type ImageInfoType = ImageInfo & { cancelled: boolean };
 export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
-  "MESSAGE"
+  "MESSAGE",
+  "TOP"
 }
 
 export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
-  MESSAGE: { height: 30, width: 30 }
-}
+  MESSAGE: { height: 30, width: 30 },
+  TOP: { height: 50, width: 50 },
+};
 
 export enum SwipeActions {
   "LIKE" = "liked",

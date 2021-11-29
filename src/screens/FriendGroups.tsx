@@ -18,6 +18,7 @@ import updateUserProfile from "../calls/updateUserCourses";
 import FriendGroupBubble from "../components/friend_group/FriendGroupBubble";
 import NoQuizzes from "../components/friend_group/NoQuizzes";
 import Returned from "../components/friend_group/Returned";
+import Colors from "../constants/Colors";
 import FriendGroupsContext from "../context/FriendGroupsContext";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import useUserProfile from "../hooks/useUserProfile";
@@ -237,11 +238,11 @@ const FriendGroups = ({
   };
 
   const renderGroups = () => (
-    <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
+    <Layout style={{ paddingTop: headerHeight, backgroundColor: Colors.theme.background }}>
       <Switch
         trackColor={{ false: "#767577", true: "#81b0ff" }}
         thumbColor={isEnabled ? "#f5dd4b" : "#f4f3f4"}
-        ios_backgroundColor="#3e3e3e"
+        ios_backgroundColor={Colors.theme.background}
         onValueChange={toggleSwitch}
         value={isEnabled}
       />
@@ -257,7 +258,7 @@ const FriendGroups = ({
   );
 
   const renderLoad = () => (
-    <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
+    <Layout style={{ paddingTop: headerHeight, backgroundColor: Colors.theme.background }}>
       <List
         refreshControl={
           <RefreshControl refreshing onRefresh={fakeLoad} />
@@ -272,7 +273,7 @@ const FriendGroups = ({
   const renderNoQuizzes = () => (
     <Layout style={[{
       paddingTop: headerHeight,
-      backgroundColor: "#0000",
+      backgroundColor: Colors.theme.background,
       justifyContent: "center",
       alignItems: "center",
     }, StyleSheet.absoluteFill]}
@@ -284,7 +285,7 @@ const FriendGroups = ({
   const renderReturned = () => (
     <Layout style={[{
       paddingTop: headerHeight,
-      backgroundColor: "#0000",
+      backgroundColor: Colors.theme.background,
       justifyContent: "center",
       alignItems: "center",
     }, StyleSheet.absoluteFill]}

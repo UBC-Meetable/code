@@ -1,3 +1,4 @@
+//  I think it's worth it to completely rewrite this screen.
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
 import {
@@ -29,6 +30,8 @@ const ProfileScreen = () => {
   const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
   const [localProfile, setLocalProfile] = React.useState<UserProfile>();
   const [key, setKey] = React.useState("");
+  console.log(key);
+
   const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
 
   const formatName = (unformattedName: string): [string, string] => {
@@ -237,7 +240,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "space-evenly",
-    backgroundColor: Colors.theme.creme,
+    backgroundColor: Colors.theme.background,
   },
   name: {
     fontSize: 24,
