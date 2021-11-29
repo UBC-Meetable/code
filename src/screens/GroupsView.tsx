@@ -19,7 +19,7 @@ import FriendGroups from "./FriendGroups";
 
 const window = Dimensions.get("window");
 
-type RedesignedCourseGroupsProps = {
+type GroupsViewProps = {
   navigation: StackNavigationProp<RootStackParamList, "GroupsView">;
 };
 const GroupTabs = createMaterialTopTabNavigator();
@@ -45,7 +45,7 @@ const GroupScreenNavigator = ({ parentNavigator }: any) => {
   );
 };
 
-const GroupsView = ({ navigation }:RedesignedCourseGroupsProps) => {
+const GroupsView = ({ navigation }:GroupsViewProps) => {
   const units = useSafeAreaInsets();
   const { loading, info: userProfile } = useUserProfile();
 
