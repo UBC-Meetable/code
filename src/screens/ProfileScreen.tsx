@@ -110,7 +110,7 @@ const ProfileScreen = () => {
   };
 
   const compareProfiles = (a: any, b: any) => Object.entries(a).sort().toString()
-  === Object.entries(b).sort().toString();
+    === Object.entries(b).sort().toString();
 
   React.useEffect(() => {
     const f = async () => {
