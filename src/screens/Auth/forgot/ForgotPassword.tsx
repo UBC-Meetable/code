@@ -6,7 +6,6 @@ import ForgotBubble from "../../../assets/images/forgot-bubble.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
@@ -66,12 +65,7 @@ const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
             />
           </Layout>
         </KeyboardAvoidingView>
-        <Layout style={{
-          backgroundColor: "#0000",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-        >
+        <Layout style={styles.footer}>
           <PrimaryButton
             status="info"
             onPress={() => submit()}
@@ -96,55 +90,24 @@ const ForgotPassword = ({ onBack, afterSubmit }:ForgotPasswordProps) => {
 };
 
 const styles = StyleSheet.create({
-  emoji: { fontSize: 50 },
-  clickable: { color: "#02A3F4" },
+  emoji: {
+    fontSize: 50,
+  },
+  clickable: {
+    color: "#02A3F4",
+  },
   bold: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
   },
-  root: {
-    flex: 1,
-    display: "flex",
-    height: "100%",
-    width: "100%",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: Colors.theme.background,
-  },
-  button: {
-    marginBottom: 20,
-    width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-    flex: 1,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: "100%",
-    minWidth: 200,
-    alignItems: "center",
-    fontFamily: "Poppins_500Medium",
-  },
-  error: {
-    color: Colors.dark.error,
-  },
   emailContainer: {
-    // height: "100%",
     marginVertical: 20,
     backgroundColor: "#0000",
   },
-  loginText: {
-    fontSize: 15,
-    textAlign: "center",
-  },
-  email: {
-    width: "80%",
+  footer: {
+    backgroundColor: "#0000",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });
 

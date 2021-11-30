@@ -14,7 +14,6 @@ import UserContext from "../context/UserContext";
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-  onConfirmCode: () => void;
   onBack: () => void;
   email?: string;
   password?: string;
@@ -22,7 +21,6 @@ type SignUpFormScreenProps = {
 };
 
 const ConfirmEmailScreen = ({
-  onConfirmCode,
   onBack,
   email,
   password,
@@ -148,10 +146,12 @@ const ConfirmEmailScreen = ({
 };
 
 const styles = StyleSheet.create({
-  emoji: { fontSize: 50 },
-  baseText: { fontSize: 14, fontFamily: "Poppins_500Medium" },
-  error: {
-    color: Colors.dark.error,
+  emoji: {
+    fontSize: 50,
+  },
+  baseText: {
+    fontSize: 14,
+    fontFamily: "Poppins_500Medium",
   },
   emailContainer: {
     height: "20%",

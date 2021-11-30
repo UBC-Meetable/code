@@ -7,7 +7,7 @@ import { UserProvider } from "../../context/UserContext";
 import { ChatMessage, ProfilePictureSize } from "../../types";
 import InspectProfile from "../profile/InspectProfile";
 import ProfilePicture from "../ProfilePicture";
-import styles from "../styles/MessageStyles";
+import { messageStyles } from "../styles";
 import CachedImage from "./CachedImage";
 
 const OtherMessage = ({ message } : {message: ChatMessage}) => {
@@ -20,24 +20,24 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
     setCachedUris((old) => [...old, uri]);
   };
   return (
-    <Layout style={otherStyles.messageContainer}>
-      <Layout style={otherStyles.messageAndAuthor}>
-        <Layout style={otherStyles.nameContainer}>
-          <Text style={otherStyles.name}>{`${message.author?.firstName} ${message.author?.lastName}`}</Text>
+    <Layout style={[messageStyles.messageContainer, styles.messageContainer]}>
+      <Layout style={styles.messageAndAuthor}>
+        <Layout style={styles.nameContainer}>
+          <Text style={styles.name}>{`${message.author?.firstName} ${message.author?.lastName}`}</Text>
         </Layout>
-        <Layout style={otherStyles.imageContainer}>
+        <Layout style={styles.imageContainer}>
           <TouchableOpacity
-            style={styles.avatarButton}
+            style={messageStyles.avatarButton}
             activeOpacity={0.5}
           >
 
             <Modal
               visible={visible}
-              backdropStyle={otherStyles.backdrop}
+              backdropStyle={styles.backdrop}
               onBackdropPress={() => {
                 setVisible(false);
               }}
-              style={otherStyles.modal}
+              style={styles.modal}
             >
               <UserProvider>
                 <InspectProfile user={message.author!} />
@@ -51,7 +51,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
               onPress={() => setVisible(true)}
             />
           </TouchableOpacity>
-          <Layout style={styles.bubble}>
+          <Layout style={messageStyles.bubble}>
             <Layout style={[{ flexDirection: "row", backgroundColor: "#0000", justifyContent: "flex-end" }]}>
               { message.files?.map((file, index) => (
                 <TouchableOpacity onPress={() => setVisible(true)} key={index}>
@@ -71,7 +71,7 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
                 onRequestClose={() => setVisible(false)}
               />
             )}
-            <Text style={[styles.message, otherStyles.message]}>{message.body}</Text>
+            <Text style={messageStyles.message}>{message.body}</Text>
           </Layout>
         </Layout>
       </Layout>
@@ -79,13 +79,10 @@ const OtherMessage = ({ message } : {message: ChatMessage}) => {
   );
 };
 
-const otherStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   messageAndAuthor: {
     backgroundColor: "#0000",
     flex: 1,
-  },
-  message: {
-    fontFamily: "Poppins_400Regular",
   },
   nameContainer: {
     marginTop: 2,
@@ -105,11 +102,8 @@ const otherStyles = StyleSheet.create({
     backgroundColor: "#0000",
   },
   messageContainer: {
-    display: "flex",
     flexDirection: "column",
-    backgroundColor: "#0000",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   name: {
     color: "#FBBA82",

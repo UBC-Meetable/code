@@ -1,12 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-// import MeetableBar from "./MeetableBar";
-// import Screen from "./Screen";
 
 export default function TosForm() {
   return (
     <View>
-      {/* <MeetableBar showBackButton /> */}
       <View>
         <h1 style={styles.header}>Develow Data Constitution</h1>
         <h3>Transparency:</h3>

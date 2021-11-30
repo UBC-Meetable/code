@@ -111,27 +111,12 @@ const NewProfileScreen = ({
         <MaterialCommunityIcons
           name="pencil"
           size={30}
-          style={{
-            position: "absolute",
-            right: -10,
-            top: -10,
-            color: "#7ED1EF",
-            shadowColor: "#000",
-            shadowOpacity: 1,
-            shadowRadius: 1,
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            zIndex: 1000,
-          }}
-          onPress={() => {
-            pickImage();
-          }}
+          style={profileStyles.bioPencil}
+          onPress={pickImage}
         />
         <ProfilePicture
           imageKey={key}
-          onPress={() => pickImage()}
+          onPress={pickImage}
         />
       </Layout>
 
@@ -141,7 +126,7 @@ const NewProfileScreen = ({
         <Input
           value={name}
           placeholder="Your Name"
-          onChangeText={(e) => setName(e)}
+          onChangeText={setName}
           style={profileStyles.inputStyle}
           textStyle={profileStyles.inputTextStyle}
         />
@@ -172,22 +157,18 @@ const NewProfileScreen = ({
           maxLength={175}
           style={profileStyles.bioInput}
           value={bio}
-          onChangeText={(e) => {
-            setBio(e);
-          }}
+          onChangeText={setBio}
         />
       </KeyboardAvoidingView>
 
       <Button
         style={profileStyles.button}
-        onPress={() => {
-          handleFinish();
-        }}
+        onPress={handleFinish}
       >
         {(evaProps: any) => (
           <Text
             {...evaProps}
-            style={{ ...evaProps.style, ...profileStyles.buttonText }}
+            style={[evaProps.style, profileStyles.buttonText]}
           >
             Finish Sign Up
           </Text>
@@ -204,39 +185,19 @@ export const profileStyles = StyleSheet.create({
     justifyContent: "space-evenly",
     backgroundColor: Colors.theme.lightCreme,
   },
-  profile: {
-    height: 144,
-    width: 144,
-    borderRadius: 100,
-    paddingVertical: 10,
-  },
-  pencil: {
+  bioPencil: {
     position: "absolute",
+    right: -10,
+    top: -10,
     color: "#7ED1EF",
-    left: "85%",
-    top: "15%",
-  },
-  input: {
-    color: "#D2E2EE",
-    paddingHorizontal: 20,
-    position: "absolute",
-    top: 10,
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  nameBubble: {
-    height: 50,
-    width: "90%",
-    borderRadius: 24,
-    backgroundColor: "white",
     shadowColor: "#000",
+    shadowOpacity: 1,
+    shadowRadius: 1,
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 1,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    zIndex: 1000,
   },
   bigBioHead: {
     fontSize: 18,
@@ -244,12 +205,6 @@ export const profileStyles = StyleSheet.create({
     color: "#7ED1EF",
     marginHorizontal: 20,
     top: 10,
-  },
-  bioPencil: {
-    position: "absolute",
-    color: "#7ED1EF",
-    left: "85%",
-    top: 5,
   },
   bioInput: {
     paddingHorizontal: 20,

@@ -8,7 +8,6 @@ import ForgotBubble from "../../../assets/images/forgot-bubble.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import BottomText from "../ui/BottomText";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
@@ -79,9 +78,9 @@ const ForgotPasswordConfirm = ({ onBack, afterSubmit, email }:ForgotPasswordProp
             entering the code sent to your email.
 
           </Text>
-          <TextField placeholder="Confirmation Code" onChangeText={(text) => setCode(text)} />
-          <TextField secureTextEntry placeholder="New Password" onChangeText={(text) => setPassword(text)} />
-          <TextField secureTextEntry placeholder="Confirm New Password" onChangeText={(text) => setConfirmPassword(text)} />
+          <TextField placeholder="Confirmation Code" onChangeText={setCode} />
+          <TextField secureTextEntry placeholder="New Password" onChangeText={setPassword} />
+          <TextField secureTextEntry placeholder="Confirm New Password" onChangeText={setConfirmPassword} />
         </KeyboardAvoidingView>
         <Layout style={{
           backgroundColor: "#0000",
@@ -112,51 +111,8 @@ const styles = StyleSheet.create({
     color: "#C5BEB9",
     width: "80%",
   },
-  emoji: { fontSize: 50 },
-  buttonContainer: { width: "80%" },
-  root: {
-    flex: 1,
-    display: "flex",
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Colors.theme.background,
-  },
-  button: {
-    marginBottom: 20,
-    width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-    flex: 1,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: "100%",
-    minWidth: 200,
-    alignItems: "center",
-  },
-  error: {
-    color: Colors.dark.error,
-  },
-  emailContainer: {
-    width: "80%",
-    height: "20%",
-    marginVertical: 20,
-    backgroundColor: "#0000",
-  },
-  loginText: {
-    fontSize: 15,
-    textAlign: "center",
-  },
-  email: {
-    width: "80%",
+  emoji: {
+    fontSize: 50,
   },
 });
 
