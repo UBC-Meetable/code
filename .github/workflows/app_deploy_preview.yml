@@ -36,7 +36,6 @@ jobs:
       - uses: expo/expo-github-action@v6
         with:
           expo-version: 4.x
-          expo-cache: true
           token: ${{ secrets.EXPO_TOKEN }}
       - run: |
           export NODE_OPTIONS=--max_old_space_size=4096
