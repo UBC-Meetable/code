@@ -3,7 +3,7 @@ name: BuildFrontend
 on:
   pull_request:
     branches:
-      - 'frontend/**'
+      - staging
 defaults:
   run:
     working-directory: src
