@@ -16,6 +16,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+      - run: npm install
       - uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: configure
@@ -35,8 +36,8 @@ jobs:
       - uses: expo/expo-github-action@v6
         with:
           expo-version: 4.x
+          expo-cache: true
           token: ${{ secrets.EXPO_TOKEN }}
-      - run: yarn
       - run: |
           export NODE_OPTIONS=--max_old_space_size=4096
           expo publish --non-interactive --release-channel pr${{ github.event.number }}
