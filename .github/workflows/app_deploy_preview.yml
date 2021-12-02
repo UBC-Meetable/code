@@ -4,19 +4,18 @@ on:
   pull_request:
     branches:
       - staging
-defaults:
-  run:
-    working-directory: src
 jobs:
   publish:
     name: Install and publish
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: src
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - run: npm install
       - uses: ambientlight/amplify-cli-action@0.3.0
         with:
           amplify_command: configure
@@ -37,7 +36,9 @@ jobs:
         with:
           expo-version: 4.x
           expo-cache: true
+          packager: npm
           token: ${{ secrets.EXPO_TOKEN }}
+      - run: npm install
       - run: |
           export NODE_OPTIONS=--max_old_space_size=4096
           expo publish --non-interactive --release-channel pr${{ github.event.number }}
