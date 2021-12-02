@@ -3,9 +3,8 @@ import React, { useContext, useState } from "react";
 import { StyleSheet } from "react-native";
 import { CourseGroup, UserState } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
-import updateUserProfile from "../../calls/updateUserProfile";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import useUserProfile from "../../hooks/useUserProfile";
 import EditCourseBody from "./EditCourseBody";
 import { SimpleCourseGroup } from "../../types";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
@@ -13,14 +12,15 @@ import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 /** TODO: make styling more dynamic */
 // Todo: componentize file
 /** TODO: Cache user courses so we don't need to fetch so often. */
-const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
+const NewEditCoursesScreen = () => {
   const courseGroups = useContext(CourseGroupsContext);
   const [courses, setCourses] = useState(simplifyCourseGroups(courseGroups));
   const [newCourses, setNewCourses] = useState([] as SimpleCourseGroup[]);
   const [currTitle, setTitle] = useState("");
   const [currCode, setCode] = useState("");
   const [currSection, setSection] = useState("");
-  const user = useAuthenticatedUser();
+  // const user = useAuthenticatedUser();
+  const { id, set } = useUserProfile();
 
   const generateNewGroup = ({
     code,
@@ -62,7 +62,7 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
   }
 
   const handleSave = async () => {
-    const promises = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
+    const promises = newCourses.map((course) => joinCourseGroup(id,
       generateNewGroup(course))) as
       Promise<CourseGroup>[];
 
@@ -72,13 +72,7 @@ const NewEditCoursesScreen = ({ onFinish } : {onFinish: () => void}) => {
       setCourses([...courses, simplifyCourseGroup(result)]);
     };
     results.forEach(handleCourseGroup);
-    const res = await updateUserProfile({
-      id: user.attributes.sub,
-      userState: UserState.DONE,
-    });
-    if (res.data) {
-      onFinish();
-    }
+    await set({ id, userState: UserState.DONE });
     // todo error handle
   };
 

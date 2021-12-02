@@ -109,8 +109,8 @@ const EditCourseScreen = () => {
       {!isNew && (
         <Layout
           style={[
-            editCourseStyles.courseTextContainer,
-            isNew && editCourseStyles.newCourseContainer,
+            styles.courseTextContainer,
+            isNew && styles.newCourseContainer,
           ]}
         >
           <Button
@@ -126,7 +126,7 @@ const EditCourseScreen = () => {
             {(evaProps: any) => (
               <Text
                 {...evaProps}
-                style={{ ...evaProps.style, ...editCourseStyles.deleteButtonText }}
+                style={{ ...evaProps.style, ...styles.deleteButtonText }}
               >
                 X
               </Text>

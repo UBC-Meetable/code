@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { Auth } from "@aws-amplify/auth";
 import * as eva from "@eva-design/eva";
 import {
   Poppins_400Regular,
@@ -35,9 +34,6 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
-import createUserProfile from "../calls/createUserProfile";
-import fetchUserProfile from "../calls/fetchUserProfile";
-import updateUserProfile from "../calls/updateUserCourses";
 import ChatBackButton from "../components/Chat/ChatBackButton";
 import Colors from "../constants/Colors";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
@@ -45,13 +41,12 @@ import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
 import { UserProfileProvider } from "../context/UserProfileContext";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/login/LoginFlowController";
 import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
-import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
+import { RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
@@ -126,14 +121,17 @@ const App = () => {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AuthorizedApp = () => {
-  const [loading, setLoading] = React.useState(true);
-  const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
-  let user = useAuthenticatedUser();
-  const [fetchedToken, setFetchedToken] = React.useState<string | null | undefined>("");
+  // const [loading, setLoading] = React.useState(true);
+  // const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
+  const {
+    loading, id, userState, expoPushToken, set,
+  } = useUserProfile();
+  // const user = useAuthenticatedUser();
+  // const [fetchedToken, setFetchedToken] = React.useState<string | null | undefined>("");
 
-  const handleFinish = () => {
-    setUserState(UserState.DONE);
-  };
+  // const handleFinish = () => {
+  //   setUserState(UserState.DONE);
+  // };
 
   // Register for push notifications
   React.useEffect(() => {
@@ -167,62 +165,63 @@ const AuthorizedApp = () => {
         });
       }
       if (token.data) { Analytics.record({ name: "Push Notifications Success" }); }
-      if (token.data !== "" && token.data !== fetchedToken) {
-        updateUserProfile({ id: user.attributes.sub, expoPushToken: token.data })
-          .then((res) => console.log(res)).catch((err) => console.log(err));
+      if (token.data !== "" && token.data !== expoPushToken) {
+        set({ id, expoPushToken: token.data });
       }
     };
-    if (user && !loading) {
+    if (!loading) {
       (async () => {
         await registerForPushNotificationsAsync();
       })();
     }
-  }, [loading, user]);
+  }, [loading]);
 
   // Finish Creating User Profile on First Sign In
-  React.useEffect(() => {
-    const getUserStatus = async (loggedInUser: CognitoUser) => {
-      if (!loggedInUser) return;
-      try {
-        const { email, sub: id } = loggedInUser.attributes;
-        let userProfile = (await fetchUserProfile({ id })).data?.getUser;
-        if (!userProfile) {
-          userProfile = (
-            await createUserProfile({
-              email,
-              id,
-              university: "None",
-              year: -1,
-            })
-          ).data?.createUser;
-          Analytics.record({ name: "Create User" });
-        }
-        if (!userProfile) throw new Error("Error Creating User Profile");
-        const { userState: fetchedUserState, expoPushToken } = userProfile;
+  // React.useEffect(() => {
+  //   const getUserStatus = async (loggedInUser: CognitoUser) => {
+  //     if (!loggedInUser) return;
+  //     try {
+  //       const { email, sub: id } = loggedInUser.attributes;
+  //       let userProfile = (await fetchUserProfile({ id })).data?.getUser;
+  //       if (!userProfile) {
+  //         userProfile = (
+  //           await createUserProfile({
+  //             email,
+  //             id,
+  //             university: "None",
+  //             year: -1,
+  //           })
+  //         ).data?.createUser;
+  //         Analytics.record({ name: "Create User" });
+  //       }
+  //       if (!userProfile) throw new Error("Error Creating User Profile");
+  //       const { userState: fetchedUserState, expoPushToken } = userProfile;
 
-        setFetchedToken(() => expoPushToken);
-        if (fetchedUserState) {
-          setUserState(fetchedUserState);
-        }
-        setLoading(() => false);
-      } catch (e) {
-        console.error(e);
-      }
-    };
+  //       setFetchedToken(() => expoPushToken);
+  //       if (fetchedUserState) {
+  //         setUserState(fetchedUserState);
+  //       }
+  //       setLoading(() => false);
+  //     } catch (e) {
+  //       console.error(e);
+  //     }
+  //   };
 
-    if (user) {
-      (async () => {
-        await getUserStatus(user);
-      })();
-    }
-  }, [user]);
+  //   if (user) {
+  //     (async () => {
+  //       await getUserStatus(user);
+  //     })();
+  //   }
+  // }, [user]);
 
   if (loading) {
-    Auth.currentAuthenticatedUser().then((loggedIn) => {
-      user = loggedIn;
-    });
+    // Auth.currentAuthenticatedUser().then((loggedIn) => {
+    //   user = loggedIn;
+    // });
     return <Blank />;
   }
+
+  console.log(loading, userState, id);
 
   // Handle post-signup account inititalization
   if (userState !== UserState.DONE) {
@@ -243,12 +242,11 @@ const AuthorizedApp = () => {
     }
 
     return (
-      <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />
+      <SignUpStackNavigator initRoute={initRoute} />
     );
   }
 
   return (
-    // <UserProvider>
     <CourseGroupsProvider>
       <FriendGroupsProvider>
         <Stack.Navigator
@@ -341,7 +339,6 @@ const AuthorizedApp = () => {
         </Stack.Navigator>
       </FriendGroupsProvider>
     </CourseGroupsProvider>
-    // </UserProvider>
   );
 };
 

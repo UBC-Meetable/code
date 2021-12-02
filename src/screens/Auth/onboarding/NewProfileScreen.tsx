@@ -13,10 +13,9 @@ import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../../../API";
-import updateUserProfile from "../../../calls/updateUserProfile";
 import ProfilePicture from "../../../components/ProfilePicture";
 import Colors from "../../../constants/Colors";
-import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
 
 const NewProfileScreen = ({
@@ -24,7 +23,7 @@ const NewProfileScreen = ({
 }: {
   navigation: StackNavigationProp<SignUpParamList, "NewProfileScreen">;
 }) => {
-  const user = useAuthenticatedUser();
+  const { id, set } = useUserProfile();
   const [bio, setBio] = React.useState("");
   const [name, setName] = React.useState("");
   const [bioFocused, setBioFocused] = React.useState(false);
@@ -34,24 +33,19 @@ const NewProfileScreen = ({
   const handleFinish = async () => {
     const [firstName, ...lastName] = name.trim().split(" ");
     if (firstName.length && bio.length) {
-      const res = await updateUserProfile({
-        id: user.attributes.sub,
+      await set({
+        id,
         firstName,
         lastName: lastName.join(" "),
         bio,
         userState: UserState.PROFILE_CREATED,
       });
-
-      if (res.data) {
-        navigation.navigate("NewEditCourses");
-      }
+      navigation.navigate("NewEditCourses");
     }
   };
 
   /** TODO Cache Profile Images */
-  const updateImageKey = async (imageKey: string) => {
-    await updateUserProfile({ id: user.attributes.sub, profilePicture: imageKey });
-  };
+  const updateImageKey = (imageKey: string) => set({ id, profilePicture: imageKey });
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -81,7 +75,7 @@ const NewProfileScreen = ({
 
   const uploadImage = (toUpload: ImageInfo) => {
     const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
-    const imageKey = `${user.attributes.sub}/${imageName}`;
+    const imageKey = `${id}/${imageName}`;
     fetch(toUpload.uri).then((response) => {
       response.blob()
         .then((blob) => {
