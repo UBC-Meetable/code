@@ -39,6 +39,7 @@
     "expo-image-picker": "~10.2.2",
     "expo-notifications": "~0.12.3",
     "expo-secure-store": "~10.2.0",
+    "expo-server-sdk": "^3.6.0",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "lodash": ">=4.17.21",
@@ -50,6 +51,7 @@
     "react-native-elements": "^3.1.0",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-image-viewing": "^0.2.0",
+    "react-native-pager-view": "5.0.12",
     "react-native-paper": "^4.7.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
@@ -59,8 +61,7 @@
     "react-native-svg-transformer": "^0.14.3",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^7.1.0",
-    "uuid": "^8.3.2",
-    "react-native-pager-view": "5.0.12"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/react": "~16.9.35",

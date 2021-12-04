@@ -56,7 +56,7 @@ import Blank from "./Blank";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
-import GroupsView from "../screens/GroupsView";
+import GroupsView from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 
 Amplify.configure({

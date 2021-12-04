@@ -9,14 +9,17 @@ import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import Colors from "../constants/Colors";
 import CourseGroupsContext from "../context/CourseGroupsContext";
-import { ChatMessage, CourseGroup, GroupStackParamList } from "../types";
+import {
+  ChatMessage, CourseGroup, GroupStackParamList, RootStackParamList,
+} from "../types";
 
 const CourseGroups = ({
   navigation,
 }: {
-  navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
+  navigation: StackNavigationProp<RootStackParamList, "GroupsView">;
 }) => {
   const groups = useContext(CourseGroupsContext);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -41,13 +44,6 @@ const CourseGroups = ({
     );
   };
 
-  const fakeLoad = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
   const headerHeight = useHeaderHeight();
 
   const renderItem = ({ item }: { item: CourseGroup }) => {
@@ -68,32 +64,23 @@ const CourseGroups = ({
   };
 
   return (
-    <>
-      <Layout style={{ backgroundColor: Colors.theme.background, flex: 1, padding: 10 }}>
-        <Layout style={styles.pinned}>
-          <Text style={[styles.sectionTitleText, styles.empty]}>No Pinned Chats.</Text>
-        </Layout>
-        <Layout style={styles.allCourses}>
-          <Text style={[styles.sectionTitleText]}>All Course Groups</Text>
-        </Layout>
-        <List
-          refreshControl={
-            <RefreshControl refreshing={loading} onRefresh={fakeLoad} />
-          }
-          style={[styles.card]}
-          data={[...groups]}
-          renderItem={renderItem}
-        />
-      </Layout>
-    </>
+    <List
+      bounces={false}
+      // refreshControl={
+      //   <RefreshControl refreshing={loading} />
+      // }
+      style={[styles.card]}
+      data={[...groups]}
+      renderItem={renderItem}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    height: "100%",
+    // height: "100%",
     overflow: "scroll",
-    backgroundColor: Colors.theme.background,
+    backgroundColor: "transparent",
   },
   empty: {
     color: "#c2c2c2",
