@@ -64,8 +64,9 @@ const ConfirmEmailScreen = ({
     console.log("Attempting email validation");
     setError([]);
     if (!confirmForm()) {
-      console.error(errors);
+      //console.error(errors);
       setErrorModal(true);
+      return;
     }
     try {
       await Auth.confirmSignUp(email, code);
