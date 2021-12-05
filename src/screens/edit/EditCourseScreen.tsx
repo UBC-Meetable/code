@@ -2,6 +2,7 @@ import {
   Button, Layout, Text,
 } from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
 import callDeleteCourseGroupConnection from "../../calls/leaveCourseGroup";
@@ -10,7 +11,6 @@ import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SimpleCourseGroup } from "../../types";
 import EditCourseBody from "./EditCourseBody";
-import editCourseStyles from "./editCourseStyles";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 
 /** TODO: make styling more dynamic */
@@ -93,15 +93,15 @@ const EditCourseScreen = () => {
   ) => groups.map((group, index) => (
     <Layout
       key={index}
-      style={[editCourseStyles.courseContainer, isNew && editCourseStyles.newCourseContainer]}
+      style={[styles.courseContainer, isNew && styles.newCourseContainer]}
     >
       <Layout
         style={[
-          editCourseStyles.courseTextContainer,
-          isNew && editCourseStyles.newCourseContainer,
+          styles.courseTextContainer,
+          isNew && styles.newCourseContainer,
         ]}
       >
-        <Text style={[editCourseStyles.courseTextStyle, isNew && editCourseStyles.newCourseText]}>
+        <Text style={[styles.courseTextStyle, isNew && styles.newCourseText]}>
           {`${group.title} ${group.code}`}
         </Text>
       </Layout>
@@ -137,7 +137,7 @@ const EditCourseScreen = () => {
 
       {isNew && (
         <Layout
-          style={[editCourseStyles.deleteContainer, isNew && editCourseStyles.newCourseContainer]}
+          style={[styles.deleteContainer, isNew && styles.newCourseContainer]}
         >
           <Button
             appearance="ghost"
@@ -148,7 +148,7 @@ const EditCourseScreen = () => {
             {(evaProps: any) => (
               <Text
                 {...evaProps}
-                style={{ ...evaProps.style, ...editCourseStyles.deleteButtonText }}
+                style={[evaProps.style, styles.deleteButtonText]}
               >
                 X
               </Text>
@@ -173,5 +173,49 @@ const EditCourseScreen = () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  courseContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    width: "100%",
+    marginVertical: 5,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  newCourseContainer: {
+    backgroundColor: "#FFEEDE",
+  },
+  newCourseText: {
+    color: "#FBBA82",
+  },
+  courseTextContainer: {
+    flex: 1,
+    borderRadius: 10,
+    padding: 20,
+  },
+  deleteContainer: {
+    flexBasis: 60,
+    borderRadius: 10,
+  },
+  courseTextStyle: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+  },
+  deleteButtonText: {
+    fontSize: 20,
+    color: "#FBBA82",
+  },
+});
 
 export default EditCourseScreen;

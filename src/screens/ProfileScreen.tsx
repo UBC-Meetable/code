@@ -15,7 +15,6 @@ import { ScrollView } from "react-native-gesture-handler";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
 import ProfilePicture from "../components/ProfilePicture";
-import Colors from "../constants/Colors";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { UserProfile } from "../types";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
@@ -236,54 +235,6 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    backgroundColor: Colors.theme.background,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  nameContainer: {
-    width: "90%",
-    backgroundColor: "#fff",
-    borderWidth: 0,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    borderRadius: 24,
-  },
-  profile: {
-    backgroundColor: "#C9E8F3",
-    height: 144,
-    width: 144,
-    borderRadius: 100,
-    paddingTop: 10,
-  },
-  pencil: {
-    color: "#7ED1EF",
-    left: "80%",
-  },
-  bioDesc: {
-    color: "#3A3A3A",
-    backgroundColor: "#0000",
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    position: "absolute",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    fontSize: 18,
-    borderWidth: 1,
-    fontWeight: "normal",
-  },
   bioInput: {
     paddingHorizontal: 20,
     position: "relative",
@@ -293,77 +244,6 @@ const styles = StyleSheet.create({
     textAlignVertical: "top",
     width: "100%",
     height: "85%",
-  },
-  bioDescBubble: {
-    flex: 1,
-    marginTop: 30,
-    padding: 10,
-    borderRadius: 24,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  socialLayout: {
-    width: "100%",
-    flex: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: "#0000",
-    paddingBottom: 20,
-  },
-  socialTitle: {
-    display: "flex",
-    color: "#3A3A3A",
-    position: "absolute",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  socialBubble: {
-    flex: 0.6,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 24,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    top: 50,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  socialButton: {
-    display: "flex",
-    paddingRight: 10,
-    backgroundColor: "#0000",
-  },
-  profileContainer: {
-    borderRadius: 100,
-    height: 125,
-    width: 125,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profileOverlay: {
-    position: "absolute",
-    borderRadius: 100,
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.3,
   },
 });
 

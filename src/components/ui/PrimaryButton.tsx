@@ -24,7 +24,7 @@ const PrimaryButton = (props:PrimaryButtonProps) => {
       { (evaProps: any) => (
         <Text
           {...evaProps}
-          style={{ ...textStyle, ...evaProps.style, ...styles.buttonText }}
+          style={[textStyle, evaProps.style, styles.buttonText]}
         >
           {children}
         </Text>

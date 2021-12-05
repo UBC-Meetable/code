@@ -10,7 +10,6 @@ const LoginControllerRoot = ({ children }:LoginControllerRootProps) => {
   const units = useSafeAreaInsets();
   return (
     <Layout style={[styles.root, {
-      position: "relative",
       top: -units.top,
       marginBottom: -units.top * 2 - units.bottom,
       paddingBottom: units.bottom + units.top,
@@ -24,6 +23,7 @@ const LoginControllerRoot = ({ children }:LoginControllerRootProps) => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    position: "relative",
     display: "flex",
     height: "100%",
     width: "100%",

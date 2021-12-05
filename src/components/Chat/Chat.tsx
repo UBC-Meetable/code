@@ -11,7 +11,6 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FileAttachment, FileType } from "../../API";
 import sendMessageToGroup from "../../calls/sendMessageToGroup";
-import Colors from "../../constants/Colors";
 import MessagesContext from "../../context/MessageContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import useUserProfile from "../../hooks/useUserProfile";
@@ -146,10 +145,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
         onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: false })}
         ref={scrollRef}
         style={styles.messages}
-        contentContainerStyle={{
-          justifyContent: "flex-end",
-          display: "flex",
-        }}
+        contentContainerStyle={styles.contentContainer}
         refreshControl={(
           <RefreshControl
             refreshing={loading}
@@ -201,27 +197,19 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
 };
 
 const styles = StyleSheet.create({
-  chat: {
-    width: "100%",
-    backgroundColor: Colors.theme.lightCreme,
+  contentContainer: {
+    justifyContent: "flex-end",
     display: "flex",
-    flex: 1,
   },
   messages: {
     flex: 1,
     overflow: "scroll",
     backgroundColor: "#0000",
   },
-  safeArea: {
-    flex: 1,
-  },
   messageContainer: {
     flex: 1,
     backgroundColor: "#0000",
     width: "100%",
-  },
-  inputContainer: {
-    flexBasis: 70,
   },
 });
 export default Chat;

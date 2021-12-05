@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const messageStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   bubble: {
     minHeight: 40,
     width: "75%",
@@ -16,12 +16,13 @@ const messageStyles = StyleSheet.create({
   },
   message: {
     marginLeft: 5,
+    fontFamily: "Poppins_400Regular",
   },
   messageContainer: {
     display: "flex",
     flexDirection: "row",
     backgroundColor: "#0000",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     alignItems: "center",
   },
   imageContainer: {
@@ -37,6 +38,9 @@ const messageStyles = StyleSheet.create({
     borderRadius: 100,
     marginRight: 10,
   },
+  pending: {
+    backgroundColor: "#d9eff7",
+  },
 });
 
-export default messageStyles;
+export default styles;

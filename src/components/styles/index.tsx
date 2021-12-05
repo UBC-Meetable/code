@@ -1,4 +1,4 @@
-import MessageStyles from "./MessageStyles";
-import TutorialStyles from "./TutorialStyles";
+import messageStyles from "./MessageStyles";
+import tutorialStyles from "./TutorialStyles";
 
-export { TutorialStyles, MessageStyles };
+export { tutorialStyles, messageStyles };
