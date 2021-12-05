@@ -11,6 +11,7 @@ export type UserInfoType = joinFriendGroupInput & {
     lastName: string | null | undefined;
     expoPushToken: string | null | undefined,
     multipleGroupsOptIn: boolean | null | undefined,
+    profilePicture: string | null | undefined,
   };
 };
 export type UserSchoolInfoContextType = {
@@ -32,6 +33,7 @@ export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
         if (!userProfile.data?.getUser) throw new Error("Failed to get User profile");
         else {
           const userInfo = userProfile.data.getUser;
+
           setInfo(
             {
               user: {
@@ -41,6 +43,7 @@ export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
                 lastName: userInfo.lastName,
                 expoPushToken: userInfo.expoPushToken,
                 multipleGroupsOptIn: userInfo.multipleGroupsOptIn,
+                profilePicture: userInfo.profilePicture,
               },
               id: userInfo.id,
               university: userInfo.university || "",

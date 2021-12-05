@@ -6,6 +6,7 @@ import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_600SemiBold,
+  Poppins_700Bold,
   useFonts,
 } from "@expo-google-fonts/poppins";
 
@@ -52,10 +53,11 @@ import GroupScreen from "../screens/GroupScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
-import BottomTabNavigator from "./BottomTabNavigator";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
+import GroupsView from "../screens/HomeScreen";
+import ProfileStackNavigator from "./ProfileStackNavigator";
 
 Amplify.configure({
   ...awsconfig,
@@ -90,6 +92,7 @@ const App = () => {
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_400Regular,
+    Poppins_700Bold,
     Quicksand_300Light,
     Quicksand_400Regular,
     Quicksand_500Medium,
@@ -243,11 +246,11 @@ const AuthorizedApp = () => {
               height: 170,
             },
           }}
-          initialRouteName="Tabs"
+          initialRouteName="GroupsView"
         >
           <Stack.Screen
-            name="Tabs"
-            component={BottomTabNavigator}
+            name="GroupsView"
+            component={GroupsView}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -302,6 +305,10 @@ const AuthorizedApp = () => {
               ),
             } as StackNavigationOptions)}
             component={ProfileSettingsScreen}
+          />
+          <Stack.Screen
+            name="ProfileStack"
+            component={ProfileStackNavigator}
           />
           <Stack.Screen name="Quiz">
             {(props) => (
