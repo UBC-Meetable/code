@@ -7,7 +7,6 @@ import updateUserProfile from "../../../calls/updateUserCourses";
 import InterestChips from "../../../../src/components/ui/InterestsChips";
 import { Interest } from "../../../../src/types";
 import { interests } from "../../../../src/constants/Interests";
-import fetchUserProfile from "../../../calls/fetchUserProfile";
 
 const YourInterestsScreen = () => {
   const [userInterests, setUserInterests] = useState<Interest[]>(interests);
@@ -18,10 +17,6 @@ const YourInterestsScreen = () => {
       setUserInterests(userProfile.interests);
     }
   }, []);
-
-  useEffect(() => {
-    console.log(userInterests);
-  }, [userInterests]);
 
   const updateSelectStatus = (index: number) => {
     let userInterestsCopy = [...userInterests];
