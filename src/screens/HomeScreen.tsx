@@ -1,4 +1,3 @@
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Spinner, Text } from "@ui-kitten/components";
 import React from "react";

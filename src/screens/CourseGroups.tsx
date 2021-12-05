@@ -1,16 +1,13 @@
 import { CommonActions } from "@react-navigation/native";
-import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
-import {
-  Layout, List, Spinner, Text,
-} from "@ui-kitten/components";
-import React, { useContext, useEffect, useState } from "react";
-import { RefreshControl, StyleSheet } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { List, Spinner } from "@ui-kitten/components";
+import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
 import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
-import Colors from "../constants/Colors";
 import CourseGroupsContext from "../context/CourseGroupsContext";
 import {
-  ChatMessage, CourseGroup, GroupStackParamList, RootStackParamList,
+  ChatMessage, CourseGroup, RootStackParamList,
 } from "../types";
 
 const CourseGroups = ({
@@ -20,15 +17,6 @@ const CourseGroups = ({
 }) => {
   const groups = useContext(CourseGroupsContext);
 
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (typeof groups !== "undefined") {
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [groups]);
   const moveToGroupScreen = (
     groupTitle: string,
     groupID: string,
@@ -43,8 +31,6 @@ const CourseGroups = ({
       }),
     );
   };
-
-  const headerHeight = useHeaderHeight();
 
   const renderItem = ({ item }: { item: CourseGroup }) => {
     if (!item.groupID) return <Spinner />;

@@ -14,6 +14,12 @@ import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
 /** TODO: Cache user profile so we don't need to fetch so often. */
+
+interface LabelProps {
+  title: string
+}
+const Label = ({ title }: LabelProps) => <Text style={profileStyles.bigBioHead}>{title}</Text>;
+
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
 
@@ -85,8 +91,6 @@ const ProfileScreen = () => {
       </ScrollView>
     );
   }
-
-  const Label = ({ title }) => <Text style={profileStyles.bigBioHead}>{title}</Text>;
 
   const open = () => setVisible(true);
   const close = () => {

@@ -20,7 +20,6 @@ import {
   createStackNavigator,
   StackNavigationOptions,
   StackNavigationProp,
-  HeaderBackButton,
 } from "@react-navigation/stack";
 import {
   ApplicationProvider as UiProvider, Layout, IconRegistry,

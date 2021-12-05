@@ -38,13 +38,13 @@ const ProfilePicture = ({
       setTimeout(async () => {
         const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 })
           .catch((error) => console.log(error)) as string;
-        Image.getSize(s3Uri, async (width, height) => {
+        Image.getSize(s3Uri, async () => {
           const newImage = await FileSystem.downloadAsync(s3Uri, path);
           const imageInfo = await FileSystem.getInfoAsync(path);
           Analytics.record({ name: "Fetch Picture from S3", attributes: { size: imageInfo.size } });
           setUri(newImage.uri);
           setImageLoading(false);
-        }, (err) => {
+        }, () => {
           setUri("");
           setImageLoading(false);
         });

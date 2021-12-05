@@ -13,6 +13,7 @@ export default function useAuth() {
     case "signOut":
       return setUser();
     default:
+      throw new Error("Unrecognized Auth event");
     }
   };
 
