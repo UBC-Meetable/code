@@ -33,10 +33,8 @@ export const UserProfileProvider = ({ children }: { children?: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const set = async (input: UpdateUserInput) => {
-    setLoading(true);
     await updateUserProfile(input);
     setProfile({ ...profile, ...input });
-    setLoading(false);
   };
 
   useEffect(() => {

@@ -21,7 +21,7 @@ const ProfileScreen = () => {
   const [bio, setBio] = React.useState(user.bio);
   const [firstName, setFirstName] = React.useState(user.firstName);
   const [lastName, setLastName] = React.useState(user.lastName);
-  const [key, setKey] = React.useState("");
+  const [key, setKey] = React.useState(user.profilePicture);
   const [visible, setVisible] = React.useState(false);
 
   const pickImage = async () => {

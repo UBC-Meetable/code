@@ -14,7 +14,7 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
     Auth.signOut();
     navigation.reset({
       index: 0,
-      routes: [{ name: "GroupsView" }],
+      routes: [{ name: "Home" }],
     });
   };
 

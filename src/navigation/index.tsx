@@ -20,6 +20,7 @@ import {
   createStackNavigator,
   StackNavigationOptions,
   StackNavigationProp,
+  HeaderBackButton,
 } from "@react-navigation/stack";
 import {
   ApplicationProvider as UiProvider, Layout, IconRegistry,
@@ -51,8 +52,9 @@ import Blank from "./Blank";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
-import GroupsView from "../screens/HomeScreen";
+import HomeScreen from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
+import useUserProfile from "../hooks/useUserProfile";
 
 Amplify.configure({ ...awsconfig });
 Analytics.record("Initialization");
@@ -121,17 +123,9 @@ const App = () => {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AuthorizedApp = () => {
-  // const [loading, setLoading] = React.useState(true);
-  // const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
   const {
     loading, id, userState, expoPushToken, set,
   } = useUserProfile();
-  // const user = useAuthenticatedUser();
-  // const [fetchedToken, setFetchedToken] = React.useState<string | null | undefined>("");
-
-  // const handleFinish = () => {
-  //   setUserState(UserState.DONE);
-  // };
 
   // Register for push notifications
   React.useEffect(() => {
@@ -145,7 +139,6 @@ const AuthorizedApp = () => {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      console.log(finalStatus);
 
       if (finalStatus !== "granted") {
         Analytics.record({ name: "Push Notifications Failed" });
@@ -176,52 +169,9 @@ const AuthorizedApp = () => {
     }
   }, [loading]);
 
-  // Finish Creating User Profile on First Sign In
-  // React.useEffect(() => {
-  //   const getUserStatus = async (loggedInUser: CognitoUser) => {
-  //     if (!loggedInUser) return;
-  //     try {
-  //       const { email, sub: id } = loggedInUser.attributes;
-  //       let userProfile = (await fetchUserProfile({ id })).data?.getUser;
-  //       if (!userProfile) {
-  //         userProfile = (
-  //           await createUserProfile({
-  //             email,
-  //             id,
-  //             university: "None",
-  //             year: -1,
-  //           })
-  //         ).data?.createUser;
-  //         Analytics.record({ name: "Create User" });
-  //       }
-  //       if (!userProfile) throw new Error("Error Creating User Profile");
-  //       const { userState: fetchedUserState, expoPushToken } = userProfile;
-
-  //       setFetchedToken(() => expoPushToken);
-  //       if (fetchedUserState) {
-  //         setUserState(fetchedUserState);
-  //       }
-  //       setLoading(() => false);
-  //     } catch (e) {
-  //       console.error(e);
-  //     }
-  //   };
-
-  //   if (user) {
-  //     (async () => {
-  //       await getUserStatus(user);
-  //     })();
-  //   }
-  // }, [user]);
-
   if (loading) {
-    // Auth.currentAuthenticatedUser().then((loggedIn) => {
-    //   user = loggedIn;
-    // });
     return <Blank />;
   }
-
-  console.log(loading, userState, id);
 
   // Handle post-signup account inititalization
   if (userState !== UserState.DONE) {
@@ -260,12 +210,11 @@ const AuthorizedApp = () => {
               height: 170,
             },
           }}
-          initialRouteName="GroupsView"
+          initialRouteName="Home"
         >
           <Stack.Screen
-            name="GroupsView"
-            component={GroupsView}
-            options={{ headerShown: false }}
+            name="Home"
+            component={HomeScreen}
           />
           <Stack.Screen
             name="Group"

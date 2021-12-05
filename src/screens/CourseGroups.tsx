@@ -16,7 +16,7 @@ import {
 const CourseGroups = ({
   navigation,
 }: {
-  navigation: StackNavigationProp<RootStackParamList, "GroupsView">;
+  navigation: StackNavigationProp<RootStackParamList, "Home">;
 }) => {
   const groups = useContext(CourseGroupsContext);
 

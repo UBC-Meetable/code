@@ -23,6 +23,7 @@ const ProfileStackNavigator = () => (
     screenOptions={{
       headerTransparent: true,
       headerTitle: "",
+      headerTintColor: "black",
       ...HeaderOptions,
     }}
   >
@@ -31,6 +32,9 @@ const ProfileStackNavigator = () => (
       component={ProfileScreen}
       options={({ navigation }) => ({
         headerShown: true,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
         headerRight: () => (
           <GearIcon onPress={() => navigation.navigate("ProfileSettings")} />
         ),

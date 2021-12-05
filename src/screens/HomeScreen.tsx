@@ -17,14 +17,13 @@ import CourseGroups from "./CourseGroups";
 
 const window = Dimensions.get("window");
 
-type GroupsViewProps = {
-  navigation: StackNavigationProp<RootStackParamList, "GroupsView">;
+type HomeProps = {
+  navigation: StackNavigationProp<RootStackParamList, "Home">;
 };
-const GroupTabs = createMaterialTopTabNavigator();
 
-const GroupsView = ({ navigation }:GroupsViewProps) => {
+const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
-  const { loading, info: userProfile } = useUserProfile();
+  const { loading, profilePicture } = useUserProfile();
 
   if (loading) return <Spinner />;
   return (
@@ -43,7 +42,7 @@ const GroupsView = ({ navigation }:GroupsViewProps) => {
             <ProfilePicture
               onPress={() => navigation.navigate("ProfileStack")}
               imageStyle={styles.profilePicture}
-              imageKey={userProfile?.user.profilePicture || ""}
+              imageKey={profilePicture || ""}
               size={ProfilePictureSize.TOP}
             />
             <IconButton
@@ -122,4 +121,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GroupsView;
+export default Home;
