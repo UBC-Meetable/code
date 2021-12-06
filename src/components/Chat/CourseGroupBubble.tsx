@@ -57,16 +57,6 @@ const CourseGroupBubble = ({
             {courseGroup.code}
           </Text>
         </Layout>
-        {/* <Layout style={groupBubbleStyles.sectionContainer}>
-          <Chip
-            style={groupBubbleStyles.sectionBubble}
-            textStyle={groupBubbleStyles.sectionBubbleText}
-          >
-            Users
-            {" "}
-            {courseGroup.users?.items?.length || 1}
-          </Chip>
-        </Layout> */}
       </Layout>
 
       <Layout style={groupBubbleStyles.bottomContainer}>
@@ -74,14 +64,12 @@ const CourseGroupBubble = ({
           <MessagePreview messages={messages} />
         </Layout>
         <Layout style={groupBubbleStyles.bottomPhotoContainer}>
-          {/* <Layout style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}> */}
           <TouchableWithoutFeedback
             onPress={moveToGroupScreen}
             style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}
           >
             <PictureStack users={userPile} />
           </TouchableWithoutFeedback>
-          {/* </Layout> */}
         </Layout>
 
       </Layout>
@@ -96,18 +84,10 @@ export const groupBubbleStyles = StyleSheet.create({
     display: "flex",
     margin: 1,
     padding: 5,
-    // borderColor: "white",
     borderRadius: 24,
     backgroundColor: "#E6F4F9",
     borderWidth: 1,
     borderColor: "#CACACA",
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 5,
-    // },
-    // shadowOpacity: 0.34,
-    // shadowRadius: 6.27,
     elevation: 10,
     position: "relative",
   },
