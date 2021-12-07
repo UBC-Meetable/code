@@ -41,11 +41,11 @@ const YourInterestsScreen = () => {
 
       <Button
         style={styles.button}
-        onPress={async () => {
+        onPress={() => {
           if (userProfile) {
             console.log(userProfile.id);
           }
-          await updateUserProfile({
+          updateUserProfile({
             id: userProfile!.id,
             interests: userInterests,
           });
