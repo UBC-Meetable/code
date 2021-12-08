@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontSize: 18,
     flex: 1,
-    fontFamily: "Poppins_600SemiBold",
   },
 });
 

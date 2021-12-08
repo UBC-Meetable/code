@@ -12,9 +12,8 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../../../API";
-import updateUserProfile from "../../../calls/updateUserCourses";
 import Colors from "../../../constants/Colors";
-import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
 import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
@@ -27,12 +26,13 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
   const [year, setYear] = useState("");
   const universities = ["The University of British Columbia", "The University of Toronto", "Simon Fraser University", "Queen's University"];
   const university = universities[selectedIndex.row];
-  const user = useAuthenticatedUser();
+  const { id, set } = useUserProfile();
+  // const user = useAuthenticatedUser();
   const units = useSafeAreaInsets();
   const onSubmit = async () => {
     const yearInt = parseInt(year, 10);
-    const res = await updateUserProfile({
-      id: user.attributes.sub, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
+    const res = await set({
+      id, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
     });
 
     if (res.data) {
