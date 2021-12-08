@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { SignUpParamList } from "../../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout } from "@ui-kitten/components";
@@ -9,6 +9,10 @@ import updateUserProfile from "../../../calls/updateUserCourses";
 import InterestChips from "../../../../src/components/ui/InterestsChips";
 import { Interest } from "../../../../src/types";
 import { interests } from "../../../../src/constants/Interests";
+import BubbleBackground from "../../../assets/images/quizBubble.svg";
+
+
+const window = Dimensions.get("window");
 
 const YourInterestsScreen = ({
   navigation,
@@ -33,6 +37,7 @@ const YourInterestsScreen = ({
       interests: userInterests,
     });
 
+    
     if (response.data) {
       navigation.navigate("NewEditCourses");
     }
@@ -48,6 +53,10 @@ const YourInterestsScreen = ({
 
   return (
     <Layout style={styles.container}>
+       <BubbleBackground
+        width={window.width}
+        style={{ position: "absolute", top: -135, left: -30 }}
+      />
       <InterestChips
         updateSelectStatus={updateSelectStatus}
         userInterests={userInterests}
@@ -71,12 +80,14 @@ const YourInterestsScreen = ({
           //     interests: userInterests,
           //   });
           // }
+
+
           () => {
             onSubmit();
           }
         }
       >
-        Done
+        Next
       </Button>
     </Layout>
   );
