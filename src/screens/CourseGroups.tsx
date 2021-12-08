@@ -1,6 +1,8 @@
 import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { List, Spinner } from "@ui-kitten/components";
+import {
+  List, Spinner, Text, Layout,
+} from "@ui-kitten/components";
 import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import { GroupType } from "../API";
@@ -49,16 +51,15 @@ const CourseGroups = ({
     );
   };
 
-  return (
+  return groups.length ? (
     <List
       bounces={false}
-      // refreshControl={
-      //   <RefreshControl refreshing={loading} />
-      // }
       style={[styles.card]}
       data={[...groups]}
       renderItem={renderItem}
     />
+  ) : (
+    <Text style={{ textAlign: "center", margin: 20 }}>You have not registered in any courses.</Text>
   );
 };
 

@@ -1,18 +1,21 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Spinner, Text } from "@ui-kitten/components";
+import {
+  Layout, Spinner, Text, Button,
+} from "@ui-kitten/components";
 import React from "react";
 import {
-  Dimensions, Platform, SafeAreaView, StyleSheet,
+  Dimensions, Image, Platform, SafeAreaView, StyleSheet, FlatList, View
 } from "react-native";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CourseGroupBackground from "../assets/images/coursegroupbackground.svg";
-import Smile from "../assets/images/smile.svg";
+import Smile from "../assets/images/meetable_logo.svg";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
+import placeholder from "../assets/images/man.png";
 
 const window = Dimensions.get("window");
 
@@ -40,7 +43,6 @@ const Home = ({ navigation }: HomeProps) => {
           <Layout style={styles.topRightButtonContainer}>
             <ProfilePicture
               onPress={() => navigation.navigate("ProfileStack")}
-              imageStyle={styles.profilePicture}
               imageKey={profilePicture || ""}
               size={ProfilePictureSize.TOP}
             />
@@ -54,18 +56,98 @@ const Home = ({ navigation }: HomeProps) => {
         <Layout style={styles.body}>
           <Text style={styles.titleText}>Suggested Friends</Text>
           <Layout style={styles.eventsContainer}>
-            <Text> List of friends here </Text>
+            <FlatList
+              horizontal
+              data={[
+                { name: "Kira Yan" },
+                { name: "Steven Wong" },
+                { name: "Mayank Rastogi" },
+                { name: "Gordon Cheung" },
+              ]}
+              renderItem={({ item: { name } }) => (
+                <View style={{
+                  backgroundColor: "#FCF8EC",
+                  margin: 10,
+                  padding: 15,
+                  display: "flex",
+                  alignItems: "center",
+                  shadowOffset: { width: 5, height: 3 },
+                  shadowRadius: 3,
+                  shadowOpacity: 0.2,
+                  shadowColor: "black",
+                  borderRadius: 5,
+                }}
+                >
+                  <Image
+                    source={placeholder}
+                    style={{
+                      borderRadius: 100, width: 55, height: 55, margin: 5,
+                    }}
+                  />
+                  <Text style={{ width: 70, textAlign: "center" }}>{name}</Text>
+                </View>
+              )}
+            />
           </Layout>
           <Text style={styles.titleText}>Upcoming Events</Text>
           <Layout style={styles.eventsContainer}>
-            <Text> Events Should link to event page? </Text>
+            <FlatList
+              // horizontal
+              data={[
+                {
+                  name: "Quiz 1 Study Session",
+                  date: "March 21st",
+                  time: "1:00 - 3:00 pm",
+                  joined: true,
+                },
+                {
+                  name: "Climbing Meetup",
+                  date: "March 23rd",
+                  time: "3:30 - 5:00 pm",
+                  joined: false,
+                },
+              ]}
+              renderItem={({
+                item: {
+                  name, date, time, joined,
+                },
+              }) => (
+                <View style={{
+                  backgroundColor: "#FCF8EC",
+                  margin: 10,
+                  padding: 15,
+                  display: "flex",
+                  // alignItems: "center",
+                  shadowOffset: { width: 5, height: 3 },
+                  shadowRadius: 3,
+                  shadowOpacity: 0.2,
+                  shadowColor: "black",
+                  borderRadius: 5,
+                }}
+                >
+                  <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+                    <Text style={{ fontFamily: "Quicksand_700Bold", fontSize: 16 }}>{name}</Text>
+                    <Button style={{
+                      padding: 5,
+                      paddingHorizontal: 10,
+                      borderRadius: 5,
+                      borderWidth: 0,
+                      backgroundColor: joined ? "#9AE399" : "#FFDE71",
+                    }}
+                    >
+                      {joined ? "Joined!" : "Join"}
+                    </Button>
+                  </View>
+                  <Text>{`${date}, ${time}`}</Text>
+                </View>
+              )}
+            />
           </Layout>
           <Text style={styles.titleText}>Courses</Text>
           <Layout style={styles.courseGroupContainer}>
             <CourseGroups navigation={navigation} />
           </Layout>
         </Layout>
-
       </SafeAreaView>
     </>
   );
@@ -73,31 +155,29 @@ const Home = ({ navigation }: HomeProps) => {
 
 const styles = StyleSheet.create({
   eventsContainer: {
-    flex: 1,
     backgroundColor: "transparent",
+    marginVertical: 20,
   },
   courseGroupContainer: {
-    flex: 1,
     flexBasis: "50%",
     backgroundColor: "transparent",
   },
   body: {
     display: "flex",
     flexDirection: "column",
-    flex: 1,
     padding: 20,
     backgroundColor: "transparent",
   },
   titleText: {
-    fontSize: 24,
-    marginBottom: 10,
+    fontSize: 22,
     color: "#000",
     fontFamily: "Poppins_700Bold",
   },
   topRightButtonContainer: {
     backgroundColor: "transparent",
     flexDirection: "row",
-    marginRight: 25,
+    marginRight: 10,
+    alignItems: "center",
   },
   titleContainer: {
     backgroundColor: "transparent",
@@ -108,11 +188,6 @@ const styles = StyleSheet.create({
     position: "relative",
     backgroundColor: "transparent",
     justifyContent: "space-between",
-  },
-  profilePicture: {
-    marginRight: 20,
-    marginBottom: 20,
-    alignSelf: "center",
   },
   buttonGroup: {
     justifyContent: "center",

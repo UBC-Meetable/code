@@ -168,7 +168,7 @@ export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
   MESSAGE: { height: 30, width: 30 },
-  TOP: { height: 50, width: 50 },
+  TOP: { height: 40, width: 40 },
 };
 
 export enum SwipeActions {

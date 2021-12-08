@@ -3,7 +3,7 @@ import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Analytics, Storage } from "aws-amplify";
-import noAvatar from "../assets/images/noavatar.png";
+import noAvatar from "../assets/images/man.png";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 
 type ProfilePictureProps = {
