@@ -22,7 +22,7 @@ export enum GroupType {
 }
 
 export type RootStackParamList = {
-  Tabs: undefined;
+  Home: undefined;
   NotFound: undefined;
   Tutorial: undefined;
   Login: undefined;
@@ -40,6 +40,7 @@ export type RootStackParamList = {
   ProfileSettings: undefined;
   NewProfileScreen: undefined;
   FriendOptions: undefined;
+  ProfileStack: undefined;
 };
 
 export type BottomTabParamList = {
@@ -76,38 +77,38 @@ export type TabTwoParamList = {
 
 export type User =
   {
-      at_hash: string;
-      aud: string;
-      exp: number;
-      family_name: string;
-      given_name: string;
-      iat: number;
-      iss: string;
-      locale: string;
-      name: string;
-      nickname: string;
-      nonce: string;
-      picture: string;
-      sub: string;
-      updated_at: string;
-      major?: string;
-      university?: string;
-      bio?: string;
-      token?: ExpoPushToken;
-    }
+    at_hash: string;
+    aud: string;
+    exp: number;
+    family_name: string;
+    given_name: string;
+    iat: number;
+    iss: string;
+    locale: string;
+    name: string;
+    nickname: string;
+    nonce: string;
+    picture: string;
+    sub: string;
+    updated_at: string;
+    major?: string;
+    university?: string;
+    bio?: string;
+    token?: ExpoPushToken;
+  }
 
 export type ButtonProps = {
   children: React.ReactChild;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
-  onPress?: (event:GestureResponderEvent) => void;
+  onPress?: (event: GestureResponderEvent) => void;
 };
 
 export type MessageProps = {
   message: any;
 };
 
-export type QuestionType= {
+export type QuestionType = {
   title: string,
   id: string,
   img: number,
@@ -147,12 +148,12 @@ export type MessageMap = {
 }
 
 export type UserProfile = Omit<Exclude<UserProfileAPIType, null>, "createdAt" | "owner" | "updatedAt">;
-export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner" >;
+export type CourseGroup = Omit<CourseGroupAPIType, "createdAt" | "owner">;
 export type ChatMessage = Omit<ChatMessageAPIType, "owner" | "userID" | "id" | "updatedAt">;
 export type ChatMessageWithPending = ChatMessage & { pending?: boolean }
 
 export type ModelChatMessageConnection = {
-  items?: Array<Omit<ChatMessage, "__typename"> | null > | null,
+  items?: Array<Omit<ChatMessage, "__typename"> | null> | null,
   nextToken?: string | null,
 };
 
@@ -162,12 +163,14 @@ export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
   "MESSAGE",
+  "TOP"
 }
 
 export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
   MESSAGE: { height: 30, width: 30 },
+  TOP: { height: 50, width: 50 },
 };
 
 export enum SwipeActions {
@@ -178,14 +181,14 @@ export enum SwipeActions {
 }
 
 export enum AuthState {
-  LANDING_SCREEN="LANDING_SCREEN",
-  TUTORIAL="TUTORIAL",
-  SIGN_UP="SIGN_UP",
-  LOGIN="LOGIN",
-  UNIVERSITY_SCREEN="UNIVERSITY_SCREEN",
-  CONFIRM_EMAIL="CONFIRM_EMAIL",
-  FORGOT_PASSWORD="FORGOT_PASSWORD",
-  FORGOT_PASSWORD_CONFIRM="FORGOT_PASSWORD_CONFIRM"
+  LANDING_SCREEN = "LANDING_SCREEN",
+  TUTORIAL = "TUTORIAL",
+  SIGN_UP = "SIGN_UP",
+  LOGIN = "LOGIN",
+  UNIVERSITY_SCREEN = "UNIVERSITY_SCREEN",
+  CONFIRM_EMAIL = "CONFIRM_EMAIL",
+  FORGOT_PASSWORD = "FORGOT_PASSWORD",
+  FORGOT_PASSWORD_CONFIRM = "FORGOT_PASSWORD_CONFIRM"
 }
 
 export type SimpleCourseGroup = {

@@ -3,7 +3,6 @@ import { Layout, Text } from "@ui-kitten/components";
 import React, { useEffect, useState, useContext } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
 import LoginControllerRoot from "../components/ui/LoginControllerRoot";
-import Colors from "../constants/Colors";
 import BottomText from "./Auth/ui/BottomText";
 import VerifyBubble from "../assets/images/verify-bubble.svg";
 import PrimaryButton from "../components/ui/PrimaryButton";

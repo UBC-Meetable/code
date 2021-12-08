@@ -9,11 +9,9 @@ const SignUpStack = createStackNavigator<SignUpParamList>();
 
 type SignUpStackNavigatorProps = {
   initRoute: keyof SignUpParamList;
-  onFinish: () => void;
 }
 const SignUpStackNavigator = ({
   initRoute,
-  onFinish,
 }: SignUpStackNavigatorProps) => (
   <SignUpStack.Navigator initialRouteName={initRoute}>
     <SignUpStack.Screen name="UniScreen" options={{ headerShown: false }} component={UniScreen} />
@@ -25,14 +23,8 @@ const SignUpStackNavigator = ({
     <SignUpStack.Screen
       name="NewEditCourses"
       options={{ headerShown: false }}
-    >
-      {(props) => (
-        <NewEditCourseScreen
-          onFinish={onFinish}
-          {...props}
-        />
-      )}
-    </SignUpStack.Screen>
+      component={NewEditCourseScreen}
+    />
   </SignUpStack.Navigator>
 );
 

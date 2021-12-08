@@ -1,14 +1,13 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable camelcase */
-import { Auth } from "@aws-amplify/auth";
 import * as eva from "@eva-design/eva";
 import {
   Poppins_400Regular,
   Poppins_500Medium,
   Poppins_600SemiBold,
+  Poppins_700Bold,
   useFonts,
 } from "@expo-google-fonts/poppins";
-
 import {
   Quicksand_300Light,
   Quicksand_400Regular,
@@ -16,7 +15,6 @@ import {
   Quicksand_600SemiBold,
   Quicksand_700Bold,
 } from "@expo-google-fonts/quicksand";
-
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import {
   createStackNavigator,
@@ -24,19 +22,18 @@ import {
   StackNavigationProp,
 } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider, Layout,
+  ApplicationProvider as UiProvider, Layout, IconRegistry,
 } from "@ui-kitten/components";
 import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
 import { Dimensions, Platform } from "react-native";
+import { merge } from "lodash";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
-import createUserProfile from "../calls/createUserProfile";
-import fetchUserProfile from "../calls/fetchUserProfile";
-import updateUserProfile from "../calls/updateUserCourses";
 import ChatBackButton from "../components/Chat/ChatBackButton";
 import Colors from "../constants/Colors";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
@@ -44,33 +41,50 @@ import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
 import { UserProfileProvider } from "../context/UserProfileContext";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import LoginFlowController from "../screens/Auth/login/LoginFlowController";
 import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
-import { CognitoUser, RootStackParamList, SignUpParamList } from "../types";
+import { RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
-import BottomTabNavigator from "./BottomTabNavigator";
 import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
+import HomeScreen from "../screens/HomeScreen";
+import ProfileStackNavigator from "./ProfileStackNavigator";
+import useUserProfile from "../hooks/useUserProfile";
 
-Amplify.configure({
-  ...awsconfig,
-  // Analytics: {
-  //   disabled: true,
-  // },
-});
+Amplify.configure({ ...awsconfig });
 Analytics.record("Initialization");
 
 const window = Dimensions.get("window");
 
+const strictTheme = { "text-font-family": "Quicksand_500Medium" }; // set global default font
+const mapping = {
+  strict: strictTheme,
+  components: {
+    Button: {
+      appearances: {
+        filled: {
+          mapping: {
+            textFontFamily: "Quicksand_600SemiBold",
+          },
+        },
+      },
+    },
+  },
+};
+
 export default function Navigation() {
   return (
     <>
-      <UiProvider {...eva} theme={{ ...eva.light, ...theme }}>
+      <IconRegistry icons={EvaIconsPack} />
+      <UiProvider
+        {...eva}
+        theme={{ ...eva.light, ...theme }}
+        customMapping={merge(eva.mapping, mapping)}
+      >
         <NavigationContainer
           theme={DefaultTheme}
         >
@@ -90,6 +104,7 @@ const App = () => {
     Poppins_500Medium,
     Poppins_600SemiBold,
     Poppins_400Regular,
+    Poppins_700Bold,
     Quicksand_300Light,
     Quicksand_400Regular,
     Quicksand_500Medium,
@@ -107,14 +122,9 @@ const App = () => {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const AuthorizedApp = () => {
-  const [loading, setLoading] = React.useState(true);
-  const [userState, setUserState] = React.useState(UserState.SIGNED_UP);
-  let user = useAuthenticatedUser();
-  const [fetchedToken, setFetchedToken] = React.useState<string | null | undefined>("");
-
-  const handleFinish = () => {
-    setUserState(UserState.DONE);
-  };
+  const {
+    loading, id, userState, expoPushToken, set,
+  } = useUserProfile();
 
   // Register for push notifications
   React.useEffect(() => {
@@ -128,7 +138,6 @@ const AuthorizedApp = () => {
         const { status } = await Notifications.requestPermissionsAsync();
         finalStatus = status;
       }
-      console.log(finalStatus);
 
       if (finalStatus !== "granted") {
         Analytics.record({ name: "Push Notifications Failed" });
@@ -148,60 +157,18 @@ const AuthorizedApp = () => {
         });
       }
       if (token.data) { Analytics.record({ name: "Push Notifications Success" }); }
-      if (token.data !== "" && token.data !== fetchedToken) {
-        updateUserProfile({ id: user.attributes.sub, expoPushToken: token.data })
-          .then((res) => console.log(res)).catch((err) => console.log(err));
+      if (token.data !== "" && token.data !== expoPushToken) {
+        set({ id, expoPushToken: token.data });
       }
     };
-    if (user && !loading) {
+    if (!loading) {
       (async () => {
         await registerForPushNotificationsAsync();
       })();
     }
-  }, [loading, user]);
-
-  // Finish Creating User Profile on First Sign In
-  React.useEffect(() => {
-    const getUserStatus = async (loggedInUser: CognitoUser) => {
-      if (!loggedInUser) return;
-      try {
-        const { email, sub: id } = loggedInUser.attributes;
-        let userProfile = (await fetchUserProfile({ id })).data?.getUser;
-        if (!userProfile) {
-          userProfile = (
-            await createUserProfile({
-              email,
-              id,
-              university: "None",
-              year: -1,
-            })
-          ).data?.createUser;
-          Analytics.record({ name: "Create User" });
-        }
-        if (!userProfile) throw new Error("Error Creating User Profile");
-        const { userState: fetchedUserState, expoPushToken } = userProfile;
-
-        setFetchedToken(() => expoPushToken);
-        if (fetchedUserState) {
-          setUserState(fetchedUserState);
-        }
-        setLoading(() => false);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-
-    if (user) {
-      (async () => {
-        await getUserStatus(user);
-      })();
-    }
-  }, [user]);
+  }, [loading]);
 
   if (loading) {
-    Auth.currentAuthenticatedUser().then((loggedIn) => {
-      user = loggedIn;
-    });
     return <Blank />;
   }
 
@@ -224,12 +191,11 @@ const AuthorizedApp = () => {
     }
 
     return (
-      <SignUpStackNavigator onFinish={handleFinish} initRoute={initRoute} />
+      <SignUpStackNavigator initRoute={initRoute} />
     );
   }
 
   return (
-    // <UserProvider>
     <CourseGroupsProvider>
       <FriendGroupsProvider>
         <Stack.Navigator
@@ -243,12 +209,11 @@ const AuthorizedApp = () => {
               height: 170,
             },
           }}
-          initialRouteName="Tabs"
+          initialRouteName="Home"
         >
           <Stack.Screen
-            name="Tabs"
-            component={BottomTabNavigator}
-            options={{ headerShown: false }}
+            name="Home"
+            component={HomeScreen}
           />
           <Stack.Screen
             name="Group"
@@ -303,6 +268,10 @@ const AuthorizedApp = () => {
             } as StackNavigationOptions)}
             component={ProfileSettingsScreen}
           />
+          <Stack.Screen
+            name="ProfileStack"
+            component={ProfileStackNavigator}
+          />
           <Stack.Screen name="Quiz">
             {(props) => (
               <QuizScreen
@@ -318,7 +287,6 @@ const AuthorizedApp = () => {
         </Stack.Navigator>
       </FriendGroupsProvider>
     </CourseGroupsProvider>
-    // </UserProvider>
   );
 };
 

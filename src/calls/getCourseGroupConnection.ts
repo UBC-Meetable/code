@@ -2,7 +2,6 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { CourseGroupConnection, CourseGroupByUserQuery, ModelStringKeyConditionInput } from "../API";
-import { courseGroupByUser } from "../graphql/queries";
 import { getCourseGroupConnectionIdOnly } from "../graphql/customQueries";
 
 const fetchCourseGroupConnection = async (userID: string, groupID: ModelStringKeyConditionInput) => {
