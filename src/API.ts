@@ -31,6 +31,7 @@ export enum UserState {
   SIGNED_UP = "SIGNED_UP",
   UNI_SELECTED = "UNI_SELECTED",
   PROFILE_CREATED = "PROFILE_CREATED",
+  INTERESTS_SELECTED = "INTERESTS_SELECTED",
   DONE = "DONE",
 }
 
@@ -9467,7 +9468,7 @@ export type GetUserQuery = {
   getUser?:  {
     __typename: "User",
     id: string,
-    interests: Interest[],
+    interests?: Interest[],
     email: string,
     firstName?: string | null,
     lastName?: string | null,

@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import NewProfileScreen from "../screens/Auth/onboarding/NewProfileScreen";
 import UniScreen from "../screens/Auth/onboarding/UniScreen";
+import YourInterestsScreen from "../screens/Auth/onboarding/YourInterestsScreen";
 import NewEditCourseScreen from "../screens/edit/NewEditCoursesScreen";
 import { SignUpParamList } from "../types";
 
@@ -21,7 +22,12 @@ const SignUpStackNavigator = ({
       component={NewProfileScreen}
     />
     <SignUpStack.Screen
-      name="NewEditCourses"
+      name="YourInterestsScreen"
+      options={{ headerShown: false }}
+      component={YourInterestsScreen}
+    />
+    <SignUpStack.Screen
+      name="NewEditCourseScreen"
       options={{ headerShown: false }}
       component={NewEditCourseScreen}
     />
