@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
+import { SignUpParamList } from "../../../types";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { Button } from "@ui-kitten/components";
@@ -8,7 +10,11 @@ import InterestChips from "../../../../src/components/ui/InterestsChips";
 import { Interest } from "../../../../src/types";
 import { interests } from "../../../../src/constants/Interests";
 
-const YourInterestsScreen = () => {
+const YourInterestsScreen = ({
+  navigation,
+}: {
+  navigation: StackNavigationProp<SignUpParamList, "YourInterestsScreen">;
+}) => {
   const [userInterests, setUserInterests] = useState<Interest[]>(interests);
   const { info: userProfile } = useUserProfile();
 
@@ -17,6 +23,20 @@ const YourInterestsScreen = () => {
       setUserInterests(userProfile.interests);
     }
   }, []);
+
+  const onSubmit = async () => {
+    if (userProfile) {
+      console.log(userProfile.id);
+    }
+    const response = await updateUserProfile({
+      id: userProfile!.id,
+      interests: userInterests,
+    });
+
+    if (response.data) {
+      navigation.navigate("NewEditCourses");
+    }
+  };
 
   const updateSelectStatus = (index: number) => {
     let userInterestsCopy = [...userInterests];
@@ -41,15 +61,20 @@ const YourInterestsScreen = () => {
 
       <Button
         style={styles.button}
-        onPress={() => {
-          if (userProfile) {
-            console.log(userProfile.id);
+        onPress={
+          //   () => {
+          //   if (userProfile) {
+          //     console.log(userProfile.id);
+          //   }
+          //   updateUserProfile({
+          //     id: userProfile!.id,
+          //     interests: userInterests,
+          //   });
+          // }
+          () => {
+            onSubmit();
           }
-          updateUserProfile({
-            id: userProfile!.id,
-            interests: userInterests,
-          });
-        }}
+        }
       >
         Done
       </Button>
