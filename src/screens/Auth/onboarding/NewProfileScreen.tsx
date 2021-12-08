@@ -40,7 +40,10 @@ const NewProfileScreen = ({
         bio,
         userState: UserState.PROFILE_CREATED,
       });
-      navigation.navigate("NewEditCourses");
+
+      if (res.data) {
+        navigation.navigate("YourInterestsScreen");
+      }
     }
   };
 
@@ -96,7 +99,7 @@ const NewProfileScreen = ({
   return (
     <ScrollView
       contentContainerStyle={[profileStyles.container,
-        { paddingTop: units.top, paddingLeft: units.left, paddingBottom: units.bottom }]}
+      { paddingTop: units.top, paddingLeft: units.left, paddingBottom: units.bottom }]}
       bounces={false}
     >
       <Layout
