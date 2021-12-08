@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
@@ -27,7 +28,7 @@ export type RootStackParamList = {
   Login: undefined;
   Signup: undefined;
   Quiz: {
-    return: (q: QuestionType[]) => void; 
+    return: (q: QuestionType[]) => void;
   };
   Group: {
     groupID: string;
@@ -65,6 +66,7 @@ export type GroupStackParamList = {
 
 export type FriendGroupStackScreens = {
   FriendGroups: undefined;
+  SuggestedFriendsScreen: undefined;
   Quiz: undefined;
 };
 
@@ -159,14 +161,14 @@ export type ImageInfoType = ImageInfo & { cancelled: boolean };
 export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
-  "MESSAGE"
+  "MESSAGE",
 }
 
 export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
-  MESSAGE: { height: 30, width: 30 }
-}
+  MESSAGE: { height: 30, width: 30 },
+};
 
 export enum SwipeActions {
   "LIKE" = "liked",

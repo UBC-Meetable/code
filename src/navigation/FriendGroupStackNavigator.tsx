@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import SuggestedFriendsScreen from "../screens/Courses/SuggestedFriendsScreen";
 import FriendGroups from "../screens/FriendGroups";
 import { FriendGroupStackScreens } from "../types";
 import HeaderOptions from "./HeaderOptions";
