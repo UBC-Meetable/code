@@ -1,6 +1,7 @@
-import { StackNavigationProp} from "@react-navigation/stack";
+import { StackNavigationProp, useHeaderHeight} from "@react-navigation/stack";
 import React, { useEffect, useState } from "react";
 import {
+  SafeAreaView,
   StyleSheet, 
 } from "react-native";
 import {
@@ -31,21 +32,25 @@ const FriendGroups = ({
       };
       getCourseGroups();
     }, []);
+    const headerHeight = useHeaderHeight();
     return (
-      <View style={styles.layout}>
-        <ScrollView style = {styles.scrolling}> 
+        <SafeAreaView style={{ paddingTop: headerHeight, backgroundColor: "#0000", flex: 1}}> 
+        <ScrollView>
         {courses.map(({ messages }) => {
+          console.log("here is all the content of the message__________")
+          console.log(messages)
           const items = messages?.items
           return (
-            <>
-              {items?.map(({ author, body }) => 
-              
-                <Text style ={styles.bubble}>{`${author.firstName} says ${body}`}</Text>)}
-            </>
+            <View style={styles.scrollView}>
+              {items?.map(({ author, body, groupChatID}) => 
+                  <Text style ={styles.bubble}>
+                  In the {groupChatID} {`${author.firstName}`} says: {"\n"} 
+                  {` ${body}`}</Text>)}
+            </View>
           )
         })}
         </ScrollView>
-      </View>
+        </SafeAreaView>
     );
   }
 
@@ -63,8 +68,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     marginBottom: 16,
   },
-  scrolling: {
-    marginTop : 10,
+  scrollView: {
+    marginHorizontal: 10,
   },
   button: {
     borderRadius: 100,
@@ -83,24 +88,18 @@ const styles = StyleSheet.create({
     display: "flex",
   },
   bubble: {
-    minHeight: 20,
-    height: 60,
-    display: "flex",
-    margin: 5,
-    padding: 5,
-    borderColor: "white",
-    borderRadius: 24,
+    minHeight: 40,
+    width: "75%",
     backgroundColor: "#E6F4F9",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    elevation: 10,
-    position: "relative",
-    flexGrow: 1,
+    borderRadius: 20,
+    padding: 10,
+    marginLeft: 10,
+    shadowColor: "#F0D9C8",
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    marginTop: 2,
+    marginBottom: 10,
+    marginRight: 20,
   },
 });
 
