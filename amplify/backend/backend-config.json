@@ -95,7 +95,8 @@
   "storage": {
     "profilePictures": {
       "service": "S3",
-      "providerPlugin": "awscloudformation"
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
     }
   },
   "analytics": {

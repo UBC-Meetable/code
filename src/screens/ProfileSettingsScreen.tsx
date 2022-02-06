@@ -19,21 +19,36 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
   };
 
   return (
-    <SafeAreaView style={styles.root}>
-      <Layout style={styles.container} />
-      <ScrollView contentContainerStyle={styles.selectionsContainer} />
+    <Layout style={styles.root}>
+      <ScrollView style={styles.listContainer} contentContainerStyle={styles.mainList}>
+        <PrimaryButton
+          status="control"
+          onPress={() => navigation.push("EditCourses")}
+        >
+          Edit Courses
+        </PrimaryButton>
+      </ScrollView>
       <PrimaryButton
         status="info"
         onPress={handleLogout}
       >
         Log Out
       </PrimaryButton>
-    </SafeAreaView>
+    </Layout>
   );
 };
 
 const styles = StyleSheet.create({
+  listContainer: {
+    flex: 1,
+  },
+  mainList: {
+    width: "100%",
+    // flex: 1,
+    backgroundColor: Colors.theme.transparent,
+  },
   root: {
+    paddingTop: 10,
     flex: 1,
     display: "flex",
     height: "100%",

@@ -1,0 +1,51 @@
+{
+  "version": "1",
+  "cognitoConfig": {
+    "authSelections": "identityPoolAndUserPool",
+    "requiredAttributes": [
+      "email"
+    ],
+    "resourceName": "meetablea02db50ea02db50e",
+    "serviceName": "Cognito",
+    "useDefault": "manual",
+    "userpoolClientReadAttributes": [
+      "email"
+    ],
+    "userpoolClientWriteAttributes": [
+      "email"
+    ],
+    "aliasAttributes": [],
+    "resourceNameTruncated": "meetaba02db50e",
+    "sharedId": "a02db50e",
+    "userPoolGroupList": [],
+    "userPoolGroups": false,
+    "userPoolName": "meetablea02db50e_userpool_a02db50e",
+    "usernameAttributes": [
+      "email, phone_number"
+    ],
+    "usernameCaseSensitive": false,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientSetAttributes": false,
+    "userpoolClientGenerateSecret": false,
+    "userpoolClientLambdaRole": "meetaba02db50e_userpoolclient_lambda_role",
+    "passwordPolicyCharacters": [],
+    "passwordPolicyMinLength": 8,
+    "adminQueries": false,
+    "mfaConfiguration": "OPTIONAL",
+    "mfaTypes": [
+      "SMS Text Message"
+    ],
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "autoVerifiedAttributes": [
+      "email"
+    ],
+    "hostedUI": false,
+    "thirdPartyAuth": false,
+    "identityPoolName": "meetablea02db50e_identitypool_a02db50e",
+    "allowUnauthenticatedIdentities": true,
+    "triggers": {}
+  }
+}

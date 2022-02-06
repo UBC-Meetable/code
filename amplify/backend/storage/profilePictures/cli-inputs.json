@@ -1,0 +1,13 @@
+{
+  "resourceName": "profilePictures",
+  "bucketName": "meetable73e187a0924943b69c30be47a83adc97",
+  "policyUUID": "3629305a",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE"
+}
