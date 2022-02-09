@@ -3,6 +3,7 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import ProfileScreen from "../screens/ProfileScreen";
 import { TabTwoParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
@@ -24,7 +25,7 @@ const ProfileStackNavigator = () => (
       headerTransparent: true,
       headerTitle: "",
       headerTintColor: "black",
-      ...HeaderOptions,
+      // ...HeaderOptions,
     }}
   >
     <ProfileTabStack.Screen
@@ -36,7 +37,11 @@ const ProfileStackNavigator = () => (
           marginLeft: 10,
         },
         headerRight: () => (
-          <GearIcon onPress={() => navigation.navigate("ProfileSettings")} />
+          <MaterialCommunityIcons
+            onPress={() => navigation.navigate("ProfileSettings")}
+            name="cog"
+            size={24}
+          />
         ),
         headerRightContainerStyle: {
           marginRight: 24,

@@ -21,7 +21,7 @@ export default {
     transparent: "#0000",
     background: "#fff",
     creme: "#FEEDDE",
-    lightCreme: "#FFF8F3",
+    lightCreme: "#FFF8E6",
     brightOrange: "#FFBC01",
   },
 };

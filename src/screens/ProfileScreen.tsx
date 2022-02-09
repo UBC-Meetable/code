@@ -9,10 +9,18 @@ import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
 import { StyleSheet, Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { LinearGradient } from "expo-linear-gradient";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
+import PrimaryButton from "../components/ui/PrimaryButton";
+import GradientButton from "../components/ui/GradientButton";
+import Bio from "../components/profile/Bio";
+import EnrolledCourses from "../components/profile/EnrolledCourses";
+import fetchUserCourses, { fetchUserCoursesById } from "../calls/fetchUserCourses";
+import { CourseGroup } from "../API";
+
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
@@ -27,9 +35,9 @@ const ProfileScreen = () => {
   const [bio, setBio] = React.useState(user.bio);
   const [firstName, setFirstName] = React.useState(user.firstName);
   const [lastName, setLastName] = React.useState(user.lastName);
-  const [key, setKey] = React.useState(user.profilePicture);
+  const [key, setKey] = React.useState(user.profilePicture || "");
   const [visible, setVisible] = React.useState(false);
-
+  const [myCourses, setMyCourses] = React.useState([] as CourseGroup[]);
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -76,7 +84,6 @@ const ProfileScreen = () => {
     });
   };
 
-  /** TODO Cache Profile Images */
   const updateImageKey = (imageKey: string) => {
     set({ id: user.id, profilePicture: imageKey });
   };
@@ -113,27 +120,46 @@ const ProfileScreen = () => {
     setLastName(user.lastName);
   };
 
+  React.useEffect(() => {
+    const getMyCourses = async () => {
+      const courses = await fetchUserCoursesById(user.id!);
+      setMyCourses(courses);
+    };
+    getMyCourses();
+  }, []);
+
   return (
     <ScrollView
+      style={styles.scrollParent}
       contentContainerStyle={[
-        profileStyles.container,
+        styles.container,
         { paddingTop: headerHeight },
       ]}
-      bounces={false}
+      // bounces={false}
     >
       <ProfilePicture imageKey={key} />
       <Text style={styles.name}>
-        {`${firstName} ${lastName}`.trim()}
+        {`${firstName}`.trim()}
       </Text>
-      <Text style={styles.email}>
-        {user.email || ""}
-      </Text>
-      <Button
-        appearance="ghost"
+      <GradientButton
         onPress={open}
+        style={styles.editButton}
+        status="info"
       >
         Edit Profile
-      </Button>
+      </GradientButton>
+
+      <Bio bio={bio} />
+
+      <Text style={styles.sectionTitle}>
+        Enrolled Classes
+      </Text>
+      <EnrolledCourses courses={myCourses} />
+
+      <Text style={styles.sectionTitle}>
+        Interests
+      </Text>
+
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
@@ -186,11 +212,28 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  gradient: {
+    height: 50,
+    margin: 0,
+    padding: 0,
+    overflow: "visible",
+    borderWidth: 1,
+  },
+  editButton: {
+    marginVertical: 12,
+  },
   name: {
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_500Medium",
+    color: "#000",
+    fontSize: 24,
+    marginVertical: 5,
+  },
+  sectionTitle: {
+    fontFamily: "Poppins_600SemiBold",
+    color: "#000",
     fontSize: 20,
-    marginTop: 16,
-    marginBottom: 8,
+    marginVertical: 5,
+    marginTop: 12,
   },
   email: { fontSize: 14 },
   modal: {
@@ -201,6 +244,14 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Quicksand_600SemiBold",
     color: "#FBBA82",
+  },
+  container: {
+    alignItems: "center",
+    backgroundColor: Colors.theme.lightCreme,
+    paddingVertical: 10,
+  },
+  scrollParent: {
+    backgroundColor: Colors.theme.lightCreme,
   },
 });
 
