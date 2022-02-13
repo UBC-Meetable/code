@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "paths": {
+    "/friendsuggestion": {
+      "name": "/friendsuggestion",
+      "lambdaFunction": "friendFunction",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      }
+    }
+  }
+}

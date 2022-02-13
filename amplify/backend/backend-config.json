@@ -38,6 +38,20 @@
           "additionalAuthenticationProviders": []
         }
       }
+    },
+    "friendsuggestionapi": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "friendFunction",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ]
     }
   },
   "function": {
@@ -104,6 +118,11 @@
           ]
         }
       ]
+    },
+    "friendFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "storage": {
