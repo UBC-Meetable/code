@@ -1,5 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
+  ApplicationProvider as UiProvider,
   Button,
   Layout,
   TopNavigationAction,
@@ -11,10 +12,9 @@ import React, { useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
 import AppLoading from "expo-app-loading";
-import { StyleSheet } from "react-native";
-import Chat from "../components/Chat/Chat";
-import Colors from "../constants/Colors";
-import { GearIcon } from "../navigation/ProfileStackNavigator";
+import { StyleSheet, View } from "react-native";
+import theme from "../constants/theme.json";
+import * as eva from "@eva-design/eva";
 //import { GroupType, RootStackParamList } from "../types";
 
 const ReturnIcon = () => (
@@ -34,7 +34,8 @@ const EventScreen = () => {
     }
 
     return(
-            <Layout style={styles.background}>
+        <UiProvider {...eva} theme={{ ...eva.light, ...theme }}>
+            <View style={styles.background}>
                 <Layout style={styles.row}>
                     <TopNavigationAction icon={ReturnIcon}/>
                 </Layout>
@@ -78,28 +79,34 @@ const EventScreen = () => {
                     Join Event
                 </Button>
                 </Layout>
-            </Layout>
+            </View>
+        </UiProvider>
     )
 }
 
 const styles = StyleSheet.create({
     background: {
         backgroundColor: '#FFF8E6',
+        height: '100%',
     },
     row: {
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#FFF8E6',
     },
     card: {
         borderRadius: 20,
     },
     joinChat: {
         flex: 1,
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: 20,
     },
     bottom: {
-        bottom: '2%',
+        bottom: 0,
     },
 })
+
+export default EventScreen;
