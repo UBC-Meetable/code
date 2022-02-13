@@ -46,7 +46,7 @@ async function getFriendSuggestions() {
 
     let userParams = getUserByIdParams(userIds[randomNum]);
 
-    let friend = await docClient.get(userParams);
+    let friend = await docClient.get(userParams).promise();
 
     friends.push(friend);
   }
