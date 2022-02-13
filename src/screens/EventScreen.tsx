@@ -5,10 +5,11 @@ import {
   TopNavigationAction,
   Text,
   Card,
+  Avatar,
 } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Poppins_400Regular, Poppins_600SemiBold, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
+import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
 import AppLoading from "expo-app-loading";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
@@ -24,7 +25,8 @@ const EventScreen = () => {
     let [fontLoaded] = useFonts({
         Poppins_600SemiBold,
         Poppins_700Bold,
-        Poppins_400Regular
+        Poppins_400Regular,
+        Poppins_500Medium
     })
 
     if(!fontLoaded) {
@@ -63,7 +65,18 @@ const EventScreen = () => {
                 <Layout style={styles.row}>
                 </Layout>
                 <Layout style={styles.row}>
-                    
+                    <Layout style={styles.joinChat}>
+                        <Avatar source={require('../assets/images/noavatar.png')}/>
+                        <Text style={{fontFamily: 'Poppins_500Medium', fontSize: 16}}>
+                            Join Event Chat
+                        </Text>
+                        <Icon name="ios-chevron-forward"/>
+                    </Layout>
+                </Layout>
+                <Layout style={styles.bottom}>
+                <Button>
+                    Join Event
+                </Button>
                 </Layout>
             </Layout>
     )
@@ -79,5 +92,14 @@ const styles = StyleSheet.create({
     },
     card: {
         borderRadius: 20,
+    },
+    joinChat: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 20,
+    },
+    bottom: {
+        bottom: '2%',
     },
 })
