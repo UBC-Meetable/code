@@ -1,8 +1,8 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Spinner, Text } from "@ui-kitten/components";
+import { Layout, Spinner, Text, View} from "@ui-kitten/components";
 import React from "react";
 import {
-  Dimensions, Platform, SafeAreaView, StyleSheet,
+  Dimensions, Platform, SafeAreaView, ScrollView, StyleSheet,
 } from "react-native";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -13,7 +13,11 @@ import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
+import { useState, useEffect } from "react";
 
+import SuggestedFriends from "./SuggestedFriends";
+import {API} from "aws-amplify";
+import { map } from "lodash";
 const window = Dimensions.get("window");
 
 type HomeProps = {
@@ -21,6 +25,19 @@ type HomeProps = {
 };
 
 const Home = ({ navigation }: HomeProps) => {
+  const [suggestedFriends, setSuggestedFriends] = useState([]);
+
+  useEffect(()=> {
+  const fetchFriends = async ()=>{
+    console.log("We are inside the suggestedFriends Before calling API");
+    const friends = await API.get("friendsuggestionapi","/friendsuggestion", "")
+    setSuggestedFriends(friends);
+    console.log("We are inside the suggestedFriends after!!");
+    console.log(friends);
+  }
+  fetchFriends()
+    .catch(console.error)
+  }, []);
   const units = useSafeAreaInsets();
   const { loading, profilePicture } = useUserProfile();
 
@@ -53,8 +70,24 @@ const Home = ({ navigation }: HomeProps) => {
         </Layout>
         <Layout style={styles.body}>
           <Text style={styles.titleText}>Suggested Friends</Text>
+          <Layout>
+          <Text> List of friends here </Text>
+            {suggestedFriends.map((friend: any) => {
+              return(
+      
+                  <Text>
+                    {console.log("---------------------")}
+                    {console.log(friend)}
+                    {console.log(friend.name)}
+                    {friend.name},
+                    {friend.education}
+                  </Text>
+
+              )
+            })}
+            <SuggestedFriends />
+          </Layout>
           <Layout style={styles.eventsContainer}>
-            <Text> List of friends here </Text>
           </Layout>
           <Text style={styles.titleText}>Upcoming Events</Text>
           <Layout style={styles.eventsContainer}>
