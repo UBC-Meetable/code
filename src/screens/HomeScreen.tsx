@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Spinner, Text} from "@ui-kitten/components";
+import { Layout, Spinner, Text } from "@ui-kitten/components";
 import React from "react";
 import {
   Dimensions, Platform, SafeAreaView, StyleSheet,
@@ -52,9 +52,6 @@ const Home = ({ navigation }: HomeProps) => {
         </Layout>
         <Layout style={styles.body}>
           <Text style={styles.titleText}>Suggested Friends</Text>
-          <Layout>
-          <Text> List of friends here </Text>
-          </Layout>
           <Layout style={styles.eventsContainer}>
           </Layout>
           <Text style={styles.titleText}>Upcoming Events</Text>
