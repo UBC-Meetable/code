@@ -18,11 +18,6 @@ export type AmplifyDependentResourcesAttributes = {
         "meetable": {
             "GraphQLAPIIdOutput": "string",
             "GraphQLAPIEndpointOutput": "string"
-        },
-        "friendsuggestionapi": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
         }
     },
     "function": {
@@ -45,7 +40,7 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string",
             "CloudWatchEventRule": "string"
         },
-        "friendFunction": {
+        "getFriendSuggestionConnectedToDatabase": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
