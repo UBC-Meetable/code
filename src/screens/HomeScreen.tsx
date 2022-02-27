@@ -13,6 +13,7 @@ import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
+
 const window = Dimensions.get("window");
 
 type HomeProps = {
@@ -53,6 +54,7 @@ const Home = ({ navigation }: HomeProps) => {
         <Layout style={styles.body}>
           <Text style={styles.titleText}>Suggested Friends</Text>
           <Layout style={styles.eventsContainer}>
+            <Text> List of friends here </Text>
           </Layout>
           <Text style={styles.titleText}>Upcoming Events</Text>
           <Layout style={styles.eventsContainer}>
