@@ -125,7 +125,7 @@ const ProfileScreen = () => {
       <Text style={styles.name}>
         {`${firstName} ${lastName}`.trim()}
       </Text>
-      <Text style={styles.email}>
+      <Text style={styles.small}>
         {user.email || ""}
       </Text>
       <Button
@@ -134,6 +134,16 @@ const ProfileScreen = () => {
       >
         Edit Profile
       </Button>
+      <Layout style={{
+        backgroundColor: Colors.theme.creme,
+        padding: 5,
+        paddingHorizontal: 10,
+        borderRadius: 5,
+      }}>
+        <Text style={styles.small}>
+          {user.bio || ""}
+        </Text>
+      </Layout>
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
@@ -192,7 +202,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 8,
   },
-  email: { fontSize: 14 },
+  small: { fontSize: 14 },
+  bio: {
+    // fontSize: 14,
+  },
   modal: {
     padding: 24,
     backgroundColor: Colors.theme.creme,

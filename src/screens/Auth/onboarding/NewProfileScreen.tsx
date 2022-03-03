@@ -1,4 +1,4 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
   Button,
@@ -10,7 +10,7 @@ import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
 import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+// import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../../../API";
 import ProfilePicture from "../../../components/ProfilePicture";
@@ -94,66 +94,69 @@ const NewProfileScreen = ({
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={[profileStyles.container,
-        { paddingTop: units.top, paddingLeft: units.left, paddingBottom: units.bottom }]}
-      bounces={false}
+    <Layout
+      style={[
+        // profileStyles.container,
+        {
+          flex: 1,
+          padding: 24,
+          paddingTop: units.top + 50,
+          // paddingLeft: units.left,
+          paddingBottom: units.bottom,
+          backgroundColor: Colors.theme.lightCreme,
+        }]}
     >
+      <Text style={[profileStyles.bigBioHead, { textAlign: "center", fontSize: 18 }]}>Let's get to know you!</Text>
       <Layout
-        style={{ backgroundColor: "#0000", position: "relative" }}
+        style={profileStyles.container}
       >
-        <MaterialCommunityIcons
-          name="pencil"
-          size={30}
-          style={profileStyles.bioPencil}
-          onPress={pickImage}
-        />
         <ProfilePicture
           imageKey={key}
           onPress={pickImage}
         />
       </Layout>
 
-      <Layout
-        style={profileStyles.nameContainer}
-      >
-        <Input
-          value={name}
-          placeholder="Your Name"
-          onChangeText={setName}
-          style={profileStyles.inputStyle}
-          textStyle={profileStyles.inputTextStyle}
-        />
-      </Layout>
+      {/* <Text style={profileStyles.bigBioHead}>Name</Text> */}
+      <Input
+        label={() => <Text style={profileStyles.bigBioHead}>What is your name?</Text>}
+        value={name}
+        placeholder="Your Name"
+        onChangeText={setName}
+        style={profileStyles.inputStyle}
+        textStyle={profileStyles.inputTextStyle}
+      />
 
-      <KeyboardAvoidingView
+      {/* <KeyboardAvoidingView
         enabled={bioFocused}
         behavior="position"
         contentContainerStyle={profileStyles.bioBubble}
         style={profileStyles.keyboardHider}
-      >
+      > */}
 
-        <Text style={profileStyles.bigBioHead}>Bio</Text>
-        <TextInput
-          onFocus={() => {
-            setBioFocused(true);
-          }}
-          onBlur={() => {
-            setBioFocused(false);
-          }}
-          onSubmitEditing={() => {
-            setBioFocused(false);
-          }}
-          placeholder="Write a short bio about yourself..."
-          multiline
-          scrollEnabled
-          numberOfLines={1}
-          maxLength={175}
-          style={profileStyles.bioInput}
-          value={bio}
-          onChangeText={setBio}
-        />
-      </KeyboardAvoidingView>
+      {/* <Text style={profileStyles.bigBioHead}>Bio</Text> */}
+      <Input
+        // onFocus={() => {
+        //   setBioFocused(true);
+        // }}
+        // onBlur={() => {
+        //   setBioFocused(false);
+        // }}
+        // onSubmitEditing={() => {
+        //   setBioFocused(false);
+        // }}
+        label={() => <Text style={profileStyles.bigBioHead}>What best describes you?</Text>}
+        placeholder="Write a short bio about yourself..."
+        multiline
+        scrollEnabled
+        numberOfLines={1}
+        maxLength={175}
+        // style={profileStyles.bioInput}
+        value={bio}
+        onChangeText={setBio}
+        style={profileStyles.inputStyle}
+        textStyle={profileStyles.inputTextStyle}
+      />
+      {/* </KeyboardAvoidingView> */}
 
       <Button
         style={profileStyles.button}
@@ -168,39 +171,27 @@ const NewProfileScreen = ({
           </Text>
         )}
       </Button>
-    </ScrollView>
+    </Layout>
   );
 };
 
 export const profileStyles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: "center",
+    margin: 20,
     backgroundColor: Colors.theme.lightCreme,
-  },
-  bioPencil: {
-    position: "absolute",
-    right: -10,
-    top: -10,
-    color: "#7ED1EF",
-    shadowColor: "#000",
-    shadowOpacity: 1,
-    shadowRadius: 1,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    zIndex: 1000,
   },
   bigBioHead: {
     fontSize: 16,
     color: "#FBBA82",
     fontFamily: "Quicksand_700Bold",
+    marginBottom: 5,
   },
   bioInput: {
     paddingHorizontal: 20,
-    position: "absolute",
-    top: 40,
+    // position: "absolute",
+    // top: 40,
     fontSize: 16,
     fontWeight: "600",
     textAlignVertical: "top",
@@ -226,8 +217,9 @@ export const profileStyles = StyleSheet.create({
     marginVertical: 5,
   },
   button: {
-    marginBottom: 20,
-    width: "75%",
+    // marginBottom: 20,
+    // width: "75%",
+    margin: 20,
     borderRadius: 100,
     borderWidth: 0,
     backgroundColor: "#02A3F4",

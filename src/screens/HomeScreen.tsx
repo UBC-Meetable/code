@@ -15,7 +15,7 @@ import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
-import placeholder from "../assets/images/man.png";
+import placeholder from "../assets/images/dog.png";
 
 const window = Dimensions.get("window");
 
@@ -67,7 +67,8 @@ const Home = ({ navigation }: HomeProps) => {
               renderItem={({ item: { name } }) => (
                 <View style={{
                   backgroundColor: "#FCF8EC",
-                  margin: 10,
+                  marginVertical: 10,
+                  marginRight: 20,
                   padding: 15,
                   display: "flex",
                   alignItems: "center",
@@ -81,10 +82,10 @@ const Home = ({ navigation }: HomeProps) => {
                   <Image
                     source={placeholder}
                     style={{
-                      borderRadius: 100, width: 55, height: 55, margin: 5,
+                      borderRadius: 100, width: 35, height: 35, margin: 10,
                     }}
                   />
-                  <Text style={{ width: 70, textAlign: "center" }}>{name}</Text>
+                  <Text style={{ width: 70, textAlign: "center", fontSize: 12, fontFamily: "Quicksand_700Bold" }}>{name}</Text>
                 </View>
               )}
             />
@@ -114,7 +115,7 @@ const Home = ({ navigation }: HomeProps) => {
               }) => (
                 <View style={{
                   backgroundColor: "#FCF8EC",
-                  margin: 10,
+                  marginVertical: 10,
                   padding: 15,
                   display: "flex",
                   // alignItems: "center",
@@ -128,9 +129,6 @@ const Home = ({ navigation }: HomeProps) => {
                   <View style={{ flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
                     <Text style={{ fontFamily: "Quicksand_700Bold", fontSize: 16 }}>{name}</Text>
                     <Button style={{
-                      padding: 5,
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
                       borderWidth: 0,
                       backgroundColor: joined ? "#9AE399" : "#FFDE71",
                     }}
@@ -138,7 +136,7 @@ const Home = ({ navigation }: HomeProps) => {
                       {joined ? "Joined!" : "Join"}
                     </Button>
                   </View>
-                  <Text>{`${date}, ${time}`}</Text>
+                  <Text style={{ fontSize: 14 }}>{`${date}, ${time}`}</Text>
                 </View>
               )}
             />
@@ -156,7 +154,7 @@ const Home = ({ navigation }: HomeProps) => {
 const styles = StyleSheet.create({
   eventsContainer: {
     backgroundColor: "transparent",
-    marginVertical: 20,
+    marginBottom: 20,
   },
   courseGroupContainer: {
     flexBasis: "50%",
@@ -169,7 +167,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   titleText: {
-    fontSize: 22,
+    fontSize: 20,
     color: "#000",
     fontFamily: "Poppins_700Bold",
   },
