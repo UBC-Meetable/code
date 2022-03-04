@@ -40,10 +40,7 @@ const NewProfileScreen = ({
         bio,
         userState: UserState.PROFILE_CREATED,
       });
-
-      if (res.data) {
-        navigation.navigate("YourInterestsScreen");
-      }
+      navigation.navigate("YourInterestsScreen");
     }
   };
 

@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import { SignUpParamList } from "../../../types";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout } from "@ui-kitten/components";
+import { Layout, Button } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
-import { Button } from "@ui-kitten/components";
-import updateUserProfile from "../../../calls/updateUserProfile";
-import InterestChips from "../../../../src/components/ui/InterestsChips";
-import { Interest } from "../../../../src/types";
-import { interests } from "../../../../src/constants/Interests";
+import { SignUpParamList, Interest } from "../../../types";
+import InterestChips from "../../../components/ui/InterestsChips";
+import { interests } from "../../../constants/Interests";
 import BubbleBackground from "../../../assets/images/quizBubble.svg";
-
 
 const window = Dimensions.get("window");
 
@@ -20,7 +16,7 @@ const YourInterestsScreen = ({
   navigation: StackNavigationProp<SignUpParamList, "YourInterestsScreen">;
 }) => {
   const [userInterests, setUserInterests] = useState<Interest[]>(interests);
-  const { info: userProfile } = useUserProfile();
+  const { loading, set, ...userProfile } = useUserProfile();
 
   useEffect(() => {
     if (userProfile && userProfile.interests) {
@@ -29,23 +25,16 @@ const YourInterestsScreen = ({
   }, []);
 
   const onSubmit = async () => {
-    if (userProfile) {
-      console.log(userProfile.id);
-    }
-    const response = await updateUserProfile({
+    await set({
       id: userProfile!.id,
       interests: userInterests,
     });
-
-
-    if (response.data) {
-      navigation.navigate("NewEditCourses");
-    }
+    navigation.navigate("NewEditCoursesScreen");
   };
 
   const updateSelectStatus = (index: number) => {
-    let userInterestsCopy = [...userInterests];
-    let userInterest = { ...userInterestsCopy[index] };
+    const userInterestsCopy = [...userInterests];
+    const userInterest = { ...userInterestsCopy[index] };
     userInterest.selected = !userInterest.selected;
     userInterestsCopy[index] = userInterest;
     setUserInterests(userInterestsCopy);
@@ -60,33 +49,14 @@ const YourInterestsScreen = ({
       <InterestChips
         updateSelectStatus={updateSelectStatus}
         userInterests={userInterests}
-        interestCategory={"nerd stuff"}
+        interestCategory="nerd stuff"
       />
       <InterestChips
         updateSelectStatus={updateSelectStatus}
         userInterests={userInterests}
-        interestCategory={"outdoor activities"}
+        interestCategory="outdoor activities"
       />
-
-      <Button
-        style={styles.button}
-        onPress={
-          //   () => {
-          //   if (userProfile) {
-          //     console.log(userProfile.id);
-          //   }
-          //   updateUserProfile({
-          //     id: userProfile!.id,
-          //     interests: userInterests,
-          //   });
-          // }
-
-
-          () => {
-            onSubmit();
-          }
-        }
-      >
+      <Button style={styles.button} onPress={onSubmit}>
         Next
       </Button>
     </Layout>
