@@ -31,13 +31,10 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
   const units = useSafeAreaInsets();
   const onSubmit = async () => {
     const yearInt = parseInt(year, 10);
-    const res = await set({
+    await set({
       id, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
     });
-
-    if (res.data) {
-      navigation.navigate("NewProfileScreen");
-    }
+    navigation.navigate("NewProfileScreen");
     // TODO Error handling
   };
 
