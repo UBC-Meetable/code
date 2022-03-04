@@ -184,10 +184,11 @@ const AuthorizedApp = () => {
       initRoute = "NewProfileScreen";
       break;
     case UserState.PROFILE_CREATED:
-      initRoute = "NewEditCourses";
+      initRoute = "YourInterestsScreen";
       break;
     case UserState.INTERESTS_SELECTED:
-      initRoute = "YourInterestsScreen"  
+      initRoute = "NewEditCoursesScreen";
+      break;
     default:
       throw new Error("UserState undefined");
     }

@@ -123,7 +123,7 @@ export type QuestionType = {
 export type SignUpParamList = {
   UniScreen: undefined;
   NewProfileScreen: undefined;
-  NewEditCourseScreen: undefined;
+  NewEditCoursesScreen: undefined;
   YourInterestsScreen: undefined;
 };
 
