@@ -15,19 +15,19 @@ export default function App() {
     return null;
   }
 
+  /*
   return (
     <SafeAreaProvider>
       <EventScreen />
       <StatusBar style="dark"/>
     </SafeAreaProvider>
   )
+  */
   
-  /*
   return (
     <SafeAreaProvider>
       <Navigation colorScheme={colorScheme} />
       <StatusBar />
     </SafeAreaProvider>
   );
-  */
 }
