@@ -2,7 +2,7 @@ import React, {
   forwardRef, ReactElement, useState,
 } from "react";
 import {
-  Dimensions, StyleProp, View, ViewStyle,
+  Dimensions, StyleProp, View, ViewStyle, StyleSheet,
 } from "react-native";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 
@@ -38,11 +38,7 @@ const MeetableCarousel = forwardRef((props: MeetableCarouselProps, ref: any) => 
 
   const { style, layout = "default" } = props;
   return (
-    <View
-      style={
-        style
-      }
-    >
+    <View style={style}>
       <Carousel
         ref={ref}
         layout={layout}
@@ -56,25 +52,26 @@ const MeetableCarousel = forwardRef((props: MeetableCarouselProps, ref: any) => 
       <Pagination
         dotsLength={props.children.length}
         activeDotIndex={activeSlide}
-        containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0)" }}
-        dotStyle={{
-          width: 10,
-          height: 10,
-          borderRadius: 5,
-          marginHorizontal: 8,
-          backgroundColor: "orange",
-        }}
-        inactiveDotStyle={
-          {
-            // Define styles for inactive dots here
-          }
-        }
+        containerStyle={styles.container}
+        dotStyle={styles.dot}
         inactiveDotOpacity={0.4}
         inactiveDotScale={0.6}
       />
     </View>
   );
-  // }
+});
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: "rgba(0, 0, 0, 0)",
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 8,
+    backgroundColor: "orange",
+  },
 });
 
 export default MeetableCarousel;

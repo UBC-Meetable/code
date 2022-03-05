@@ -19,8 +19,9 @@ export default {
   },
   theme: {
     transparent: "#0000",
-    background: "#FFF9F5",
+    background: "#fff",
     creme: "#FEEDDE",
     lightCreme: "#FFF8F3",
+    brightOrange: "#FFBC01",
   },
 };

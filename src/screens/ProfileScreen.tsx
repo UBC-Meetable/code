@@ -1,65 +1,34 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
 import {
-  Input, Layout, Spinner, Text,
+  Input, Layout, Spinner, Text, Button,
 } from "@ui-kitten/components";
 import { Storage } from "aws-amplify";
-import * as FileSystem from "expo-file-system";
 import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
-import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
+import { StyleSheet, Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import fetchUserProfile from "../calls/fetchUserProfile";
-import updateUserProfile from "../calls/updateUserProfile";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import { UserProfile } from "../types";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
+import useUserProfile from "../hooks/useUserProfile";
 /** TODO: Cache user profile so we don't need to fetch so often. */
+
+interface LabelProps {
+  title: string
+}
+const Label = ({ title }: LabelProps) => <Text style={profileStyles.bigBioHead}>{title}</Text>;
+
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
 
-  const user = useAuthenticatedUser();
-  const [bio, setBio] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [bioFocused, setBioFocused] = React.useState(false);
-  const [fetchedProfile, setFetchedProfile] = React.useState<UserProfile>();
-  const [localProfile, setLocalProfile] = React.useState<UserProfile>();
-  const [key, setKey] = React.useState("");
-  const path = `${FileSystem.cacheDirectory}profile${user.attributes.sub}`;
-
-  const formatName = (unformattedName: string): [string, string] => {
-    if (unformattedName.length > 0) {
-      const split = unformattedName.split(" ");
-      return [split[0], split.slice(1).join(" ")];
-    }
-    return ["", ""];
-  };
-
-  const updateProfile = async () => {
-    const [firstName, lastName] = formatName(name);
-    const updatedProfile = {
-      email: user.attributes.email,
-      id: user.attributes.sub,
-      bio,
-      firstName,
-      lastName,
-    };
-    const same = compareProfiles(fetchedProfile, { ...localProfile, ...updatedProfile });
-
-    if (!same) {
-      updateUserProfile(updatedProfile);
-      await FileSystem.writeAsStringAsync(path, JSON.stringify(updatedProfile));
-    }
-  };
-
-  /** TODO Cache Profile Images */
-  const updateImageKey = async (imageKey: string) => {
-    await updateUserProfile({ id: user.attributes.sub, profilePicture: imageKey });
-  };
+  const { loading, set, ...user } = useUserProfile();
+  const [bio, setBio] = React.useState(user.bio);
+  const [firstName, setFirstName] = React.useState(user.firstName);
+  const [lastName, setLastName] = React.useState(user.lastName);
+  const [key, setKey] = React.useState(user.profilePicture);
+  const [visible, setVisible] = React.useState(false);
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -89,7 +58,7 @@ const ProfileScreen = () => {
 
   const uploadImage = (toUpload: ImageInfo) => {
     const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
-    const imageKey = `${user.attributes.sub}/${imageName}`;
+    const imageKey = `${user.id}/${imageName}`;
     console.log(toUpload.uri);
 
     fetch(toUpload.uri).then((response) => {
@@ -107,37 +76,12 @@ const ProfileScreen = () => {
     });
   };
 
-  const compareProfiles = (a: any, b: any) => Object.entries(a).sort().toString()
-  === Object.entries(b).sort().toString();
+  /** TODO Cache Profile Images */
+  const updateImageKey = (imageKey: string) => {
+    set({ id: user.id, profilePicture: imageKey });
+  };
 
-  React.useEffect(() => {
-    const f = async () => {
-      const resPromise = fetchUserProfile({ id: user.attributes.sub });
-      const cachedProfile = await FileSystem.getInfoAsync(path);
-      if (cachedProfile.exists) {
-        const stringProfile = await FileSystem.readAsStringAsync(cachedProfile.uri);
-        const profile = JSON.parse(stringProfile) as UserProfile;
-        setName(`${profile?.firstName} ${profile?.lastName}`);
-        setBio(profile?.bio || "");
-        setFetchedProfile(profile);
-        setKey(profile.profilePicture || "");
-        setLocalProfile(profile);
-      }
-      const res = await resPromise;
-      if (await res.data) {
-        const profile = res.data?.getUser as UserProfile;
-        await FileSystem.writeAsStringAsync(path, JSON.stringify(profile));
-        setName(`${profile?.firstName} ${profile?.lastName}`);
-        setBio(profile?.bio || "");
-        setFetchedProfile(profile);
-        setKey(profile.profilePicture || "");
-        setLocalProfile(profile);
-      }
-    };
-    if (user) f();
-  }, [user]);
-
-  if (!localProfile) {
+  if (loading) {
     return (
       <ScrollView
         contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}
@@ -147,220 +91,116 @@ const ProfileScreen = () => {
       </ScrollView>
     );
   }
+
+  const open = () => setVisible(true);
+  const close = () => {
+    reset();
+    setVisible(false);
+  };
+  const save = () => {
+    set({
+      id: user.id,
+      email: user.email,
+      bio,
+      firstName,
+      lastName,
+    });
+    setVisible(false);
+  };
+  const reset = () => {
+    setBio(user.bio);
+    setFirstName(user.firstName);
+    setLastName(user.lastName);
+  };
+
   return (
     <ScrollView
-      contentContainerStyle={[profileStyles.container, { paddingTop: headerHeight }]}
+      contentContainerStyle={[
+        profileStyles.container,
+        { paddingTop: headerHeight },
+      ]}
       bounces={false}
     >
-      <Layout
-        style={{ backgroundColor: "#0000", position: "relative" }}
+      <ProfilePicture imageKey={key} />
+      <Text style={styles.name}>
+        {`${firstName} ${lastName}`.trim()}
+      </Text>
+      <Text style={styles.email}>
+        {user.email || ""}
+      </Text>
+      <Button
+        appearance="ghost"
+        onPress={open}
       >
-        <MaterialCommunityIcons
-          name="pencil"
-          size={30}
-          style={{
-            position: "absolute",
-            right: -10,
-            top: -10,
-            color: "#7ED1EF",
-            shadowColor: "#000",
-            shadowOpacity: 1,
-            shadowRadius: 1,
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            zIndex: 1000,
-          }}
-          onPress={() => {
-            pickImage();
-          }}
-        />
-        <ProfilePicture
-          imageKey={key}
-          onPress={() => pickImage()}
-        />
-      </Layout>
-
-      <Layout
-        style={profileStyles.nameContainer}
+        Edit Profile
+      </Button>
+      <Modal
+        animationType="slide"
+        presentationStyle="formSheet"
+        visible={visible}
       >
-        <Input
-          value={name}
-          placeholder="Your Name"
-          onChangeText={(e) => setName(e)}
-          style={profileStyles.inputStyle}
-          textStyle={profileStyles.inputTextStyle}
-          onSubmitEditing={() => updateProfile()}
-          onBlur={() => updateProfile()}
-        />
-      </Layout>
-
-      <KeyboardAvoidingView
-        enabled={bioFocused}
-        behavior="position"
-        contentContainerStyle={profileStyles.bioBubble}
-        style={profileStyles.keyboardHider}
-      >
-
-        <Text style={profileStyles.bigBioHead}>Bio</Text>
-        <TextInput
-          onFocus={() => {
-            setBioFocused(true);
-          }}
-          onBlur={() => {
-            setBioFocused(false);
-            updateProfile();
-          }}
-          onSubmitEditing={() => {
-            setBioFocused(false);
-            updateProfile();
-          }}
-          placeholder="Write a short bio about yourself..."
-          multiline
-          scrollEnabled
-          numberOfLines={1}
-          maxLength={175}
-          style={styles.bioInput}
-          value={bio}
-          onChangeText={(e) => {
-            setBio(e);
-          }}
-        />
-      </KeyboardAvoidingView>
+        <Layout style={styles.modal}>
+          <Text style={styles.title}>Edit Profile</Text>
+          <Layout
+            style={profileStyles.nameContainer}
+          >
+            <ProfilePicture
+              imageKey={key}
+              onPress={pickImage}
+            />
+          </Layout>
+          <Input
+            label={() => <Label title="First Name" />}
+            value={firstName || ""}
+            placeholder="First Name"
+            onChangeText={setFirstName}
+            style={profileStyles.inputStyle}
+            textStyle={profileStyles.inputTextStyle}
+          />
+          <Input
+            label={() => <Label title="Last Name" />}
+            value={lastName || ""}
+            placeholder="Last Name"
+            onChangeText={setLastName}
+            style={profileStyles.inputStyle}
+            textStyle={profileStyles.inputTextStyle}
+          />
+          <Input
+            label={() => <Label title="Bio" />}
+            value={bio || ""}
+            placeholder="Write a short bio about yourself..."
+            multiline
+            scrollEnabled
+            numberOfLines={1}
+            maxLength={175}
+            onChangeText={setBio}
+            style={profileStyles.inputStyle}
+            textStyle={profileStyles.inputTextStyle}
+          />
+          <Button onPress={save} style={{ marginTop: 16 }}>Save</Button>
+          <Button appearance="ghost" onPress={close}>Close</Button>
+        </Layout>
+      </Modal>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "space-evenly",
-    backgroundColor: Colors.theme.creme,
-  },
   name: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontFamily: "Quicksand_600SemiBold",
+    fontSize: 20,
+    marginTop: 16,
+    marginBottom: 8,
   },
-  nameContainer: {
-    width: "90%",
-    backgroundColor: "#fff",
-    borderWidth: 0,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    borderRadius: 24,
-  },
-  profile: {
-    backgroundColor: "#C9E8F3",
-    height: 144,
-    width: 144,
-    borderRadius: 100,
-    paddingTop: 10,
-  },
-  pencil: {
-    color: "#7ED1EF",
-    left: "80%",
-  },
-  bioDesc: {
-    color: "#3A3A3A",
-    backgroundColor: "#0000",
-    flex: 1,
-    width: "100%",
+  email: { fontSize: 14 },
+  modal: {
+    padding: 24,
+    backgroundColor: Colors.theme.creme,
     height: "100%",
-    position: "absolute",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    fontSize: 18,
-    borderWidth: 1,
-    fontWeight: "normal",
   },
-  bioInput: {
-    paddingHorizontal: 20,
-    position: "relative",
-    marginTop: 10,
-    fontSize: 16,
-    fontWeight: "600",
-    textAlignVertical: "top",
-    width: "100%",
-    height: "85%",
-  },
-  bioDescBubble: {
-    flex: 1,
-    marginTop: 30,
-    padding: 10,
-    borderRadius: 24,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  socialLayout: {
-    width: "100%",
-    flex: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    backgroundColor: "#0000",
-    paddingBottom: 20,
-  },
-  socialTitle: {
-    display: "flex",
-    color: "#3A3A3A",
-    position: "absolute",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  socialBubble: {
-    flex: 0.6,
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "white",
-    borderRadius: 24,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    top: 50,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  socialButton: {
-    display: "flex",
-    paddingRight: 10,
-    backgroundColor: "#0000",
-  },
-  profileContainer: {
-    borderRadius: 100,
-    height: 125,
-    width: 125,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  profileOverlay: {
-    position: "absolute",
-    borderRadius: 100,
-    height: "100%",
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    opacity: 0.3,
+  title: {
+    fontFamily: "Quicksand_600SemiBold",
+    color: "#FBBA82",
   },
 });
 

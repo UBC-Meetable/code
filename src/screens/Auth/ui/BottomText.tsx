@@ -28,7 +28,7 @@ const BottomText = ({ onPressText }:BottomTextProps) => {
 
   const [text, buttonText] = getTextFromAuthState();
   return (
-    <Text style={{ ...styles.buttonText }}>
+    <Text style={styles.buttonText}>
       {text}
       {" "}
       <Text

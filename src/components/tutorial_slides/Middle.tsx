@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout, Text } from "@ui-kitten/components";
-import { TutorialStyles as styles } from "../styles";
+import { tutorialStyles as styles } from "../styles";
 import MiddleTutorialImage from "../../assets/images/tutorial-slide2.svg";
 
 const Middle = () => (

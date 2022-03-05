@@ -9,16 +9,16 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import TosModal, { PrivacyModal } from "../../../navigation/TosModal";
+import ErrorModal from "../../../navigation/ErrorsModal";
 import SignUpBubble from "../../../assets/images/verify-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 const window = Dimensions.get("window");
 
 type SignUpFormScreenProps = {
-    onLogIn: () => void,
-    onCreate: (email: string, password: string) => void,
+  onLogIn: () => void,
+  onCreate: (email: string, password: string) => void,
 }
 
 // TODO error messages, disabled styles, theme
@@ -27,7 +27,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [confirmEmail, setConfirmEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
-  // const [errors, setError] = useState<string[]>([]);
+  const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const confirmEmailRef = useRef<Input>(null);
@@ -35,26 +35,27 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [tosModal, setTosModal] = useState(false);
   const [privacyModal, setPrivacyModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
   const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
 
   const confirmForm = () => {
-    // setError(() => []);
+    setError(() => []);
     let flag = true;
     if (password !== confirmPassword) {
-      // setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
+      setError((prevErrors) => [...prevErrors, "Passwords do not match"]);
       flag = false;
     }
     if (email !== confirmEmail) {
-      // setError((prevErrors) => [...prevErrors, "Emails do not match"]);
+      setError((prevErrors) => [...prevErrors, "Emails do not match"]);
       flag = false;
     }
     if (!email) {
-      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
+      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
+      setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
@@ -62,10 +63,13 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
 
   const createProfile = async () => {
     console.log("Attempting create profile");
+    setError([]);
 
-    // setError([]);
-
-    if (!confirmForm()) return;
+    if (!confirmForm()) {
+      console.error(errors);
+      setErrorModal(true);
+      return;
+    }
     console.log("Confirmed form");
 
     try {
@@ -79,11 +83,12 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
       console.log(user);
 
       onCreate(email, password);
-    } catch (e:any) {
-      // const message = e.message as string;
+    } catch (e: any) {
+      const message = e.message as string;
       console.log(e);
 
-      // setError((prevErrors) => [...prevErrors, message]);
+      setError((prevErrors) => [...prevErrors, message]);
+      setErrorModal(true);
     } finally {
       setLoading(false);
     }
@@ -92,7 +97,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
   return (
     <LoginControllerRoot>
       <SignUpBubble
-        style={{ position: "absolute", top: 0 }}
+        style={styles.bubble}
         width={window.width}
       />
       <KeyboardSwipeLayout>
@@ -110,10 +115,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
           >
             <Text style={styles.emoji}>👋</Text>
             <Text
-              style={{
-                fontSize: 34,
-                fontFamily: "Quicksand_500Medium",
-              }}
+              style={{ fontSize: 34 }}
             >
               Let's get started!
             </Text>
@@ -168,7 +170,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               scrollEnabled={false}
               secureTextEntry
               placeholder="•••••••••••"
-              onChangeText={(e) => setPassword(e)}
+              onChangeText={setPassword}
               onSubmitEditing={() => confirmPasswordRef.current?.focus()}
               value={password}
               ref={passwordRef}
@@ -184,14 +186,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
               ref={confirmPasswordRef}
             />
           </KeyboardAvoidingView>
-          <Layout
-            style={{
-              backgroundColor: "#0000",
-              flex: 0,
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
+          <Layout style={styles.footer}>
             <Layout style={styles.tosContainer}>
               {/* Theme needs to be setup for this to be colored correctly */}
               <CheckBox
@@ -231,7 +226,7 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
             <Text>
               Where can I
               {" "}
-              <Text onPress={() => onLogIn()} style={[styles.clickable]}>
+              <Text onPress={onLogIn} style={styles.clickable}>
                 sign in
               </Text>
               ?
@@ -249,11 +244,21 @@ const SignUpFormScreen = ({ onLogIn, onCreate }: SignUpFormScreenProps) => {
         setOpen={setPrivacyModal}
         title="Privacy Policy"
       />
+      <ErrorModal
+        open={errorModal}
+        setOpen={setErrorModal}
+        title="Error signing up"
+        errors={errors}
+      />
     </LoginControllerRoot>
   );
 };
 
 const styles = StyleSheet.create({
+  bubble: {
+    position: "absolute",
+    top: 0,
+  },
   field: {
     marginVertical: 5,
   },
@@ -261,9 +266,12 @@ const styles = StyleSheet.create({
     color: "#FBBA82",
     marginRight: 20,
   },
-
-  emoji: { fontSize: 50 },
-  clickable: { color: "#02A3F4" },
+  emoji: {
+    fontSize: 50,
+  },
+  clickable: {
+    color: "#02A3F4",
+  },
   bold: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
@@ -278,55 +286,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  button: {
-    marginBottom: 20,
-    width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-    flex: 1,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: "80%",
-    minWidth: 200,
+  footer: {
     backgroundColor: "#0000",
-  },
-  error: {
-    color: Colors.dark.error,
-  },
-  emailContainer: {
-    marginVertical: 20,
-    backgroundColor: "#0000",
-  },
-  input: {
-    marginVertical: 2,
-    marginHorizontal: -20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-    borderRadius: 20,
-    backgroundColor: "white",
-  },
-  loginText: {
-    fontSize: 15,
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 30,
+    flex: 0,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });
 

@@ -6,7 +6,6 @@ import { Dimensions, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Carousel from "react-native-snap-carousel";
 import QuizBubbleTop from "../../../assets/images/tutorial-bubble.svg";
-import rootStyles from "../../../components/styles/rootStyles";
 import End from "../../../components/tutorial_slides/End";
 import Intro from "../../../components/tutorial_slides/Intro";
 import Middle from "../../../components/tutorial_slides/Middle";
@@ -25,7 +24,7 @@ const TutorialScreen = ({ onContinue }: TutorialProps) => {
   const carouselRef = createRef<Carousel<any>>();
   const units = useSafeAreaInsets();
   return (
-    <Layout style={rootStyles}>
+    <Layout style={styles.root}>
       <QuizBubbleTop
         width={window.width}
         height={window.height + 4 * units.top}
@@ -82,8 +81,15 @@ const TutorialScreen = ({ onContinue }: TutorialProps) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    color: "#FBBA82",
+  root: {
+    flex: 1,
+    display: "flex",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0000",
+    marginTop: -50,
+    paddingTop: 0,
   },
   card: {
     width: "100%",
@@ -105,24 +111,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     flex: 1,
-  },
-  carousel: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
-  blacktext: {
-    color: "#000",
-  },
-  slide: {
-    height: "90%",
-    display: "flex",
-    width: "90%",
-    marginTop: 10,
-    backgroundColor: "rgba(0,0,0,0)",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "#000000",
   },
   topcontainer: {
     flex: 1,

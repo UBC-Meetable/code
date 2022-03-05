@@ -36,9 +36,9 @@ import {
   TOS_TITLE_13, TOS_BODY_13,
 } from "./legal/tos";
 
-const Title = ({ title }: HeaderProps) => <Text style={modalStyles.legalTitle}>{title}</Text>;
+const Title = ({ title }: HeaderProps) => <Text style={styles.legalTitle}>{title}</Text>;
 const Body = ({ body }: {body: string}) => (
-  <Text style={modalStyles.legalBody}>
+  <Text style={styles.legalBody}>
     {body}
   </Text>
 );
@@ -47,7 +47,7 @@ type HeaderProps = {
   title: string;
 }
 const Header = ({ title = "" }: HeaderProps) => (
-  <Text category="h6" style={modalStyles.header}>
+  <Text category="h6" style={styles.header}>
     {title}
   </Text>
 );
@@ -68,22 +68,22 @@ type TosModalProps = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string;
 };
-const TosModal = ({ open, setOpen, title = "" }:TosModalProps) => (
+const TosModal = ({ open, setOpen, title = "" }: TosModalProps) => (
   <Modal
     visible={open}
-    backdropStyle={modalStyles.backdrop}
-    style={modalStyles.innerModal}
+    backdropStyle={styles.backdrop}
+    style={styles.innerModal}
     onBackdropPress={() => {
       setOpen(false);
     }}
   >
     <Card
       disabled
-      style={modalStyles.container}
+      style={styles.container}
       footer={() => <Footer onPress={() => setOpen(false)} />}
       header={() => <Header title={title} />}
     >
-      <ScrollView style={modalStyles.scroll}>
+      <ScrollView style={styles.scroll}>
         <Title title={TOS_TITLE_1} />
         <Body body={TOS_BODY_1} />
         <Title title={TOS_TITLE_2} />
@@ -115,22 +115,22 @@ const TosModal = ({ open, setOpen, title = "" }:TosModalProps) => (
   </Modal>
 );
 
-const PrivacyModal = ({ open, setOpen, title = "" }:TosModalProps) => (
+const PrivacyModal = ({ open, setOpen, title = "" }: TosModalProps) => (
   <Modal
     visible={open}
-    backdropStyle={modalStyles.backdrop}
-    style={modalStyles.innerModal}
+    backdropStyle={styles.backdrop}
+    style={styles.innerModal}
     onBackdropPress={() => {
       setOpen(false);
     }}
   >
     <Card
       disabled
-      style={modalStyles.container}
+      style={styles.container}
       footer={() => <Footer onPress={() => setOpen(false)} />}
       header={() => <Header title={title} />}
     >
-      <ScrollView style={modalStyles.scroll}>
+      <ScrollView style={styles.scroll}>
         <Title title={PRIV_TITLE_1} />
         <Title title={PRIV_TITLE_2} />
         <Body body={PRIV_BODY_1} />
@@ -165,7 +165,7 @@ const PrivacyModal = ({ open, setOpen, title = "" }:TosModalProps) => (
   </Modal>
 );
 
-const modalStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   scroll: {
     height: "90%",
     marginBottom: 10,

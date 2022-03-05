@@ -6,7 +6,6 @@ import LoginPageBubbleTop from "../../../assets/images/login-page-bubble-top.svg
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import UserContext from "../../../context/UserContext";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
@@ -70,7 +69,6 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
         width={window.width}
       />
       <KeyboardSwipeLayout>
-
         <KeyboardAvoidingView
           behavior="position"
           style={{
@@ -102,35 +100,23 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
           <TextField
             secureTextEntry
             placeholder="•••••••••••"
-            onChangeText={(e) => setPassword(e)}
-            onSubmitEditing={() => login()}
+            onChangeText={setPassword}
+            onSubmitEditing={login}
             value={password}
             ref={passwordRef}
           />
         </KeyboardAvoidingView>
-        <Layout style={{
-          backgroundColor: "#0000",
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-        >
+        <Layout style={styles.footer}>
           <Text
             style={[styles.bold, { marginTop: 10 }]}
-            onPress={() => onForgot()}
+            onPress={onForgot}
           >
             Forgot Password?
           </Text>
-          <Layout style={{
-            backgroundColor: "#0000",
-            flex: 0,
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          >
+          <Layout style={styles.buttonContainer}>
             <PrimaryButton
               status="info"
-              onPress={() => login()}
+              onPress={login}
               loading={loading}
             >
               Sign In
@@ -140,7 +126,7 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
               Where can I
               {" "}
               <Text
-                onPress={() => onSignUp()}
+                onPress={onSignUp}
                 style={[styles.bold, styles.clickable]}
               >
                 sign up
@@ -155,61 +141,27 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
 };
 
 const styles = StyleSheet.create({
-  emoji: { fontSize: 50 },
-  clickable: { color: "#02A3F4" },
+  emoji: {
+    fontSize: 50,
+  },
+  clickable: {
+    color: "#02A3F4",
+  },
   bold: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
   },
-  button: {
-    marginBottom: 20,
-    width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-    flex: 1,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: "80%",
-    minWidth: 200,
+  footer: {
     backgroundColor: "#0000",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  error: {
-    color: Colors.dark.error,
-  },
-  emailContainer: {
-    marginVertical: 20,
+  buttonContainer: {
     backgroundColor: "#0000",
-  },
-  input: {
-    marginVertical: 2,
-    marginHorizontal: -20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-    borderRadius: 20,
-    backgroundColor: "white",
-  },
-  loginText: {
-    fontSize: 15,
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 30,
+    flex: 0,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });
 

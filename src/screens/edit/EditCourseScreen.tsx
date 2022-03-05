@@ -1,12 +1,16 @@
-import { Button, Layout, Text } from "@ui-kitten/components";
+import {
+  Button, Layout, Text,
+} from "@ui-kitten/components";
 import React, { useContext, useState } from "react";
+import { StyleSheet } from "react-native";
 import { CourseGroup } from "../../API";
 import joinCourseGroup from "../../calls/joinCourseGroup";
+import callDeleteCourseGroupConnection from "../../calls/leaveCourseGroup";
+import fetchCourseGroupConnection from "../../calls/getCourseGroupConnection";
 import CourseGroupsContext from "../../context/CourseGroupsContext";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { SimpleCourseGroup } from "../../types";
 import EditCourseBody from "./EditCourseBody";
-import editCourseStyles from "./editCourseStyles";
 import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 
 /** TODO: make styling more dynamic */
@@ -20,6 +24,7 @@ const EditCourseScreen = () => {
   const [currTitle, setTitle] = useState("");
   const [currCode, setCode] = useState("");
   const user = useAuthenticatedUser();
+  let markedForDeletion = new Set<SimpleCourseGroup>();
 
   const generateNewGroup = ({
     code,
@@ -60,17 +65,26 @@ const EditCourseScreen = () => {
   }
 
   const handleSave = async () => {
-    const promises = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
+    const joinCourses = newCourses.map((course) => joinCourseGroup(user.attributes.sub,
       generateNewGroup(course))) as
       Promise<CourseGroup>[];
-
-    const results = await Promise.all(promises);
-
+    const results = await Promise.all(joinCourses);
     const handleCourseGroup = (result: CourseGroup) => {
       setNewCourses((prevCourses) => prevCourses.filter((c) => c.groupID !== result.groupID));
       setCourses([...courses, simplifyCourseGroup(result)]);
     };
     results.forEach(handleCourseGroup);
+
+    // leave courses
+    setCourses(courses.filter((course) => !markedForDeletion.has(course)));
+    await Promise.all([...markedForDeletion].map((group) => {
+      return fetchCourseGroupConnection(user.attributes.sub, { eq: group.groupID })
+        .then((connectionToDelete) => {
+          return callDeleteCourseGroupConnection({ id: connectionToDelete.id! });
+        })
+        .catch((err) => console.log("failed to leave course", err));
+    }));
+    markedForDeletion = new Set(); // clear data
   };
 
   const renderCourses = (
@@ -79,22 +93,51 @@ const EditCourseScreen = () => {
   ) => groups.map((group, index) => (
     <Layout
       key={index}
-      style={[editCourseStyles.courseContainer, isNew && editCourseStyles.newCourseContainer]}
+      style={[styles.courseContainer, isNew && styles.newCourseContainer]}
     >
       <Layout
         style={[
-          editCourseStyles.courseTextContainer,
-          isNew && editCourseStyles.newCourseContainer,
+          styles.courseTextContainer,
+          isNew && styles.newCourseContainer,
         ]}
       >
-        <Text style={[editCourseStyles.courseTextStyle, isNew && editCourseStyles.newCourseText]}>
+        <Text style={[styles.courseTextStyle, isNew && styles.newCourseText]}>
           {`${group.title} ${group.code}`}
         </Text>
       </Layout>
 
+      {!isNew && (
+        <Layout
+          style={[
+            styles.courseTextContainer,
+            isNew && styles.newCourseContainer,
+          ]}
+        >
+          <Button
+            appearance="ghost"
+            onPress={() => {
+              if (markedForDeletion.has(group)) {
+                markedForDeletion.delete(group);
+              } else {
+                markedForDeletion.add(group);
+              }
+            }}
+          >
+            {(evaProps: any) => (
+              <Text
+                {...evaProps}
+                style={{ ...evaProps.style, ...styles.deleteButtonText }}
+              >
+                X
+              </Text>
+            )}
+          </Button>
+        </Layout>
+      )}
+
       {isNew && (
         <Layout
-          style={[editCourseStyles.deleteContainer, isNew && editCourseStyles.newCourseContainer]}
+          style={[styles.deleteContainer, isNew && styles.newCourseContainer]}
         >
           <Button
             appearance="ghost"
@@ -105,7 +148,7 @@ const EditCourseScreen = () => {
             {(evaProps: any) => (
               <Text
                 {...evaProps}
-                style={{ ...evaProps.style, ...editCourseStyles.deleteButtonText }}
+                style={[evaProps.style, styles.deleteButtonText]}
               >
                 X
               </Text>
@@ -130,5 +173,49 @@ const EditCourseScreen = () => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  courseContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    width: "100%",
+    marginVertical: 5,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 2.22,
+    elevation: 3,
+  },
+  newCourseContainer: {
+    backgroundColor: "#FFEEDE",
+  },
+  newCourseText: {
+    color: "#FBBA82",
+  },
+  courseTextContainer: {
+    flex: 1,
+    borderRadius: 10,
+    padding: 20,
+  },
+  deleteContainer: {
+    flexBasis: 60,
+    borderRadius: 10,
+  },
+  courseTextStyle: {
+    fontFamily: "Poppins_400Regular",
+    fontSize: 15,
+  },
+  deleteButtonText: {
+    fontSize: 20,
+    color: "#FBBA82",
+  },
+});
 
 export default EditCourseScreen;

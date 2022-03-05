@@ -3,13 +3,11 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import useCachedResources from "./hooks/useCachedResources";
-import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import EventScreen from "./screens/EventScreen";
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
     return null;
@@ -26,7 +24,7 @@ export default function App() {
   
   return (
     <SafeAreaProvider>
-      <Navigation colorScheme={colorScheme} />
+      <Navigation />
       <StatusBar />
     </SafeAreaProvider>
   );

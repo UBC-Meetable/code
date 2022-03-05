@@ -13,10 +13,9 @@ import { KeyboardAvoidingView, StyleSheet, TextInput } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../../../API";
-import updateUserProfile from "../../../calls/updateUserProfile";
 import ProfilePicture from "../../../components/ProfilePicture";
 import Colors from "../../../constants/Colors";
-import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
 
 const NewProfileScreen = ({
@@ -24,7 +23,7 @@ const NewProfileScreen = ({
 }: {
   navigation: StackNavigationProp<SignUpParamList, "NewProfileScreen">;
 }) => {
-  const user = useAuthenticatedUser();
+  const { id, set } = useUserProfile();
   const [bio, setBio] = React.useState("");
   const [name, setName] = React.useState("");
   const [bioFocused, setBioFocused] = React.useState(false);
@@ -34,24 +33,19 @@ const NewProfileScreen = ({
   const handleFinish = async () => {
     const [firstName, ...lastName] = name.trim().split(" ");
     if (firstName.length && bio.length) {
-      const res = await updateUserProfile({
-        id: user.attributes.sub,
+      await set({
+        id,
         firstName,
         lastName: lastName.join(" "),
         bio,
         userState: UserState.PROFILE_CREATED,
       });
-
-      if (res.data) {
-        navigation.navigate("NewEditCourses");
-      }
+      navigation.navigate("NewEditCourses");
     }
   };
 
   /** TODO Cache Profile Images */
-  const updateImageKey = async (imageKey: string) => {
-    await updateUserProfile({ id: user.attributes.sub, profilePicture: imageKey });
-  };
+  const updateImageKey = (imageKey: string) => set({ id, profilePicture: imageKey });
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -81,7 +75,7 @@ const NewProfileScreen = ({
 
   const uploadImage = (toUpload: ImageInfo) => {
     const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
-    const imageKey = `${user.attributes.sub}/${imageName}`;
+    const imageKey = `${id}/${imageName}`;
     fetch(toUpload.uri).then((response) => {
       response.blob()
         .then((blob) => {
@@ -111,27 +105,12 @@ const NewProfileScreen = ({
         <MaterialCommunityIcons
           name="pencil"
           size={30}
-          style={{
-            position: "absolute",
-            right: -10,
-            top: -10,
-            color: "#7ED1EF",
-            shadowColor: "#000",
-            shadowOpacity: 1,
-            shadowRadius: 1,
-            shadowOffset: {
-              width: 0,
-              height: 1,
-            },
-            zIndex: 1000,
-          }}
-          onPress={() => {
-            pickImage();
-          }}
+          style={profileStyles.bioPencil}
+          onPress={pickImage}
         />
         <ProfilePicture
           imageKey={key}
-          onPress={() => pickImage()}
+          onPress={pickImage}
         />
       </Layout>
 
@@ -141,7 +120,7 @@ const NewProfileScreen = ({
         <Input
           value={name}
           placeholder="Your Name"
-          onChangeText={(e) => setName(e)}
+          onChangeText={setName}
           style={profileStyles.inputStyle}
           textStyle={profileStyles.inputTextStyle}
         />
@@ -172,22 +151,18 @@ const NewProfileScreen = ({
           maxLength={175}
           style={profileStyles.bioInput}
           value={bio}
-          onChangeText={(e) => {
-            setBio(e);
-          }}
+          onChangeText={setBio}
         />
       </KeyboardAvoidingView>
 
       <Button
         style={profileStyles.button}
-        onPress={() => {
-          handleFinish();
-        }}
+        onPress={handleFinish}
       >
         {(evaProps: any) => (
           <Text
             {...evaProps}
-            style={{ ...evaProps.style, ...profileStyles.buttonText }}
+            style={[evaProps.style, profileStyles.buttonText]}
           >
             Finish Sign Up
           </Text>
@@ -201,55 +176,26 @@ export const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "space-evenly",
     backgroundColor: Colors.theme.lightCreme,
-  },
-  profile: {
-    height: 144,
-    width: 144,
-    borderRadius: 100,
-    paddingVertical: 10,
-  },
-  pencil: {
-    position: "absolute",
-    color: "#7ED1EF",
-    left: "85%",
-    top: "15%",
-  },
-  input: {
-    color: "#D2E2EE",
-    paddingHorizontal: 20,
-    position: "absolute",
-    top: 10,
-    fontSize: 16,
-    fontWeight: "600",
-  },
-  nameBubble: {
-    height: 50,
-    width: "90%",
-    borderRadius: 24,
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  bigBioHead: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#7ED1EF",
-    marginHorizontal: 20,
-    top: 10,
   },
   bioPencil: {
     position: "absolute",
+    right: -10,
+    top: -10,
     color: "#7ED1EF",
-    left: "85%",
-    top: 5,
+    shadowColor: "#000",
+    shadowOpacity: 1,
+    shadowRadius: 1,
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    zIndex: 1000,
+  },
+  bigBioHead: {
+    fontSize: 16,
+    color: "#FBBA82",
+    fontFamily: "Quicksand_700Bold",
   },
   bioInput: {
     paddingHorizontal: 20,
@@ -292,21 +238,18 @@ export const profileStyles = StyleSheet.create({
     flex: 1,
   },
   inputStyle: {
-    borderRadius: 50,
-    marginLeft: 30,
-    marginRight: 30,
-    marginTop: 10,
     backgroundColor: "#ffff",
+    marginVertical: 5,
+    borderRadius: 5,
   },
   inputTextStyle: {
-    fontFamily: "Poppins_600SemiBold",
-    fontSize: 24,
-    textAlign: "center",
+    fontSize: 14,
   },
   nameContainer: {
     backgroundColor: "#0000",
     width: "100%",
     margin: 10,
+    alignItems: "center",
   },
 });
 

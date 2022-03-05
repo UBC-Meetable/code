@@ -24,7 +24,7 @@ const PrimaryButton = (props:PrimaryButtonProps) => {
       { (evaProps: any) => (
         <Text
           {...evaProps}
-          style={{ ...textStyle, ...evaProps.style, ...styles.buttonText }}
+          style={[textStyle, evaProps.style, styles.buttonText]}
         >
           {children}
         </Text>
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontSize: 18,
     flex: 1,
-    fontFamily: "Poppins_600SemiBold",
   },
 });
 
