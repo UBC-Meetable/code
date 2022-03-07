@@ -4,11 +4,13 @@ import React from "react";
 import {
   Dimensions, Platform, SafeAreaView, StyleSheet,
 } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CourseGroupBackground from "../assets/images/coursegroupbackground.svg";
 import Smile from "../assets/images/smile.svg";
 import ProfilePicture from "../components/ProfilePicture";
+import SuggestedFriend from "../components/SuggestedFriend";
 import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
@@ -33,38 +35,49 @@ const Home = ({ navigation }: HomeProps) => {
       {/* TODO make this safe area a global component */}
       <SafeAreaView style={{ marginTop: Platform.OS === "android" ? units.top : 0, flex: 1 }}>
         {/* Welcome Banner */}
-        <Layout style={styles.topContainer}>
-          <Layout style={[styles.titleContainer]}>
-            <Smile />
+        <ScrollView>
+          <Layout style={styles.topContainer}>
+            <Layout style={[styles.titleContainer]}>
+              <Smile />
+            </Layout>
+            <Layout style={styles.topRightButtonContainer}>
+              <ProfilePicture
+                onPress={() => navigation.navigate("ProfileStack")}
+                imageStyle={styles.profilePicture}
+                imageKey={profilePicture || ""}
+                size={ProfilePictureSize.TOP}
+              />
+              <IconButton
+                icon="forum"
+                size={32}
+                onPress={() => console.log("this button should link to the chat list screen")}
+              />
+            </Layout>
           </Layout>
-          <Layout style={styles.topRightButtonContainer}>
-            <ProfilePicture
-              onPress={() => navigation.navigate("ProfileStack")}
-              imageStyle={styles.profilePicture}
-              imageKey={profilePicture || ""}
-              size={ProfilePictureSize.TOP}
-            />
-            <IconButton
-              icon="forum"
-              size={32}
-              onPress={() => console.log("this button should link to the chat list screen")}
-            />
+          <Layout style={styles.body}>
+            <Text style={styles.titleText}>Suggested Friends</Text>
+            <ScrollView
+              horizontal
+              style={[styles.scrollView, styles.suggestedFriendsContainer]}
+            >
+              <SuggestedFriend name="Betty" interests={["Hip-Hop🎧", "Dancing🕺"]} courses={["APSC 280", "CPSC 210", "COMM 434", "COMM 365"]} faculty="Engineering" />
+              <SuggestedFriend name="Brendan" interests={["Shopping👛", "Music🎧"]} courses={["APSC 300", "CPSC 400", "COMM 100", "COMM 101"]} faculty="Duck Biology" />
+            </ScrollView>
+            <Text style={styles.titleText}>Upcoming Events</Text>
+            <Layout style={styles.eventsContainer}>
+              <Text> Events Should link to event page? </Text>
+            </Layout>
+            <Text style={styles.titleText}>Courses</Text>
+            <Layout style={styles.courseGroupContainer}>
+              <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
+            </Layout>
           </Layout>
-        </Layout>
-        <Layout style={styles.body}>
-          <Text style={styles.titleText}>Suggested Friends</Text>
-          <Layout style={styles.eventsContainer}>
-            <Text> List of friends here </Text>
-          </Layout>
-          <Text style={styles.titleText}>Upcoming Events</Text>
-          <Layout style={styles.eventsContainer}>
-            <Text> Events Should link to event page? </Text>
-          </Layout>
-          <Text style={styles.titleText}>Courses</Text>
-          <Layout style={styles.courseGroupContainer}>
-            <CourseGroups navigation={navigation} />
-          </Layout>
-        </Layout>
+        </ScrollView>
 
       </SafeAreaView>
     </>
@@ -75,6 +88,12 @@ const styles = StyleSheet.create({
   eventsContainer: {
     flex: 1,
     backgroundColor: "transparent",
+  },
+  suggestedFriendsContainer: {
+    flex: 1,
+    backgroundColor: "transparent",
+    flexDirection: "row",
+    marginBottom: 15,
   },
   courseGroupContainer: {
     flex: 1,
@@ -117,6 +136,11 @@ const styles = StyleSheet.create({
   buttonGroup: {
     justifyContent: "center",
     backgroundColor: Colors.theme.transparent,
+  },
+  scrollView: {
+    // backgroundColor: 'pink',
+    // marginHorizontal: 20,
+    marginRight: 0,
   },
 });
 
