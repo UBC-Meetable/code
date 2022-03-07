@@ -20,6 +20,7 @@ import Bio from "../components/profile/Bio";
 import EnrolledCourses from "../components/profile/EnrolledCourses";
 import fetchUserCourses, { fetchUserCoursesById } from "../calls/fetchUserCourses";
 import { CourseGroup } from "../API";
+import Interests from "../components/profile/Interests";
 
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
@@ -155,10 +156,10 @@ const ProfileScreen = () => {
         Enrolled Classes
       </Text>
       <EnrolledCourses courses={myCourses} />
-
       <Text style={styles.sectionTitle}>
         Interests
       </Text>
+      {/* <Interests user={user} /> */}
 
       <Modal
         animationType="slide"
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
   },
   editButton: {
     marginVertical: 12,
+    width: "85%",
   },
   name: {
     fontFamily: "Poppins_500Medium",

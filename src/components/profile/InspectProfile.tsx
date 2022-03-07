@@ -11,7 +11,7 @@ import reportUser from "../../calls/reportUser";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../../types";
 import ProfilePicture from "../ProfilePicture";
-import Interests from "./Interests";
+import Interests from "./InterestsOld";
 
 type ReportUserProps = {
   onPressReport: (value: string) => Promise<boolean>;

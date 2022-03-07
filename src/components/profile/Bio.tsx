@@ -8,17 +8,20 @@ type BioProps = {
 };
 const Bio = ({ bio }:BioProps) => {
   return (
-    <ScrollView style={styles.root} bounces={false}>
+    <ScrollView style={styles.root} contentContainerStyle={styles.content} bounces={false}>
       <Text style={[styles.text, bio ? styles.bio : styles.emptyText]}>{bio || "There isn't anything here"}</Text>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  content: {
+    paddingBottom: 20,
+  },
   root: {
     width: "85%",
     flex: 0,
-    maxHeight: 100,
+    height: 100,
     backgroundColor: "white",
     display: "flex",
     borderRadius: 20,

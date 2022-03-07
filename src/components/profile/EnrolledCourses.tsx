@@ -13,9 +13,9 @@ const EnrolledCourses = ({ courses }:EnrolledCoursesProps) => {
 
   return (
     <Layout style={styles.root}>
-      {courses.map((course:CourseGroup) => {
+      {courses.map((course:CourseGroup, index) => {
         const courseName = `${course.title} ${course.code}`.trim();
-        return <EnrolledCourse courseName={courseName} />;
+        return <EnrolledCourse courseName={courseName} key={index} />;
       })}
     </Layout>
   );
