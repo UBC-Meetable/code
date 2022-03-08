@@ -1,17 +1,17 @@
 import React, { useEffect } from "react";
 import { Text } from "@ui-kitten/components";
-import { User } from "../../API";
 
 type InterestsProps = {
-  user: User;
+  userId?: String;
 };
 
-const Interests = (props:InterestsProps) => {
+const Interests = ({ userId }:InterestsProps) => {
   const [interests, setInterests] = React.useState([]);
 
   useEffect(() => {
-    const getInterests = async () => {
+    console.log(userId);
 
+    const getInterests = async () => {
     };
   }, []);
   return (

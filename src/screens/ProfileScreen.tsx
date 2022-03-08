@@ -159,7 +159,7 @@ const ProfileScreen = () => {
       <Text style={styles.sectionTitle}>
         Interests
       </Text>
-      {/* <Interests user={user} /> */}
+      <Interests userId={user.id} />
 
       <Modal
         animationType="slide"
