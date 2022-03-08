@@ -25,7 +25,6 @@ const ProfileStackNavigator = () => (
       headerTransparent: true,
       headerTitle: "",
       headerTintColor: "black",
-      // ...HeaderOptions,
     }}
   >
     <ProfileTabStack.Screen

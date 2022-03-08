@@ -9,8 +9,6 @@ type EnrolledCoursesProps = {
 };
 
 const EnrolledCourses = ({ courses }:EnrolledCoursesProps) => {
-  console.log(courses);
-
   return (
     <Layout style={styles.root}>
       {courses.map((course:CourseGroup, index) => {

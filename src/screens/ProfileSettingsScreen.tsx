@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
   },
   mainList: {
     width: "100%",
-    // flex: 1,
     backgroundColor: Colors.theme.transparent,
   },
   root: {
