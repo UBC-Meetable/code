@@ -1,5 +1,5 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Spinner, Text } from "@ui-kitten/components";
+import { Layout, Spinner, Text, Button } from "@ui-kitten/components";
 import React from "react";
 import {
   Dimensions, Platform, SafeAreaView, StyleSheet,
@@ -13,6 +13,8 @@ import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
+import { GroupType } from "../API";
+import { CommonActions } from "@react-navigation/native";
 
 const window = Dimensions.get("window");
 
@@ -23,6 +25,21 @@ type HomeProps = {
 const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
   const { loading, profilePicture } = useUserProfile();
+
+  const eventNavigation = (
+    eventTitle: string,
+    eventID: string,
+    //eventType: GroupType,
+  ) => {
+    navigation.dispatch(
+      CommonActions.navigate("events", {
+        screen: "EventScreen",
+        eventID,
+        //eventType,
+        eventTitle,
+      }),
+    );
+  };  
 
   if (loading) return <Spinner />;
   return (
@@ -58,7 +75,11 @@ const Home = ({ navigation }: HomeProps) => {
           </Layout>
           <Text style={styles.titleText}>Upcoming Events</Text>
           <Layout style={styles.eventsContainer}>
-            <Text> Events Should link to event page? </Text>
+            <Button onPress={() => eventNavigation(
+              "Quiz 1",
+              "1",
+              GroupType.COURSE
+            )}>Quiz 1</Button>
           </Layout>
           <Text style={styles.titleText}>Courses</Text>
           <Layout style={styles.courseGroupContainer}>
