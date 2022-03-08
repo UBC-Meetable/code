@@ -45,6 +45,7 @@ import LoginFlowController from "../screens/Auth/login/LoginFlowController";
 import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
+import EventScreen from "../screens/EventScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
@@ -214,6 +215,10 @@ const AuthorizedApp = () => {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
+          />
+          <Stack.Screen 
+            name="Event" 
+            component={EventScreen} 
           />
           <Stack.Screen
             name="Group"

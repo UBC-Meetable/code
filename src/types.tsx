@@ -34,6 +34,10 @@ export type RootStackParamList = {
     groupType: GroupType;
     groupTitle: string;
   };
+  Event: {
+    eventID: string;
+    eventTitle: string;
+  };
   UniScreen: undefined;
   EditCourses: undefined;
   ProfileSettings: undefined;

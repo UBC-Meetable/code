@@ -1,4 +1,3 @@
-import { StackNavigationProp } from "@react-navigation/stack";
 import {
   ApplicationProvider as UiProvider,
   Button,
@@ -9,71 +8,54 @@ import {
 } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { Poppins_400Regular, Poppins_500Medium, Poppins_600SemiBold, Poppins_700Bold, useFonts } from "@expo-google-fonts/poppins";
-import AppLoading from "expo-app-loading";
 import { StyleSheet, View } from "react-native";
-import theme from "../constants/theme.json";
-import * as eva from "@eva-design/eva";
-//import { GroupType, RootStackParamList } from "../types";
 
-const EventScreen = () => {
-    let [fontLoaded] = useFonts({
-        Poppins_600SemiBold,
-        Poppins_700Bold,
-        Poppins_400Regular,
-        Poppins_500Medium
-    })
-
-    if(!fontLoaded) {
-        return <AppLoading />;
-    }
-
+const EventScreen = (props : any) => {
+    const navigation = props.navigation
     return(
-        <UiProvider {...eva} theme={{ ...eva.light, ...theme }}>
-            <View style={styles.background}>
-                <Layout style={styles.rowTop}>
-                    <Icon name="ios-chevron-back" size={23}/>
-                </Layout>
-                <Layout style={styles.row}>
-                    <Text style={{fontFamily: 'Poppins_700Bold', fontSize: 32, marginLeft: '9.6%'}} category='h1'>
-                        Quiz 1
+        <View style={styles.background}>
+            <Layout style={styles.rowTop}>
+                <Icon name="ios-chevron-back" size={23} onPress={() => navigation.navigate("Home")}/>
+            </Layout>
+            <Layout style={styles.row}>
+                <Text style={{fontFamily: 'Poppins_700Bold', fontSize: 32, marginLeft: '9.6%'}} category='h1'>
+                    {props.route.params.eventTitle}
+                </Text>
+            </Layout>
+            <Layout style={styles.row}>
+                <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '5%'}} category='h2'>
+                    Study Session
+                </Text>
+            </Layout>
+            <Layout style={styles.row}>
+            </Layout>
+            <Layout style={styles.row}>
+                <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '1%'}} category='h2'>
+                    Description
+                </Text>
+            </Layout>
+            <Layout style={styles.row}> 
+                <Card style={styles.card}>
+                    <Text style={{fontFamily: 'Poppins_400Regular', fontSize: 14}}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie sed elementum pretium purus pharetra scelerisque sit. Et varius lectus id netus.
                     </Text>
-                </Layout>
-                <Layout style={styles.row}>
-                    <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '5%'}} category='h2'>
-                        Study Session
+                </Card>
+            </Layout>
+            <Layout style={styles.rowChat}>
+                <Layout style={styles.joinChat}>
+                    <Avatar source={require('../assets/images/noavatar.png')}/>
+                    <Text style={{fontFamily: 'Poppins_500Medium', fontSize: 16}}>
+                        Join Event Chat
                     </Text>
+                    <Icon name="ios-chevron-forward" size={40}/>
                 </Layout>
-                <Layout style={styles.row}>
-                </Layout>
-                <Layout style={styles.row}>
-                    <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '1%'}} category='h2'>
-                        Description
-                    </Text>
-                </Layout>
-                <Layout style={styles.row}> 
-                    <Card style={styles.card}>
-                        <Text style={{fontFamily: 'Poppins_400Regular', fontSize: 14}}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie sed elementum pretium purus pharetra scelerisque sit. Et varius lectus id netus.
-                        </Text>
-                    </Card>
-                </Layout>
-                <Layout style={styles.rowChat}>
-                    <Layout style={styles.joinChat}>
-                        <Avatar source={require('../assets/images/noavatar.png')}/>
-                        <Text style={{fontFamily: 'Poppins_500Medium', fontSize: 16}}>
-                            Join Event Chat
-                        </Text>
-                        <Icon name="ios-chevron-forward" size={40}/>
-                    </Layout>
-                </Layout>
-                <Layout style={styles.bottom}>
-                    <Button style={styles.button}>
-                        Join Event
-                    </Button>
-                </Layout>
-            </View>
-        </UiProvider>
+            </Layout>
+            <Layout style={styles.bottom}>
+                <Button style={styles.button}>
+                    Join Event
+                </Button>
+            </Layout>
+        </View>
     )
 }
 

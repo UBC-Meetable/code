@@ -32,7 +32,7 @@ const Home = ({ navigation }: HomeProps) => {
     //eventType: GroupType,
   ) => {
     navigation.dispatch(
-      CommonActions.navigate("events", {
+      CommonActions.navigate("Event", {
         screen: "EventScreen",
         eventID,
         //eventType,
@@ -76,9 +76,9 @@ const Home = ({ navigation }: HomeProps) => {
           <Text style={styles.titleText}>Upcoming Events</Text>
           <Layout style={styles.eventsContainer}>
             <Button onPress={() => eventNavigation(
-              "Quiz 1",
+              "Quiz 3",
               "1",
-              GroupType.COURSE
+              //GroupType.COURSE
             )}>Quiz 1</Button>
           </Layout>
           <Text style={styles.titleText}>Courses</Text>
