@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 function MyTabBar({ state, descriptors, navigation }: any) {
@@ -11,26 +11,8 @@ function MyTabBar({ state, descriptors, navigation }: any) {
   }
 
   return (
-    <View
-      style={{
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
-        backgroundColor: "#0000",
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          height: 50,
-          width: "80%",
-          borderRadius: 9999,
-          marginBottom: 20,
-          backgroundColor: "#FBBA82",
-        }}
-      >
+    <View style={styles.root}>
+      <View style={styles.container}>
         {state.routes.map((route: any, index: any) => {
           const { options } = descriptors[route.key];
           let Label;
@@ -68,13 +50,7 @@ function MyTabBar({ state, descriptors, navigation }: any) {
               testID={options.tabBarTestID}
               onPress={onPress}
               onLongPress={onLongPress}
-              style={{
-                flex: 1,
-                height: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#0000",
-              }}
+              style={styles.button}
             >
               <Text style={{ color: isFocused ? "#CE6206" : "#fff" }}>
                 <Label />
@@ -87,5 +63,31 @@ function MyTabBar({ state, descriptors, navigation }: any) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: "#0000",
+  },
+  container: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 50,
+    width: "80%",
+    borderRadius: 9999,
+    marginBottom: 20,
+    backgroundColor: "#FBBA82",
+  },
+  button: {
+    flex: 1,
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#0000",
+  }
+})
 
 export default MyTabBar;

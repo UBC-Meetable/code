@@ -3,27 +3,23 @@ import {
 } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Auth0BubbleBackground from "../../../assets/images/auth0-bubble.svg";
-import BubbleBackground from "../../../assets/images/quizBubble.svg";
 import Auth0Flair from "../../../assets/images/auth0-flair.svg";
-import { TutorialStyles } from "../../../components/styles";
-import rootStyles from "../../../components/styles/rootStyles";
+import { tutorialStyles } from "../../../components/styles";
 
 const window = Dimensions.get("window");
 
 const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
-  const units = useSafeAreaInsets();
   return (
-    <Layout style={rootStyles}>
+    <Layout style={styles.root}>
       <Auth0BubbleBackground
         width={window.width}
         height={window.height + 100}
-        style={{ position: "absolute", top: 0 }}
+        style={styles.bubble}
       />
       <Layout style={styles.mainContainer}>
         <Layout style={styles.text}>
-          <Text style={TutorialStyles.title}>Hang Tight!</Text>
+          <Text style={tutorialStyles.title}>Hang Tight!</Text>
           <Text style={[styles.body]}>
             We are analyzing your responses and will put you in a friend group
             shortly.
@@ -39,11 +35,11 @@ const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
         <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 16 }}>
           In the meantime...
         </Text>
-        <Button style={styles.button} onPress={() => onContinue()}>
+        <Button style={styles.button} onPress={onContinue}>
           {(evaProps: any) => (
             <Text
               {...evaProps}
-              style={{ ...evaProps.style, ...styles.buttonText }}
+              style={[evaProps.style, styles.buttonText]}
             >
               Create an Account
             </Text>
@@ -55,29 +51,19 @@ const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
 };
 
 const styles = StyleSheet.create({
+  bubble: {
+    position: "absolute",
+    top: 0,
+  },
   root: {
     flex: 1,
+    display: "flex",
+    height: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#0000",
-    width: "80%",
-  },
-  image: {
-    width: "75%",
-    maxHeight: "50%",
-    padding: 10,
-    marginBottom: 20,
-    flex: 1,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#c4c4c4",
-    borderRadius: 40,
-    borderWidth: 0,
-    shadowColor: "black",
-    shadowOffset: { width: 5, height: 5 },
-    shadowOpacity: 0.5,
-    overflow: "visible",
+    marginTop: -50,
+    paddingTop: 0,
   },
   button: {
     marginBottom: 20,

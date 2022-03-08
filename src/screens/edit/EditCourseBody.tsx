@@ -1,20 +1,16 @@
 import React, { ReactNode, useState } from "react";
-import {
-  Text, Layout, Input, ApplicationProvider,
-} from "@ui-kitten/components";
-import { SafeAreaView, ScrollView } from "react-native";
-import * as eva from "@eva-design/eva";
-import editCourseStyles from "./editCourseStyles";
+import { Text, Layout, Input } from "@ui-kitten/components";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import TextField from "../../components/ui/TextField";
 import PrimaryButton from "../../components/ui/PrimaryButton";
 import { SimpleCourseGroup } from "../../types";
-import customOrangeTheme from "./customOrangeTheme.json";
+import Colors from "../../constants/Colors";
 
 type EditCourseBodyProps = {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   setCode: React.Dispatch<React.SetStateAction<string>>;
   addCourse: () => void;
-  renderCourses: (courses: SimpleCourseGroup[], isNew?: boolean,) => ReactNode;
+  renderCourses: (courses: SimpleCourseGroup[], isNew?: boolean) => ReactNode;
   handleSave: () => Promise<void>;
   currCode: string;
   currTitle: string;
@@ -31,25 +27,23 @@ const EditCourseBody = ({
   const codeRef = React.useRef<Input>(null);
   const [loading, setLoading] = useState(false);
   return (
-    <SafeAreaView style={editCourseStyles.root}>
-      <Layout style={[editCourseStyles.form, editCourseStyles.noBg]}>
-        <Layout style={editCourseStyles.container2}>
-          <Text style={[editCourseStyles.textStyle, { left: "0%" }]}>Course</Text>
-          <Layout style={editCourseStyles.codeContainer}>
+    <SafeAreaView style={styles.root}>
+      <Layout style={[styles.form, styles.noBg]}>
+        <Layout style={styles.container2}>
+          <Text style={[styles.textStyle, { left: "0%" }]}>Course</Text>
+          <Layout style={styles.codeContainer}>
             <TextField
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.courseStyle]}
+              style={[styles.courseCodeInput, styles.courseStyle]}
               placeholder="COMM"
               value={currTitle}
-              onChangeText={(newTitle) => {
-                setTitle(newTitle);
-              }}
+              onChangeText={setTitle}
               onSubmitEditing={() => codeRef.current?.focus()}
               ref={titleRef}
               returnKeyType="next"
             />
             <TextField
               ref={codeRef}
-              style={[editCourseStyles.courseCodeInput, editCourseStyles.codeStyle]}
+              style={[styles.courseCodeInput, styles.codeStyle]}
               placeholder="101"
               value={currCode}
               onSubmitEditing={() => addCourse()}
@@ -63,9 +57,9 @@ const EditCourseBody = ({
       </Layout>
 
       <PrimaryButton onPress={addCourse} status="primary">Add Course</PrimaryButton>
-      <Layout style={[editCourseStyles.noBg, editCourseStyles.middleContainer, { width: "110%" }]}>
-        <Text style={editCourseStyles.textStyle}>Your Courses</Text>
-        <ScrollView contentContainerStyle={editCourseStyles.selectionsContainer}>
+      <Layout style={[styles.noBg, styles.middleContainer, { width: "110%" }]}>
+        <Text style={styles.textStyle}>Your Courses</Text>
+        <ScrollView contentContainerStyle={styles.selectionsContainer}>
           {renderCourses(courses)}
           {renderCourses(newCourses, true)}
         </ScrollView>
@@ -98,5 +92,68 @@ const EditCourseBody = ({
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  middleContainer: {
+    flex: 1,
+    flexGrow: 1,
+  },
+  noBg: {
+    backgroundColor: "#0000",
+  },
+  root: {
+    backgroundColor: Colors.theme.lightCreme,
+    height: "100%",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  form: {
+    alignItems: "center",
+    width: "90%",
+  },
+  selectionsContainer: {
+    flexDirection: "column",
+    flex: 1,
+    width: "80.75%",
+    marginLeft: 10,
+    left: "7.5%",
+  },
+  textStyle: {
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 20,
+    fontWeight: "500",
+    lineHeight: 24,
+    left: "10%",
+  },
+  codeContainer: {
+    flexDirection: "row",
+    backgroundColor: "#0000",
+  },
+  courseStyle: {
+    flex: 0.5,
+  },
+  codeStyle: {
+    flex: 0.5,
+  },
+  courseCodeInput: {
+    borderRadius: 15,
+    margin: 5,
+    backgroundColor: "#ffff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
+  },
+  container2: {
+    width: "100%",
+    margin: 5,
+    backgroundColor: Colors.theme.lightCreme,
+    justifyContent: "center",
+  },
+});
 
 export default EditCourseBody;

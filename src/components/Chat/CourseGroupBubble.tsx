@@ -1,9 +1,8 @@
 import { Layout } from "@ui-kitten/components";
-import React, { ReactNode, useEffect, useState } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Avatar, Chip } from "react-native-paper";
-import { CourseGroupConnection, User } from "../../API";
+import { User } from "../../API";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../../types";
 import PictureStack from "../PictureStack";
@@ -58,16 +57,6 @@ const CourseGroupBubble = ({
             {courseGroup.code}
           </Text>
         </Layout>
-        {/* <Layout style={groupBubbleStyles.sectionContainer}>
-          <Chip
-            style={groupBubbleStyles.sectionBubble}
-            textStyle={groupBubbleStyles.sectionBubbleText}
-          >
-            Users
-            {" "}
-            {courseGroup.users?.items?.length || 1}
-          </Chip>
-        </Layout> */}
       </Layout>
 
       <Layout style={groupBubbleStyles.bottomContainer}>
@@ -75,14 +64,12 @@ const CourseGroupBubble = ({
           <MessagePreview messages={messages} />
         </Layout>
         <Layout style={groupBubbleStyles.bottomPhotoContainer}>
-          {/* <Layout style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}> */}
           <TouchableWithoutFeedback
             onPress={moveToGroupScreen}
             style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}
           >
             <PictureStack users={userPile} />
           </TouchableWithoutFeedback>
-          {/* </Layout> */}
         </Layout>
 
       </Layout>
@@ -95,18 +82,12 @@ export const groupBubbleStyles = StyleSheet.create({
     minHeight: 100,
     height: 100,
     display: "flex",
-    margin: 10,
+    margin: 1,
     padding: 5,
-    borderColor: "white",
     borderRadius: 24,
     backgroundColor: "#E6F4F9",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
+    borderWidth: 1,
+    borderColor: "#CACACA",
     elevation: 10,
     position: "relative",
   },

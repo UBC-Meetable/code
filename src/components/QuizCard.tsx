@@ -4,18 +4,13 @@ import {
 } from "@ui-kitten/components";
 import React from "react";
 import {
-  Dimensions,
   Image,
   StyleSheet,
   View,
 } from "react-native";
 import { QuestionType } from "../types";
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
-
-const QuizCard = ({
-  title, id, img, response,
-}: QuestionType) => (
+const QuizCard = ({ title, img }: QuestionType) => (
   <Layout style={styles.card}>
     <Text style={styles.questionTitle}>{title}</Text>
     <View style={styles.questionView}>

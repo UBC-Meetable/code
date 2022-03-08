@@ -16,7 +16,6 @@ type SendMessageToUserInput = {
 
 const sendMessageToUser = async ({
   userID,
-  userID2,
   directChatID,
   userName,
   hasFile,
@@ -26,7 +25,7 @@ const sendMessageToUser = async ({
     console.error("Null Inputs");
     throw new Error("An input to sendMessageToUser was undefined");
   }
-  const res = await API.graphql({
+  await API.graphql({
     query: createChatMessage,
     variables: {
       input: {
@@ -39,7 +38,7 @@ const sendMessageToUser = async ({
   console.log("Res done");
 
   try {
-    const lambdaRes = API.graphql({
+    API.graphql({
       query: pushNotification,
       variables: {
         input: {

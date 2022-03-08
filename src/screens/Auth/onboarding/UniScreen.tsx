@@ -12,9 +12,8 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { UserState } from "../../../API";
-import updateUserProfile from "../../../calls/updateUserCourses";
 import Colors from "../../../constants/Colors";
-import useAuthenticatedUser from "../../../hooks/useAuthenticatedUser";
+import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
 import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
@@ -30,12 +29,13 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
   const [year, setYear] = useState("");
   const universities = ["The University of British Columbia", "The University of Toronto", "Simon Fraser University", "Queen's University"];
   const university = universities[selectedIndex.row];
-  const user = useAuthenticatedUser();
+  const { id, set } = useUserProfile();
+  // const user = useAuthenticatedUser();
   const units = useSafeAreaInsets();
   const onSubmit = async () => {
     const yearInt = parseInt(year, 10);
-    const res = await updateUserProfile({
-      id: user.attributes.sub, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
+    const res = await set({
+      id, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
     });
 
     if (res.data) {
@@ -58,7 +58,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           style={{ position: "absolute" }}
         />
 
-        <Layout style={stylesTwo.container}>
+        <Layout style={styles.container}>
           <Text style={styles.textStyle}>
             What university are you currently attending?
           </Text>
@@ -72,7 +72,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           </Select>
         </Layout>
 
-        <Layout style={stylesTwo.container}>
+        <Layout style={styles.container}>
           <Text style={styles.textStyle}>What is your major?</Text>
           <Input
             placeholder="Business"
@@ -83,7 +83,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           />
         </Layout>
 
-        <Layout style={stylesTwo.container}>
+        <Layout style={styles.container}>
           <Text style={styles.textStyle}>What academic year are you in?</Text>
           <Input
             placeholder="1"
@@ -95,15 +95,13 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
         </Layout>
         <Button
           style={major ? styles.button : styles.disabledButton}
-          onPress={() => {
-            onSubmit();
-          }}
+          onPress={onSubmit}
           disabled={!major || !year}
         >
           {(evaProps: any) => (
             <Text
               {...evaProps}
-              style={{ ...evaProps.style, ...styles.buttonText }}
+              style={[evaProps.style, styles.buttonText]}
             >
               Next
             </Text>
@@ -127,6 +125,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: Colors.theme.lightCreme,
   },
+  container: {
+    backgroundColor: "#0000",
+    width: "100%",
+    marginTop: 10,
+    marginLeft: 10,
+    marginRight: 10,
+    marginBottom: 80,
+  },
   button: {
     marginBottom: 20,
     width: "75%",
@@ -146,44 +152,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     flex: 1,
   },
-  blacktext: {
-    color: "#000",
-  },
-  topcontainer: {
-    flex: 1,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomcontainer: {
-    flex: 0,
-    display: "flex",
-    flexBasis: 150,
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  bodyContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-    marginTop: 30,
-  },
-  selectionsContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-  },
-  courseContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    height: "100%",
-  },
   dropDownStyle: {
     borderRadius: 100,
     marginTop: 10,
@@ -197,9 +165,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: "#ffff",
   },
-  yearStyle: {
-    width: 20,
-  },
   textStyle: {
     fontFamily: "Poppins_600SemiBold",
     textAlign: "left",
@@ -210,17 +175,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     marginLeft: 30,
     marginRight: 30,
-  },
-});
-
-const stylesTwo = StyleSheet.create({
-  container: {
-    backgroundColor: "#0000",
-    width: "100%",
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 80,
   },
 });
 

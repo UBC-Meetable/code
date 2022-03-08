@@ -2,12 +2,10 @@ import Auth from "@aws-amplify/auth";
 import { Input, Layout, Text } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import LoginPageBubbleTop from "../../../assets/images/login-page-bubble-top.svg";
 import LoginControllerRoot from "../../../components/ui/LoginControllerRoot";
 import PrimaryButton from "../../../components/ui/PrimaryButton";
 import TextField from "../../../components/ui/TextField";
-import Colors from "../../../constants/Colors";
 import UserContext from "../../../context/UserContext";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
@@ -22,27 +20,26 @@ type LoginFormScreenProps = {
 const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setError] = useState<string[]>([]);
+  // const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const { setUser } = useContext(UserContext);
-  const units = useSafeAreaInsets();
   const [loading, setLoading] = useState(false);
   const confirmForm = () => {
-    setError(() => []);
+    // setError(() => []);
     let flag = true;
     if (!email) {
-      setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
+      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
   };
   const login = async () => {
-    setError([]);
+    // setError([]);
 
     if (!confirmForm()) return;
     try {
@@ -58,8 +55,8 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
         onNotConfirmed(email);
       }
 
-      const message = e.message as string;
-      setError((prevErrors) => [...prevErrors, message]);
+      // const message = e.message as string;
+      // setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
     }
@@ -72,7 +69,6 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
         width={window.width}
       />
       <KeyboardSwipeLayout>
-
         <KeyboardAvoidingView
           behavior="position"
           style={{
@@ -104,46 +100,33 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
           <TextField
             secureTextEntry
             placeholder="•••••••••••"
-            onChangeText={(e) => setPassword(e)}
-            onSubmitEditing={() => login()}
+            onChangeText={setPassword}
+            onSubmitEditing={login}
             value={password}
             ref={passwordRef}
           />
         </KeyboardAvoidingView>
-        <Layout style={{
-          backgroundColor: "#0000",
-          flex: 1,
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-        >
+        <Layout style={styles.footer}>
           <Text
             style={[styles.bold, { marginTop: 10 }]}
-            onPress={() => onForgot()}
+            onPress={onForgot}
           >
             Forgot Password?
           </Text>
-          <Layout style={{
-            backgroundColor: "#0000",
-            flex: 0,
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          >
+          <Layout style={styles.buttonContainer}>
             <PrimaryButton
               status="info"
-              onPress={() => login()}
+              onPress={login}
               loading={loading}
             >
               Sign In
-
             </PrimaryButton>
             <Text style={[styles.bold]}>
               I'm new!
               Where can I
               {" "}
               <Text
-                onPress={() => onSignUp()}
+                onPress={onSignUp}
                 style={[styles.bold, styles.clickable]}
               >
                 sign up
@@ -158,61 +141,27 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
 };
 
 const styles = StyleSheet.create({
-  emoji: { fontSize: 50 },
-  clickable: { color: "#02A3F4" },
+  emoji: {
+    fontSize: 50,
+  },
+  clickable: {
+    color: "#02A3F4",
+  },
   bold: {
     fontFamily: "Poppins_600SemiBold",
     fontSize: 14,
   },
-  button: {
-    marginBottom: 20,
-    width: "90%",
-    borderRadius: 100,
-    borderWidth: 0,
-    backgroundColor: "#02A3F4",
-  },
-  buttonText: {
-    fontSize: 20,
-    textAlign: "center",
-    flex: 1,
-  },
-  formContainer: {
-    flex: 1,
-    justifyContent: "center",
-    width: "80%",
-    minWidth: 200,
+  footer: {
     backgroundColor: "#0000",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-between",
   },
-  error: {
-    color: Colors.dark.error,
-  },
-  emailContainer: {
-    marginVertical: 20,
+  buttonContainer: {
     backgroundColor: "#0000",
-  },
-  input: {
-    marginVertical: 2,
-    marginHorizontal: -20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
-    borderRadius: 20,
-    backgroundColor: "white",
-  },
-  loginText: {
-    fontSize: 15,
-    textAlign: "center",
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 30,
+    flex: 0,
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });
 

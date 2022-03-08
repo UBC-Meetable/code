@@ -1,9 +1,8 @@
-import { Layout, Spinner } from "@ui-kitten/components";
+import { Layout, Spinner, StyleType } from "@ui-kitten/components";
 import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Analytics, Storage } from "aws-amplify";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import noAvatar from "../assets/images/noavatar.png";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 
@@ -11,12 +10,14 @@ type ProfilePictureProps = {
     imageKey: string;
     size?: ProfilePictureSize;
     onPress?: () => void;
+    imageStyle?: StyleType;
 };
 
 const ProfilePicture = ({
   imageKey,
   size = ProfilePictureSize.PROFILE,
   onPress,
+  imageStyle = {},
 }:ProfilePictureProps) => {
   const [uri, setUri] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
@@ -35,12 +36,18 @@ const ProfilePicture = ({
       }
       console.log("Got from s3");
       setTimeout(async () => {
-        const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 }) as string;
-        const newImage = await FileSystem.downloadAsync(s3Uri, path);
-        const imageInfo = await FileSystem.getInfoAsync(path);
-        Analytics.record({ name: "Fetch Picture from S3", attributes: { size: imageInfo.size } });
-        setUri(newImage.uri);
-        setImageLoading(false);
+        const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 })
+          .catch((error) => console.log(error)) as string;
+        Image.getSize(s3Uri, async () => {
+          const newImage = await FileSystem.downloadAsync(s3Uri, path);
+          const imageInfo = await FileSystem.getInfoAsync(path);
+          Analytics.record({ name: "Fetch Picture from S3", attributes: { size: imageInfo.size } });
+          setUri(newImage.uri);
+          setImageLoading(false);
+        }, () => {
+          setUri("");
+          setImageLoading(false);
+        });
       }, 1000);
     };
 
@@ -59,6 +66,9 @@ const ProfilePicture = ({
   case ProfilePictureSize.MESSAGE:
     sizeObj = ProfilePictureDimensions.MESSAGE;
     break;
+  case ProfilePictureSize.TOP:
+    sizeObj = ProfilePictureDimensions.TOP;
+    break;
   default:
     throw new Error("Size Object Error");
   }
@@ -67,7 +77,7 @@ const ProfilePicture = ({
     <TouchableWithoutFeedback style={{ borderRadius: 100 }} onPress={onPress}>
       <Image
         source={noAvatar}
-        style={{ borderRadius: 100, ...sizeObj }}
+        style={{ borderRadius: 100, ...sizeObj, ...imageStyle }}
       />
     </TouchableWithoutFeedback>
   );
@@ -86,10 +96,10 @@ const ProfilePicture = ({
         </Layout>
       </Layout>
     ) : (
-      <TouchableWithoutFeedback style={{ borderRadius: 100 }} onPress={onPress}>
+      <TouchableWithoutFeedback style={[{ borderRadius: 100 }]} onPress={onPress}>
         <Image
           source={uri ? { uri } : noAvatar}
-          style={{ borderRadius: 100, ...sizeObj }}
+          style={{ borderRadius: 100, ...sizeObj, ...imageStyle }}
         />
       </TouchableWithoutFeedback>
     )

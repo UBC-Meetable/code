@@ -1,72 +1,86 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import * as FileSystem from "expo-file-system";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
-import { Storage } from "aws-amplify";
-import { joinFriendGroupInput, User } from "../API";
+import { UpdateUserInput, UserState } from "../API";
 import fetchUserProfile from "../calls/fetchUserProfile";
+import createUserProfile from "../calls/createUserProfile";
 import updateUserProfile from "../calls/updateUserProfile";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import useAuth from "../hooks/useAuth";
 
-export type UserInfoType = joinFriendGroupInput & {
-  user: {
-    id: string | undefined;
-    email: string | undefined;
-    firstName: string | null | undefined;
-    lastName: string | null | undefined;
-    expoPushToken: string | null | undefined,
-    multipleGroupsOptIn: boolean | null | undefined,
-  };
+export type UserProfileType = {
+  id?: string,
+  email?: string | null | undefined,
+  firstName?: string | null,
+  lastName?: string | null,
+  profilePicture?: string | null,
+  bio?: string | null,
+  userState?: UserState | null,
+  university?: string | null | undefined,
+  year?: number | null | undefined,
+  major?: string | null | undefined,
+  expoPushToken?: string | null,
+  multipleGroupsOptIn?: boolean | null,
 };
-export type UserSchoolInfoContextType = {
-    info: UserInfoType | undefined;
-    loading: boolean;
+export type UserProfileContextType = UserProfileType & {
+  loading: boolean;
+  set: any;
 }
 
-const UserSchoolInfoContext = React.createContext({
-} as UserSchoolInfoContextType);
+const UserProfileContext = React.createContext({
+} as UserProfileContextType);
 
-export const UserProfileProvider = ({ children }: {children?: ReactNode}) => {
-  const user = useAuthenticatedUser();
-  const [info, setInfo] = useState<UserInfoType>();
+export const UserProfileProvider = ({ children }: { children?: ReactNode }) => {
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<UserProfileType>();
   const [loading, setLoading] = useState(true);
+
+  const set = async (input: UpdateUserInput) => {
+    await updateUserProfile(input);
+    setProfile({ ...profile, ...input });
+  };
 
   useEffect(() => {
     if (user) {
-      fetchUserProfile({ id: user.attributes.sub }).then((userProfile) => {
-        if (!userProfile.data?.getUser) throw new Error("Failed to get User profile");
-        else {
-          const userInfo = userProfile.data.getUser;
-          setInfo(
-            {
-              user: {
-                id: userInfo.id,
-                email: userInfo.email,
-                firstName: userInfo.firstName,
-                lastName: userInfo.lastName,
-                expoPushToken: userInfo.expoPushToken,
-                multipleGroupsOptIn: userInfo.multipleGroupsOptIn,
-              },
-              id: userInfo.id,
-              university: userInfo.university || "",
-              year: userInfo.year,
-            },
-          );
-
-          setLoading(() => false);
+      setLoading(true);
+      fetchUserProfile({ id: user.attributes.sub }).then(async (userProfile) => {
+        const userInfo = userProfile.data?.getUser ?? (
+          await createUserProfile({
+            id: user.attributes.sub,
+            email: user.attributes.email,
+            university: "None",
+            year: -1,
+          })
+        ).data?.createUser;
+        if (userInfo) {
+          setProfile({
+            id: userInfo.id,
+            email: userInfo.email,
+            firstName: userInfo.firstName,
+            lastName: userInfo.lastName,
+            profilePicture: userInfo.profilePicture,
+            bio: userInfo.bio,
+            userState: userInfo.userState,
+            university: userInfo.university,
+            year: userInfo.year,
+            major: userInfo.major,
+            expoPushToken: userInfo.expoPushToken,
+            multipleGroupsOptIn: userInfo.multipleGroupsOptIn,
+          });
         }
+        setLoading(() => false);
       });
     }
   }, [user]);
 
   return (
-    <UserSchoolInfoContext.Provider value={{
-      info,
-      loading,
-    }}
+    <UserProfileContext.Provider
+      value={{
+        ...profile,
+        loading,
+        set,
+      }}
     >
       {children}
-    </UserSchoolInfoContext.Provider>
+    </UserProfileContext.Provider>
   );
 };
 
-export default UserSchoolInfoContext;
+export default UserProfileContext;

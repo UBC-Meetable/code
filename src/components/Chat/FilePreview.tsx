@@ -1,9 +1,7 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Layout } from "@ui-kitten/components";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import React from "react";
-import { Image, View } from "react-native";
-import { Icon } from "react-native-elements";
+import { Image, View, StyleSheet } from "react-native";
 import { FileAttachment } from "../../API";
 
 type FilePreviewProps = {
@@ -13,36 +11,44 @@ type FilePreviewProps = {
 
 const FilePreview = ({ file, remove }:FilePreviewProps) => {
   return (
-    <View style={{
-      backgroundColor: "#0000", position: "relative", overflow: "visible",
-    }}
-    >
-      <Layout
-        style={{ backgroundColor: "#0000", position: "relative" }}
-      >
+    <View style={styles.root}>
+      <Layout style={styles.container}>
         <MaterialCommunityIcons
           onPress={() => remove(file)}
           name="close-circle"
           size={20}
-          style={{
-            width: 20,
-            height: 20,
-            position: "absolute",
-            top: 0,
-            zIndex: 1,
-            right: -3,
-          }}
+          style={styles.icon}
         />
         <Image
-          style={{ borderRadius: 5, margin: 5, aspectRatio: file.width! / file.height! }}
+          style={[styles.image, { aspectRatio: file.width! / file.height! }]}
           source={{ uri: file.fileURI }}
           height={100}
           width={100}
         />
       </Layout>
-
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#0000",
+    position: "relative",
+    overflow: "visible",
+  },
+  container: {
+    backgroundColor: "#0000",
+    position: "relative",
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    position: "absolute",
+    top: 0,
+    zIndex: 1,
+    right: -3,
+  },
+  image: { borderRadius: 5, margin: 5 },
+});
 
 export default FilePreview;

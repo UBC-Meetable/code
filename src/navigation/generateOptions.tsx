@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { StackNavigationProp } from "@react-navigation/stack";
-import React, { ReactElement } from "react";
+import React from "react";
 import { Layout } from "@ui-kitten/components";
 import { Dimensions, StyleProp, ViewStyle } from "react-native";
 import ChatBackButton from "../components/Chat/ChatBackButton";

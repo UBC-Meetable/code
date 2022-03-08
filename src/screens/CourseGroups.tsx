@@ -1,30 +1,22 @@
 import { CommonActions } from "@react-navigation/native";
-import { StackNavigationProp, useHeaderHeight } from "@react-navigation/stack";
-import { Layout, List, Spinner } from "@ui-kitten/components";
-import React, { useContext, useEffect, useState } from "react";
-import { RefreshControl, StyleSheet } from "react-native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { List, Spinner } from "@ui-kitten/components";
+import React, { useContext } from "react";
+import { StyleSheet } from "react-native";
 import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import CourseGroupsContext from "../context/CourseGroupsContext";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
-import { ChatMessage, CourseGroup, GroupStackParamList } from "../types";
+import {
+  ChatMessage, CourseGroup, RootStackParamList,
+} from "../types";
 
 const CourseGroups = ({
   navigation,
 }: {
-  navigation: StackNavigationProp<GroupStackParamList, "GroupScreen">;
+  navigation: StackNavigationProp<RootStackParamList, "Home">;
 }) => {
-  const user = useAuthenticatedUser();
   const groups = useContext(CourseGroupsContext);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (typeof groups !== "undefined") {
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [groups]);
   const moveToGroupScreen = (
     groupTitle: string,
     groupID: string,
@@ -39,15 +31,6 @@ const CourseGroups = ({
       }),
     );
   };
-
-  const fakeLoad = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  };
-
-  const headerHeight = useHeaderHeight();
 
   const renderItem = ({ item }: { item: CourseGroup }) => {
     if (!item.groupID) return <Spinner />;
@@ -67,24 +50,51 @@ const CourseGroups = ({
   };
 
   return (
-    <Layout style={{ paddingTop: headerHeight, backgroundColor: "#0000" }}>
-      <List
-        refreshControl={
-          <RefreshControl refreshing={loading} onRefresh={fakeLoad} />
-        }
-        style={[styles.card]}
-        data={groups}
-        renderItem={renderItem}
-      />
-    </Layout>
+    <List
+      bounces={false}
+      // refreshControl={
+      //   <RefreshControl refreshing={loading} />
+      // }
+      style={[styles.card]}
+      data={[...groups]}
+      renderItem={renderItem}
+    />
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    height: "100%",
+    // height: "100%",
     overflow: "scroll",
-    backgroundColor: "#0000",
+    backgroundColor: "transparent",
+  },
+  empty: {
+    color: "#c2c2c2",
+  },
+  sectionTitleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    fontFamily: "Poppins_700Bold",
+    color: "#000",
+  },
+  iconButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 100,
+    marginRight: 15,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  pinned: {
+    marginBottom: 10,
+    marginLeft: 10,
+    backgroundColor: "transparent",
+  },
+  allCourses: {
+    marginVertical: 10,
+    marginLeft: 10,
+    backgroundColor: "transparent",
   },
 });
 

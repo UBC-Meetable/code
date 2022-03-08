@@ -1,12 +1,14 @@
+/* eslint-disable max-len */
 import { API } from "aws-amplify";
 import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
 import Observable from "zen-observable-ts";
-import { GroupType, OnCreateChatMessageSubscription, OnCreateCourseGroupConnectionSubscription } from "../API";
-import fetchCourseGroup from "../calls/fetchCourseGroup";
+import {
+  GroupType, OnCreateChatMessageSubscription, OnCreateCourseGroupConnectionSubscription, OnDeleteCourseGroupConnectionSubscription,
+} from "../API";
 import fetchUserCourses from "../calls/fetchUserCourses";
-import { onCreateChatMessage, onCreateCourseGroupConnection } from "../graphql/subscriptions";
+import { onCreateChatMessage, onCreateCourseGroupConnection, onDeleteCourseGroupConnection } from "../graphql/subscriptions";
 import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ChatMessage, CourseGroup } from "../types";
 
@@ -75,7 +77,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
         {value: {data: OnCreateCourseGroupConnectionSubscription}}) => {
         if (!data.onCreateCourseGroupConnection) return;
 
-        const newGroups:CourseGroup[] = [];
+        const newGroups: CourseGroup[] = [];
         const findGroup = {
           ...data.onCreateCourseGroupConnection.courseGroup,
           messages: [] as any,
@@ -94,6 +96,21 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
       error: (error:any) => console.warn(error),
     });
 
+    return () => subscription.unsubscribe();
+  });
+
+  // update state when CourseGroupConnection deleted
+  useEffect(() => {
+    const observableObj = API.graphql({
+      query: onDeleteCourseGroupConnection,
+    }) as Observable<Object>;
+    const subscription = observableObj.subscribe({
+      next: ({ value: { data } }: {value: {data: OnDeleteCourseGroupConnectionSubscription }}) => {
+        if (!data.onDeleteCourseGroupConnection) return;
+        setGroups(groups.filter((group) => group.groupID !== data.onDeleteCourseGroupConnection?.groupID));
+      },
+      error: (error:any) => console.warn(error),
+    });
     return () => subscription.unsubscribe();
   });
 

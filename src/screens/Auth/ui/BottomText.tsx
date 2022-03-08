@@ -1,5 +1,5 @@
 import { Text } from "@ui-kitten/components";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { StyleSheet } from "react-native";
 import AuthStateContext from "../../../context/AuthStateContext";
 import { AuthState } from "../../../types";
@@ -28,7 +28,7 @@ const BottomText = ({ onPressText }:BottomTextProps) => {
 
   const [text, buttonText] = getTextFromAuthState();
   return (
-    <Text style={{ ...styles.buttonText }}>
+    <Text style={styles.buttonText}>
       {text}
       {" "}
       <Text

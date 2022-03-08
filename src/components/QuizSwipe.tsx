@@ -1,15 +1,9 @@
-import { Layout, Text } from "@ui-kitten/components";
-import React, { useRef, useState } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Layout } from "@ui-kitten/components";
+import React, { useRef } from "react";
+import { StyleSheet } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { QuestionType, SwipeActions } from "../types";
 import QuizCard from "./QuizCard";
-
-const window = Dimensions.get("window");
-
-const q1 = () => <Layout style={{ height: 200, backgroundColor: "green" }}><Text>Hi</Text></Layout>;
-
-const Cards = Array(100).fill(q1);
 
 type SwipeProps = {
   onFinish?: () => void,
@@ -26,7 +20,7 @@ const DEV_SKIP = false;
 const QuizSwipe = ({
   onFinish, data, swiperRef, onSwiped, remainingLoves,
 }: SwipeProps) => {
-  const renderCard = (cardData: QuestionType, index: number) => <QuizCard {...cardData} />;
+  const renderCard = (cardData: QuestionType) => <QuizCard {...cardData} />;
 
   const indexToCardSwipe = (index: number, direction: SwipeActions) => {
     const card = data[index];

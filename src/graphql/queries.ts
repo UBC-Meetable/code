@@ -24,6 +24,7 @@ export const getUser = /* GraphQL */ `
       university
       year
       major
+      interests
       courseGroups {
         items {
           id
@@ -74,6 +75,7 @@ export const getUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -166,6 +168,7 @@ export const getUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -225,6 +228,7 @@ export const getUser = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -307,6 +311,7 @@ export const listUsers = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -338,6 +343,7 @@ export const listUsers = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -388,6 +394,7 @@ export const listUsers = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -424,6 +431,7 @@ export const listUsers = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -512,6 +520,7 @@ export const getCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -577,6 +586,7 @@ export const getCourseGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -682,6 +692,7 @@ export const listCourseGroups = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -724,6 +735,7 @@ export const listCourseGroups = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -812,6 +824,7 @@ export const getFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -875,6 +888,7 @@ export const getFriendGroup = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -978,6 +992,7 @@ export const listFriendGroups = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1018,6 +1033,7 @@ export const listFriendGroups = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1075,6 +1091,7 @@ export const getReport = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -1100,6 +1117,7 @@ export const getReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1135,6 +1153,7 @@ export const getReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1162,6 +1181,7 @@ export const getReport = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1211,6 +1231,7 @@ export const getReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -1242,6 +1263,7 @@ export const getReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1292,6 +1314,7 @@ export const getReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1328,6 +1351,7 @@ export const getReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1370,6 +1394,7 @@ export const getReport = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -1401,6 +1426,7 @@ export const getReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1451,6 +1477,7 @@ export const getReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1487,6 +1514,7 @@ export const getReport = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1549,6 +1577,7 @@ export const listReports = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -1614,6 +1643,7 @@ export const listReports = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -1639,6 +1669,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1674,6 +1705,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1701,6 +1733,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1734,6 +1767,7 @@ export const listReports = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -1759,6 +1793,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1794,6 +1829,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1821,6 +1857,7 @@ export const listReports = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -1868,6 +1905,7 @@ export const getDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -1899,6 +1937,7 @@ export const getDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1949,6 +1988,7 @@ export const getDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -1985,6 +2025,7 @@ export const getDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2027,6 +2068,7 @@ export const getDirectChat = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2058,6 +2100,7 @@ export const getDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2108,6 +2151,7 @@ export const getDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2144,6 +2188,7 @@ export const getDirectChat = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2192,6 +2237,7 @@ export const getDirectChat = /* GraphQL */ `
             university
             year
             major
+            interests
             courseGroups {
               items {
                 id
@@ -2272,6 +2318,7 @@ export const listDirectChats = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -2297,6 +2344,7 @@ export const listDirectChats = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2332,6 +2380,7 @@ export const listDirectChats = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2359,6 +2408,7 @@ export const listDirectChats = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2392,6 +2442,7 @@ export const listDirectChats = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -2417,6 +2468,7 @@ export const listDirectChats = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2452,6 +2504,7 @@ export const listDirectChats = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2479,6 +2532,7 @@ export const listDirectChats = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2518,6 +2572,7 @@ export const listDirectChats = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2573,6 +2628,7 @@ export const getChatMessage = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -2604,6 +2660,7 @@ export const getChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2654,6 +2711,7 @@ export const getChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2690,6 +2748,7 @@ export const getChatMessage = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2758,6 +2817,7 @@ export const listChatMessages = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -2783,6 +2843,7 @@ export const listChatMessages = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2818,6 +2879,7 @@ export const listChatMessages = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2845,6 +2907,7 @@ export const listChatMessages = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -2921,6 +2984,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -2963,6 +3027,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3007,6 +3072,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3038,6 +3104,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3088,6 +3155,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3124,6 +3192,7 @@ export const getCourseGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3202,6 +3271,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3235,6 +3305,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3270,6 +3341,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -3295,6 +3367,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3330,6 +3403,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3357,6 +3431,7 @@ export const listCourseGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3423,6 +3498,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3463,6 +3539,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3507,6 +3584,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3538,6 +3616,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3588,6 +3667,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3624,6 +3704,7 @@ export const getFriendGroupConnection = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3700,6 +3781,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3731,6 +3813,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3766,6 +3849,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -3791,6 +3875,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3826,6 +3911,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3853,6 +3939,7 @@ export const listFriendGroupConnections = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -3899,6 +3986,7 @@ export const getQuiz = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -3930,6 +4018,7 @@ export const getQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -3980,6 +4069,7 @@ export const getQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4016,6 +4106,7 @@ export const getQuiz = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4078,6 +4169,7 @@ export const listQuizs = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -4103,6 +4195,7 @@ export const listQuizs = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4138,6 +4231,7 @@ export const listQuizs = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4165,6 +4259,7 @@ export const listQuizs = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4227,6 +4322,7 @@ export const userByUniYear = /* GraphQL */ `
         university
         year
         major
+        interests
         courseGroups {
           items {
             id
@@ -4258,6 +4354,7 @@ export const userByUniYear = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4308,6 +4405,7 @@ export const userByUniYear = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4344,6 +4442,7 @@ export const userByUniYear = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4411,6 +4510,7 @@ export const chatByUsers = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -4436,6 +4536,7 @@ export const chatByUsers = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4471,6 +4572,7 @@ export const chatByUsers = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4498,6 +4600,7 @@ export const chatByUsers = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4531,6 +4634,7 @@ export const chatByUsers = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -4556,6 +4660,7 @@ export const chatByUsers = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4591,6 +4696,7 @@ export const chatByUsers = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4618,6 +4724,7 @@ export const chatByUsers = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4657,6 +4764,7 @@ export const chatByUsers = /* GraphQL */ `
               university
               year
               major
+              interests
               courseGroups {
                 nextToken
               }
@@ -4727,6 +4835,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -4752,6 +4861,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4787,6 +4897,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4814,6 +4925,7 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4885,6 +4997,7 @@ export const messagesByDirectChatId = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -4910,6 +5023,7 @@ export const messagesByDirectChatId = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4945,6 +5059,7 @@ export const messagesByDirectChatId = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -4972,6 +5087,7 @@ export const messagesByDirectChatId = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5057,6 +5173,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5090,6 +5207,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5125,6 +5243,7 @@ export const courseGroupByUser = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -5150,6 +5269,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5185,6 +5305,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5212,6 +5333,7 @@ export const courseGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5287,6 +5409,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5318,6 +5441,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5353,6 +5477,7 @@ export const friendGroupByUser = /* GraphQL */ `
           university
           year
           major
+          interests
           courseGroups {
             items {
               id
@@ -5378,6 +5503,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5413,6 +5539,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt
@@ -5440,6 +5567,7 @@ export const friendGroupByUser = /* GraphQL */ `
                 university
                 year
                 major
+                interests
                 expoPushToken
                 multipleGroupsOptIn
                 createdAt

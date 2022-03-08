@@ -3,7 +3,7 @@ import {
   Layout, Text,
 } from "@ui-kitten/components";
 import IntroTutorialImage from "../../assets/images/tutorial-slide1.svg";
-import { TutorialStyles as styles } from "../styles";
+import { tutorialStyles as styles } from "../styles";
 
 const Intro = () => (
   <Layout style={styles.main}>

@@ -1,15 +1,11 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React, { useState } from "react";
-import { StyleSheet, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import ImageView from "react-native-image-viewing";
-import { ChatMessage, ChatMessageWithPending } from "../../types";
-import styles from "../styles/MessageStyles";
+import { ChatMessageWithPending } from "../../types";
+import { messageStyles } from "../styles";
 import CachedImage from "./CachedImage";
 
-type PreviewURI = {
-  uri: string;
-  index: number;
-}
 const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
   const [visible, setVisible] = React.useState(false);
   const [index, setIndex] = useState(0);
@@ -20,10 +16,8 @@ const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
     setCachedUris(() => oldMap);
   };
   return (
-    <Layout style={[styles.messageContainer, selfStyles.messageContainer,
-      message.pending ? selfStyles.pending : {}]}
-    >
-      <Layout style={[styles.bubble, selfStyles.bubble]}>
+    <Layout style={[messageStyles.messageContainer, message.pending ? messageStyles.pending : {}]}>
+      <Layout style={[messageStyles.bubble, styles.bubble]}>
         <Layout style={[{ flexDirection: "row", backgroundColor: "#0000", justifyContent: "flex-start" }]}>
           { message.files?.map((file, i) => (
             <TouchableOpacity onPress={() => { setVisible(true); setIndex(i); }} key={i}>
@@ -43,24 +37,16 @@ const SelfMessage = ({ message }:{message: ChatMessageWithPending}) => {
             onRequestClose={() => setVisible(false)}
           />
         )}
-        <Text style={[styles.message, selfStyles.message]}>{ message.body }</Text>
+        <Text style={messageStyles.message}>{ message.body }</Text>
       </Layout>
     </Layout>
   );
 };
 
-const selfStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   bubble: {
     backgroundColor: "#C9E8F3",
   },
-  message: {
-    fontFamily: "Poppins_400Regular",
-  },
-  messageContainer: {
-    justifyContent: "flex-end",
-  },
-  pending: {
-    backgroundColor: "#d9eff7",
-  },
 });
+
 export default SelfMessage;

@@ -7,7 +7,6 @@ import Observable from "zen-observable-ts";
 import { OnCreateChatMessageSubscription } from "../API";
 import fetchCourseGroupMessages from "../calls/fetchCourseGroupMessages";
 import { onCreateChatMessage } from "../graphql/subscriptions";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
 import { ChatMessage } from "../types";
 
 type MessageContextType = {
@@ -26,7 +25,6 @@ export const MessageProvider = (props: { groupID: string, children?: ReactNode }
   const [loading, setLoading] = useState(true);
   const [nextToken, setNextToken] = useState<string | null | undefined>();
   const [reachedEnd, setReachedEnd] = useState(false);
-  const user = useAuthenticatedUser();
   const messagesRef = useRef<ChatMessage[]>([]);
   messagesRef.current = messages;
 

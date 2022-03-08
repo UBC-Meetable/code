@@ -4,16 +4,8 @@ import {
   Text,
 } from "@ui-kitten/components";
 import React, { useState } from "react";
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  View,
-} from "react-native";
-import { Badge, Icon } from "react-native-elements";
-import { IconButton } from "react-native-paper";
-
-const SCREEN_WIDTH = Dimensions.get("window").width;
+import { StyleSheet } from "react-native";
+import { Icon } from "react-native-elements";
 
 type QuizButtonsProps = {
     onLike: () => void;
@@ -40,14 +32,12 @@ const QuizButtons = ({
           onPress={() => onUndo()}
           style={[!undoIn ? styles.shadow : styles.button, { width: 60, height: 60 }]}
         >
-          {() => (
-            <Icon
-              name="undo-variant"
-              type="material-community"
-              color="#FDD0A9"
-              size={30}
-            />
-          )}
+          <Icon
+            name="undo-variant"
+            type="material-community"
+            color="#FDD0A9"
+            size={30}
+          />
         </Button>
         <Button
           onPressIn={() => setDislikeIn(true)}
@@ -55,14 +45,12 @@ const QuizButtons = ({
           onPress={() => onDislike()}
           style={[!dislikeIn ? styles.shadow : styles.button, { width: 80, height: 80 }]}
         >
-          {() => (
-            <Icon
-              name="dislike1"
-              type="antdesign"
-              color="#F5A159"
-              size={40}
-            />
-          )}
+          <Icon
+            name="dislike1"
+            type="antdesign"
+            color="#F5A159"
+            size={40}
+          />
         </Button>
         <Button
           onPressIn={() => setLikeIn(true)}
@@ -70,14 +58,12 @@ const QuizButtons = ({
           onPress={() => onLike()}
           style={[!likeIn ? styles.shadow : styles.button, { width: 80, height: 80 }]}
         >
-          {() => (
-            <Icon
-              name="like1"
-              type="antdesign"
-              color="#7ED1EF"
-              size={40}
-            />
-          )}
+          <Icon
+            name="like1"
+            type="antdesign"
+            color="#7ED1EF"
+            size={40}
+          />
         </Button>
         <Button
           onPressIn={() => setLoveIn(true)}
@@ -87,21 +73,19 @@ const QuizButtons = ({
             : styles.button, { width: 60, height: 60 }, loveDisabled && styles.disabled]}
           disabled={loveDisabled}
         >
-          {() => (
-            <Layout style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#0000" }}>
-              <Icon
-                name="heart"
-                type="antdesign"
-                color={loveDisabled ? "#cc8D8D" : "#FF8D8D"}
-                backgroundColor="#0000"
-                onPress={() => onLove()}
-                disabledStyle={{ backgroundColor: "#0000" }}
-                disabled={loveDisabled}
-                size={30}
-              />
-              <Text style={{ position: "absolute", color: "white" }}>{remainingLoves}</Text>
-            </Layout>
-          )}
+          <Layout style={{ justifyContent: "center", alignItems: "center", backgroundColor: "#0000" }}>
+            <Icon
+              name="heart"
+              type="antdesign"
+              color={loveDisabled ? "#cc8D8D" : "#FF8D8D"}
+              backgroundColor="#0000"
+              onPress={() => onLove()}
+              disabledStyle={{ backgroundColor: "#0000" }}
+              disabled={loveDisabled}
+              size={30}
+            />
+            <Text style={{ position: "absolute", color: "white" }}>{remainingLoves}</Text>
+          </Layout>
         </Button>
       </Layout>
     </Layout>

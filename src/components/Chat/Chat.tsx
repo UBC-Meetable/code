@@ -1,21 +1,14 @@
 import { Spinner } from "@ui-kitten/components";
 import { Analytics, Storage } from "aws-amplify";
 import * as ImagePicker from "expo-image-picker";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
-import React, {
-  useContext,
-  useEffect, useRef, useState,
-} from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   KeyboardAvoidingView, Platform, RefreshControl, ScrollView, StyleSheet,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import * as FileSystem from "expo-file-system";
 import { FileAttachment, FileType } from "../../API";
 import sendMessageToGroup from "../../calls/sendMessageToGroup";
-import Colors from "../../constants/Colors";
 import MessagesContext from "../../context/MessageContext";
-import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import useUserProfile from "../../hooks/useUserProfile";
 import { ChatMessageWithPending, GroupType } from "../../types";
 import MessageInput from "./MessageInput";
@@ -27,12 +20,9 @@ import SelfMessage from "./SelfMessage";
 const Chat = ({ groupType }: {groupType: GroupType}) => {
   const [message, setMessage] = useState("");
   const scrollRef = useRef<ScrollView>(null);
-  const user = useAuthenticatedUser();
-  const userProfile = useUserProfile();
+  const { id, firstName } = useUserProfile();
   const [pendingMessages, setPendingMessages] = useState<ChatMessageWithPending[]>([]);
   const [textLoading, setTextLoading] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [previewURI, setPreviewURI] = useState<string | null>(null);
   const {
     groupID, messages, loading, getMessages, reachedEnd,
   } = useContext(MessagesContext);
@@ -74,9 +64,9 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     const res = sendMessageToGroup({
       groupID,
       body: message,
-      userID: user.attributes.sub,
+      userID: id,
       groupType,
-      userName: userProfile.info!.user!.firstName!,
+      userName: firstName,
       hasFile: !!files?.length,
       files: s3Files,
     });
@@ -89,11 +79,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     setTextLoading(false);
   };
 
-  useEffect(() => {
-    if (messages) { setLoaded(true); }
-  }, [messages]);
-
-  if (!user || !loaded) {
+  if (!messages) {
     return <Spinner />;
   }
 
@@ -101,7 +87,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      console.warn("Permission to access camera roll is required!");
       return;
     }
 
@@ -149,10 +135,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
         onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: false })}
         ref={scrollRef}
         style={styles.messages}
-        contentContainerStyle={{
-          justifyContent: "flex-end",
-          display: "flex",
-        }}
+        contentContainerStyle={styles.contentContainer}
         refreshControl={(
           <RefreshControl
             refreshing={loading}
@@ -162,7 +145,7 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
         )}
       >
         {messages.map((m, index) => {
-          if (m?.author?.id === user.attributes.sub) {
+          if (m?.author?.id === id) {
             return (
               <SelfMessage
                 key={index}
@@ -204,27 +187,19 @@ const Chat = ({ groupType }: {groupType: GroupType}) => {
 };
 
 const styles = StyleSheet.create({
-  chat: {
-    width: "100%",
-    backgroundColor: Colors.theme.lightCreme,
+  contentContainer: {
+    justifyContent: "flex-end",
     display: "flex",
-    flex: 1,
   },
   messages: {
     flex: 1,
     overflow: "scroll",
     backgroundColor: "#0000",
   },
-  safeArea: {
-    flex: 1,
-  },
   messageContainer: {
     flex: 1,
     backgroundColor: "#0000",
     width: "100%",
-  },
-  inputContainer: {
-    flexBasis: 70,
   },
 });
 export default Chat;

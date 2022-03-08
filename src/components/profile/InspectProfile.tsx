@@ -6,10 +6,8 @@ import {
 } from "@ui-kitten/components";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { Chip } from "react-native-paper";
 import { User } from "../../API";
 import reportUser from "../../calls/reportUser";
-import Colors from "../../constants/Colors";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../../types";
 import ProfilePicture from "../ProfilePicture";
@@ -27,7 +25,7 @@ const ReportUserModal = ({ onPressReport, onSuccess }: ReportUserProps) => {
 
   return (
     <ScrollView
-      style={{ width: "100%" }}
+      style={styles.root}
       scrollEnabled={false}
       keyboardDismissMode="interactive"
       bounces={false}
@@ -161,19 +159,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     paddingVertical: 0,
   },
-  matching: {
-    backgroundColor: "#94DBCE",
-  },
-  chip: {
-    display: "flex",
-    justifyContent: "center",
-    maxWidth: 120,
-    margin: 3,
-    flexGrow: 1,
-  },
-  nonMatching: {
-    backgroundColor: Colors.theme.creme,
-  },
   bio: {
     margin: 5,
     flex: 1,
@@ -229,18 +214,13 @@ const styles = StyleSheet.create({
   },
   reportButton: {
     margin: 10,
-    // width: "80%",
     backgroundColor: "red",
     borderWidth: 1,
     borderColor: "red",
-    // color: "#000",
   },
   reportText: {
     marginBottom: 20,
     fontSize: 25,
-  },
-  reportButtonText: {
-    color: "red",
   },
 });
 
