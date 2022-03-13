@@ -183,11 +183,6 @@ type joinFriendGroupOutput {
   relevantUsers: [String!]!
 }
 
-# getFriendSuggestion 
-#type getFriendSuggestion {
-# getFriendSuggestion(id: getFriendSuggestionInput): getFriendSuggestionOutput @function(name: "getFriendSuggestionConnectedToDatabase-${env}")
-#}
-
 input getFriendSuggestionInput {
   id : String!
 }
