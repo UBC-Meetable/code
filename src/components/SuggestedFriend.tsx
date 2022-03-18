@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  Image,
   StyleSheet,
   View,
   Text,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import Tag from "./profile/Tag";
 
 type SuggestFriendProps = {
   name: string;
@@ -17,28 +17,6 @@ type SuggestFriendProps = {
 const SuggestedFriend = ({
   name, interests, courses, faculty,
 }: SuggestFriendProps) => {
-  const renderCourseTags = () => {
-    const courseTags = courses.map((course) => {
-      return (
-        <View style={[styles.tag, { backgroundColor: "#FFEAB4" }]}>
-          <Text style={[styles.tagText]}>{course}</Text>
-        </View>
-      );
-    });
-    return courseTags;
-  };
-
-  const renderInterestTags = () => {
-    const interestTags = interests.map((interest) => {
-      return (
-        <View style={[styles.tag, { backgroundColor: "#FEEDDE" }]}>
-          <Text style={styles.tagText}>{interest}</Text>
-        </View>
-      );
-    });
-    return interestTags;
-  };
-
   return (
     <LinearGradient
       start={{ x: 0.3, y: 0 }}
@@ -54,12 +32,10 @@ const SuggestedFriend = ({
       </View>
       <View>
         <View style={styles.interestsContainer}>
-          {renderInterestTags()}
+          {interests.map((interest) => <Tag type="interest" text={interest} />)}
         </View>
-        <View>
-          <View style={styles.coursesContainer}>
-            {renderCourseTags()}
-          </View>
+        <View style={styles.coursesContainer}>
+          {courses.map((course) => <Tag type="course" text={course} />)}
         </View>
       </View>
     </LinearGradient>
@@ -82,7 +58,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 25,
     borderWidth: 1,
-    // backgroundColor: "linear-gradient('red', 'yellow')",
   },
   name: {
     fontSize: 21,
@@ -114,24 +89,6 @@ const styles = StyleSheet.create({
     width: 50,
     backgroundColor: "#e7f0ff",
     borderRadius: 50,
-  },
-  tagText: {
-    fontSize: 11,
-    textAlign: "center",
-  },
-  tag: {
-    color: "black",
-    padding: 2,
-    paddingTop: 7,
-    paddingBottom: 7,
-    paddingLeft: 7,
-    paddingRight: 7,
-    borderRadius: 800,
-    minWidth: "40%",
-    maxWidth: "50%",
-    margin: 2,
-    marginBottom: 3,
-    maxHeight: 35,
   },
 });
 

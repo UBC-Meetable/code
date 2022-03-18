@@ -90,6 +90,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   suggestedFriendsContainer: {
+    marginLeft: -10,
+    marginRight: -20,
+    paddingLeft: 5,
+    width: "auto",
     flex: 1,
     backgroundColor: "transparent",
     flexDirection: "row",
@@ -138,8 +142,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.theme.transparent,
   },
   scrollView: {
-    // backgroundColor: 'pink',
-    // marginHorizontal: 20,
     marginRight: 0,
   },
 });
