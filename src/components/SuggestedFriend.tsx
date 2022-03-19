@@ -18,10 +18,11 @@ const SuggestedFriend = ({
   name, interests, courses, faculty,
 }: SuggestFriendProps) => {
   return (
+    // TODO: fix linear gradient
     <LinearGradient
       start={{ x: 0.3, y: 0 }}
       end={{ x: 1, y: 0 }}
-      colors={["#fffefd", "#f5fbf5"]}
+      colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 1)"]}
       style={styles.card}
     >
       <View>
@@ -50,14 +51,12 @@ const styles = StyleSheet.create({
     paddingLeft: 2,
     paddingTop: 8,
     paddingBottom: 5,
-    backgroundColor: "#e7f0ff",
-    flexDirection: "column",
     flex: 1,
     alignItems: "center",
     overflow: "hidden",
     marginRight: 10,
     borderRadius: 25,
-    borderWidth: 1,
+    borderWidth: 0.1,
   },
   name: {
     fontSize: 21,
