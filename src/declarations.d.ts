@@ -9,3 +9,4 @@ declare module "*.svg"
 declare module "aws-amplify-react-native";
 declare module "lighten-darken-color";
 declare module "expo-fast-image";
+declare module "react-native-switch-selector";

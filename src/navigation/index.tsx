@@ -52,6 +52,7 @@ import generateOptions from "./generateOptions";
 import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
 import HomeScreen from "../screens/HomeScreen";
+import ChatScreen from "../screens/ChatScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import useUserProfile from "../hooks/useUserProfile";
 
@@ -214,6 +215,10 @@ const AuthorizedApp = () => {
           <Stack.Screen
             name="Home"
             component={HomeScreen}
+          />
+           <Stack.Screen
+            name="Chat"
+            component={ChatScreen}
           />
           <Stack.Screen
             name="Group"
