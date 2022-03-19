@@ -1,6 +1,7 @@
+/* eslint-disable no-shadow */
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Spinner, Text } from "@ui-kitten/components";
-import React from "react";
+import React, { useState } from "react";
 import { Dimensions, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton, Searchbar } from "react-native-paper";
@@ -11,11 +12,19 @@ import { RootStackParamList } from "../types";
 
 const window = Dimensions.get("window");
 
+enum ChatScreenNavigation {
+  COURSE_CHATS = "COURSE_CHATS",
+  DIRECT_CHATS = "DIRECT_CHATS",
+}
+
 type ChatProps = {
   navigation: StackNavigationProp<RootStackParamList, "Chat">;
 };
 
 const Chat = ({ navigation }: ChatProps) => {
+  const [chatScreenMode, setChatScreenMode] = useState(
+    ChatScreenNavigation.COURSE_CHATS
+  );
   const units = useSafeAreaInsets();
   const { loading } = useUserProfile();
 
@@ -42,22 +51,33 @@ const Chat = ({ navigation }: ChatProps) => {
           <IconButton icon="pencil" />
         </Layout>
         <SwitchSelector
+          font="bold"
           style={styles.switch}
           initial={0}
-          onPress={(value) => console.log(value)}
+          onPress={(value: ChatScreenNavigation) => setChatScreenMode(value)}
           textColor="grey"
           selectedColor="black"
           buttonColor="#B5E6FE"
           borderColor="#B5E6FE"
           hasPadding
           options={[
-            { label: "Course Chats", value: "f" },
-            { label: "Direct Chats", value: "m" },
+            { label: "Course Chats", value: ChatScreenNavigation.COURSE_CHATS },
+            { label: "Direct Chats", value: ChatScreenNavigation.DIRECT_CHATS },
           ]}
           testID="gender-switch-selector"
           accessibilityLabel="gender-switch-selector"
         />
         <Searchbar placeholder="Search" style={styles.searchBar} />
+
+        {chatScreenMode == ChatScreenNavigation.COURSE_CHATS ? (
+          <Layout style={styles.chats}>
+            <Text>Chat Screen Here</Text>
+          </Layout>
+        ) : (
+          <Layout style={styles.chats}>
+            <Text>Direct Chat Screen Here</Text>
+          </Layout>
+        )}
       </SafeAreaView>
     </>
   );
@@ -67,6 +87,11 @@ const styles = StyleSheet.create({
   eventsContainer: {
     flex: 1,
     backgroundColor: "transparent",
+  },
+  chats: {
+    marginTop: 30,
+    justifyContent: "center",
+    flexDirection: "row",
   },
   switch: {
     width: "85%",
