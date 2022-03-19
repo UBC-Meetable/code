@@ -24,6 +24,20 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
       <ScrollView contentContainerStyle={styles.selectionsContainer} />
       <PrimaryButton
         status="info"
+        //TODO: Change this to Edit Interests Page
+        onPress={handleLogout}
+      >
+        Edit Interests
+      </PrimaryButton>
+      <PrimaryButton
+        status="info"
+        //TODO: Change this to Edit Courses Page
+        onPress={handleLogout}
+      >
+        Edit Courses
+      </PrimaryButton>
+      <PrimaryButton
+        status="info"
         onPress={handleLogout}
       >
         Log Out
