@@ -36,6 +36,18 @@ type CourseGroup
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
 }
 
+type Event
+    @model 
+    @key(fields: ["eventID"])
+    @auth(rules: [{allow: owner, operations: [create]}]){
+  users: [EventConnection!] @connection(keyName: "byEventID", fields: ["eventID"])
+  title: String!
+  eventID: String!
+  code: String!
+  section: String!
+  messages: [ChatMessage!] @connection(keyName: "byEventID", fields: ["eventID"])
+}
+
 # Friend Groups 
 type FriendGroup
   @model
