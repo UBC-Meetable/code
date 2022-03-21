@@ -12,23 +12,40 @@
       "AmplifyAppId": "dreemc78qbl81"
     },
     "categories": {
-      "auth": {
-        "meetablea02db50ea02db50e": {},
-        "userPoolGroups": {}
-      },
       "function": {
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-5351656c784372487633-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-526e687968555a567537-build.zip"
         },
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/pushNotification-434d372f56336f4c386f-build.zip"
+          "s3Key": "amplify-builds/pushNotification-54635968754f4e2f336d-build.zip"
         },
         "periodicGrouping": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/periodicGrouping-57484d514d39764c6244-build.zip"
-        }
+          "s3Key": "amplify-builds/periodicGrouping-5659524e647431486263-build.zip"
+        },
+        "friendFunction": {
+          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
+          "s3Key": "amplify-builds/friendFunction-656d36696d7743655068-build.zip"
+        },
+        "getFriendSuggestion": {
+          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
+          "s3Key": "amplify-builds/getFriendSuggestion-6a743175645032537874-build.zip"
+        },
+        "getFriendSuggestionTest": {
+          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
+          "s3Key": "amplify-builds/getFriendSuggestionTest-4d6f4f2b414972556476-build.zip"
+        },
+        "getFriendSuggestionConnectedToDatabase": {
+          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
+          "s3Key": "amplify-builds/getFriendSuggestionConnectedToDatabase-2f41524b5555394f7868-build.zip"
+        },
+        "getFriendSuggestions": {}
+      },
+      "auth": {
+        "meetablea02db50ea02db50e": {},
+        "userPoolGroups": {}
       }
     }
   }

@@ -180,6 +180,7 @@ type QAPair {
 # joinFriendGroupInput -> GroupID
 type Query {
   joinFriendGroup(user: joinFriendGroupInput): joinFriendGroupOutput @function(name: "joinFriendGroup-${env}")
+  getFriendSuggestion(id: getFriendSuggestionInput): getFriendSuggestionOutput @function(name: "getFriendSuggestionConnectedToDatabase-${env}")
 }
 
 input joinFriendGroupInput {
@@ -192,6 +193,19 @@ type joinFriendGroupOutput {
   statusCode: Int!
   groupID: String
   relevantUsers: [String!]!
+}
+
+# getFriendSuggestion 
+#type getFriendSuggestion {
+# getFriendSuggestion(id: getFriendSuggestionInput): getFriendSuggestionOutput @function(name: "getFriendSuggestionConnectedToDatabase-${env}")
+#}
+
+input getFriendSuggestionInput {
+  id : String!
+}
+
+type getFriendSuggestionOutput {
+  user: [User!]!
 }
 
 type Mutation {
