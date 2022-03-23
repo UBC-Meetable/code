@@ -18,7 +18,7 @@ type DirectChatProps = {
 const chats: Chat[] = [
   {
     imageUrl: "../../assets/images/profilePic2.jpg",
-    message: "Hello dude. please respond",
+    message: "Hello dude. pls respond",
     name: "John Doe",
   },
 ];

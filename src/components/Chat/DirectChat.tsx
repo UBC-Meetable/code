@@ -1,5 +1,7 @@
 import { Layout } from "@ui-kitten/components";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import TextField from "../../components/ui/TextField";
+
 import React from "react";
 import {
   StyleSheet,
@@ -7,8 +9,11 @@ import {
   Dimensions,
   Platform,
   SafeAreaView,
+  TextInput,
+  View,
 } from "react-native";
 import CourseGroupBackground from "../../assets/images/coursegroupbackground.svg";
+import { IconButton } from "react-native-paper";
 
 type DirectChatProp = {};
 
@@ -32,12 +37,47 @@ const DirectChat = ({}: DirectChatProp) => {
         <Layout style={[styles.titleContainer]}>
           <Text style={styles.titleText}>John Doe</Text>
         </Layout>
+
+        <View
+          style={{
+            marginTop: 50,
+            marginLeft: 20,
+            backgroundColor: "#D3D3D3",
+            width: "70%",
+            height: "7%",
+            borderRadius: 100,
+          }}
+        >
+          <Text style={styles.message}>Hello dude. pls respond</Text>
+        </View>
+        <Layout style={[styles.replyContainer]}>
+        <TextField style={styles.replyBar} />
+        <IconButton icon="send" />
+        </Layout>
       </SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  message: {
+    marginTop: 15,
+    marginLeft: 50,
+    fontSize: 14,
+  },
+  replyBar: {
+    width: "75%",
+    marginLeft: 25,
+ 
+  },
+  titleContainer: {
+    marginLeft: "5%",
+    marginRight: "5%",
+    flexDirection: "row",
+    backgroundColor: "transparent",
+    justifyContent: "space-between",
+  },
+
   root: {
     backgroundColor: "#0000",
     position: "relative",
@@ -50,12 +90,11 @@ const styles = StyleSheet.create({
     color: "#000",
     fontFamily: "Poppins_700Bold",
   },
-  titleContainer: {
-    marginLeft: "5%",
-    marginRight: "5%",
+  replyContainer: {
+    marginTop: "auto",
     flexDirection: "row",
     backgroundColor: "transparent",
-    justifyContent: "space-between",
+  
   },
 });
 
