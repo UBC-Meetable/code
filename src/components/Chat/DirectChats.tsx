@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, View, StyleSheet, Text } from "react-native";
 import { Layout } from "@ui-kitten/components";
-import { IconButton} from "react-native-paper";
+import { IconButton } from "react-native-paper";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../types";
 
@@ -28,7 +28,7 @@ const DirectChats = ({ navigation }: DirectChatProps) => {
     <View style={styles.root}>
       {chats.length &&
         chats.map((chat) => (
-          <Layout>
+          <Layout style={{ marginTop: 15 }}>
             <Image
               style={styles.image}
               source={require("../../assets/images/profilePic2.jpg")}
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     marginRight: 200,
-    borderRadius: 100,
+    borderRadius: 90,
   },
 });
 

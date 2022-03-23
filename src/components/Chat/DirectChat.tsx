@@ -40,7 +40,32 @@ const DirectChat = ({}: DirectChatProp) => {
 
         <View
           style={{
-            marginTop: 50,
+            marginTop: 35,
+            marginLeft: 20,
+            backgroundColor: "#D3D3D3",
+            width: "70%",
+            height: "7%",
+            borderRadius: 100,
+          }}
+        >
+          <Text style={styles.message}>Hello dude. pls respond</Text>
+        </View>
+
+        <View
+          style={{
+            marginTop: 35,
+            marginLeft: 20,
+            backgroundColor: "#D3D3D3",
+            width: "70%",
+            height: "7%",
+            borderRadius: 100,
+          }}
+        >
+          <Text style={styles.message}>Hello dude. pls respond</Text>
+        </View>
+        <View
+          style={{
+            marginTop: 35,
             marginLeft: 20,
             backgroundColor: "#D3D3D3",
             width: "70%",
@@ -51,8 +76,8 @@ const DirectChat = ({}: DirectChatProp) => {
           <Text style={styles.message}>Hello dude. pls respond</Text>
         </View>
         <Layout style={[styles.replyContainer]}>
-        <TextField style={styles.replyBar} />
-        <IconButton icon="send" />
+          <TextField style={styles.replyBar} />
+          <IconButton icon="send" />
         </Layout>
       </SafeAreaView>
     </>
@@ -67,8 +92,7 @@ const styles = StyleSheet.create({
   },
   replyBar: {
     width: "75%",
-    marginLeft: 25,
- 
+    marginLeft: 40,
   },
   titleContainer: {
     marginLeft: "5%",
@@ -94,7 +118,6 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     flexDirection: "row",
     backgroundColor: "transparent",
-  
   },
 });
 

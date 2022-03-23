@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   switch: {
     width: "85%",
     marginLeft: 28,
+    marginTop: 25
   },
   searchBar: {
     width: "80%",
