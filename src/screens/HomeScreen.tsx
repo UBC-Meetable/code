@@ -47,7 +47,7 @@ const Home = ({ navigation }: HomeProps) => {
             <IconButton
               icon="forum"
               size={32}
-              onPress={() => navigation.navigate("Chat")}
+              onPress={() => navigation.navigate("Chats")}
             />
           </Layout>
         </Layout>

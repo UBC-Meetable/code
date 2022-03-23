@@ -1,7 +1,9 @@
 import React from "react";
 import { Image, View, StyleSheet, Text } from "react-native";
 import { Layout } from "@ui-kitten/components";
-import { Searchbar } from "react-native-paper";
+import { IconButton} from "react-native-paper";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../types";
 
 type Chat = {
   imageUrl: string;
@@ -9,7 +11,9 @@ type Chat = {
   name: string;
 };
 
-type DirectChatProps = {};
+type DirectChatProps = {
+  navigation: StackNavigationProp<RootStackParamList, "Chats">;
+};
 
 const chats: Chat[] = [
   {
@@ -19,7 +23,7 @@ const chats: Chat[] = [
   },
 ];
 
-const DirectChats = ({}: DirectChatProps) => {
+const DirectChats = ({ navigation }: DirectChatProps) => {
   return (
     <View style={styles.root}>
       {chats.length &&
@@ -30,6 +34,12 @@ const DirectChats = ({}: DirectChatProps) => {
               source={require("../../assets/images/profilePic2.jpg")}
             />
             <Layout style={styles.chatWrapper}>
+              <IconButton
+                onPress={() => {
+                  navigation.navigate("DirectChat");
+                }}
+                icon="message"
+              />
               <Text style={styles.name}>{chat.name}</Text>
               <Text>{chat.message}</Text>
             </Layout>
@@ -56,7 +66,7 @@ const styles = StyleSheet.create({
   },
   chatWrapper: {
     justifyContent: "center",
-    marginTop: -60,
+    marginTop: -85,
     marginLeft: 100,
   },
 

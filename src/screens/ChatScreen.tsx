@@ -20,7 +20,7 @@ enum ChatScreenNavigation {
 }
 
 type ChatProps = {
-  navigation: StackNavigationProp<RootStackParamList, "Chat">;
+  navigation: StackNavigationProp<RootStackParamList, "Chats">;
 };
 
 const Chat = ({ navigation }: ChatProps) => {
@@ -77,7 +77,7 @@ const Chat = ({ navigation }: ChatProps) => {
           </Layout>
         ) : (
           <Layout style={styles.chats}>
-            <DirectChats />
+            <DirectChats navigation={navigation} />
           </Layout>
         )}
       </SafeAreaView>
@@ -99,12 +99,6 @@ const styles = StyleSheet.create({
     width: "80%",
     marginTop: 30,
     marginLeft: 40,
-  },
-
-  courseGroupContainer: {
-    flex: 1,
-    flexBasis: "50%",
-    backgroundColor: "transparent",
   },
 
   titleText: {

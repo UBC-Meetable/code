@@ -53,6 +53,7 @@ import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
 import HomeScreen from "../screens/HomeScreen";
 import ChatScreen from "../screens/ChatScreen";
+import DirectChat from "../components/Chat/DirectChat"
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import useUserProfile from "../hooks/useUserProfile";
 
@@ -217,7 +218,11 @@ const AuthorizedApp = () => {
             component={HomeScreen}
           />
            <Stack.Screen
-            name="Chat"
+            name="DirectChat"
+            component={DirectChat}
+          />
+           <Stack.Screen
+            name="Chats"
             component={ChatScreen}
           />
           <Stack.Screen

@@ -26,6 +26,8 @@ export type RootStackParamList = {
   Tutorial: undefined;
   Login: undefined;
   Signup: undefined;
+  Chats: undefined;
+  DirectChat: undefined;
   Quiz: {
     return: (q: QuestionType[]) => void;
   };
