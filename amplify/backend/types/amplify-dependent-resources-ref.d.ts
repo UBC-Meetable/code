@@ -40,7 +40,7 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string",
             "CloudWatchEventRule": "string"
         },
-        "getFriendSuggestionConnectedToDatabase": {
+        "getSuggestedFriends": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

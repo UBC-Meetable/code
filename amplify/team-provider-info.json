@@ -24,27 +24,15 @@
         },
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/pushNotification-54635968754f4e2f336d-build.zip"
+          "s3Key": "amplify-builds/pushNotification-645459596a4b64575366-build.zip"
         },
         "periodicGrouping": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
           "s3Key": "amplify-builds/periodicGrouping-5659524e647431486263-build.zip"
         },
-        "friendFunction": {
+        "getSuggestedFriends": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/friendFunction-656d36696d7743655068-build.zip"
-        },
-        "getFriendSuggestionTest": {
-          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/getFriendSuggestionTest-4d6f4f2b414972556476-build.zip"
-        },
-        "getFriendSuggestion": {
-          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/getFriendSuggestion-6a743175645032537874-build.zip"
-        },
-        "getFriendSuggestionConnectedToDatabase": {
-          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/getFriendSuggestionConnectedToDatabase-2f6f665945477a2b3661-build.zip"
+          "s3Key": "amplify-builds/getSuggestedFriends-786b57366248754c6930-build.zip"
         }
       }
     }

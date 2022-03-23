@@ -91,7 +91,7 @@
         }
       ]
     },
-    "getFriendSuggestions": {
+    "getSuggestedFriends": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -100,37 +100,8 @@
           "category": "api",
           "resourceName": "meetable",
           "attributes": [
-            "GraphQLAPIIdOutput"
-          ]
-        }
-      ]
-    },
-    "friendFunction": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "getFriendSuggestion": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
-    "getFriendSuggestionTest": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
-    },
-    "getFriendSuggestionConnectedToDatabase": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "api",
-          "resourceName": "meetable",
-          "attributes": [
-            "GraphQLAPIIdOutput"
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
           ]
         }
       ]
