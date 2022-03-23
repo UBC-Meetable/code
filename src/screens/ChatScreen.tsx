@@ -9,6 +9,8 @@ import SwitchSelector from "react-native-switch-selector";
 import CourseGroupBackground from "../assets/images/coursegroupbackground.svg";
 import useUserProfile from "../hooks/useUserProfile";
 import { RootStackParamList } from "../types";
+import DirectChats from "../components/Chat/DirectChats";
+import CourseChats from "../components/Chat/CourseChats";
 
 const window = Dimensions.get("window");
 
@@ -71,11 +73,11 @@ const Chat = ({ navigation }: ChatProps) => {
 
         {chatScreenMode == ChatScreenNavigation.COURSE_CHATS ? (
           <Layout style={styles.chats}>
-            <Text>Chat Screen Here</Text>
+            <CourseChats />
           </Layout>
         ) : (
           <Layout style={styles.chats}>
-            <Text>Direct Chat Screen Here</Text>
+            <DirectChats />
           </Layout>
         )}
       </SafeAreaView>
@@ -84,10 +86,6 @@ const Chat = ({ navigation }: ChatProps) => {
 };
 
 const styles = StyleSheet.create({
-  eventsContainer: {
-    flex: 1,
-    backgroundColor: "transparent",
-  },
   chats: {
     marginTop: 30,
     justifyContent: "center",
@@ -116,10 +114,11 @@ const styles = StyleSheet.create({
   },
 
   titleContainer: {
-    marginTop: 20,
+    marginLeft: "5%",
+    marginRight: "5%",
     flexDirection: "row",
     backgroundColor: "transparent",
-    justifyContent: "center",
+    justifyContent: "space-between",
   },
 });
 
