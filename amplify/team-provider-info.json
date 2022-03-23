@@ -32,7 +32,7 @@
         },
         "getSuggestedFriends": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/getSuggestedFriends-786b57366248754c6930-build.zip"
+          "s3Key": "amplify-builds/getSuggestedFriends-6346744730366937632f-build.zip"
         }
       }
     }

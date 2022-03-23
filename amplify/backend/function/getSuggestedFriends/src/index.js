@@ -102,8 +102,8 @@ Amplify Params - DO NOT EDIT */
  }
  
  exports.handler = async (event, context) => {
-     let arguments = event.arguments;
-     let userId = arguments.id;
+     let args = event.arguments;
+     let userId = args.id;
    try {
      const friends = await getFriendSuggestion(userId);
      return { body: JSON.stringify(friends) };
