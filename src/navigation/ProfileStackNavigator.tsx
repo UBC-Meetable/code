@@ -2,6 +2,7 @@
 
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { IconProps } from "react-native-vector-icons/Icon";
 import Icon from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "../screens/ProfileScreen";
 import { TabTwoParamList } from "../types";
@@ -14,12 +15,8 @@ import HeaderOptions from "./HeaderOptions";
 
 const ProfileTabStack = createStackNavigator<TabTwoParamList>();
 
-export const GearIcon = (props: any) => (
-  <Icon name="ios-settings" size={24} {...props} />
-);
-
-export const HomeIcon = (props: any) => (
-  <Icon name="home" size={20} {...props} />
+export const Ionicon = (props: IconProps) => (
+  <Icon {...props} />
 );
 
 const ProfileStackNavigator = () => (

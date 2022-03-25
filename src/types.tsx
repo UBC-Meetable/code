@@ -26,6 +26,11 @@ export type RootStackParamList = {
   Tutorial: undefined;
   Login: undefined;
   Signup: undefined;
+  Chat: {
+    groupID: string;
+    groupType: GroupType;
+    groupTitle: string;
+  };
   Quiz: {
     return: (q: QuestionType[]) => void;
   };

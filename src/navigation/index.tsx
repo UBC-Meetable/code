@@ -33,7 +33,7 @@ import * as React from "react";
 import { Dimensions, Platform } from "react-native";
 import { merge } from "lodash";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
-import { UserState } from "../API";
+import { GroupType, UserState } from "../API";
 import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
 import ChatBackButton from "../components/Chat/ChatBackButton";
@@ -56,6 +56,7 @@ import theme from "../constants/theme.json";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import useUserProfile from "../hooks/useUserProfile";
+import Chat from "../components/Chat/Chat";
 
 Amplify.configure({ ...awsconfig });
 Analytics.record("Initialization");
@@ -216,10 +217,21 @@ const AuthorizedApp = () => {
             {(props) => (
               <MessageProvider groupID={props.route.params.groupID}>
                 <GroupScreen
+                  groupID={props.route.params.groupID}
                   groupType={props.route.params.groupType}
                   groupTitle={props.route.params.groupTitle}
                   navigation={props.navigation}
                 />
+              </MessageProvider>
+            )}
+          </Stack.Screen>
+          <Stack.Screen
+            name="Chat"
+          >
+            {(props) => (
+              <MessageProvider groupID={props.route.params.groupID}>
+                {/* Only groups supported are courses now */}
+                <Chat groupType={GroupType.COURSE} />
               </MessageProvider>
             )}
           </Stack.Screen>

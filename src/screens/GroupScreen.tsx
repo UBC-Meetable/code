@@ -5,21 +5,47 @@ import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
 import CourseGroup from "../components/courseGroup/CourseGroup";
 import Colors from "../constants/Colors";
-import { GearIcon, HomeIcon } from "../navigation/ProfileStackNavigator";
+import { Ionicon } from "../navigation/ProfileStackNavigator";
 import { GroupType, RootStackParamList } from "../types";
 
-type HeaderRightProps = {
+type HeaderComponentProps = {
   navigation: StackNavigationProp<RootStackParamList, "Group">;
 };
 
-const HeaderLeft = ({ navigation }: HeaderRightProps) => {
+const HeaderLeft = ({ navigation }: HeaderComponentProps) => {
   return (
     <Layout style={styles.headerLeftRoot}>
       <Button
         onPress={() => navigation.popToTop()}
         style={styles.iconButton}
         appearance="ghost"
-        accessoryLeft={HomeIcon}
+        accessoryLeft={<Ionicon name="home" size={20} />}
+      />
+    </Layout>
+  );
+};
+
+type HeaderRightProps = {
+  navigation: StackNavigationProp<RootStackParamList, "Group">;
+  groupTitle: string;
+  groupID: string;
+  groupType: GroupType;
+}
+
+const HeaderRight = ({
+  navigation, groupID, groupTitle, groupType,
+}: HeaderRightProps) => {
+  return (
+    <Layout style={styles.headerLeftRoot}>
+      <Button
+        onPress={() => navigation.navigate("Chat", {
+          groupID,
+          groupTitle,
+          groupType,
+        })}
+        style={styles.iconButton}
+        appearance="ghost"
+        accessoryLeft={<Ionicon name="chatbox" size={20} />}
       />
     </Layout>
   );
@@ -29,10 +55,12 @@ const GroupScreen = ({
   navigation,
   groupTitle,
   groupType,
+  groupID,
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Group">;
   groupTitle: string;
   groupType: GroupType;
+  groupID: string;
 }) => {
   useEffect(() => {
     navigation.setOptions({
@@ -43,6 +71,14 @@ const GroupScreen = ({
       headerTitle: groupTitle,
       headerLeft: () => (
         <HeaderLeft navigation={navigation} />
+      ),
+      headerRight: () => (
+        <HeaderRight
+          navigation={navigation}
+          groupID={groupID}
+          groupTitle={groupTitle}
+          groupType={groupTitle}
+        />
       ),
     });
   }, [groupTitle, groupType]);
