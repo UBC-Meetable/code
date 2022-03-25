@@ -21,16 +21,16 @@ headerLeft: string | any) => {
     headerShown: true,
     headerTitle: "",
     headerLeft,
-    headerBackground: (props: {style: StyleProp<ViewStyle>}) => (
-      <Layout
-        {...props}
-        style={{
-          backgroundColor: Colors.theme.lightCreme,
-        }}
-      >
-        <BubbleHeader width={window.width} height={170} />
-      </Layout>
-    ),
+    // headerBackground: (props: {style: StyleProp<ViewStyle>}) => (
+    //   <Layout
+    //     {...props}
+    //     style={{
+    //       backgroundColor: Colors.theme.lightCreme,
+    //     }}
+    //   >
+    //     <BubbleHeader width={window.width} height={100} />
+    //   </Layout>
+    // ),
   });
 };
 export default generateOptions;

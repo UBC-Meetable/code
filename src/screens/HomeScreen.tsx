@@ -11,6 +11,7 @@ import Smile from "../assets/images/smile.svg";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
+import { homeStyles } from "../styles";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
 
@@ -28,19 +29,27 @@ const Home = ({ navigation }: HomeProps) => {
   return (
     <>
       {/* Background, Outside of Safe Area View */}
-      <CourseGroupBackground width={window.width} style={{ position: "absolute", opacity: 0.7 }} />
+      <CourseGroupBackground
+        width={window.width}
+        style={{ position: "absolute", opacity: 0.7 }}
+      />
 
       {/* TODO make this safe area a global component */}
-      <SafeAreaView style={{ marginTop: Platform.OS === "android" ? units.top : 0, flex: 1 }}>
+      <SafeAreaView
+        style={{
+          marginTop: Platform.OS === "android" ? units.top : 0,
+          flex: 1,
+        }}
+      >
         {/* Welcome Banner */}
-        <Layout style={styles.topContainer}>
-          <Layout style={[styles.titleContainer]}>
+        <Layout style={homeStyles.topContainer}>
+          <Layout style={[homeStyles.titleContainer]}>
             <Smile />
           </Layout>
-          <Layout style={styles.topRightButtonContainer}>
+          <Layout style={homeStyles.topRightButtonContainer}>
             <ProfilePicture
               onPress={() => navigation.navigate("ProfileStack")}
-              imageStyle={styles.profilePicture}
+              imageStyle={homeStyles.profilePicture}
               imageKey={profilePicture || ""}
               size={ProfilePictureSize.TOP}
             />
@@ -51,73 +60,23 @@ const Home = ({ navigation }: HomeProps) => {
             />
           </Layout>
         </Layout>
-        <Layout style={styles.body}>
-          <Text style={styles.titleText}>Suggested Friends</Text>
-          <Layout style={styles.eventsContainer}>
+        <Layout style={homeStyles.body}>
+          <Text style={homeStyles.titleText}>Suggested Friends</Text>
+          <Layout style={homeStyles.eventsContainer}>
             <Text> List of friends here </Text>
           </Layout>
-          <Text style={styles.titleText}>Upcoming Events</Text>
-          <Layout style={styles.eventsContainer}>
+          <Text style={homeStyles.titleText}>Upcoming Events</Text>
+          <Layout style={homeStyles.eventsContainer}>
             <Text> Events Should link to event page? </Text>
           </Layout>
-          <Text style={styles.titleText}>Courses</Text>
-          <Layout style={styles.courseGroupContainer}>
+          <Text style={homeStyles.titleText}>Courses</Text>
+          <Layout style={homeStyles.courseGroupContainer}>
             <CourseGroups navigation={navigation} />
           </Layout>
         </Layout>
-
       </SafeAreaView>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  eventsContainer: {
-    flex: 1,
-    backgroundColor: "transparent",
-  },
-  courseGroupContainer: {
-    flex: 1,
-    flexBasis: "50%",
-    backgroundColor: "transparent",
-  },
-  body: {
-    display: "flex",
-    flexDirection: "column",
-    flex: 1,
-    padding: 20,
-    backgroundColor: "transparent",
-  },
-  titleText: {
-    fontSize: 24,
-    marginBottom: 10,
-    color: "#000",
-    fontFamily: "Poppins_700Bold",
-  },
-  topRightButtonContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
-    marginRight: 25,
-  },
-  titleContainer: {
-    backgroundColor: "transparent",
-    padding: 20,
-  },
-  topContainer: {
-    flexDirection: "row",
-    position: "relative",
-    backgroundColor: "transparent",
-    justifyContent: "space-between",
-  },
-  profilePicture: {
-    marginRight: 20,
-    marginBottom: 20,
-    alignSelf: "center",
-  },
-  buttonGroup: {
-    justifyContent: "center",
-    backgroundColor: Colors.theme.transparent,
-  },
-});
 
 export default Home;

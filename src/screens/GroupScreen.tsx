@@ -1,14 +1,29 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import {
-  Button,
-  Layout,
-} from "@ui-kitten/components";
+import { Button, Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import Chat from "../components/Chat/Chat";
+import CourseGroup from "../components/courseGroup/CourseGroup";
 import Colors from "../constants/Colors";
-import { GearIcon } from "../navigation/ProfileStackNavigator";
+import { GearIcon, HomeIcon } from "../navigation/ProfileStackNavigator";
 import { GroupType, RootStackParamList } from "../types";
+
+type HeaderRightProps = {
+  navigation: StackNavigationProp<RootStackParamList, "Group">;
+};
+
+const HeaderLeft = ({ navigation }: HeaderRightProps) => {
+  return (
+    <Layout style={styles.headerLeftRoot}>
+      <Button
+        onPress={() => navigation.popToTop()}
+        style={styles.iconButton}
+        appearance="ghost"
+        accessoryLeft={HomeIcon}
+      />
+    </Layout>
+  );
+};
 
 const GroupScreen = ({
   navigation,
@@ -20,18 +35,20 @@ const GroupScreen = ({
   groupType: GroupType;
 }) => {
   useEffect(() => {
-    navigation.setOptions({ headerBackTitle: groupTitle });
-    if (groupType === GroupType.FRIEND) {
-      navigation.setOptions({
-        headerRight: () => (
-          <Button onPress={() => navigation.navigate("FriendOptions")} style={styles.iconButton} appearance="ghost" accessoryLeft={GearIcon} />
-        ),
-      });
-    }
+    navigation.setOptions({
+      headerShown: true,
+      headerTitleAlign: "left",
+      headerTitleStyle: styles.headerTitle,
+      headerTransparent: true,
+      headerTitle: groupTitle,
+      headerLeft: () => (
+        <HeaderLeft navigation={navigation} />
+      ),
+    });
   }, [groupTitle, groupType]);
   return (
     <Layout style={styles.root}>
-      <Chat groupType={groupType} />
+      <CourseGroup />
     </Layout>
   );
 };
@@ -49,10 +66,20 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 100,
-    marginRight: 15,
+    marginRight: 10,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+  },
+  headerLeftRoot: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "transparent",
+  },
+  headerTitle: {
+    fontSize: 30,
+    fontFamily: "Poppins_600SemiBold",
   },
 });
 

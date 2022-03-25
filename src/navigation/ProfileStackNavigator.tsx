@@ -18,6 +18,10 @@ export const GearIcon = (props: any) => (
   <Icon name="ios-settings" size={24} {...props} />
 );
 
+export const HomeIcon = (props: any) => (
+  <Icon name="home" size={20} {...props} />
+);
+
 const ProfileStackNavigator = () => (
   <ProfileTabStack.Navigator
     screenOptions={{

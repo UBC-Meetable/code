@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authmeetablea02db50ea02db50e"
+    },
+    "conflictResolution": {},
+    "apiName": "meetable",
+    "gqlSchemaPath": "/Users/trevorflanigan/Desktop/Projects/MeetableApp/amplify/backend/api/meetable/schema.graphql"
+  }
+}

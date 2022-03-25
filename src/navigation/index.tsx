@@ -22,7 +22,9 @@ import {
   StackNavigationProp,
 } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider, Layout, IconRegistry,
+  ApplicationProvider as UiProvider,
+  Layout,
+  IconRegistry,
 } from "@ui-kitten/components";
 import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
@@ -85,9 +87,7 @@ export default function Navigation() {
         theme={{ ...eva.light, ...theme }}
         customMapping={merge(eva.mapping, mapping)}
       >
-        <NavigationContainer
-          theme={DefaultTheme}
-        >
+        <NavigationContainer theme={DefaultTheme}>
           <UserProvider>
             <UserProfileProvider>
               <App />
@@ -129,9 +129,7 @@ const AuthorizedApp = () => {
   // Register for push notifications
   React.useEffect(() => {
     const registerForPushNotificationsAsync = async () => {
-      const {
-        status: existingStatus,
-      } = await Notifications.requestPermissionsAsync();
+      const { status: existingStatus } = await Notifications.requestPermissionsAsync();
 
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
@@ -156,7 +154,9 @@ const AuthorizedApp = () => {
           lightColor: "#FF231F7C",
         });
       }
-      if (token.data) { Analytics.record({ name: "Push Notifications Success" }); }
+      if (token.data) {
+        Analytics.record({ name: "Push Notifications Success" });
+      }
       if (token.data !== "" && token.data !== expoPushToken) {
         set({ id, expoPushToken: token.data });
       }
@@ -190,9 +190,7 @@ const AuthorizedApp = () => {
       throw new Error("UserState undefined");
     }
 
-    return (
-      <SignUpStackNavigator initRoute={initRoute} />
-    );
+    return <SignUpStackNavigator initRoute={initRoute} />;
   }
 
   return (
@@ -206,21 +204,14 @@ const AuthorizedApp = () => {
               marginLeft: 10,
             },
             headerStyle: {
-              height: 170,
+              height: 100,
             },
           }}
           initialRouteName="Home"
         >
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-          />
+          <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen
             name="Group"
-            options={({ navigation }) => generateOptions(navigation,
-              ({ label }: { label: string }) => (
-                <ChatBackButton navigation={navigation} label={label} />
-              ))}
           >
             {(props) => (
               <MessageProvider groupID={props.route.params.groupID}>
@@ -255,23 +246,20 @@ const AuthorizedApp = () => {
               headerLeft: () => (
                 <ChatBackButton navigation={navigation} label="Settings" />
               ),
-              headerBackground: (props) => (
-                <Layout
-                  {...props}
-                  style={{
-                    backgroundColor: Colors.theme.lightCreme,
-                  }}
-                >
-                  <BubbleHeader width={window.width} height={170} />
-                </Layout>
-              ),
+              // headerBackground: (props) => (
+              //   <Layout
+              //     {...props}
+              //     style={{
+              //       backgroundColor: Colors.theme.lightCreme,
+              //     }}
+              //   >
+              //     <BubbleHeader width={200} height={100} />
+              //   </Layout>
+              // ),
             } as StackNavigationOptions)}
             component={ProfileSettingsScreen}
           />
-          <Stack.Screen
-            name="ProfileStack"
-            component={ProfileStackNavigator}
-          />
+          <Stack.Screen name="ProfileStack" component={ProfileStackNavigator} />
           <Stack.Screen name="Quiz">
             {(props) => (
               <QuizScreen

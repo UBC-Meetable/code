@@ -19,6 +19,7 @@ type User
   courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
   quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
+  events: [EventAttendee!]! @connection(keyName: "byUser", fields: ["id"])
   expoPushToken: String
   multipleGroupsOptIn: Boolean # undefined interpreted same as false
 }
@@ -33,7 +34,35 @@ type CourseGroup
   groupID: String!
   code: String!
   section: String!
+  events: [Event!]! @connection(keyName: "byCourseGroup", fields: ["groupID"])
   messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
+}
+
+type EventAttendee
+  @model
+  @key(name: "byEvent", fields: ["eventID", "userID"])
+  @key(name: "byUser", fields: ["userID", "eventID"])
+  @auth(rules: [{allow: owner, operations: [create]}]){
+  id: ID!
+  userID: String!
+  eventID: String!
+  user: User! @connection(fields: ["userID"])
+  event: Event! @connection(fields: ["eventID"])
+}
+
+type Event
+  @model 
+  @key(name: "byCourseGroup", fields: ["id", "startTime"])
+  @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) {
+  id: String!
+  title: String!
+  description: String
+  startTime: AWSDateTime!
+  endTime: AWSDateTime!
+  location: String
+  courseGroup: CourseGroup! @connection(fields: ["id"])
+  attendees: [EventAttendee!]! @connection(keyName: "byEvent", fields: ["id"])
+  messages: [ChatMessage!] @connection(keyName: "byEventID", fields: ["id"])
 }
 
 # Friend Groups 
@@ -83,9 +112,11 @@ type DirectChat
 #[Many ChatMessages: Many Users]
 type ChatMessage
   @model
+  @key(name: "byEventID", fields: ["eventID", "createdAt"], queryField: "messagesByEventID")
   @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
   @key(name: "byDirectChatID", fields: ["directChatID", "createdAt"], queryField: "messagesByDirectChatID")
   @auth(rules: [{allow: owner, operations: [create]}]) {
+    eventID: String
     groupChatID: String # removing ! to allow ChatMessages in DMs
     directChatID: String
     userID: String!
