@@ -7,12 +7,13 @@ import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
-import { StyleSheet, Modal } from "react-native";
+import { StyleSheet, Modal, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
+import PrimaryButton from "../components/ui/PrimaryButton";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
@@ -128,12 +129,88 @@ const ProfileScreen = () => {
       <Text style={styles.email}>
         {user.email || ""}
       </Text>
-      <Button
-        appearance="ghost"
+      <PrimaryButton
+        // appearance="ghost"
+        status="info"
         onPress={open}
+        style={styles.edit}
       >
         Edit Profile
-      </Button>
+      </PrimaryButton>
+      <Text
+        style={styles.name}
+      >
+        Bio
+      </Text>
+      <View
+        style={styles.itemContainer}
+      >
+        <Text
+          style={styles.bio}
+        >
+          {bio}
+        </Text>
+      </View>
+      <Text
+        style={styles.name}
+      >
+        Enrolled Classes
+      </Text>
+      <View
+        style={styles.itemContainer}
+      >
+        <View
+          style={styles.textDiv}
+        >
+          <Text>
+            CPEN211
+          </Text>
+        </View>
+        <View
+          style={styles.textDiv}
+          >
+          <Text>
+            MATH256
+          </Text>
+        </View>
+        <View
+          style={styles.textDiv}
+          >
+          <Text>
+            CPEN221
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={styles.name}
+      >
+        Interests
+      </Text>
+      <View
+        style={styles.itemContainer}
+      >
+        <View
+          style={styles.textDiv}
+        >
+          <Text>
+            Anime 📺
+          </Text>
+        </View>
+        <View
+          style={styles.textDiv}
+          >
+          <Text>
+            Gaming 🎮
+          </Text>
+        </View>
+        <View
+          style={styles.textDiv}
+          >
+          <Text>
+            Formula 1 🏎️
+          </Text>
+        </View>
+      </View>
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
@@ -177,8 +254,8 @@ const ProfileScreen = () => {
             style={profileStyles.inputStyle}
             textStyle={profileStyles.inputTextStyle}
           />
-          <Button onPress={save} style={{ marginTop: 16 }}>Save</Button>
-          <Button appearance="ghost" onPress={close}>Close</Button>
+          <PrimaryButton onPress={save} style={{ marginTop: 16, alignSelf: "center" }}>Save</PrimaryButton>
+          <PrimaryButton appearance="ghost" style={{ alignSelf: "center" }} onPress={close}>Close</PrimaryButton>
         </Layout>
       </Modal>
     </ScrollView>
@@ -202,6 +279,35 @@ const styles = StyleSheet.create({
     fontFamily: "Quicksand_600SemiBold",
     color: "#FBBA82",
   },
+  edit: {
+    marginTop: 20
+  },
+  bio: {
+    width: "90%",
+    paddingTop:20,
+    paddingBottom:20,
+    color:'black',
+    textAlign:'center',
+  },
+  textDiv: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+    backgroundColor: '#FFEAB4',
+    borderRadius: 20,
+    padding:10,
+    margin: 10
+  },
+  itemContainer: {
+    width: "90%",
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
+  }
 });
 
 export default ProfileScreen;
