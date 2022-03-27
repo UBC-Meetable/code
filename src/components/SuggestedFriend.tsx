@@ -17,6 +17,8 @@ type SuggestFriendProps = {
 const SuggestedFriend = ({
   name, interests, courses, faculty,
 }: SuggestFriendProps) => {
+  const firstTwoInterests = interests.slice(0, 2);
+  const firstFourCourses = courses.slice(0, 4);
   return (
     // TODO: fix linear gradient
     <LinearGradient
@@ -26,17 +28,16 @@ const SuggestedFriend = ({
       style={styles.card}
     >
       <View>
-        {/* Replace with profile picture component */}
         <View style={styles.image} />
         <Text style={styles.name}>{name}</Text>
         <Text style={styles.faculty}>{faculty}</Text>
       </View>
       <View>
         <View style={styles.interestsContainer}>
-          {interests.map((interest) => <Tag type="interest" text={interest} />)}
+          {firstTwoInterests.map((interest, index) => <Tag type="interest" text={interest} key={index} />)}
         </View>
         <View style={styles.coursesContainer}>
-          {courses.map((course) => <Tag type="course" text={course} />)}
+          {firstFourCourses.map((course, index) => <Tag type="course" text={course} key={index} />)}
         </View>
       </View>
     </LinearGradient>

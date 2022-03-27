@@ -24,7 +24,7 @@ type HomeProps = {
 
 const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
-  const { loading, profilePicture } = useUserProfile();
+  const { loading, profilePicture, id } = useUserProfile();
 
   if (loading) return <Spinner />;
   return (
@@ -60,7 +60,7 @@ const Home = ({ navigation }: HomeProps) => {
               horizontal
               style={[styles.scrollView, styles.suggestedFriendsContainer]}
             >
-              <SuggestedFriend name="Betty" interests={["Hip-Hop🎧", "Dancing🕺"]} courses={["APSC 280", "CPSC 210", "COMM 434", "COMM 365"]} faculty="Engineering" />
+              <SuggestedFriend name="Betty" interests={["Hip-Hop🎧", "Dancing🕺", "Music🎧"]} courses={["APSC 280", "CPSC 210", "COMM 434", "COMM 365", "COMM 100", "COMM 101"]} faculty="Engineering" />
               <SuggestedFriend name="Brendan" interests={["Shopping👛", "Music🎧"]} courses={["APSC 300", "CPSC 400", "COMM 100", "COMM 101"]} faculty="Duck Biology" />
             </ScrollView>
             <Text style={styles.titleText}>Upcoming Events</Text>
