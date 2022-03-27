@@ -53,6 +53,7 @@ import SignUpStackNavigator from "./SignUpStackNavigator";
 import theme from "../constants/theme.json";
 import HomeScreen from "../screens/HomeScreen";
 import ChatScreen from "../screens/ChatScreen";
+import CreateNewChat from "../components/Chat/CreateNewChat"
 import DirectChat from "../components/Chat/DirectChat"
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import useUserProfile from "../hooks/useUserProfile";
@@ -224,6 +225,10 @@ const AuthorizedApp = () => {
            <Stack.Screen
             name="Chats"
             component={ChatScreen}
+          />
+           <Stack.Screen
+            name="NewChat"
+            component={CreateNewChat}
           />
           <Stack.Screen
             name="Group"

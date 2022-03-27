@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Dimensions, Platform, SafeAreaView, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IconButton, Searchbar } from "react-native-paper";
-import SwitchSelector from "react-native-switch-selector";
+// import SwitchSelector from "react-native-switch-selector";
 import CourseGroupBackground from "../assets/images/coursegroupbackground.svg";
 import useUserProfile from "../hooks/useUserProfile";
 import { RootStackParamList } from "../types";
@@ -25,7 +25,7 @@ type ChatProps = {
 
 const Chat = ({ navigation }: ChatProps) => {
   const [chatScreenMode, setChatScreenMode] = useState(
-    ChatScreenNavigation.COURSE_CHATS
+    ChatScreenNavigation.DIRECT_CHATS
   );
   const units = useSafeAreaInsets();
   const { loading } = useUserProfile();
@@ -47,12 +47,22 @@ const Chat = ({ navigation }: ChatProps) => {
         }}
       >
         <Layout style={[styles.titleContainer]}>
-          <IconButton icon="home" />
+          <IconButton
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+            icon="home"
+          />
 
           <Text style={styles.titleText}>Chats</Text>
-          <IconButton icon="pencil" />
+          <IconButton 
+           onPress={() => {
+            navigation.navigate("NewChat");
+          }}
+          
+          icon="pencil" />
         </Layout>
-        <SwitchSelector
+        {/* <SwitchSelector
           font="bold"
           style={styles.switch}
           initial={0}
@@ -68,7 +78,7 @@ const Chat = ({ navigation }: ChatProps) => {
           ]}
           testID="gender-switch-selector"
           accessibilityLabel="gender-switch-selector"
-        />
+        /> */}
         <Searchbar placeholder="Search" style={styles.searchBar} />
 
         {chatScreenMode == ChatScreenNavigation.COURSE_CHATS ? (
@@ -94,7 +104,7 @@ const styles = StyleSheet.create({
   switch: {
     width: "85%",
     marginLeft: 28,
-    marginTop: 25
+    marginTop: 25,
   },
   searchBar: {
     width: "80%",
