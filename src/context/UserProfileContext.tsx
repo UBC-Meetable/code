@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useState } from "react";
-import { Interest } from "../types";
 import { UpdateUserInput, UserState } from "../API";
 import fetchUserProfile from "../calls/fetchUserProfile";
 import createUserProfile from "../calls/createUserProfile";
@@ -11,7 +10,7 @@ export type UserProfileType = {
   email?: string | null | undefined,
   firstName?: string | null,
   lastName?: string | null,
-  interests?: Interest[] | (string | null)[] | null,
+  interests?: string[] | null,
   profilePicture?: string | null,
   bio?: string | null,
   userState?: UserState | null,

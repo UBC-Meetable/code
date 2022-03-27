@@ -73,16 +73,10 @@ export type TabTwoParamList = {
   ProfileScreen: undefined;
 };
 
-export type Interest = {
-  name: string;
-  category: string;
-  selected: boolean;
-};
-
 export type User =
   {
     at_hash: string;
-    interests: Interest[];
+    interests: string[];
     aud: string;
     exp: number;
     family_name: string;
