@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "meetable",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authmeetablea02db50ea02db50e",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

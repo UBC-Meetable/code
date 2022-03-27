@@ -117,13 +117,15 @@ node_modules/
 aws-exports.js
 awsconfiguration.json
 
+amplify/backend/api/meetable/pipelineFunctions/
+amplify/backend/api/meetable/resolvers/
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
 amplify/mock-data
 amplify/backend/amplify-meta.json
-amplify/backend/awscloudformation
 amplify/backend/.temp
 build/
 dist/
@@ -138,5 +140,3 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
-amplify/backend/api/meetable/pipelineFunctions/
-amplify/backend/api/meetable/resolvers/

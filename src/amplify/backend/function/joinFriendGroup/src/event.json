@@ -1,0 +1,15 @@
+
+{
+  "typeName": "Query",
+  "fieldName": "", 
+  "arguments": { "user": {
+    "id": "1943998a-6fe8-4cc1-b322-879ea4375fec",
+    "university": "The University of British Columbia",
+    "year": -1
+  } }, 
+  "identity": {},
+  "source": {}, 
+  "request": {}, 
+  "prev": {},
+  "comment": "this mock is according to the AWS docs https://docs.amplify.aws/guides/api-graphql/lambda-resolvers/q/platform/js#creating-basic-query-and-mutation-function-resolvers"
+}

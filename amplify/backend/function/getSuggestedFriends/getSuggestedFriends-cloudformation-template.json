@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.25\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -23,10 +23,6 @@
     "apimeetableGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apimeetableGraphQLAPIEndpointOutput"
-    },
-    "functionjoinFriendGroupName": {
-      "Type": "String",
-      "Default": "functionjoinFriendGroupName"
     }
   },
   "Conditions": {
@@ -59,12 +55,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "periodicGrouping",
+            "getSuggestedFriends",
             {
               "Fn::Join": [
                 "",
                 [
-                  "periodicGrouping",
+                  "getSuggestedFriends",
                   "-",
                   {
                     "Ref": "env"
@@ -87,9 +83,6 @@
             },
             "API_MEETABLE_GRAPHQLAPIENDPOINTOUTPUT": {
               "Ref": "apimeetableGraphQLAPIEndpointOutput"
-            },
-            "FUNCTION_JOINFRIENDGROUP_NAME": {
-              "Ref": "functionjoinFriendGroupName"
             },
             "API_MEETABLE_USERTABLE_NAME": {
               "Fn::ImportValue": {
@@ -116,58 +109,6 @@
                   }
                 ]
               ]
-            },
-            "API_MEETABLE_FRIENDGROUPTABLE_NAME": {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupTable:Name"
-              }
-            },
-            "API_MEETABLE_FRIENDGROUPTABLE_ARN": {
-              "Fn::Join": [
-                "",
-                [
-                  "arn:aws:dynamodb:",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ":",
-                  {
-                    "Ref": "AWS::AccountId"
-                  },
-                  ":table/",
-                  {
-                    "Fn::ImportValue": {
-                      "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupTable:Name"
-                    }
-                  }
-                ]
-              ]
-            },
-            "API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_NAME": {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupConnectionTable:Name"
-              }
-            },
-            "API_MEETABLE_FRIENDGROUPCONNECTIONTABLE_ARN": {
-              "Fn::Join": [
-                "",
-                [
-                  "arn:aws:dynamodb:",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ":",
-                  {
-                    "Ref": "AWS::AccountId"
-                  },
-                  ":table/",
-                  {
-                    "Fn::ImportValue": {
-                      "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupConnectionTable:Name"
-                    }
-                  }
-                ]
-              ]
             }
           }
         },
@@ -179,7 +120,7 @@
         },
         "Runtime": "nodejs14.x",
         "Layers": [],
-        "Timeout": "25"
+        "Timeout": 25
       }
     },
     "LambdaExecutionRole": {
@@ -188,12 +129,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "meetableLambdaRole91837277",
+            "meetableLambdaRole6d729535",
             {
               "Fn::Join": [
                 "",
                 [
-                  "meetableLambdaRole91837277",
+                  "meetableLambdaRole6d729535",
                   "-",
                   {
                     "Ref": "env"
@@ -264,45 +205,6 @@
         }
       }
     },
-    "CloudWatchEvent": {
-      "Type": "AWS::Events::Rule",
-      "Properties": {
-        "Description": "Schedule rule for Lambda",
-        "ScheduleExpression": {
-          "Ref": "CloudWatchRule"
-        },
-        "State": "ENABLED",
-        "Targets": [
-          {
-            "Arn": {
-              "Fn::GetAtt": [
-                "LambdaFunction",
-                "Arn"
-              ]
-            },
-            "Id": {
-              "Ref": "LambdaFunction"
-            }
-          }
-        ]
-      }
-    },
-    "PermissionForEventsToInvokeLambda": {
-      "Type": "AWS::Lambda::Permission",
-      "Properties": {
-        "FunctionName": {
-          "Ref": "LambdaFunction"
-        },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "events.amazonaws.com",
-        "SourceArn": {
-          "Fn::GetAtt": [
-            "CloudWatchEvent",
-            "Arn"
-          ]
-        }
-      }
-    },
     "AmplifyResourcesPolicy": {
       "DependsOn": [
         "LambdaExecutionRole"
@@ -363,22 +265,12 @@
                       "/types/Mutation/*"
                     ]
                   ]
-                }
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "lambda:Get*",
-                "lambda:List*",
-                "lambda:Invoke*"
-              ],
-              "Resource": [
+                },
                 {
                   "Fn::Join": [
                     "",
                     [
-                      "arn:aws:lambda:",
+                      "arn:aws:appsync:",
                       {
                         "Ref": "AWS::Region"
                       },
@@ -386,10 +278,11 @@
                       {
                         "Ref": "AWS::AccountId"
                       },
-                      ":function:",
+                      ":apis/",
                       {
-                        "Ref": "functionjoinFriendGroupName"
-                      }
+                        "Ref": "apimeetableGraphQLAPIIdOutput"
+                      },
+                      "/types/Subscription/*"
                     ]
                   ]
                 }
@@ -403,7 +296,9 @@
                 "dynamodb:List*",
                 "dynamodb:Describe*",
                 "dynamodb:Scan",
-                "dynamodb:Query"
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*"
               ],
               "Resource": [
                 {
@@ -443,124 +338,6 @@
                       {
                         "Fn::ImportValue": {
                           "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:UserTable:Name"
-                        }
-                      },
-                      "/index/*"
-                    ]
-                  ]
-                }
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:Put*",
-                "dynamodb:Create*",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:Get*",
-                "dynamodb:BatchGetItem",
-                "dynamodb:List*",
-                "dynamodb:Describe*",
-                "dynamodb:Scan",
-                "dynamodb:Query"
-              ],
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:dynamodb:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":table/",
-                      {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupTable:Name"
-                        }
-                      }
-                    ]
-                  ]
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:dynamodb:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":table/",
-                      {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupTable:Name"
-                        }
-                      },
-                      "/index/*"
-                    ]
-                  ]
-                }
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:Put*",
-                "dynamodb:Create*",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:Get*",
-                "dynamodb:BatchGetItem",
-                "dynamodb:List*",
-                "dynamodb:Describe*",
-                "dynamodb:Scan",
-                "dynamodb:Query"
-              ],
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:dynamodb:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":table/",
-                      {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupConnectionTable:Name"
-                        }
-                      }
-                    ]
-                  ]
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:dynamodb:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":table/",
-                      {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apimeetableGraphQLAPIIdOutput}:GetAtt:FriendGroupConnectionTable:Name"
                         }
                       },
                       "/index/*"
@@ -596,11 +373,6 @@
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
-      }
-    },
-    "CloudWatchEventRule": {
-      "Value": {
-        "Ref": "CloudWatchEvent"
       }
     }
   }

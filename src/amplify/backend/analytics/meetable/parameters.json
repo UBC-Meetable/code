@@ -1,0 +1,21 @@
+{
+    "appName": "meetable",
+    "roleName": "pinpointLambdaRolee16d2dc4",
+    "cloudformationPolicyName": "cloudformationPolicye16d2dc4",
+    "cloudWatchPolicyName": "cloudWatchPolicye16d2dc4",
+    "pinpointPolicyName": "pinpointPolicye16d2dc4",
+    "authPolicyName": "pinpoint_amplify_e16d2dc4",
+    "unauthPolicyName": "pinpoint_amplify_e16d2dc4",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}
