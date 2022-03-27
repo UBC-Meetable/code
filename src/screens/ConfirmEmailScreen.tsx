@@ -9,6 +9,7 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import TextField from "../components/ui/TextField";
 import KeyboardSwipeLayout from "./Auth/ui/KeyboardSwipeLayout";
 import UserContext from "../context/UserContext";
+import ErrorModal from "../navigation/ErrorsModal";
 
 const window = Dimensions.get("window");
 
@@ -28,7 +29,8 @@ const ConfirmEmailScreen = ({
   const { setUser } = useContext(UserContext);
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [errors, setError] = useState<string[]>([]);
+  const [errors, setError] = useState<string[]>([]);
+  const [errorModal, setErrorModal] = useState(false);
 
   useEffect(() => {
     if (email && !fromSignUp) {
@@ -37,10 +39,10 @@ const ConfirmEmailScreen = ({
   }, [email]);
 
   const confirmForm = () => {
-    // setError(() => []);
+    setError(() => []);
     let flag = true;
     if (!code) {
-      // setError((prevErrors) => [...prevErrors, "Code cannot be blank"]);
+      setError((prevErrors) => [...prevErrors, "Code cannot be blank"]);
       flag = false;
     }
     return flag;
@@ -56,21 +58,31 @@ const ConfirmEmailScreen = ({
   };
 
   const createProfile = async () => {
-    // setError([]);
-    if (!confirmForm()) return;
+    console.log("Attempting email validation");
+    setError([]);
+    if (!confirmForm()) {
+      //console.error(errors);
+      setErrorModal(true);
+      return;
+    }
     try {
       await Auth.confirmSignUp(email, code);
       await login();
-    } catch (e:any) {
-      // const message = e.message as string;
-      // setError((prevErrors) => [...prevErrors, message]);
+    } catch (e: any) {
+      const message = e.message as string;
+      setError((prevErrors) => [...prevErrors, message]);
+      setErrorModal(true);
     }
   };
 
   const login = async () => {
-    // setError([]);
+    setError([]);
 
-    if (!confirmForm()) return;
+    if (!confirmForm()) {
+      console.error(errors);
+      setErrorModal(true);
+      return;
+    }
     try {
       setLoading(true);
       const user = await Auth.signIn({
@@ -78,9 +90,10 @@ const ConfirmEmailScreen = ({
         password,
       });
       setUser(user);
-    } catch (e) {
-      // const message = e.message as string;
-      // setError((prevErrors) => [...prevErrors, message]);
+    } catch (e: any) {
+      const message = e.message as string;
+      setError((prevErrors) => [...prevErrors, message]);
+      setErrorModal(true);
     } finally {
       setLoading(false);
     }
@@ -140,6 +153,12 @@ const ConfirmEmailScreen = ({
           <BottomText onPressText={onBack} />
         </Layout>
       </KeyboardSwipeLayout>
+      <ErrorModal
+        open={errorModal}
+        setOpen={setErrorModal}
+        title="Error signing up"
+        errors={errors}
+      />
     </LoginControllerRoot>
   );
 };

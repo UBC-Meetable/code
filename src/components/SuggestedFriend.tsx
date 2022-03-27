@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -6,6 +6,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Tag from "./profile/Tag";
+import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
 
 type SuggestFriendProps = {
   name: string;
@@ -17,8 +18,10 @@ type SuggestFriendProps = {
 const SuggestedFriend = ({
   name, interests, courses, faculty,
 }: SuggestFriendProps) => {
+  useEffect(() => {
+    fetchSuggestedFriends();
+  }, []);
   return (
-    // TODO: fix linear gradient
     <LinearGradient
       start={{ x: 0.3, y: 0 }}
       end={{ x: 1, y: 0 }}

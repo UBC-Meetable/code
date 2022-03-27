@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Spinner, Text } from "@ui-kitten/components";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Dimensions, Platform, SafeAreaView, StyleSheet,
 } from "react-native";
@@ -15,6 +15,7 @@ import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
+import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
 
 const window = Dimensions.get("window");
 
@@ -27,6 +28,9 @@ const Home = ({ navigation }: HomeProps) => {
   const { loading, profilePicture } = useUserProfile();
 
   if (loading) return <Spinner />;
+  useEffect(() => {
+    fetchSuggestedFriends();
+  }, []);
   return (
     <>
       {/* Background, Outside of Safe Area View */}
