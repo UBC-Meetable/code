@@ -9,7 +9,8 @@
       "UnauthRoleName": "amplify-meetable-dev-203202-unauthRole",
       "StackName": "amplify-meetable-dev-203202",
       "StackId": "arn:aws:cloudformation:us-east-1:145470991472:stack/amplify-meetable-dev-203202/207a2300-308d-11ec-ae1d-0aaf0017d45d",
-      "AmplifyAppId": "dreemc78qbl81"
+      "AmplifyAppId": "dreemc78qbl81",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-meetable-dev-203202-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -19,15 +20,19 @@
       "function": {
         "joinFriendGroup": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/joinFriendGroup-5351656c784372487633-build.zip"
+          "s3Key": "amplify-builds/joinFriendGroup-526e687968555a567537-build.zip"
         },
         "pushNotification": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/pushNotification-434d372f56336f4c386f-build.zip"
+          "s3Key": "amplify-builds/pushNotification-645459596a4b64575366-build.zip"
         },
         "periodicGrouping": {
           "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
-          "s3Key": "amplify-builds/periodicGrouping-57484d514d39764c6244-build.zip"
+          "s3Key": "amplify-builds/periodicGrouping-5659524e647431486263-build.zip"
+        },
+        "getSuggestedFriends": {
+          "deploymentBucketName": "amplify-meetable-dev-203202-deployment",
+          "s3Key": "amplify-builds/getSuggestedFriends-6346744730366937632f-build.zip"
         }
       }
     }
