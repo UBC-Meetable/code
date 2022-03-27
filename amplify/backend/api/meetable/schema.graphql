@@ -168,7 +168,7 @@ type QAPair {
 # joinFriendGroupInput -> GroupID
 type Query {
   joinFriendGroup(user: joinFriendGroupInput): joinFriendGroupOutput @function(name: "joinFriendGroup-${env}")
-  getFriendSuggestion(id: getFriendSuggestionInput): getFriendSuggestionOutput @function(name: "getFriendSuggestionConnectedToDatabase-${env}")
+  getFriendSuggestion(id: getFriendSuggestionInput): getFriendSuggestionOutput @function(name: "getSuggestedFriends-${env}")
 }
 
 input joinFriendGroupInput {

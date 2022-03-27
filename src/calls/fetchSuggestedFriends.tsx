@@ -1,12 +1,14 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import { getFriendSuggestion } from "../graphql/queries";
-import { GetFriendSuggestionQuery } from "../API";
+import { GetFriendSuggestionQuery, GetUserQueryVariables } from "../API";
 
-// using the wrong graphQL query? Confirm that it's getFriendSuggestion
-const fetchSuggestedFriends = async () => {
+const fetchSuggestedFriends = async ({ id }: GetUserQueryVariables) => {
   const res: GraphQLResult<GetFriendSuggestionQuery> = await API.graphql({
     query: getFriendSuggestion,
+    variables: {
+      id,
+    },
   }) as GraphQLResult<GetFriendSuggestionQuery>;
   console.log("Fetching suggested friends");
   console.log(res);
