@@ -48,9 +48,24 @@ export const createUser = /* GraphQL */ `
             groupID
             code
             section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -104,6 +119,17 @@ export const createUser = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -144,6 +170,7 @@ export const createUser = /* GraphQL */ `
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -197,6 +224,17 @@ export const createUser = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -263,6 +301,17 @@ export const createUser = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -272,6 +321,133 @@ export const createUser = /* GraphQL */ `
           responses {
             q
             a
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      events {
+        items {
+          id
+          userID
+          eventID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          event {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -325,9 +501,24 @@ export const updateUser = /* GraphQL */ `
             groupID
             code
             section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -381,6 +572,17 @@ export const updateUser = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -421,6 +623,7 @@ export const updateUser = /* GraphQL */ `
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -474,6 +677,17 @@ export const updateUser = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -540,6 +754,17 @@ export const updateUser = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -549,6 +774,133 @@ export const updateUser = /* GraphQL */ `
           responses {
             q
             a
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      events {
+        items {
+          id
+          userID
+          eventID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          event {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -602,9 +954,24 @@ export const deleteUser = /* GraphQL */ `
             groupID
             code
             section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -658,6 +1025,17 @@ export const deleteUser = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -698,6 +1076,7 @@ export const deleteUser = /* GraphQL */ `
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -751,6 +1130,17 @@ export const deleteUser = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -817,6 +1207,17 @@ export const deleteUser = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -826,6 +1227,133 @@ export const deleteUser = /* GraphQL */ `
           responses {
             q
             a
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      events {
+        items {
+          id
+          userID
+          eventID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          event {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
           }
           createdAt
           updatedAt
@@ -868,9 +1396,24 @@ export const createCourseGroup = /* GraphQL */ `
             groupID
             code
             section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -930,6 +1473,17 @@ export const createCourseGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -946,9 +1500,152 @@ export const createCourseGroup = /* GraphQL */ `
       groupID
       code
       section
+      events {
+        items {
+          id
+          title
+          description
+          startTime
+          endTime
+          location
+          courseGroup {
+            users {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            title
+            groupID
+            code
+            section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          attendees {
+            items {
+              id
+              userID
+              eventID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              event {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              eventID
+              groupChatID
+              directChatID
+              userID
+              author {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              body
+              files {
+                fileURI
+                width
+                height
+                type
+              }
+              createdAt
+              updatedAt
+              groupType
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -990,6 +1687,17 @@ export const createCourseGroup = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -1049,9 +1757,24 @@ export const updateCourseGroup = /* GraphQL */ `
             groupID
             code
             section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -1111,6 +1834,17 @@ export const updateCourseGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -1127,9 +1861,152 @@ export const updateCourseGroup = /* GraphQL */ `
       groupID
       code
       section
+      events {
+        items {
+          id
+          title
+          description
+          startTime
+          endTime
+          location
+          courseGroup {
+            users {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            title
+            groupID
+            code
+            section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          attendees {
+            items {
+              id
+              userID
+              eventID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              event {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              eventID
+              groupChatID
+              directChatID
+              userID
+              author {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              body
+              files {
+                fileURI
+                width
+                height
+                type
+              }
+              createdAt
+              updatedAt
+              groupType
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -1171,6 +2048,17 @@ export const updateCourseGroup = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -1230,9 +2118,24 @@ export const deleteCourseGroup = /* GraphQL */ `
             groupID
             code
             section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -1292,6 +2195,17 @@ export const deleteCourseGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -1308,9 +2222,152 @@ export const deleteCourseGroup = /* GraphQL */ `
       groupID
       code
       section
+      events {
+        items {
+          id
+          title
+          description
+          startTime
+          endTime
+          location
+          courseGroup {
+            users {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            title
+            groupID
+            code
+            section
+            events {
+              items {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          attendees {
+            items {
+              id
+              userID
+              eventID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              event {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              eventID
+              groupChatID
+              directChatID
+              userID
+              author {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              body
+              files {
+                fileURI
+                width
+                height
+                type
+              }
+              createdAt
+              updatedAt
+              groupType
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -1352,6 +2409,2732 @@ export const deleteCourseGroup = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
+          createdAt
+          updatedAt
+          groupType
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createEventAttendee = /* GraphQL */ `
+  mutation CreateEventAttendee(
+    $input: CreateEventAttendeeInput!
+    $condition: ModelEventAttendeeConditionInput
+  ) {
+    createEventAttendee(input: $input, condition: $condition) {
+      id
+      userID
+      eventID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        interests
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              users {
+                nextToken
+              }
+              groupID
+              title
+              messages {
+                nextToken
+              }
+              owner
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        expoPushToken
+        multipleGroupsOptIn
+        createdAt
+        updatedAt
+        owner
+      }
+      event {
+        id
+        title
+        description
+        startTime
+        endTime
+        location
+        courseGroup {
+          users {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          title
+          groupID
+          code
+          section
+          events {
+            items {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              eventID
+              groupChatID
+              directChatID
+              userID
+              author {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              body
+              files {
+                fileURI
+                width
+                height
+                type
+              }
+              createdAt
+              updatedAt
+              groupType
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        attendees {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            eventID
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateEventAttendee = /* GraphQL */ `
+  mutation UpdateEventAttendee(
+    $input: UpdateEventAttendeeInput!
+    $condition: ModelEventAttendeeConditionInput
+  ) {
+    updateEventAttendee(input: $input, condition: $condition) {
+      id
+      userID
+      eventID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        interests
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              users {
+                nextToken
+              }
+              groupID
+              title
+              messages {
+                nextToken
+              }
+              owner
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        expoPushToken
+        multipleGroupsOptIn
+        createdAt
+        updatedAt
+        owner
+      }
+      event {
+        id
+        title
+        description
+        startTime
+        endTime
+        location
+        courseGroup {
+          users {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          title
+          groupID
+          code
+          section
+          events {
+            items {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              eventID
+              groupChatID
+              directChatID
+              userID
+              author {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              body
+              files {
+                fileURI
+                width
+                height
+                type
+              }
+              createdAt
+              updatedAt
+              groupType
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        attendees {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            eventID
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteEventAttendee = /* GraphQL */ `
+  mutation DeleteEventAttendee(
+    $input: DeleteEventAttendeeInput!
+    $condition: ModelEventAttendeeConditionInput
+  ) {
+    deleteEventAttendee(input: $input, condition: $condition) {
+      id
+      userID
+      eventID
+      user {
+        id
+        email
+        firstName
+        lastName
+        profilePicture
+        bio
+        userState
+        university
+        year
+        major
+        interests
+        courseGroups {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        friendGroups {
+          items {
+            id
+            groupID
+            userID
+            friendGroup {
+              users {
+                nextToken
+              }
+              groupID
+              title
+              messages {
+                nextToken
+              }
+              owner
+              createdAt
+              updatedAt
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        quizzes {
+          items {
+            id
+            userID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            responses {
+              q
+              a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        expoPushToken
+        multipleGroupsOptIn
+        createdAt
+        updatedAt
+        owner
+      }
+      event {
+        id
+        title
+        description
+        startTime
+        endTime
+        location
+        courseGroup {
+          users {
+            items {
+              id
+              groupID
+              userID
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          title
+          groupID
+          code
+          section
+          events {
+            items {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
+          messages {
+            items {
+              id
+              eventID
+              groupChatID
+              directChatID
+              userID
+              author {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              body
+              files {
+                fileURI
+                width
+                height
+                type
+              }
+              createdAt
+              updatedAt
+              groupType
+              owner
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        attendees {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            eventID
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const createEvent = /* GraphQL */ `
+  mutation CreateEvent(
+    $input: CreateEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    createEvent(input: $input, condition: $condition) {
+      id
+      title
+      description
+      startTime
+      endTime
+      location
+      courseGroup {
+        users {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        title
+        groupID
+        code
+        section
+        events {
+          items {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            eventID
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      attendees {
+        items {
+          id
+          userID
+          eventID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          event {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          eventID
+          groupChatID
+          directChatID
+          userID
+          author {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
+          createdAt
+          updatedAt
+          groupType
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateEvent = /* GraphQL */ `
+  mutation UpdateEvent(
+    $input: UpdateEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    updateEvent(input: $input, condition: $condition) {
+      id
+      title
+      description
+      startTime
+      endTime
+      location
+      courseGroup {
+        users {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        title
+        groupID
+        code
+        section
+        events {
+          items {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            eventID
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      attendees {
+        items {
+          id
+          userID
+          eventID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          event {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          eventID
+          groupChatID
+          directChatID
+          userID
+          author {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          body
+          files {
+            fileURI
+            width
+            height
+            type
+          }
+          createdAt
+          updatedAt
+          groupType
+          owner
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteEvent = /* GraphQL */ `
+  mutation DeleteEvent(
+    $input: DeleteEventInput!
+    $condition: ModelEventConditionInput
+  ) {
+    deleteEvent(input: $input, condition: $condition) {
+      id
+      title
+      description
+      startTime
+      endTime
+      location
+      courseGroup {
+        users {
+          items {
+            id
+            groupID
+            userID
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        title
+        groupID
+        code
+        section
+        events {
+          items {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        messages {
+          items {
+            id
+            eventID
+            groupChatID
+            directChatID
+            userID
+            author {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            body
+            files {
+              fileURI
+              width
+              height
+              type
+            }
+            createdAt
+            updatedAt
+            groupType
+            owner
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+        owner
+      }
+      attendees {
+        items {
+          id
+          userID
+          eventID
+          user {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            expoPushToken
+            multipleGroupsOptIn
+            createdAt
+            updatedAt
+            owner
+          }
+          event {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          createdAt
+          updatedAt
+          owner
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          eventID
+          groupChatID
+          directChatID
+          userID
+          author {
+            id
+            email
+            firstName
+            lastName
+            profilePicture
+            bio
+            userState
+            university
+            year
+            major
+            interests
+            courseGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            friendGroups {
+              items {
+                id
+                groupID
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            quizzes {
+              items {
+                id
+                userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -1412,6 +5195,7 @@ export const createFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -1471,6 +5255,17 @@ export const createFriendGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -1488,6 +5283,7 @@ export const createFriendGroup = /* GraphQL */ `
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -1529,6 +5325,17 @@ export const createFriendGroup = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -1589,6 +5396,7 @@ export const updateFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -1648,6 +5456,17 @@ export const updateFriendGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -1665,6 +5484,7 @@ export const updateFriendGroup = /* GraphQL */ `
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -1706,6 +5526,17 @@ export const updateFriendGroup = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -1766,6 +5597,7 @@ export const deleteFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                eventID
                 groupChatID
                 directChatID
                 userID
@@ -1825,6 +5657,17 @@ export const deleteFriendGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -1842,6 +5685,7 @@ export const deleteFriendGroup = /* GraphQL */ `
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -1889,6 +5733,17 @@ export const deleteFriendGroup = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -1924,6 +5779,7 @@ export const createReport = /* GraphQL */ `
       id
       message {
         id
+        eventID
         groupChatID
         directChatID
         userID
@@ -2045,6 +5901,46 @@ export const createReport = /* GraphQL */ `
             }
             nextToken
           }
+          events {
+            items {
+              id
+              userID
+              eventID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              event {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
           expoPushToken
           multipleGroupsOptIn
           createdAt
@@ -2092,6 +5988,9 @@ export const createReport = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -2118,6 +6017,9 @@ export const createReport = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -2171,6 +6073,9 @@ export const createReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2208,6 +6113,9 @@ export const createReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2217,6 +6125,73 @@ export const createReport = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -2255,6 +6230,9 @@ export const createReport = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -2281,6 +6259,9 @@ export const createReport = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -2334,6 +6315,9 @@ export const createReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2371,6 +6355,9 @@ export const createReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2380,6 +6367,73 @@ export const createReport = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -2408,6 +6462,7 @@ export const updateReport = /* GraphQL */ `
       id
       message {
         id
+        eventID
         groupChatID
         directChatID
         userID
@@ -2529,6 +6584,46 @@ export const updateReport = /* GraphQL */ `
             }
             nextToken
           }
+          events {
+            items {
+              id
+              userID
+              eventID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              event {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
           expoPushToken
           multipleGroupsOptIn
           createdAt
@@ -2576,6 +6671,9 @@ export const updateReport = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -2602,6 +6700,9 @@ export const updateReport = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -2655,6 +6756,9 @@ export const updateReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2692,6 +6796,9 @@ export const updateReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2701,6 +6808,73 @@ export const updateReport = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -2739,6 +6913,9 @@ export const updateReport = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -2765,6 +6942,9 @@ export const updateReport = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -2818,6 +6998,9 @@ export const updateReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2855,6 +7038,9 @@ export const updateReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -2864,6 +7050,73 @@ export const updateReport = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -2892,6 +7145,7 @@ export const deleteReport = /* GraphQL */ `
       id
       message {
         id
+        eventID
         groupChatID
         directChatID
         userID
@@ -3013,6 +7267,46 @@ export const deleteReport = /* GraphQL */ `
             }
             nextToken
           }
+          events {
+            items {
+              id
+              userID
+              eventID
+              user {
+                id
+                email
+                firstName
+                lastName
+                profilePicture
+                bio
+                userState
+                university
+                year
+                major
+                interests
+                expoPushToken
+                multipleGroupsOptIn
+                createdAt
+                updatedAt
+                owner
+              }
+              event {
+                id
+                title
+                description
+                startTime
+                endTime
+                location
+                createdAt
+                updatedAt
+                owner
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            nextToken
+          }
           expoPushToken
           multipleGroupsOptIn
           createdAt
@@ -3060,6 +7354,9 @@ export const deleteReport = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -3086,6 +7383,9 @@ export const deleteReport = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -3139,6 +7439,9 @@ export const deleteReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3176,6 +7479,9 @@ export const deleteReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3185,6 +7491,73 @@ export const deleteReport = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -3223,6 +7596,9 @@ export const deleteReport = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -3249,6 +7625,9 @@ export const deleteReport = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -3302,6 +7681,9 @@ export const deleteReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3339,6 +7721,9 @@ export const deleteReport = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3348,6 +7733,73 @@ export const deleteReport = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -3401,6 +7853,9 @@ export const createDirectChat = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -3427,6 +7882,9 @@ export const createDirectChat = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -3480,6 +7938,9 @@ export const createDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3517,6 +7978,9 @@ export const createDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3526,6 +7990,73 @@ export const createDirectChat = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -3564,6 +8095,9 @@ export const createDirectChat = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -3590,6 +8124,9 @@ export const createDirectChat = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -3643,6 +8180,9 @@ export const createDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3680,6 +8220,9 @@ export const createDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3696,6 +8239,73 @@ export const createDirectChat = /* GraphQL */ `
           }
           nextToken
         }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         expoPushToken
         multipleGroupsOptIn
         createdAt
@@ -3705,6 +8315,7 @@ export const createDirectChat = /* GraphQL */ `
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -3746,6 +8357,17 @@ export const createDirectChat = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -3812,6 +8434,9 @@ export const updateDirectChat = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -3838,6 +8463,9 @@ export const updateDirectChat = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -3891,6 +8519,9 @@ export const updateDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3928,6 +8559,9 @@ export const updateDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -3937,6 +8571,73 @@ export const updateDirectChat = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -3975,6 +8676,9 @@ export const updateDirectChat = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -4001,6 +8705,9 @@ export const updateDirectChat = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -4054,6 +8761,9 @@ export const updateDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4091,6 +8801,9 @@ export const updateDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4107,6 +8820,73 @@ export const updateDirectChat = /* GraphQL */ `
           }
           nextToken
         }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         expoPushToken
         multipleGroupsOptIn
         createdAt
@@ -4116,6 +8896,7 @@ export const updateDirectChat = /* GraphQL */ `
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -4157,6 +8938,17 @@ export const updateDirectChat = /* GraphQL */ `
               items {
                 id
                 userID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            events {
+              items {
+                id
+                userID
+                eventID
                 createdAt
                 updatedAt
                 owner
@@ -4223,6 +9015,9 @@ export const deleteDirectChat = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -4249,6 +9044,9 @@ export const deleteDirectChat = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -4302,6 +9100,9 @@ export const deleteDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4339,6 +9140,9 @@ export const deleteDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4348,6 +9152,73 @@ export const deleteDirectChat = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -4386,6 +9257,9 @@ export const deleteDirectChat = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -4412,6 +9286,9 @@ export const deleteDirectChat = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -4465,6 +9342,9 @@ export const deleteDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4502,6 +9382,9 @@ export const deleteDirectChat = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4518,6 +9401,73 @@ export const deleteDirectChat = /* GraphQL */ `
           }
           nextToken
         }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         expoPushToken
         multipleGroupsOptIn
         createdAt
@@ -4527,6 +9477,7 @@ export const deleteDirectChat = /* GraphQL */ `
       messages {
         items {
           id
+          eventID
           groupChatID
           directChatID
           userID
@@ -4574,6 +9525,17 @@ export const deleteDirectChat = /* GraphQL */ `
               }
               nextToken
             }
+            events {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
             expoPushToken
             multipleGroupsOptIn
             createdAt
@@ -4607,6 +9569,7 @@ export const createChatMessage = /* GraphQL */ `
   ) {
     createChatMessage(input: $input, condition: $condition) {
       id
+      eventID
       groupChatID
       directChatID
       userID
@@ -4635,6 +9598,9 @@ export const createChatMessage = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -4661,6 +9627,9 @@ export const createChatMessage = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -4714,6 +9683,9 @@ export const createChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4751,6 +9723,9 @@ export const createChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4760,6 +9735,73 @@ export const createChatMessage = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -4794,6 +9836,7 @@ export const updateChatMessage = /* GraphQL */ `
   ) {
     updateChatMessage(input: $input, condition: $condition) {
       id
+      eventID
       groupChatID
       directChatID
       userID
@@ -4822,6 +9865,9 @@ export const updateChatMessage = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -4848,6 +9894,9 @@ export const updateChatMessage = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -4901,6 +9950,9 @@ export const updateChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4938,6 +9990,9 @@ export const updateChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -4947,6 +10002,73 @@ export const updateChatMessage = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -4981,6 +10103,7 @@ export const deleteChatMessage = /* GraphQL */ `
   ) {
     deleteChatMessage(input: $input, condition: $condition) {
       id
+      eventID
       groupChatID
       directChatID
       userID
@@ -5009,6 +10132,9 @@ export const deleteChatMessage = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5035,6 +10161,9 @@ export const deleteChatMessage = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5088,6 +10217,9 @@ export const deleteChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5125,6 +10257,9 @@ export const deleteChatMessage = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5134,6 +10269,73 @@ export const deleteChatMessage = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -5184,6 +10386,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5212,6 +10417,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5228,9 +10436,68 @@ export const createCourseGroupConnection = /* GraphQL */ `
         groupID
         code
         section
+        events {
+          items {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         messages {
           items {
             id
+            eventID
             groupChatID
             directChatID
             userID
@@ -5253,6 +10520,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5304,6 +10574,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5330,6 +10603,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5383,6 +10659,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5420,6 +10699,9 @@ export const createCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5429,6 +10711,73 @@ export const createCourseGroupConnection = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -5471,6 +10820,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5499,6 +10851,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5515,9 +10870,68 @@ export const updateCourseGroupConnection = /* GraphQL */ `
         groupID
         code
         section
+        events {
+          items {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         messages {
           items {
             id
+            eventID
             groupChatID
             directChatID
             userID
@@ -5540,6 +10954,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5591,6 +11008,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5617,6 +11037,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5670,6 +11093,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5707,6 +11133,9 @@ export const updateCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5716,6 +11145,73 @@ export const updateCourseGroupConnection = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -5758,6 +11254,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5786,6 +11285,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5802,9 +11304,68 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
         groupID
         code
         section
+        events {
+          items {
+            id
+            title
+            description
+            startTime
+            endTime
+            location
+            courseGroup {
+              users {
+                nextToken
+              }
+              title
+              groupID
+              code
+              section
+              events {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
+            }
+            attendees {
+              items {
+                id
+                userID
+                eventID
+                createdAt
+                updatedAt
+                owner
+              }
+              nextToken
+            }
+            messages {
+              items {
+                id
+                eventID
+                groupChatID
+                directChatID
+                userID
+                body
+                createdAt
+                updatedAt
+                groupType
+                owner
+              }
+              nextToken
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
         messages {
           items {
             id
+            eventID
             groupChatID
             directChatID
             userID
@@ -5827,6 +11388,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5878,6 +11442,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -5904,6 +11471,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -5957,6 +11527,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -5994,6 +11567,9 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6003,6 +11579,73 @@ export const deleteCourseGroupConnection = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -6071,6 +11714,9 @@ export const createFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6088,6 +11734,7 @@ export const createFriendGroupConnection = /* GraphQL */ `
         messages {
           items {
             id
+            eventID
             groupChatID
             directChatID
             userID
@@ -6110,6 +11757,9 @@ export const createFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6161,6 +11811,9 @@ export const createFriendGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -6187,6 +11840,9 @@ export const createFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6240,6 +11896,9 @@ export const createFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6277,6 +11936,9 @@ export const createFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6286,6 +11948,73 @@ export const createFriendGroupConnection = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -6354,6 +12083,9 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6371,6 +12103,7 @@ export const updateFriendGroupConnection = /* GraphQL */ `
         messages {
           items {
             id
+            eventID
             groupChatID
             directChatID
             userID
@@ -6393,6 +12126,9 @@ export const updateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6444,6 +12180,9 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -6470,6 +12209,9 @@ export const updateFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6523,6 +12265,9 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6560,6 +12305,9 @@ export const updateFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6569,6 +12317,73 @@ export const updateFriendGroupConnection = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -6637,6 +12452,9 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6654,6 +12472,7 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
         messages {
           items {
             id
+            eventID
             groupChatID
             directChatID
             userID
@@ -6676,6 +12495,9 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6727,6 +12549,9 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -6753,6 +12578,9 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6806,6 +12634,9 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6843,6 +12674,9 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -6852,6 +12686,73 @@ export const deleteFriendGroupConnection = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -6904,6 +12805,9 @@ export const createQuiz = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -6930,6 +12834,9 @@ export const createQuiz = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -6983,6 +12890,9 @@ export const createQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -7020,6 +12930,9 @@ export const createQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -7029,6 +12942,73 @@ export const createQuiz = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -7085,6 +13065,9 @@ export const updateQuiz = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -7111,6 +13094,9 @@ export const updateQuiz = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -7164,6 +13150,9 @@ export const updateQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -7201,6 +13190,9 @@ export const updateQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -7210,6 +13202,73 @@ export const updateQuiz = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt
@@ -7266,6 +13325,9 @@ export const deleteQuiz = /* GraphQL */ `
               groupID
               code
               section
+              events {
+                nextToken
+              }
               messages {
                 nextToken
               }
@@ -7292,6 +13354,9 @@ export const deleteQuiz = /* GraphQL */ `
                 nextToken
               }
               quizzes {
+                nextToken
+              }
+              events {
                 nextToken
               }
               expoPushToken
@@ -7345,6 +13410,9 @@ export const deleteQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -7382,6 +13450,9 @@ export const deleteQuiz = /* GraphQL */ `
               quizzes {
                 nextToken
               }
+              events {
+                nextToken
+              }
               expoPushToken
               multipleGroupsOptIn
               createdAt
@@ -7391,6 +13462,73 @@ export const deleteQuiz = /* GraphQL */ `
             responses {
               q
               a
+            }
+            createdAt
+            updatedAt
+            owner
+          }
+          nextToken
+        }
+        events {
+          items {
+            id
+            userID
+            eventID
+            user {
+              id
+              email
+              firstName
+              lastName
+              profilePicture
+              bio
+              userState
+              university
+              year
+              major
+              interests
+              courseGroups {
+                nextToken
+              }
+              friendGroups {
+                nextToken
+              }
+              quizzes {
+                nextToken
+              }
+              events {
+                nextToken
+              }
+              expoPushToken
+              multipleGroupsOptIn
+              createdAt
+              updatedAt
+              owner
+            }
+            event {
+              id
+              title
+              description
+              startTime
+              endTime
+              location
+              courseGroup {
+                title
+                groupID
+                code
+                section
+                createdAt
+                updatedAt
+                owner
+              }
+              attendees {
+                nextToken
+              }
+              messages {
+                nextToken
+              }
+              createdAt
+              updatedAt
+              owner
             }
             createdAt
             updatedAt

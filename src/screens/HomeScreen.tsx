@@ -1,6 +1,6 @@
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Spinner, Text } from "@ui-kitten/components";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dimensions, Platform, SafeAreaView, StyleSheet,
 } from "react-native";
@@ -15,6 +15,7 @@ import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
+import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
 
 const window = Dimensions.get("window");
 
@@ -25,8 +26,12 @@ type HomeProps = {
 const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
   const { loading, profilePicture, id } = useUserProfile();
+  const [suggestedFriends, setSuggestedFriends] = useState([]);
 
   if (loading) return <Spinner />;
+  useEffect(() => {
+    fetchSuggestedFriends({ id }).then(setSuggestedFriends);
+  }, []);
   return (
     <>
       {/* Background, Outside of Safe Area View */}
@@ -60,8 +65,7 @@ const Home = ({ navigation }: HomeProps) => {
               horizontal
               style={[styles.scrollView, styles.suggestedFriendsContainer]}
             >
-              <SuggestedFriend name="Betty" interests={["Hip-Hop🎧", "Dancing🕺", "Music🎧"]} courses={["APSC 280", "CPSC 210", "COMM 434", "COMM 365", "COMM 100", "COMM 101"]} faculty="Engineering" />
-              <SuggestedFriend name="Brendan" interests={["Shopping👛", "Music🎧"]} courses={["APSC 300", "CPSC 400", "COMM 100", "COMM 101"]} faculty="Duck Biology" />
+              {suggestedFriends.map(suggestedFriend => <SuggestedFriend key={suggestedFriend.id} {...suggestedFriend} />)}
             </ScrollView>
             <Text style={styles.titleText}>Upcoming Events</Text>
             <Layout style={styles.eventsContainer}>

@@ -11,9 +11,9 @@ const fetchSuggestedFriends = async ({ id }: GetUserQueryVariables) => {
     },
   }) as GraphQLResult<GetFriendSuggestionQuery>;
   console.log("Fetching suggested friends");
-  console.log(res);
+  console.log(id, res);
   if (res.data?.getFriendSuggestion) {
-    return res.data.getFriendSuggestion;
+    return res.data.getFriendSuggestion.user;
   }
   throw new Error("Failed to get suggested friends");
 };

@@ -5,17 +5,21 @@ import {
   Text,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import ProfilePicture from "./ProfilePicture";
 import Tag from "./profile/Tag";
+import { ProfilePictureSize } from "../types";
 
 type SuggestFriendProps = {
-  name: string;
-  faculty: string;
+  firstName: string;
+  lastName: string;
+  major: string;
   courses: string[];
   interests: string[];
+  profilePicture: string;
 }
 
 const SuggestedFriend = ({
-  name, interests, courses, faculty,
+  firstName, lastName, interests = [], courses = [], major, profilePicture,
 }: SuggestFriendProps) => {
   const firstTwoInterests = interests.slice(0, 2);
   const firstFourCourses = courses.slice(0, 4);
@@ -28,9 +32,9 @@ const SuggestedFriend = ({
       style={styles.card}
     >
       <View>
-        <View style={styles.image} />
-        <Text style={styles.name}>{name}</Text>
-        <Text style={styles.faculty}>{faculty}</Text>
+        <ProfilePicture imageKey={profilePicture} size={ProfilePictureSize.TOP} />
+        <Text style={styles.name}>{[firstName, lastName].filter(s => s).join(' ')}</Text>
+        <Text style={styles.major}>{major}</Text>
       </View>
       <View>
         <View style={styles.interestsContainer}>
@@ -65,7 +69,7 @@ const styles = StyleSheet.create({
     margin: 0,
     alignSelf: "center",
   },
-  faculty: {
+  major: {
     fontSize: 15,
     fontWeight: "300",
     margin: 0,
