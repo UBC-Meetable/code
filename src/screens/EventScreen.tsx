@@ -6,12 +6,14 @@ import {
   Card,
   Avatar,
 } from "@ui-kitten/components";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, View } from "react-native";
+import GradientButton from "../components/ui/GradientButton";
 
 const EventScreen = (props : any) => {
     const navigation = props.navigation
+
     return(
         <View style={styles.background}>
             <Layout style={styles.rowTop}>
@@ -23,9 +25,6 @@ const EventScreen = (props : any) => {
                 </Text>
             </Layout>
             <Layout style={styles.row}>
-                <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '5%'}} category='h2'>
-                    Study Session
-                </Text>
             </Layout>
             <Layout style={styles.row}>
             </Layout>
@@ -41,19 +40,39 @@ const EventScreen = (props : any) => {
                     </Text>
                 </Card>
             </Layout>
+            <Layout style={styles.row}>
+                <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '1%'}} category='h2'>
+                    Details
+                </Text>
+            </Layout>
+            <Layout style={styles.row}> 
+                <Card style={styles.card}>
+                    <Text style={{fontFamily: 'Poppins_400Regular', fontSize: 14}}>
+                        April 12 3:00 - 3:30 pm
+                    </Text>
+                    <Text style={{fontFamily: 'Poppins_400Regular', fontSize: 14}}>
+                        APSC 100
+                    </Text>
+                </Card>
+            </Layout>
+            <Layout style={styles.row}>
+                <Text style={{fontFamily: 'Poppins_600SemiBold', fontSize: 20, marginLeft: '9.6%', marginBottom: '1%'}} category='h2'>
+                    Event Chat
+                </Text>
+            </Layout>
             <Layout style={styles.rowChat}>
                 <Layout style={styles.joinChat}>
                     <Avatar source={require('../assets/images/noavatar.png')}/>
                     <Text style={{fontFamily: 'Poppins_500Medium', fontSize: 16}}>
                         Join Event Chat
                     </Text>
-                    <Icon name="ios-chevron-forward" size={40}/>
+                    <Icon name="ios-chevron-forward" size={40} onPress={() => console.log('Event chat')}/>
                 </Layout>
             </Layout>
             <Layout style={styles.bottom}>
-                <Button style={styles.button}>
-                    Join Event
-                </Button>
+                <GradientButton style={styles.button}>
+                    Join Chat
+                </GradientButton>
             </Layout>
         </View>
     )

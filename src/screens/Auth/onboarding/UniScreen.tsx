@@ -40,6 +40,7 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
 
     if (res.data) {
       navigation.navigate("NewProfileScreen");
+      console.log(res.data)
     }
     // TODO Error handling
   };
