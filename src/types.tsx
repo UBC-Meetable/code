@@ -40,6 +40,7 @@ export type RootStackParamList = {
   NewProfileScreen: undefined;
   FriendOptions: undefined;
   ProfileStack: undefined;
+  EditInterest: undefined;
 };
 
 export type BottomTabParamList = {

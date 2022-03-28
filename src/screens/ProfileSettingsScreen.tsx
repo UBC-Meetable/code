@@ -8,6 +8,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import Colors from "../constants/Colors";
 import { RootStackParamList } from "../types";
+import GradientButton from "../components/ui/GradientButton";
 
 const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
   const handleLogout = async () => {
@@ -20,28 +21,40 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
 
   return (
     <SafeAreaView style={styles.root}>
-      <Layout style={styles.container} />
-      <ScrollView contentContainerStyle={styles.selectionsContainer} />
-      <PrimaryButton
-        status="info"
-        //TODO: Change this to Edit Interests Page
-        onPress={handleLogout}
-      >
-        Edit Interests
-      </PrimaryButton>
-      <PrimaryButton
-        status="info"
-        //TODO: Change this to Edit Courses Page
-        onPress={handleLogout}
-      >
-        Edit Courses
-      </PrimaryButton>
-      <PrimaryButton
-        status="info"
-        onPress={handleLogout}
-      >
-        Log Out
-      </PrimaryButton>
+      <Layout style={styles.container}>
+        <ScrollView contentContainerStyle={styles.selectionsContainer} />
+        <GradientButton
+          status="info"
+          style={styles.editButton}
+          //TODO: Change this to Edit Interests Page
+          onPress={() => {
+            navigation.push("EditInterest");
+
+            // alert('You\'re gonna edit your Interests!');
+          }}
+        >
+          Edit Interests
+        </GradientButton>
+        <GradientButton
+          status="info"
+          style={styles.editButton}
+          //TODO: Change this to Edit Courses Page
+          onPress={() => {
+            alert('You\'re gonna edit your Courses!');
+          }}
+        >
+          Edit Courses
+        </GradientButton>
+      </Layout>
+      <Layout style={styles.container}>
+        <GradientButton
+          status="info"
+          style={styles.editButton}
+          onPress={handleLogout}
+        >
+          Log Out
+        </GradientButton>
+      </Layout>
     </SafeAreaView>
   );
 };
@@ -49,11 +62,17 @@ const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<
 const styles = StyleSheet.create({
   root: {
     flex: 1,
+    flexDirection: "column",
     display: "flex",
     height: "100%",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: Colors.theme.lightCreme,
+  },
+  editButton: {
+    marginVertical: 12,
+    height: 60,
+    width: "85%",
   },
   container: {
     width: "100%",
@@ -61,6 +80,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
+    alignItems: "center",
     backgroundColor: Colors.theme.lightCreme,
   },
   selectionsContainer: {

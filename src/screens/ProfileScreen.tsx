@@ -7,19 +7,22 @@ import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
-import { StyleSheet, Modal, View } from "react-native";
+import { StyleSheet, Modal, View, KeyboardAvoidingView  } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
 import PrimaryButton from "../components/ui/PrimaryButton";
+import GradientButton from "../components/ui/GradientButton";
+import EditInterests from "./EditInterests"
+// import { Modalize } from 'react-native-modalize';
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
   title: string
 }
-const Label = ({ title }: LabelProps) => <Text style={profileStyles.bigBioHead}>{title}</Text>;
+const Label = ({ title }: LabelProps) => <Text style={styles.ModalField}>{title}</Text>;
 
 const ProfileScreen = () => {
   const headerHeight = useHeaderHeight();
@@ -122,21 +125,20 @@ const ProfileScreen = () => {
       ]}
       bounces={false}
     >
-      <ProfilePicture imageKey={key} />
+      <ProfilePicture imageKey={key} style={styles.image}/>
       <Text style={styles.name}>
         {`${firstName} ${lastName}`.trim()}
       </Text>
       <Text style={styles.email}>
         {user.email || ""}
       </Text>
-      <PrimaryButton
-        // appearance="ghost"
-        status="info"
+      <GradientButton
         onPress={open}
-        style={styles.edit}
+        style={styles.editButton}
+        status="info"
       >
         Edit Profile
-      </PrimaryButton>
+      </GradientButton>
       <Text
         style={styles.name}
       >
@@ -214,12 +216,23 @@ const ProfileScreen = () => {
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
+        swipeToClose={true}
+        propagateSwipe={true}
         visible={visible}
       >
+        <KeyboardAvoidingView
+      // style={styles.container}
+      behavior="position"
+      style={{
+        padding:10,
+        backgroundColor: Colors.theme.lightCreme,
+      }}
+    >
+        <ScrollView style={styles.MainModal}>
         <Layout style={styles.modal}>
           <Text style={styles.title}>Edit Profile</Text>
           <Layout
-            style={profileStyles.nameContainer}
+            style={styles.photoContainer}
           >
             <ProfilePicture
               imageKey={key}
@@ -231,7 +244,7 @@ const ProfileScreen = () => {
             value={firstName || ""}
             placeholder="First Name"
             onChangeText={setFirstName}
-            style={profileStyles.inputStyle}
+            style={styles.inputStyle}
             textStyle={profileStyles.inputTextStyle}
           />
           <Input
@@ -239,7 +252,7 @@ const ProfileScreen = () => {
             value={lastName || ""}
             placeholder="Last Name"
             onChangeText={setLastName}
-            style={profileStyles.inputStyle}
+            style={styles.inputStyle}
             textStyle={profileStyles.inputTextStyle}
           />
           <Input
@@ -251,12 +264,18 @@ const ProfileScreen = () => {
             numberOfLines={1}
             maxLength={175}
             onChangeText={setBio}
-            style={profileStyles.inputStyle}
+            style={styles.inputStyle}
             textStyle={profileStyles.inputTextStyle}
           />
-          <PrimaryButton onPress={save} style={{ marginTop: 16, alignSelf: "center" }}>Save</PrimaryButton>
-          <PrimaryButton appearance="ghost" style={{ alignSelf: "center" }} onPress={close}>Close</PrimaryButton>
+          <GradientButton onPress={save} style={
+            { marginTop: 16, marginBottom: 16, alignSelf: "center", width: "100%", height: 60 }
+            }>Save</GradientButton>
+          <GradientButton appearance="ghost" style={
+            { alignSelf: "center", width: "100%", height: 60 }
+            } onPress={close}>Close</GradientButton>
         </Layout>
+        </ScrollView>
+        </KeyboardAvoidingView>
       </Modal>
     </ScrollView>
   );
@@ -265,19 +284,43 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   name: {
     fontFamily: "Quicksand_600SemiBold",
+    color: "#000000",
     fontSize: 20,
     marginTop: 16,
     marginBottom: 8,
   },
+  gradient: {
+    height: 50,
+    margin: 0,
+    padding: 0,
+    overflow: "visible",
+    borderWidth: 1,
+  },
+  editButton: {
+    marginVertical: 12,
+    width: "90%",
+    height: 60,
+  },
   email: { fontSize: 14 },
+  image: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
   modal: {
     padding: 24,
-    backgroundColor: Colors.theme.creme,
+    backgroundColor: Colors.theme.lightCreme,
     height: "100%",
   },
   title: {
     fontFamily: "Quicksand_600SemiBold",
-    color: "#FBBA82",
+    fontSize: 20,
+    color: "#000000",
+    textAlign: "center",
+    marginTop: 16,
+    marginBottom: 20
   },
   edit: {
     marginTop: 20
@@ -288,6 +331,15 @@ const styles = StyleSheet.create({
     paddingBottom:20,
     color:'black',
     textAlign:'center',
+  },
+  ModalField: {
+    width: "90%",
+    paddingTop:20,
+    paddingBottom:20,
+    color:'black',
+    marginLeft: 10,
+    fontSize: 20
+    // textAlign:'center',
   },
   textDiv: {
     flexDirection: "row",
@@ -307,7 +359,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-  }
+  },
+  photoContainer: {
+    backgroundColor: "#0000",
+    width: "100%",
+    margin: 10,
+    alignItems: "center",
+  },
+  inputStyle: {
+    backgroundColor: "#ffff",
+    marginVertical: 5,
+    borderRadius: 5,
+  },
 });
 
 export default ProfileScreen;

@@ -44,6 +44,7 @@ import { UserProfileProvider } from "../context/UserProfileContext";
 import LoginFlowController from "../screens/Auth/login/LoginFlowController";
 import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
+import EditInterestsPage from "../screens/EditInterests";
 import GroupScreen from "../screens/GroupScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { RootStackParamList, SignUpParamList } from "../types";
@@ -267,6 +268,10 @@ const AuthorizedApp = () => {
               ),
             } as StackNavigationOptions)}
             component={ProfileSettingsScreen}
+          />
+          <Stack.Screen
+            name="EditInterest"
+            component={EditInterestsPage}
           />
           <Stack.Screen
             name="ProfileStack"
