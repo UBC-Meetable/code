@@ -214,10 +214,6 @@ type joinFriendGroupOutput {
   relevantUsers: [String!]!
 }
 
-# input getFriendSuggestionInput {
-#   id : String!
-# }
-
 type getFriendSuggestionOutput {
   user: [User]
 }
