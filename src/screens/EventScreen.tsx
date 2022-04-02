@@ -1,6 +1,4 @@
 import {
-  ApplicationProvider as UiProvider,
-  Button,
   Layout,
   Text,
   Card,
@@ -48,10 +46,10 @@ const EventScreen = (props : any) => {
             <Layout style={styles.row}> 
                 <Card style={styles.card}>
                     <Text style={{fontFamily: 'Poppins_400Regular', fontSize: 14}}>
-                        April 12 3:00 - 3:30 pm
+                        🕒 April 12 3:00 - 3:30 pm
                     </Text>
                     <Text style={{fontFamily: 'Poppins_400Regular', fontSize: 14}}>
-                        APSC 100
+                        📚 APSC 100
                     </Text>
                 </Card>
             </Layout>

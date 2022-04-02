@@ -12,15 +12,6 @@ export default function App() {
   if (!isLoadingComplete) {
     return null;
   }
-
-  /*
-  return (
-    <SafeAreaProvider>
-      <EventScreen />
-      <StatusBar style="dark"/>
-    </SafeAreaProvider>
-  )
-  */
   
   return (
     <SafeAreaProvider>

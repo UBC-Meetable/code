@@ -29,13 +29,11 @@ const Home = ({ navigation }: HomeProps) => {
   const eventNavigation = (
     eventTitle: string,
     eventID: string,
-    //eventType: GroupType,
   ) => {
     navigation.dispatch(
       CommonActions.navigate("Event", {
         screen: "EventScreen",
         eventID,
-        //eventType,
         eventTitle,
       }),
     );
