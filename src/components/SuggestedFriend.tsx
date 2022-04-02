@@ -16,15 +16,18 @@ type SuggestFriendProps = {
   courses: string[];
   interests: string[];
   profilePicture: string;
+  courseGroups: any;
 }
 
 const SuggestedFriend = ({
-  firstName, lastName, interests = [], courses = [], major, profilePicture,
+  firstName = "Bob", lastName = "Dylan", interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major = "Major", profilePicture, courseGroups,
 }: SuggestFriendProps) => {
+  // TODO: fix courseGroup object containing empty array
+  console.log("Course Groups Below....");
+  console.log(courseGroups.items);
   const firstTwoInterests = interests.slice(0, 2);
-  const firstFourCourses = courses.slice(0, 4);
+  const firstTwoCourses = courses.slice(0, 2);
   return (
-    // TODO: fix linear gradient
     <LinearGradient
       start={{ x: 0.3, y: 0 }}
       end={{ x: 1, y: 0 }}
@@ -33,7 +36,7 @@ const SuggestedFriend = ({
     >
       <View>
         <ProfilePicture imageKey={profilePicture} size={ProfilePictureSize.FRIEND} imageStyle={{ alignSelf: "center", margin: 10 }} />
-        <Text style={styles.name}>{[firstName, lastName].filter(s => s).join(' ')}</Text>
+        <Text style={styles.name}>{[firstName, lastName].filter((s) => s).join(' ')}</Text>
         <Text style={styles.major}>{major}</Text>
       </View>
       <View>
@@ -41,7 +44,7 @@ const SuggestedFriend = ({
           {firstTwoInterests.map((interest, index) => <Tag type="interest" text={interest} key={index} />)}
         </View>
         <View style={styles.coursesContainer}>
-          {firstFourCourses.map((course, index) => <Tag type="course" text={course} key={index} />)}
+          {firstTwoCourses.map((course, index) => <Tag type="course" text={course} key={index} />)}
         </View>
       </View>
     </LinearGradient>
@@ -51,7 +54,7 @@ const SuggestedFriend = ({
 const styles = StyleSheet.create({
   card: {
     width: 170,
-    height: 225,
+    height: 230,
     paddingRight: 2,
     paddingLeft: 2,
     paddingTop: 8,
@@ -61,13 +64,10 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginRight: 10,
     borderRadius: 25,
-    // borderWidth: 0.1,
   },
   name: {
     fontSize: 18,
     fontFamily: "Poppins_500Medium",
-    // margin: 0,
-    // alignSelf: "center",
     textAlign: "center",
   },
   major: {
