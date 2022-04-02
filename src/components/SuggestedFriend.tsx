@@ -20,7 +20,7 @@ type SuggestFriendProps = {
 }
 
 const SuggestedFriend = ({
-  firstName = "Bob", lastName = "Dylan", interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major = "Major", profilePicture, courseGroups,
+  firstName = "Test", lastName = "User", interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major = "Major", profilePicture, courseGroups,
 }: SuggestFriendProps) => {
   // TODO: fix courseGroup object containing empty array
   console.log("Course Groups Below....");
