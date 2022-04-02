@@ -20,7 +20,7 @@ export default {
   theme: {
     transparent: "#0000",
     background: "#fff",
-    creme: "#FEEDDE",
+    creme: "#FFF8E6",
     lightCreme: "#FFF8F3",
     brightOrange: "#FFBC01",
   },

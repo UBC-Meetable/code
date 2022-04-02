@@ -3,14 +3,14 @@ import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { Analytics, Storage } from "aws-amplify";
-import noAvatar from "../assets/images/noavatar.png";
+import noAvatar from "../assets/images/circle.png";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 
 type ProfilePictureProps = {
-    imageKey: string;
-    size?: ProfilePictureSize;
-    onPress?: () => void;
-    imageStyle?: StyleType;
+  imageKey: string;
+  size?: ProfilePictureSize;
+  onPress?: () => void;
+  imageStyle?: StyleType;
 };
 
 const ProfilePicture = ({
@@ -18,7 +18,7 @@ const ProfilePicture = ({
   size = ProfilePictureSize.PROFILE,
   onPress,
   imageStyle = {},
-}:ProfilePictureProps) => {
+}: ProfilePictureProps) => {
   const [uri, setUri] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
 
@@ -54,23 +54,26 @@ const ProfilePicture = ({
     if (imageKey) { checkCache(); }
   }, [imageKey]);
 
-  let sizeObj: {height: number, width: number};
+  let sizeObj: { height: number, width: number };
   /** TODO: Maybe have these not as static sizes? */
   switch (size) {
-  case ProfilePictureSize.PROFILE:
-    sizeObj = ProfilePictureDimensions.PROFILE;
-    break;
-  case ProfilePictureSize.BUBBLE:
-    sizeObj = ProfilePictureDimensions.BUBBLE;
-    break;
-  case ProfilePictureSize.MESSAGE:
-    sizeObj = ProfilePictureDimensions.MESSAGE;
-    break;
-  case ProfilePictureSize.TOP:
-    sizeObj = ProfilePictureDimensions.TOP;
-    break;
-  default:
-    throw new Error("Size Object Error");
+    case ProfilePictureSize.PROFILE:
+      sizeObj = ProfilePictureDimensions.PROFILE;
+      break;
+    case ProfilePictureSize.BUBBLE:
+      sizeObj = ProfilePictureDimensions.BUBBLE;
+      break;
+    case ProfilePictureSize.MESSAGE:
+      sizeObj = ProfilePictureDimensions.MESSAGE;
+      break;
+    case ProfilePictureSize.FRIEND:
+      sizeObj = ProfilePictureDimensions.FRIEND;
+      break;
+    case ProfilePictureSize.TOP:
+      sizeObj = ProfilePictureDimensions.TOP;
+      break;
+    default:
+      throw new Error("Size Object Error");
   }
 
   const DefaultAvatar = () => (

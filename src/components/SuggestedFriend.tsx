@@ -32,7 +32,7 @@ const SuggestedFriend = ({
       style={styles.card}
     >
       <View>
-        <ProfilePicture imageKey={profilePicture} size={ProfilePictureSize.TOP} />
+        <ProfilePicture imageKey={profilePicture} size={ProfilePictureSize.FRIEND} imageStyle={{ alignSelf: "center", margin: 10 }} />
         <Text style={styles.name}>{[firstName, lastName].filter(s => s).join(' ')}</Text>
         <Text style={styles.major}>{major}</Text>
       </View>
@@ -61,19 +61,21 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginRight: 10,
     borderRadius: 25,
-    borderWidth: 0.1,
+    // borderWidth: 0.1,
   },
   name: {
-    fontSize: 21,
-    fontWeight: "500",
-    margin: 0,
-    alignSelf: "center",
+    fontSize: 18,
+    fontFamily: "Poppins_500Medium",
+    // margin: 0,
+    // alignSelf: "center",
+    textAlign: "center",
   },
   major: {
-    fontSize: 15,
-    fontWeight: "300",
+    fontSize: 14,
+    fontFamily: "Poppins_400Regular",
     margin: 0,
     marginBottom: 10,
+    textAlign: "center",
   },
   interestsContainer: {
     flexDirection: "row",

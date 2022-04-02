@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import CourseGroupBackground from "../assets/images/coursegroupbackground.svg";
-import Smile from "../assets/images/smile.svg";
+import Smile from "../assets/images/meetable-logo.svg";
 import ProfilePicture from "../components/ProfilePicture";
 import SuggestedFriend from "../components/SuggestedFriend";
 import Colors from "../constants/Colors";
@@ -74,11 +74,6 @@ const Home = ({ navigation }: HomeProps) => {
             <Text style={styles.titleText}>Courses</Text>
             <Layout style={styles.courseGroupContainer}>
               <CourseGroups navigation={navigation} />
-              <CourseGroups navigation={navigation} />
-              <CourseGroups navigation={navigation} />
-              <CourseGroups navigation={navigation} />
-              <CourseGroups navigation={navigation} />
-              <CourseGroups navigation={navigation} />
             </Layout>
           </Layout>
         </ScrollView>
@@ -116,10 +111,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
   },
   titleText: {
-    fontSize: 24,
+    fontSize: 20,
     marginBottom: 10,
     color: "#000",
-    fontFamily: "Poppins_700Bold",
+    fontFamily: "Poppins_600SemiBold",
   },
   topRightButtonContainer: {
     backgroundColor: "transparent",

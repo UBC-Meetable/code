@@ -177,17 +177,17 @@ const AuthorizedApp = () => {
     let initRoute: keyof SignUpParamList;
 
     switch (userState) {
-    case UserState.SIGNED_UP:
-      initRoute = "UniScreen";
-      break;
-    case UserState.UNI_SELECTED:
-      initRoute = "NewProfileScreen";
-      break;
-    case UserState.PROFILE_CREATED:
-      initRoute = "NewEditCourses";
-      break;
-    default:
-      throw new Error("UserState undefined");
+      case UserState.SIGNED_UP:
+        initRoute = "UniScreen";
+        break;
+      case UserState.UNI_SELECTED:
+        initRoute = "NewProfileScreen";
+        break;
+      case UserState.PROFILE_CREATED:
+        initRoute = "NewEditCourses";
+        break;
+      default:
+        throw new Error("UserState undefined");
     }
 
     return (
@@ -201,7 +201,7 @@ const AuthorizedApp = () => {
         <Stack.Navigator
           screenOptions={{
             headerShown: false,
-            cardStyle: { backgroundColor: Colors.theme.background },
+            cardStyle: { backgroundColor: Colors.theme.creme },
             headerLeftContainerStyle: {
               marginLeft: 10,
             },
