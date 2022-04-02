@@ -74,6 +74,8 @@ const Home = ({ navigation }: HomeProps) => {
             <Text style={styles.titleText}>Courses</Text>
             <Layout style={styles.courseGroupContainer}>
               <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
+              <CourseGroups navigation={navigation} />
             </Layout>
           </Layout>
         </ScrollView>
