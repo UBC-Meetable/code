@@ -20,7 +20,7 @@ type SuggestFriendProps = {
 }
 
 const SuggestedFriend = ({
-  firstName = "Test", lastName = "User", interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major = "Major", profilePicture, courseGroups,
+  firstName, lastName, interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major, profilePicture, courseGroups,
 }: SuggestFriendProps) => {
   // TODO: fix courseGroup object containing empty array
   console.log("Course Groups Below....");
@@ -36,8 +36,8 @@ const SuggestedFriend = ({
     >
       <View>
         <ProfilePicture imageKey={profilePicture} size={ProfilePictureSize.FRIEND} imageStyle={{ alignSelf: "center", margin: 10 }} />
-        <Text style={styles.name}>{[firstName, lastName].filter((s) => s).join(' ')}</Text>
-        <Text style={styles.major}>{major}</Text>
+        <Text style={styles.name}>{[firstName, lastName].filter((s) => s).join(' ').trim() || "Test User"}</Text>
+        <Text style={styles.major}>{major || "Major"}</Text>
       </View>
       <View>
         <View style={styles.interestsContainer}>

@@ -28,7 +28,7 @@ import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
-import { Dimensions, Platform } from "react-native";
+import { Dimensions, ImageBackground, Platform, View } from "react-native";
 import { merge } from "lodash";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { UserState } from "../API";
@@ -54,6 +54,7 @@ import theme from "../constants/theme.json";
 import HomeScreen from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
 import useUserProfile from "../hooks/useUserProfile";
+import background from "../assets/images/meetable-background.jpeg";
 
 Amplify.configure({ ...awsconfig });
 Analytics.record("Initialization");
@@ -196,97 +197,106 @@ const AuthorizedApp = () => {
   }
 
   return (
-    <CourseGroupsProvider>
-      <FriendGroupsProvider>
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false,
-            cardStyle: { backgroundColor: Colors.theme.creme },
-            headerLeftContainerStyle: {
-              marginLeft: 10,
-            },
-            headerStyle: {
-              height: 170,
-            },
-          }}
-          initialRouteName="Home"
-        >
-          <Stack.Screen
-            name="Home"
-            component={HomeScreen}
-          />
-          <Stack.Screen
-            name="Group"
-            options={({ navigation }) => generateOptions(navigation,
-              ({ label }: { label: string }) => (
-                <ChatBackButton navigation={navigation} label={label} />
-              ))}
-          >
-            {(props) => (
-              <MessageProvider groupID={props.route.params.groupID}>
-                <GroupScreen
-                  groupType={props.route.params.groupType}
-                  groupTitle={props.route.params.groupTitle}
-                  navigation={props.navigation}
-                />
-              </MessageProvider>
-            )}
-          </Stack.Screen>
-          <Stack.Screen
-            name="EditCourses"
-            options={({ navigation }) => generateOptions(navigation, "Add Courses")}
-            component={EditCourseScreen}
-          />
-          <Stack.Screen
-            name="ProfileSettings"
-            options={({
-              navigation,
-            }: {
-              navigation: StackNavigationProp<
-                RootStackParamList,
-                "ProfileSettings"
-              >;
-            }) => ({
-              cardStyle: {
-                backgroundColor: Colors.theme.creme,
-              },
-              headerShown: true,
-              headerTitle: "",
-              headerLeft: () => (
-                <ChatBackButton navigation={navigation} label="Settings" />
-              ),
-              headerBackground: (props) => (
-                <Layout
-                  {...props}
-                  style={{
-                    backgroundColor: Colors.theme.lightCreme,
-                  }}
-                >
-                  <BubbleHeader width={window.width} height={170} />
-                </Layout>
-              ),
-            } as StackNavigationOptions)}
-            component={ProfileSettingsScreen}
-          />
-          <Stack.Screen
-            name="ProfileStack"
-            component={ProfileStackNavigator}
-          />
-          <Stack.Screen name="Quiz">
-            {(props) => (
-              <QuizScreen
-                onFinish={(q) => {
-                  Analytics.record({ name: "Finish Quiz" });
-                  props.navigation.pop();
-                  props.route.params.return(q);
-                }}
-                {...props}
+    <View style={{
+      flex: 1,
+    }}>
+      <ImageBackground source={background} style={{
+        flex: 1,
+        justifyContent: 'center',
+      }}>
+        <CourseGroupsProvider>
+          <FriendGroupsProvider>
+            <Stack.Navigator
+              screenOptions={{
+                headerShown: false,
+                cardStyle: { backgroundColor: 'transparent' },
+                headerLeftContainerStyle: {
+                  marginLeft: 10,
+                },
+                // headerStyle: {
+                //   height: 170,
+                // },
+              }}
+              initialRouteName="Home"
+            >
+              <Stack.Screen
+                name="Home"
+                component={HomeScreen}
               />
-            )}
-          </Stack.Screen>
-        </Stack.Navigator>
-      </FriendGroupsProvider>
-    </CourseGroupsProvider>
+              <Stack.Screen
+                name="Group"
+                options={({ navigation }) => generateOptions(navigation,
+                  ({ label }: { label: string }) => (
+                    <ChatBackButton navigation={navigation} label={label} />
+                  ))}
+              >
+                {(props) => (
+                  <MessageProvider groupID={props.route.params.groupID}>
+                    <GroupScreen
+                      groupType={props.route.params.groupType}
+                      groupTitle={props.route.params.groupTitle}
+                      navigation={props.navigation}
+                    />
+                  </MessageProvider>
+                )}
+              </Stack.Screen>
+              <Stack.Screen
+                name="EditCourses"
+                options={({ navigation }) => generateOptions(navigation, "Add Courses")}
+                component={EditCourseScreen}
+              />
+              <Stack.Screen
+                name="ProfileSettings"
+                options={({
+                  navigation,
+                }: {
+                  navigation: StackNavigationProp<
+                    RootStackParamList,
+                    "ProfileSettings"
+                  >;
+                }) => ({
+                  cardStyle: {
+                    backgroundColor: Colors.theme.creme,
+                  },
+                  headerShown: true,
+                  headerTitle: "",
+                  headerLeft: () => (
+                    <ChatBackButton navigation={navigation} label="Settings" />
+                  ),
+                  // headerBackground: (props) => (
+                  //   <Layout
+                  //     {...props}
+                  //     style={{
+                  //       backgroundColor: Colors.theme.lightCreme,
+                  //     }}
+                  //   >
+                  //     <BubbleHeader width={window.width} height={170} />
+                  //   </Layout>
+                  // ),
+                } as StackNavigationOptions)}
+                component={ProfileSettingsScreen}
+              />
+              <Stack.Screen
+                name="ProfileStack"
+                component={ProfileStackNavigator}
+              />
+              <Stack.Screen name="Quiz">
+                {(props) => (
+                  <QuizScreen
+                    onFinish={(q) => {
+                      Analytics.record({ name: "Finish Quiz" });
+                      props.navigation.pop();
+                      props.route.params.return(q);
+                    }}
+                    {...props}
+                  />
+                )}
+              </Stack.Screen>
+            </Stack.Navigator>
+          </FriendGroupsProvider>
+        </CourseGroupsProvider>
+      </ImageBackground>
+    </View>
   );
 };
 

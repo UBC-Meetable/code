@@ -7,7 +7,7 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import CourseGroupBackground from "../assets/images/coursegroupbackground.svg";
+import CourseGroupBackground from "../assets/images/meetable-background.jpeg";
 import Smile from "../assets/images/meetable-logo.svg";
 import ProfilePicture from "../components/ProfilePicture";
 import SuggestedFriend from "../components/SuggestedFriend";
@@ -35,7 +35,7 @@ const Home = ({ navigation }: HomeProps) => {
   return (
     <>
       {/* Background, Outside of Safe Area View */}
-      <CourseGroupBackground width={window.width} style={{ position: "absolute", opacity: 0.7 }} />
+      {/* <CourseGroupBackground width={window.width} style={{ position: "absolute", opacity: 0.7 }} /> */}
 
       {/* TODO make this safe area a global component */}
       <SafeAreaView style={{ marginTop: Platform.OS === "android" ? units.top : 0, flex: 1 }}>
