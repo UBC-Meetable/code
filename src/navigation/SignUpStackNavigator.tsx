@@ -13,7 +13,9 @@ type SignUpStackNavigatorProps = {
 const SignUpStackNavigator = ({
   initRoute,
 }: SignUpStackNavigatorProps) => (
-  <SignUpStack.Navigator initialRouteName={initRoute}>
+  <SignUpStack.Navigator
+    initialRouteName={initRoute}
+    screenOptions={{ cardStyle: { backgroundColor: 'transparent' } }}>
     <SignUpStack.Screen name="UniScreen" options={{ headerShown: false }} component={UniScreen} />
     <SignUpStack.Screen
       name="NewProfileScreen"

@@ -89,42 +89,28 @@ const NewProfileScreen = ({
             });
         });
     });
-
-    // const fileType = mime.lookup(toUpload.uri);
   };
 
   return (
     <ScrollView
       contentContainerStyle={[profileStyles.container,
-        { paddingTop: units.top, paddingLeft: units.left, paddingBottom: units.bottom }]}
+      { paddingTop: units.top, paddingHorizontal: 10, paddingBottom: units.bottom }]}
       bounces={false}
     >
-      <Layout
-        style={{ backgroundColor: "#0000", position: "relative" }}
-      >
-        <MaterialCommunityIcons
-          name="pencil"
-          size={30}
-          style={profileStyles.bioPencil}
-          onPress={pickImage}
-        />
-        <ProfilePicture
-          imageKey={key}
-          onPress={pickImage}
-        />
-      </Layout>
+      <ProfilePicture
+        imageKey={key}
+        onPress={pickImage}
+        imageStyle={{ margin: 30 }}
+        editable
+      />
 
-      <Layout
-        style={profileStyles.nameContainer}
-      >
-        <Input
-          value={name}
-          placeholder="Your Name"
-          onChangeText={setName}
-          style={profileStyles.inputStyle}
-          textStyle={profileStyles.inputTextStyle}
-        />
-      </Layout>
+      <Input
+        value={name}
+        placeholder="Your Name"
+        onChangeText={setName}
+        style={[profileStyles.inputStyle, { marginHorizontal: 30 }]}
+        textStyle={profileStyles.inputTextStyle}
+      />
 
       <KeyboardAvoidingView
         enabled={bioFocused}
@@ -176,7 +162,7 @@ export const profileStyles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: Colors.theme.lightCreme,
+    backgroundColor: Colors.theme.transparent,
   },
   bioPencil: {
     position: "absolute",
@@ -202,20 +188,19 @@ export const profileStyles = StyleSheet.create({
     position: "absolute",
     top: 40,
     fontSize: 16,
-    fontWeight: "600",
     textAlignVertical: "top",
-    width: "100%",
-    height: "50%",
+    // width: "100%",
+    // height: "50%",
   },
   bioBubble: {
-    height: "100%",
+    // height: "100%",
     maxHeight: 300,
     flex: 1,
     padding: 10,
     width: "100%",
     backgroundColor: "white",
     borderRadius: 24,
-    marginVertical: 5,
+    // marginVertical: 5,
   },
   keyboardHider: {
     height: "100%",
@@ -227,7 +212,7 @@ export const profileStyles = StyleSheet.create({
   },
   button: {
     marginBottom: 20,
-    width: "75%",
+    width: "85%",
     borderRadius: 100,
     borderWidth: 0,
     backgroundColor: "#02A3F4",
@@ -244,12 +229,6 @@ export const profileStyles = StyleSheet.create({
   },
   inputTextStyle: {
     fontSize: 14,
-  },
-  nameContainer: {
-    backgroundColor: "#0000",
-    width: "100%",
-    margin: 10,
-    alignItems: "center",
   },
 });
 

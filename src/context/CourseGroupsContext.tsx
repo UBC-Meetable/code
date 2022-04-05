@@ -9,23 +9,26 @@ import {
 } from "../API";
 import fetchUserCourses from "../calls/fetchUserCourses";
 import { onCreateChatMessage, onCreateCourseGroupConnection, onDeleteCourseGroupConnection } from "../graphql/subscriptions";
-import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+// import useAuthenticatedUser from "../hooks/useAuthenticatedUser";
+import useUserProfile from "../hooks/useUserProfile";
 import { ChatMessage, CourseGroup } from "../types";
 
 const CourseGroupsContext = React.createContext([] as CourseGroup[]);
 export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
   const [groups, setGroups] = useState([] as CourseGroup[]);
-  const user = useAuthenticatedUser();
+  // const user = useAuthenticatedUser();
+  const { id = "" } = useUserProfile();
   const groupRef = useRef<CourseGroup[]>([]);
   groupRef.current = groups;
 
   useEffect(() => {
-    const getCourseGroups = async () => {
-      const courses = await fetchUserCourses(user);
-      setGroups(courses);
-    };
-    getCourseGroups();
-  }, []);
+    // const getCourseGroups = async () => {
+    //   const courses = await fetchUserCourses(user);
+    //   setGroups(courses);
+    // };
+    // getCourseGroups();
+    fetchUserCourses(id).then(setGroups);
+  }, [id]);
 
   /** Handle Messages Being Sent */
   useEffect(() => {
@@ -34,12 +37,12 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
     }) as Observable<Object>;
 
     const subscription = observableObj.subscribe({
-      next: ({ value: { data } }: {value: {data: OnCreateChatMessageSubscription}}) => {
+      next: ({ value: { data } }: { value: { data: OnCreateChatMessageSubscription } }) => {
         //
         if (!data.onCreateChatMessage) return;
         if (data.onCreateChatMessage.groupType !== GroupType.COURSE) return;
 
-        const newGroups:CourseGroup[] = [];
+        const newGroups: CourseGroup[] = [];
 
         //
 
@@ -61,7 +64,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
         setGroups(() => newGroups);
         //
       },
-      error: (error:any) => console.warn(error),
+      error: (error: any) => console.warn(error),
     });
 
     return () => subscription.unsubscribe();
@@ -74,7 +77,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
     const subscription = observableObj.subscribe({
       next: ({ value: { data } }:
-        {value: {data: OnCreateCourseGroupConnectionSubscription}}) => {
+        { value: { data: OnCreateCourseGroupConnectionSubscription } }) => {
         if (!data.onCreateCourseGroupConnection) return;
 
         const newGroups: CourseGroup[] = [];
@@ -93,7 +96,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
         newGroups.push(data.onCreateCourseGroupConnection.courseGroup as CourseGroup);
         setGroups(() => newGroups);
       },
-      error: (error:any) => console.warn(error),
+      error: (error: any) => console.warn(error),
     });
 
     return () => subscription.unsubscribe();
@@ -105,11 +108,11 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
       query: onDeleteCourseGroupConnection,
     }) as Observable<Object>;
     const subscription = observableObj.subscribe({
-      next: ({ value: { data } }: {value: {data: OnDeleteCourseGroupConnectionSubscription }}) => {
+      next: ({ value: { data } }: { value: { data: OnDeleteCourseGroupConnectionSubscription } }) => {
         if (!data.onDeleteCourseGroupConnection) return;
         setGroups(groups.filter((group) => group.groupID !== data.onDeleteCourseGroupConnection?.groupID));
       },
-      error: (error:any) => console.warn(error),
+      error: (error: any) => console.warn(error),
     });
     return () => subscription.unsubscribe();
   });

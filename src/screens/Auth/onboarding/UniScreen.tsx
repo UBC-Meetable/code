@@ -19,7 +19,7 @@ import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 // imported platform to use it to specify ios in avoidkeyboardview
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 const window = Dimensions.get("window");
 
@@ -34,23 +34,17 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
   const units = useSafeAreaInsets();
   const onSubmit = async () => {
     const yearInt = parseInt(year, 10);
-    const res = await set({
-      id, major, university, userState: UserState.UNI_SELECTED, year: yearInt,
-    });
-
-    if (res.data) {
-      navigation.navigate("NewProfileScreen");
-    }
+    await set({ id, major, university, userState: UserState.UNI_SELECTED, year: yearInt });
+    navigation.navigate("NewProfileScreen");
     // TODO Error handling
   };
 
   return (
     <KeyboardSwipeLayout>
-      
       <KeyboardAvoidingView
-       behavior={Platform.OS === "ios" ? "padding" : "height"}
-       keyboardVerticalOffset={100}
-       style={[styles.root, { paddingTop: units.top }]}>
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={100}
+        style={[styles.root, { paddingTop: units.top }]}>
 
         <BubbleBackground
           width={window.width}
@@ -108,11 +102,8 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
           )}
 
         </Button>
-        </KeyboardAvoidingView> 
-      
+      </KeyboardAvoidingView>
     </KeyboardSwipeLayout>
-
-
   );
 };
 

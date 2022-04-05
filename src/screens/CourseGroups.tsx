@@ -49,14 +49,13 @@ const CourseGroups = ({
     );
   };
 
+  console.log(groups);
+
   return (
     <List
       bounces={false}
-      // refreshControl={
-      //   <RefreshControl refreshing={loading} />
-      // }
       style={[styles.card]}
-      data={[...groups]}
+      data={groups}
       renderItem={renderItem}
     />
   );
@@ -64,7 +63,6 @@ const CourseGroups = ({
 
 const styles = StyleSheet.create({
   card: {
-    // height: "100%",
     overflow: "scroll",
     backgroundColor: "transparent",
   },

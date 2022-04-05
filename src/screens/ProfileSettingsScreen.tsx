@@ -6,10 +6,9 @@ import { StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import PrimaryButton from "../components/ui/PrimaryButton";
-import Colors from "../constants/Colors";
 import { RootStackParamList } from "../types";
 
-const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
+const ProfileSettingsScreen = ({ navigation }: { navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
   const handleLogout = async () => {
     Auth.signOut();
     navigation.reset({
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: Colors.theme.lightCreme,
+    // backgroundColor: Colors.theme.lightCreme,
   },
   container: {
     width: "100%",
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     marginBottom: 10,
-    backgroundColor: Colors.theme.lightCreme,
+    // backgroundColor: Colors.theme.lightCreme,
   },
   selectionsContainer: {
     display: "flex",
@@ -55,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     width: "75%",
-    backgroundColor: Colors.theme.lightCreme,
+    // backgroundColor: Colors.theme.lightCreme,
     marginTop: 10,
     marginBottom: 10,
     marginLeft: 10,

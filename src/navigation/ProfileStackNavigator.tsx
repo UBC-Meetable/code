@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "../screens/ProfileScreen";
 import { TabTwoParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
+import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 
 // https://icons.expo.fyi/
 
@@ -42,6 +43,46 @@ const ProfileStackNavigator = () => (
           marginRight: 24,
         },
       })}
+    />
+    <ProfileTabStack.Screen
+      name="ProfileSettings"
+      // options={({
+      //   navigation,
+      // }: {
+      //   navigation: StackNavigationProp<
+      //     RootStackParamList,
+      //     "ProfileSettings"
+      //   >;
+      // }) => ({
+      //   cardStyle: {
+      //     backgroundColor: Colors.theme.transparent,
+      //   },
+      //   // headerShown: true,
+      //   // headerTitle: "",
+      //   // headerLeft: () => (
+      //   //   <ChatBackButton navigation={navigation} label="Settings" />
+      //   // ),
+      //   // headerBackground: (props) => (
+      //   //   <Layout
+      //   //     {...props}
+      //   //     style={{
+      //   //       backgroundColor: Colors.theme.lightCreme,
+      //   //     }}
+      //   //   >
+      //   //     <BubbleHeader width={window.width} height={170} />
+      //   //   </Layout>
+      //   // ),
+      // } as StackNavigationOptions)}
+      component={ProfileSettingsScreen}
+      options={{
+        headerShown: true,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
+        headerRightContainerStyle: {
+          marginRight: 24,
+        },
+      }}
     />
   </ProfileTabStack.Navigator>
 );

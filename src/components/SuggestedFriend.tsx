@@ -20,18 +20,15 @@ type SuggestFriendProps = {
 }
 
 const SuggestedFriend = ({
-  firstName, lastName, interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major, profilePicture, courseGroups,
+  firstName, lastName, interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major, profilePicture,
 }: SuggestFriendProps) => {
-  // TODO: fix courseGroup object containing empty array
-  console.log("Course Groups Below....");
-  console.log(courseGroups.items);
   const firstTwoInterests = interests.slice(0, 2);
   const firstTwoCourses = courses.slice(0, 2);
   return (
     <LinearGradient
-      start={{ x: 0.3, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 1)"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      colors={["rgba(255, 255, 255, 0.2)", "rgba(255, 255, 255, 0.8)"]}
       style={styles.card}
     >
       <View>
@@ -88,13 +85,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
     flexWrap: "wrap",
-  },
-  image: {
-    alignSelf: "center",
-    height: 50,
-    width: 50,
-    backgroundColor: "#e7f0ff",
-    borderRadius: 50,
   },
 });
 

@@ -10,9 +10,12 @@ import * as React from "react";
 import { StyleSheet, Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfilePicture from "../components/ProfilePicture";
+import GradientButton from "../components/ui/GradientButton";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
+import useCourseGroups from "../hooks/useCourseGroups";
+import Tag from "../components/profile/Tag";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
@@ -29,6 +32,8 @@ const ProfileScreen = () => {
   const [lastName, setLastName] = React.useState(user.lastName);
   const [key, setKey] = React.useState(user.profilePicture);
   const [visible, setVisible] = React.useState(false);
+
+  const groups = useCourseGroups();
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -117,23 +122,33 @@ const ProfileScreen = () => {
     <ScrollView
       contentContainerStyle={[
         profileStyles.container,
-        { paddingTop: headerHeight },
+        { paddingTop: headerHeight, paddingHorizontal: 20 },
       ]}
       bounces={false}
     >
-      <ProfilePicture imageKey={key} />
+      <ProfilePicture imageKey={key} editable />
       <Text style={styles.name}>
         {`${firstName} ${lastName}`.trim()}
       </Text>
       <Text style={styles.email}>
         {user.email || ""}
       </Text>
-      <Button
-        appearance="ghost"
+      <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 20 }} category='h2'>Enrolled Classes</Text>
+      <Layout style={{ padding: 10, borderRadius: 20, width: "100%" }}>
+        {groups.map(({ title, code }, index) => <Tag key={index} type="course" text={`${title} ${code}`} />)}
+      </Layout>
+      <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 20 }} category='h2'>Interests</Text>
+      <Layout>
+        {[].map((interest, index) => <Tag key={index} type="interest" text={interest} />)}
+      </Layout>
+      <GradientButton
+        // appearance="ghost"
         onPress={open}
+        style={{ marginVertical: 20 }}
       >
         Edit Profile
-      </Button>
+      </GradientButton>
+
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
@@ -142,11 +157,12 @@ const ProfileScreen = () => {
         <Layout style={styles.modal}>
           <Text style={styles.title}>Edit Profile</Text>
           <Layout
-            style={profileStyles.nameContainer}
+            style={{ alignItems: "center", backgroundColor: "transparent" }}
           >
             <ProfilePicture
               imageKey={key}
               onPress={pickImage}
+              editable
             />
           </Layout>
           <Input

@@ -28,7 +28,7 @@ import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as Notifications from "expo-notifications";
 import * as React from "react";
-import { Dimensions, ImageBackground, Platform, View } from "react-native";
+import { Dimensions, Platform, ImageBackground, View } from "react-native";
 import { merge } from "lodash";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { UserState } from "../API";
@@ -45,6 +45,7 @@ import LoginFlowController from "../screens/Auth/login/LoginFlowController";
 import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
+import EventScreen from "../screens/EventScreen";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
@@ -197,31 +198,24 @@ const AuthorizedApp = () => {
   }
 
   return (
-    <View style={{
-      flex: 1,
-    }}>
-      <ImageBackground source={background} style={{
-        flex: 1,
-        justifyContent: 'center',
-      }}>
+    <View style={{ flex: 1 }}>
+      <ImageBackground source={background} style={{ flex: 1 }}>
         <CourseGroupsProvider>
           <FriendGroupsProvider>
             <Stack.Navigator
               screenOptions={{
                 headerShown: false,
                 cardStyle: { backgroundColor: 'transparent' },
-                headerLeftContainerStyle: {
-                  marginLeft: 10,
-                },
-                // headerStyle: {
-                //   height: 170,
-                // },
               }}
               initialRouteName="Home"
             >
               <Stack.Screen
                 name="Home"
                 component={HomeScreen}
+              />
+              <Stack.Screen
+                name="Event"
+                component={EventScreen}
               />
               <Stack.Screen
                 name="Group"
@@ -245,7 +239,7 @@ const AuthorizedApp = () => {
                 options={({ navigation }) => generateOptions(navigation, "Add Courses")}
                 component={EditCourseScreen}
               />
-              <Stack.Screen
+              {/* <Stack.Screen
                 name="ProfileSettings"
                 options={({
                   navigation,
@@ -256,13 +250,13 @@ const AuthorizedApp = () => {
                   >;
                 }) => ({
                   cardStyle: {
-                    backgroundColor: Colors.theme.creme,
+                    backgroundColor: Colors.theme.transparent,
                   },
-                  headerShown: true,
-                  headerTitle: "",
-                  headerLeft: () => (
-                    <ChatBackButton navigation={navigation} label="Settings" />
-                  ),
+                  // headerShown: true,
+                  // headerTitle: "",
+                  // headerLeft: () => (
+                  //   <ChatBackButton navigation={navigation} label="Settings" />
+                  // ),
                   // headerBackground: (props) => (
                   //   <Layout
                   //     {...props}
@@ -275,7 +269,7 @@ const AuthorizedApp = () => {
                   // ),
                 } as StackNavigationOptions)}
                 component={ProfileSettingsScreen}
-              />
+              /> */}
               <Stack.Screen
                 name="ProfileStack"
                 component={ProfileStackNavigator}
