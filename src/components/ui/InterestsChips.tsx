@@ -1,7 +1,12 @@
 import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Chip } from "react-native-paper";
-import { Interest } from "../../types";
+
+interface Interest {
+  name: string;
+  category: string;
+  selected: boolean;
+}
 
 interface InterestChipsProps {
   updateSelectStatus: any;
