@@ -2,9 +2,8 @@ import * as React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Chip } from "react-native-paper";
 
-interface Interest {
+export interface Interest {
   name: string;
-  category: string;
   selected: boolean;
 }
 
@@ -22,24 +21,20 @@ export default function InterestChips({
   return (
     <View style={styles.view}>
       <Text style={styles.title}>{interestCategory}</Text>
-      {userInterests.map((interest, index) => {
-        if (interest.category == interestCategory) {
-          return (
-            <Chip
-              key={index}
-              textStyle={styles.text}
-              style={styles.chip}
-              selected={interest.selected}
-              onPress={() => {
-                updateSelectStatus(index);
-              }}
-              mode={"outlined"}
-            >
-              {interest.name}
-            </Chip>
-          );
-        }
-      })}
+      {userInterests.map((interest, index) => (
+        <Chip
+          key={index}
+          textStyle={styles.text}
+          style={styles.chip}
+          selected={interest.selected}
+          onPress={() => {
+            updateSelectStatus(index);
+          }}
+          mode={"outlined"}
+        >
+          {interest.name}
+        </Chip>
+      ))}
     </View>
   );
 }
@@ -49,7 +44,8 @@ const styles = StyleSheet.create({
     marginLeft: 75,
   },
   title: {
-    fontSize: 20,
+    fontFamily: "Poppins_500Medium",
+    fontSize: 16,
     margin: 10,
   },
   chip: {

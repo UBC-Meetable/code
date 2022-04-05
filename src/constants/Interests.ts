@@ -1,42 +1,37 @@
-export const interests = [
-    {
-      name: "reading",
-      category: "nerd stuff",
-      selected: false,
-    },
-  
-    {
-      name: "coding",
-      category: "nerd stuff",
-      selected: false,
-    },
-  
-    {
-      name: "anime",
-      category: "nerd stuff",
-      selected: false,
-    },
-  
-    {
-      name: "painting",
-      category: "nerd stuff",
-      selected: false,
-    },
-  
-    {
-      name: "swimming",
-      category: "outdoor activities",
-      selected: false,
-    },
-  
-    {
-      name: "hiking",
-      category: "outdoor activities",
-      selected: false,
-    },
-    {
-      name: "rock climbing",
-      category: "outdoor activities",
-      selected: false,
-    },
-  ];
+export const nerdStuff = [
+  {
+    name: "reading",
+    selected: false,
+  },
+
+  {
+    name: "coding",
+    selected: false,
+  },
+
+  {
+    name: "anime",
+    selected: false,
+  },
+
+  {
+    name: "painting",
+    selected: false,
+  },
+];
+
+export const outdoorActivity = [
+  {
+    name: "swimming",
+    selected: false,
+  },
+
+  {
+    name: "hiking",
+    selected: false,
+  },
+  {
+    name: "rock climbing",
+    selected: false,
+  },
+];

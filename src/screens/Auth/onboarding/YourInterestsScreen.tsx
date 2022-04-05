@@ -3,9 +3,9 @@ import { Dimensions, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Button } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
-import { SignUpParamList, Interest } from "../../../types";
-import InterestChips from "../../../components/ui/InterestsChips";
-import { interests } from "../../../constants/Interests";
+import { SignUpParamList } from "../../../types";
+import InterestChips, { Interest } from "../../../components/ui/InterestsChips";
+import { nerdStuff, outdoorActivity } from "../../../constants/Interests";
 import BubbleBackground from "../../../assets/images/quizBubble.svg";
 
 const window = Dimensions.get("window");
@@ -15,14 +15,14 @@ const YourInterestsScreen = ({
 }: {
   navigation: StackNavigationProp<SignUpParamList, "YourInterestsScreen">;
 }) => {
-  const [userInterests, setUserInterests] = useState<Interest[]>(interests);
+  const [userInterests, setUserInterests] = useState<Interest[]>([]);
   const { loading, set, ...userProfile } = useUserProfile();
 
-  useEffect(() => {
-    if (userProfile && userProfile.interests) {
-      setUserInterests(userProfile.interests);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (userProfile && userProfile.interests) {
+  //     setUserInterests(userProfile.interests);
+  //   }
+  // }, []);
 
   const onSubmit = async () => {
     await set({
@@ -48,13 +48,13 @@ const YourInterestsScreen = ({
       />
       <InterestChips
         updateSelectStatus={updateSelectStatus}
-        userInterests={userInterests}
-        interestCategory="nerd stuff"
+        userInterests={nerdStuff}
+        interestCategory="Nerd Stuff"
       />
       <InterestChips
         updateSelectStatus={updateSelectStatus}
-        userInterests={userInterests}
-        interestCategory="outdoor activities"
+        userInterests={outdoorActivity}
+        interestCategory="Outdoor Activities"
       />
       <Button style={styles.button} onPress={onSubmit}>
         Next
@@ -65,7 +65,7 @@ const YourInterestsScreen = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#0000",
+    // backgroundColor: "#0000",
     marginTop: 135,
     marginLeft: 30,
   },
