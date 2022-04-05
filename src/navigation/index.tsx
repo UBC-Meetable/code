@@ -16,11 +16,7 @@ import {
   Quicksand_700Bold,
 } from "@expo-google-fonts/quicksand";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
-import {
-  createStackNavigator,
-  StackNavigationOptions,
-  StackNavigationProp,
-} from "@react-navigation/stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import {
   ApplicationProvider as UiProvider, Layout, IconRegistry,
 } from "@ui-kitten/components";
@@ -32,10 +28,8 @@ import { Dimensions, Platform, ImageBackground, View } from "react-native";
 import { merge } from "lodash";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import { UserState } from "../API";
-import BubbleHeader from "../assets/images/chat-bubble.svg";
 import awsconfig from "../aws-exports";
 import ChatBackButton from "../components/Chat/ChatBackButton";
-import Colors from "../constants/Colors";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 import { MessageProvider } from "../context/MessageContext";
@@ -179,24 +173,28 @@ const AuthorizedApp = () => {
     let initRoute: keyof SignUpParamList;
 
     switch (userState) {
-    case UserState.SIGNED_UP:
-      initRoute = "UniScreen";
-      break;
-    case UserState.UNI_SELECTED:
-      initRoute = "NewProfileScreen";
-      break;
-    case UserState.PROFILE_CREATED:
-      initRoute = "YourInterestsScreen";
-      break;
-    case UserState.INTERESTS_SELECTED:
-      initRoute = "NewEditCoursesScreen";
-      break;
-    default:
-      throw new Error("UserState undefined");
+      case UserState.SIGNED_UP:
+        initRoute = "UniScreen";
+        break;
+      case UserState.UNI_SELECTED:
+        initRoute = "NewProfileScreen";
+        break;
+      case UserState.PROFILE_CREATED:
+        initRoute = "YourInterestsScreen";
+        break;
+      case UserState.INTERESTS_SELECTED:
+        initRoute = "NewEditCoursesScreen";
+        break;
+      default:
+        throw new Error("UserState undefined");
     }
 
     return (
-      <SignUpStackNavigator initRoute={initRoute} />
+      <View style={{ flex: 1 }}>
+        <ImageBackground source={background} style={{ flex: 1 }}>
+          <SignUpStackNavigator initRoute={initRoute} />
+        </ImageBackground>
+      </View>
     );
   }
 

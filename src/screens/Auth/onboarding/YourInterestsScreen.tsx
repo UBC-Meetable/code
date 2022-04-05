@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Dimensions, StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Button } from "@ui-kitten/components";
+import { Layout, Button, Text } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
 import InterestChips, { Interest } from "../../../components/ui/InterestsChips";
 import { nerdStuff, outdoorActivity } from "../../../constants/Interests";
-import BubbleBackground from "../../../assets/images/quizBubble.svg";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ScrollView } from "react-native-gesture-handler";
+import GradientButton from "../../../components/ui/GradientButton";
+// import BubbleBackground from "../../../assets/images/quizBubble.svg";
 
-const window = Dimensions.get("window");
+// const window = Dimensions.get("window");
 
 const YourInterestsScreen = ({
   navigation,
@@ -17,6 +20,7 @@ const YourInterestsScreen = ({
 }) => {
   const [userInterests, setUserInterests] = useState<Interest[]>([]);
   const { loading, set, ...userProfile } = useUserProfile();
+  const units = useSafeAreaInsets();
 
   // useEffect(() => {
   //   if (userProfile && userProfile.interests) {
@@ -41,11 +45,30 @@ const YourInterestsScreen = ({
   };
 
   return (
-    <Layout style={styles.container}>
-      <BubbleBackground
+    <ScrollView
+      contentContainerStyle={[{
+        flex: 1,
+        // display: "flex",
+        // height: "100%",
+        // justifyContent: "space-between",
+        alignItems: "center",
+        margin: 20
+      }, {
+        paddingTop: units.top,
+        // paddingHorizontal: 10,
+        // paddingBottom: units.bottom
+      }]}
+      bounces={false}
+    >
+      {/* <BubbleBackground
         width={window.width}
         style={{ position: "absolute", top: -135, left: -30 }}
-      />
+      /> */}
+      <Text style={{
+        fontFamily: "Poppins_600SemiBold",
+        fontSize: 20,
+        textAlign: "center",
+      }}>Tell us your favourite interests!</Text>
       <InterestChips
         updateSelectStatus={updateSelectStatus}
         userInterests={nerdStuff}
@@ -56,23 +79,19 @@ const YourInterestsScreen = ({
         userInterests={outdoorActivity}
         interestCategory="Outdoor Activities"
       />
-      <Button style={styles.button} onPress={onSubmit}>
+      <GradientButton style={styles.button} onPress={onSubmit}>
         Next
-      </Button>
-    </Layout>
+      </GradientButton>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    // backgroundColor: "#0000",
-    marginTop: 135,
-    marginLeft: 30,
-  },
   button: {
-    marginTop: 20,
-    marginLeft: 70,
-    width: "50%",
+    // marginTop: 20,
+    // marginLeft: 70,
+    // width: "50%",
+    alignContent: "flex-end",
   },
 });
 

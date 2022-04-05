@@ -19,42 +19,49 @@ export default function InterestChips({
   interestCategory,
 }: InterestChipsProps) {
   return (
-    <View style={styles.view}>
+    <View>
       <Text style={styles.title}>{interestCategory}</Text>
-      {userInterests.map((interest, index) => (
-        <Chip
-          key={index}
-          textStyle={styles.text}
-          style={styles.chip}
-          selected={interest.selected}
-          onPress={() => {
-            updateSelectStatus(index);
-          }}
-          mode={"outlined"}
-        >
-          {interest.name}
-        </Chip>
-      ))}
+      <View style={styles.container}>
+        {userInterests.map((interest, index) => (
+          <Chip
+            key={index}
+            textStyle={styles.text}
+            style={styles.chip}
+            selected={interest.selected}
+            onPress={() => {
+              updateSelectStatus(index);
+            }}
+            mode={"outlined"}
+          >
+            {`${interest.name} 🍩`}
+          </Chip>
+        ))}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  view: {
-    marginLeft: 75,
-  },
   title: {
     fontFamily: "Poppins_500Medium",
     fontSize: 16,
     margin: 10,
+    textAlign: "center",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    flexWrap: "wrap",
   },
   chip: {
-    width: "50%",
+    width: "auto",
     marginLeft: 10,
     marginBottom: 10,
   },
   text: {
-    color: "orange",
+    fontFamily: "Poppins_500Medium",
+    color: "#082737",
     fontSize: 15,
   },
 });

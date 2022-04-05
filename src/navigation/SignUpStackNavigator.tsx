@@ -16,21 +16,24 @@ const SignUpStackNavigator = ({
 }: SignUpStackNavigatorProps) => (
   <SignUpStack.Navigator
     initialRouteName={initRoute}
-    screenOptions={{ cardStyle: { backgroundColor: 'transparent' } }}>
-    <SignUpStack.Screen name="UniScreen" options={{ headerShown: false }} component={UniScreen} />
+    screenOptions={{
+      headerShown: false,
+      cardStyle: { backgroundColor: 'transparent' }
+    }}>
+    <SignUpStack.Screen
+      name="UniScreen"
+      component={UniScreen}
+    />
     <SignUpStack.Screen
       name="NewProfileScreen"
-      options={{ headerShown: false }}
       component={NewProfileScreen}
     />
     <SignUpStack.Screen
       name="YourInterestsScreen"
-      options={{ headerShown: false }}
       component={YourInterestsScreen}
     />
     <SignUpStack.Screen
       name="NewEditCoursesScreen"
-      options={{ headerShown: false }}
       component={NewEditCoursesScreen}
     />
   </SignUpStack.Navigator>

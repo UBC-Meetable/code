@@ -203,7 +203,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   name: {
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 20,
     marginTop: 16,
     marginBottom: 8,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   title: {
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
     color: "#FBBA82",
   },
 });

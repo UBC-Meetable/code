@@ -15,7 +15,7 @@ import { UserState } from "../../../API";
 import Colors from "../../../constants/Colors";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
-import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
+// import BubbleBackground from "../../../assets/images/tutorial-bubble.svg";
 import KeyboardSwipeLayout from "../ui/KeyboardSwipeLayout";
 
 // imported platform to use it to specify ios in avoidkeyboardview
@@ -46,11 +46,11 @@ const UniScreen = ({ navigation }: { navigation: StackNavigationProp<SignUpParam
         keyboardVerticalOffset={100}
         style={[styles.root, { paddingTop: units.top }]}>
 
-        <BubbleBackground
+        {/* <BubbleBackground
           width={window.width}
           height={window.height}
           style={{ position: "absolute" }}
-        />
+        /> */}
 
         <Layout style={styles.container}>
           <Text style={styles.textStyle}>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: Colors.theme.lightCreme,
+    // backgroundColor: Colors.theme.lightCreme,
   },
   container: {
     backgroundColor: "#0000",
