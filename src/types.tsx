@@ -80,6 +80,7 @@ export type TabTwoParamList = {
 export type User =
   {
     at_hash: string;
+    interests: string[];
     aud: string;
     exp: number;
     family_name: string;
@@ -120,7 +121,8 @@ export type QuestionType = {
 export type SignUpParamList = {
   UniScreen: undefined;
   NewProfileScreen: undefined;
-  NewEditCourses: undefined;
+  NewEditCoursesScreen: undefined;
+  YourInterestsScreen: undefined;
 };
 
 export type CognitoUser = {

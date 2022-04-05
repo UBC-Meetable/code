@@ -40,7 +40,7 @@ const NewProfileScreen = ({
         bio,
         userState: UserState.PROFILE_CREATED,
       });
-      navigation.navigate("NewEditCourses");
+      navigation.navigate("YourInterestsScreen");
     }
   };
 

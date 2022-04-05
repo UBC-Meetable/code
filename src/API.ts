@@ -981,6 +981,7 @@ export type GetUserProfileQuery = {
     email: string,
     firstName?: string | null,
     lastName?: string | null,
+    interests?: Array< string | null > | null,
     profilePicture?: string | null,
     bio?: string | null,
     userState?: UserState | null,

@@ -179,17 +179,20 @@ const AuthorizedApp = () => {
     let initRoute: keyof SignUpParamList;
 
     switch (userState) {
-      case UserState.SIGNED_UP:
-        initRoute = "UniScreen";
-        break;
-      case UserState.UNI_SELECTED:
-        initRoute = "NewProfileScreen";
-        break;
-      case UserState.PROFILE_CREATED:
-        initRoute = "NewEditCourses";
-        break;
-      default:
-        throw new Error("UserState undefined");
+    case UserState.SIGNED_UP:
+      initRoute = "UniScreen";
+      break;
+    case UserState.UNI_SELECTED:
+      initRoute = "NewProfileScreen";
+      break;
+    case UserState.PROFILE_CREATED:
+      initRoute = "YourInterestsScreen";
+      break;
+    case UserState.INTERESTS_SELECTED:
+      initRoute = "NewEditCoursesScreen";
+      break;
+    default:
+      throw new Error("UserState undefined");
     }
 
     return (
