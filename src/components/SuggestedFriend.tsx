@@ -20,10 +20,11 @@ type SuggestFriendProps = {
 }
 
 const SuggestedFriend = ({
-  firstName, lastName, interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major, profilePicture,
+  firstName, lastName, interests = [], courses = ["APSC 280", "COMM 314", "CPSC 210", "CPSC 121"], major, profilePicture
 }: SuggestFriendProps) => {
   const firstTwoInterests = interests.slice(0, 2);
   const firstTwoCourses = courses.slice(0, 2);
+
   return (
     <LinearGradient
       start={{ x: 0, y: 0 }}

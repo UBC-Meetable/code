@@ -17,6 +17,7 @@ import useUserProfile from "../hooks/useUserProfile";
 import useCourseGroups from "../hooks/useCourseGroups";
 import Tag from "../components/profile/Tag";
 import { Chip } from "react-native-paper";
+import UserProfile from "../components/profile/UserProfile";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
@@ -127,7 +128,8 @@ const ProfileScreen = () => {
       ]}
       bounces={false}
     >
-      <ProfilePicture imageKey={key} editable />
+      <UserProfile user={user} />
+      {/* <ProfilePicture imageKey={key} editable />
       <Text style={styles.name}>
         {`${firstName} ${lastName}`.trim()}
       </Text>
@@ -149,11 +151,11 @@ const ProfileScreen = () => {
       <Layout style={{ padding: 10, borderRadius: 20, width: "100%", display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
         {user.interests.length ? user.interests.map((interest, index) => <Chip key={index} style={{ margin: 5, backgroundColor: "#FEEDDE" }} textStyle={{ fontFamily: "Poppins_500Medium", fontSize: 12 }}>{interest}</Chip>)
           : <Text style={{ margin: 10, textAlign: "center", color: "gray" }}>No interests selected</Text>}
-      </Layout>
+      </Layout> */}
 
       <GradientButton
         onPress={open}
-        style={{ marginVertical: 20 }}
+        style={{ marginVertical: 50 }}
       >
         Edit Profile
       </GradientButton>
@@ -202,7 +204,7 @@ const ProfileScreen = () => {
             style={profileStyles.inputStyle}
             textStyle={profileStyles.inputTextStyle}
           />
-          <Button onPress={save} style={{ marginTop: 16 }}>Save</Button>
+          <GradientButton onPress={save} style={{ marginTop: 16 }}>Save</GradientButton>
           <Button appearance="ghost" onPress={close}>Close</Button>
         </Layout>
       </Modal>
@@ -225,7 +227,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: "Poppins_600SemiBold",
-    color: "#FBBA82",
+    fontSize: 18,
+    // color: "#FBBA82",
   },
 });
 

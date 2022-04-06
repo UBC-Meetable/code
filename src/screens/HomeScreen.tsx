@@ -2,7 +2,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout, Spinner, Text, Button } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import {
-  Dimensions, Platform, SafeAreaView, StyleSheet, View
+  Dimensions, Platform, SafeAreaView, StyleSheet, View, Modal
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "react-native-paper";
@@ -16,7 +16,8 @@ import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
 import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
-import PrimaryButton from "../components/ui/PrimaryButton";
+import UserProfile from "../components/profile/UserProfile";
+import GradientButton from "../components/ui/GradientButton";
 
 const window = Dimensions.get("window");
 
@@ -28,6 +29,8 @@ const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
   const { loading, profilePicture, id } = useUserProfile();
   const [suggestedFriends, setSuggestedFriends] = useState([]);
+  const [visible, setVisible] = useState(false);
+  const [friend, setFriend] = useState({});
 
   if (loading) return <Spinner />;
 
@@ -82,16 +85,21 @@ const Home = ({ navigation }: HomeProps) => {
                 horizontal
                 style={[styles.scrollView, styles.suggestedFriendsContainer]}
               >
-                {suggestedFriends.map(suggestedFriend => <SuggestedFriend key={suggestedFriend.id} {...suggestedFriend} />)}
+                {suggestedFriends.map(suggestedFriend => <Button appearance="ghost" onPress={() => { setFriend(suggestedFriend); setVisible(true); }}>
+                  <SuggestedFriend key={suggestedFriend.id} {...suggestedFriend} />
+                </Button>)}
               </ScrollView>
             </View>
             <View style={styles.row}>
               <Text style={styles.titleText}>Upcoming Events</Text>
-              <PrimaryButton onPress={() => eventNavigation(
+              {/* <PrimaryButton onPress={() => eventNavigation(
                 "Quiz 3",
                 "1",
                 //GroupType.COURSE
-              )}>Quiz 1</PrimaryButton>
+              )}>Quiz 1</PrimaryButton> */}
+              <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
+                <Text style={{ margin: 10, textAlign: "center", color: "#404040" }}>No upcoming events</Text>
+              </View>
             </View>
             <View style={styles.row}>
               <Text style={styles.titleText}>Courses</Text>
@@ -101,6 +109,16 @@ const Home = ({ navigation }: HomeProps) => {
             </View>
           </Layout>
         </ScrollView>
+        <Modal
+          animationType="slide"
+          presentationStyle="formSheet"
+          visible={visible}
+        >
+          <View style={{ backgroundColor: Colors.theme.creme, flex: 1, padding: 20 }}>
+            <UserProfile user={friend} style={{ paddingTop: 50 }} />
+            <GradientButton onPress={() => setVisible(false)} style={{ marginVertical: 50 }}>Close</GradientButton>
+          </View>
+        </Modal>
       </SafeAreaView>
     </>
   );
