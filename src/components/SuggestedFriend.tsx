@@ -50,12 +50,13 @@ const SuggestedFriend = ({
 
 const styles = StyleSheet.create({
   card: {
-    width: 170,
-    height: 230,
-    paddingRight: 2,
-    paddingLeft: 2,
-    paddingTop: 8,
-    paddingBottom: 5,
+    // width: 170,
+    // height: 230,
+    // paddingRight: 2,
+    // paddingLeft: 2,
+    // paddingTop: 8,
+    // paddingBottom: 5,
+    padding: 20,
     flex: 1,
     alignItems: "center",
     overflow: "hidden",

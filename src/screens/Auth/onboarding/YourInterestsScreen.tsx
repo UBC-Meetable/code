@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Button, Text } from "@ui-kitten/components";
+import { Text } from "@ui-kitten/components";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
-import InterestChips, { Interest } from "../../../components/ui/InterestsChips";
+import InterestChips from "../../../components/ui/InterestsChips";
 import { nerdStuff, outdoorActivity } from "../../../constants/Interests";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
@@ -18,15 +18,9 @@ const YourInterestsScreen = ({
 }: {
   navigation: StackNavigationProp<SignUpParamList, "YourInterestsScreen">;
 }) => {
-  const [userInterests, setUserInterests] = useState<Interest[]>([]);
+  const [userInterests, setUserInterests] = useState<string[]>([]);
   const { loading, set, ...userProfile } = useUserProfile();
   const units = useSafeAreaInsets();
-
-  // useEffect(() => {
-  //   if (userProfile && userProfile.interests) {
-  //     setUserInterests(userProfile.interests);
-  //   }
-  // }, []);
 
   const onSubmit = async () => {
     await set({
@@ -36,34 +30,20 @@ const YourInterestsScreen = ({
     navigation.navigate("NewEditCoursesScreen");
   };
 
-  const updateSelectStatus = (index: number) => {
-    const userInterestsCopy = [...userInterests];
-    const userInterest = { ...userInterestsCopy[index] };
-    userInterest.selected = !userInterest.selected;
-    userInterestsCopy[index] = userInterest;
-    setUserInterests(userInterestsCopy);
+  const updateSelectStatus = (interest: string) => {
+    setUserInterests([...userInterests, interest]);
   };
 
   return (
     <ScrollView
       contentContainerStyle={[{
-        flex: 1,
-        // display: "flex",
-        // height: "100%",
-        // justifyContent: "space-between",
         alignItems: "center",
-        margin: 20
+        margin: 20,
       }, {
         paddingTop: units.top,
-        // paddingHorizontal: 10,
-        // paddingBottom: units.bottom
       }]}
       bounces={false}
     >
-      {/* <BubbleBackground
-        width={window.width}
-        style={{ position: "absolute", top: -135, left: -30 }}
-      /> */}
       <Text style={{
         fontFamily: "Poppins_600SemiBold",
         fontSize: 20,
@@ -88,10 +68,7 @@ const YourInterestsScreen = ({
 
 const styles = StyleSheet.create({
   button: {
-    // marginTop: 20,
-    // marginLeft: 70,
-    // width: "50%",
-    alignContent: "flex-end",
+    // marginTop: 50
   },
 });
 

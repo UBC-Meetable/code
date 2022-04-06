@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { Chip } from "react-native-paper";
 
@@ -8,9 +8,9 @@ export interface Interest {
 }
 
 interface InterestChipsProps {
-  updateSelectStatus: any;
+  updateSelectStatus?: any;
   userInterests: Interest[];
-  interestCategory: string;
+  interestCategory?: string;
 }
 
 export default function InterestChips({
@@ -18,6 +18,13 @@ export default function InterestChips({
   userInterests,
   interestCategory,
 }: InterestChipsProps) {
+  const [interests, setInterests] = useState(userInterests);
+
+  const updateInterests = (index: number) => {
+    interests[index].selected = !interests[index].selected;
+    setInterests([...interests]);
+  }
+
   return (
     <View>
       <Text style={styles.title}>{interestCategory}</Text>
@@ -25,11 +32,12 @@ export default function InterestChips({
         {userInterests.map((interest, index) => (
           <Chip
             key={index}
-            textStyle={styles.text}
-            style={styles.chip}
+            textStyle={[styles.text, interest.selected && styles.selected]}
+            style={[styles.chip, interest.selected && styles.selected]}
             selected={interest.selected}
             onPress={() => {
-              updateSelectStatus(index);
+              updateInterests(index);
+              updateSelectStatus(interest.name);
             }}
             mode={"outlined"}
           >
@@ -58,6 +66,10 @@ const styles = StyleSheet.create({
     width: "auto",
     marginLeft: 10,
     marginBottom: 10,
+  },
+  selected: {
+    backgroundColor: "orange",
+    color: "white",
   },
   text: {
     fontFamily: "Poppins_500Medium",
