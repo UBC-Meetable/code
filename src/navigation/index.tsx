@@ -40,7 +40,6 @@ import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
 import GroupScreen from "../screens/GroupScreen";
 import EventScreen from "../screens/EventScreen";
-import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
 import { RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
 import generateOptions from "./generateOptions";

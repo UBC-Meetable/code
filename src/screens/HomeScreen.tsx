@@ -85,8 +85,8 @@ const Home = ({ navigation }: HomeProps) => {
                 horizontal
                 style={[styles.scrollView, styles.suggestedFriendsContainer]}
               >
-                {suggestedFriends.map(suggestedFriend => <Button appearance="ghost" onPress={() => { setFriend(suggestedFriend); setVisible(true); }}>
-                  <SuggestedFriend key={suggestedFriend.id} {...suggestedFriend} />
+                {suggestedFriends.map(suggestedFriend => <Button key={suggestedFriend.id} appearance="ghost" onPress={() => { setFriend(suggestedFriend); setVisible(true); }}>
+                  <SuggestedFriend {...suggestedFriend} />
                 </Button>)}
               </ScrollView>
             </View>

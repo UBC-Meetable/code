@@ -7,6 +7,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import { TabTwoParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
 import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
+import EditInterestsScreen from "../screens/EditInterestsScreen";
 
 // https://icons.expo.fyi/
 
@@ -74,6 +75,19 @@ const ProfileStackNavigator = () => (
       //   // ),
       // } as StackNavigationOptions)}
       component={ProfileSettingsScreen}
+      options={{
+        headerShown: true,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
+        headerRightContainerStyle: {
+          marginRight: 24,
+        },
+      }}
+    />
+    <ProfileTabStack.Screen
+      name="EditInterests"
+      component={EditInterestsScreen}
       options={{
         headerShown: true,
         headerLeftContainerStyle: {
