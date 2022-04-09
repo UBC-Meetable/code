@@ -16,7 +16,6 @@ const ChatBackButton = ({
     {showBack && (
       <HeaderBackButton
         onPress={() => navigation.goBack()}
-        tintColor="#000"
         labelVisible={false}
       />
     )}

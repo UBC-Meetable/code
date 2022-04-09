@@ -77,7 +77,7 @@ const GroupScreen = ({
           navigation={navigation}
           groupID={groupID}
           groupTitle={groupTitle}
-          groupType={groupTitle}
+          groupType={groupType}
         />
       ),
     });

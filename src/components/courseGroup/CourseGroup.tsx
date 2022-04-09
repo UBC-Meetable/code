@@ -23,7 +23,6 @@ const CourseGroup = (props: CourseGroupProps) => {
           <Layout style={[homeStyles.eventsContainer]}>
             <Text> Events Should link to event page? </Text>
           </Layout>
-          <Text style={[homeStyles.titleText, styles.paddedContainer]}>Courses</Text>
         </ScrollView>
       </Layout>
     </>
