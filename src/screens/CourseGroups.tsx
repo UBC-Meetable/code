@@ -2,7 +2,7 @@ import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { List, Spinner } from "@ui-kitten/components";
 import React, { useContext } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import CourseGroupsContext from "../context/CourseGroupsContext";
@@ -50,21 +50,20 @@ const CourseGroups = ({
   };
 
   return (
-    <List
-      bounces={false}
-      // refreshControl={
-      //   <RefreshControl refreshing={loading} />
-      // }
-      style={[styles.card]}
-      data={[...groups]}
-      renderItem={renderItem}
-    />
+    groups.length ?
+      <List
+        bounces={false}
+        style={[styles.card]}
+        data={groups}
+        renderItem={renderItem}
+      /> : <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
+        <Text style={{ margin: 10, textAlign: "center", color: "#404040", fontSize: 15 }}>No registered courses</Text>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    // height: "100%",
     overflow: "scroll",
     backgroundColor: "transparent",
   },

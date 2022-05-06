@@ -10,9 +10,14 @@ import * as React from "react";
 import { StyleSheet, Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import ProfilePicture from "../components/ProfilePicture";
+import GradientButton from "../components/ui/GradientButton";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
+import useCourseGroups from "../hooks/useCourseGroups";
+import Tag from "../components/profile/Tag";
+import { Chip } from "react-native-paper";
+import UserProfile from "../components/profile/UserProfile";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
@@ -29,6 +34,8 @@ const ProfileScreen = () => {
   const [lastName, setLastName] = React.useState(user.lastName);
   const [key, setKey] = React.useState(user.profilePicture);
   const [visible, setVisible] = React.useState(false);
+
+  const groups = useCourseGroups();
 
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -117,23 +124,42 @@ const ProfileScreen = () => {
     <ScrollView
       contentContainerStyle={[
         profileStyles.container,
-        { paddingTop: headerHeight },
+        { paddingTop: headerHeight, paddingHorizontal: 20 },
       ]}
       bounces={false}
     >
-      <ProfilePicture imageKey={key} />
+      <UserProfile user={user} />
+      {/* <ProfilePicture imageKey={key} editable />
       <Text style={styles.name}>
         {`${firstName} ${lastName}`.trim()}
       </Text>
       <Text style={styles.email}>
         {user.email || ""}
       </Text>
-      <Button
-        appearance="ghost"
+
+      <Layout style={{ backgroundColor: "white", padding: 10, width: "100%", marginVertical: 10, borderRadius: 10 }}>
+        <Text style={{ textAlign: "center" }}>{user.bio}</Text>
+      </Layout>
+
+      <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 20, margin: 10 }} category='h2'>Enrolled Classes</Text>
+      <Layout style={{ padding: 10, borderRadius: 20, width: "100%" }}>
+        {groups.length ? groups.map(({ title, code }, index) => <Tag key={index} type="course" text={`${title} ${code}`} />)
+          : <Text style={{ margin: 10, textAlign: "center", color: "gray" }}>No courses registered</Text>}
+      </Layout>
+
+      <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 20, margin: 10 }} category='h2'>Interests</Text>
+      <Layout style={{ padding: 10, borderRadius: 20, width: "100%", display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
+        {user.interests.length ? user.interests.map((interest, index) => <Chip key={index} style={{ margin: 5, backgroundColor: "#FEEDDE" }} textStyle={{ fontFamily: "Poppins_500Medium", fontSize: 12 }}>{interest}</Chip>)
+          : <Text style={{ margin: 10, textAlign: "center", color: "gray" }}>No interests selected</Text>}
+      </Layout> */}
+
+      <GradientButton
         onPress={open}
+        style={{ marginVertical: 50 }}
       >
         Edit Profile
-      </Button>
+      </GradientButton>
+
       <Modal
         animationType="slide"
         presentationStyle="formSheet"
@@ -142,11 +168,12 @@ const ProfileScreen = () => {
         <Layout style={styles.modal}>
           <Text style={styles.title}>Edit Profile</Text>
           <Layout
-            style={profileStyles.nameContainer}
+            style={{ alignItems: "center", backgroundColor: "transparent" }}
           >
             <ProfilePicture
               imageKey={key}
               onPress={pickImage}
+              editable
             />
           </Layout>
           <Input
@@ -177,7 +204,7 @@ const ProfileScreen = () => {
             style={profileStyles.inputStyle}
             textStyle={profileStyles.inputTextStyle}
           />
-          <Button onPress={save} style={{ marginTop: 16 }}>Save</Button>
+          <GradientButton onPress={save} style={{ marginTop: 16 }}>Save</GradientButton>
           <Button appearance="ghost" onPress={close}>Close</Button>
         </Layout>
       </Modal>
@@ -187,7 +214,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   name: {
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 20,
     marginTop: 16,
     marginBottom: 8,
@@ -199,8 +226,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   title: {
-    fontFamily: "Quicksand_600SemiBold",
-    color: "#FBBA82",
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 18,
+    // color: "#FBBA82",
   },
 });
 

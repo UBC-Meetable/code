@@ -6,12 +6,12 @@ import { CognitoUser, CourseGroup } from "../types";
 /**
  * @returns CourseGroup[]
  */
-const fetchUserCourses = async (user: CognitoUser) => {
+const fetchUserCourses = async (id: string) => {
   console.log("fetched");
   const res = await API.graphql({
     query: getUserCourses,
     variables: {
-      id: user.attributes.sub,
+      id
     },
   }) as GraphQLResult<any>;
   const fetchedGroups = res.data?.getUser?.courseGroups?.items

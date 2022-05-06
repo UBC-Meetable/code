@@ -3,7 +3,7 @@ import {
 } from "@ui-kitten/components";
 import React from "react";
 import { Dimensions, StyleSheet } from "react-native";
-import Auth0BubbleBackground from "../../../assets/images/auth0-bubble.svg";
+// import Auth0BubbleBackground from "../../../assets/images/auth0-bubble.svg";
 import Auth0Flair from "../../../assets/images/auth0-flair.svg";
 import { tutorialStyles } from "../../../components/styles";
 
@@ -12,11 +12,11 @@ const window = Dimensions.get("window");
 const SignupScreen = ({ onContinue }: { onContinue: () => void }) => {
   return (
     <Layout style={styles.root}>
-      <Auth0BubbleBackground
+      {/* <Auth0BubbleBackground
         width={window.width}
         height={window.height + 100}
         style={styles.bubble}
-      />
+      /> */}
       <Layout style={styles.mainContainer}>
         <Layout style={styles.text}>
           <Text style={tutorialStyles.title}>Hang Tight!</Text>

@@ -8,25 +8,26 @@ const window = Dimensions.get("window");
 
 export default {
   headerShown: false,
-  headerStyle: {
-    height: 150,
-  },
-  headerTitleAlign: "left",
+  // headerStyle: {
+  //   height: 150,
+  // },
+  // headerTitleAlign: "left",
   headerTitleContainerStyle: {
-    height: "100%",
-    alignItems: "flex-start",
-    justifyContent: "flex-end",
+    // height: "100%",
+    // alignItems: "flex-start",
+    // justifyContent: "flex-end",
   },
   headerTitleStyle: {
-    fontFamily: "Poppins_600SemiBold",
-    fontSize: 24,
-    margin: 10,
-    textAlign: "left",
+    // fontFamily: "Poppins_500Regular",
+    // fontSize: 24,
+    // margin: 10,s
+    // textAlign: "left",
   },
-  headerBackground: () => (
-    <Layout style={{ backgroundColor: "#0000" }}>
-      <BubbleHeader width={window.width} height={150} />
-    </Layout>
-  ),
-  cardStyle: { backgroundColor: "#FFF9F5" },
+  cardStyle: { backgroundColor: 'transparent' },
+  // headerBackground: () => (
+  //   <Layout style={{ backgroundColor: "#0000" }}>
+  //     <BubbleHeader width={window.width} height={150} />
+  //   </Layout>
+  // ),
+  // cardStyle: { backgroundColor: "#FFF9F5" },
 } as StackNavigationOptions;

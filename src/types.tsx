@@ -34,6 +34,10 @@ export type RootStackParamList = {
     groupType: GroupType;
     groupTitle: string;
   };
+  Event: {
+    eventID: string;
+    eventTitle: string;
+  };
   UniScreen: undefined;
   EditCourses: undefined;
   ProfileSettings: undefined;
@@ -76,6 +80,7 @@ export type TabTwoParamList = {
 export type User =
   {
     at_hash: string;
+    interests: string[];
     aud: string;
     exp: number;
     family_name: string;
@@ -116,7 +121,8 @@ export type QuestionType = {
 export type SignUpParamList = {
   UniScreen: undefined;
   NewProfileScreen: undefined;
-  NewEditCourses: undefined;
+  NewEditCoursesScreen: undefined;
+  YourInterestsScreen: undefined;
 };
 
 export type CognitoUser = {
@@ -161,6 +167,7 @@ export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
   "MESSAGE",
+  "FRIEND",
   "TOP"
 }
 
@@ -168,6 +175,7 @@ export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
   MESSAGE: { height: 30, width: 30 },
+  FRIEND: { height: 70, width: 70 },
   TOP: { height: 50, width: 50 },
 };
 

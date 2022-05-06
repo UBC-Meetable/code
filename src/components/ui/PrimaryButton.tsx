@@ -9,9 +9,9 @@ type PrimaryButtonProps = {
   loading?: boolean
 } & ButtonProps;
 
-const PrimaryButton = (props:PrimaryButtonProps) => {
+const PrimaryButton = (props: PrimaryButtonProps) => {
   const {
-    onPress = () => {}, textStyle, children, style, loading = false, disabled,
+    onPress = () => { }, textStyle, children, style, loading = false, disabled,
   } = props;
   return (
     <Button
@@ -21,14 +21,14 @@ const PrimaryButton = (props:PrimaryButtonProps) => {
       accessoryLeft={() => (loading ? <Spinner status={props.status} /> : <Layout />)}
       disabled={loading || disabled}
     >
-      { (evaProps: any) => (
+      {(evaProps: any) => (
         <Text
           {...evaProps}
           style={[textStyle, evaProps.style, styles.buttonText]}
         >
           {children}
         </Text>
-      ) }
+      )}
     </Button>
   );
 };
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   button: {
     marginBottom: 20,
     width: "90%",
-    borderRadius: 20,
+    borderRadius: 100,
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
