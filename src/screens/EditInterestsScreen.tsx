@@ -1,4 +1,4 @@
-import { useHeaderHeight } from "@react-navigation/stack";
+import { useHeaderHeight, StackNavigationProp } from "@react-navigation/stack";
 import {
   Input, Layout, Spinner, Text, Button,
 } from "@ui-kitten/components";
@@ -7,18 +7,19 @@ import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
-import { StyleSheet, Modal, View, KeyboardAvoidingView  } from "react-native";
+import {
+  StyleSheet, Modal, View, KeyboardAvoidingView,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { FlexViewCrossStyleProps } from "@ui-kitten/components/devsupport";
 import ProfilePicture from "../components/ProfilePicture";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
 import PrimaryButton from "../components/ui/PrimaryButton";
 import GradientButton from "../components/ui/GradientButton";
-import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { FlexViewCrossStyleProps } from "@ui-kitten/components/devsupport";
 // import { Modalize } from 'react-native-modalize';
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
@@ -27,146 +28,138 @@ interface LabelProps {
 }
 const Label = ({ title }: LabelProps) => <Text style={styles.ModalField}>{title}</Text>;
 
-const EditInterestsScreen =
-  ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "EditInterest">;}) => {
+const EditInterestsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "EditInterest">;}) => {
   return (
     <SafeAreaView style={styles.root}>
       <Layout style={styles.container}>
         <ScrollView contentContainerStyle={styles.selectionsContainer} />
-          <Text style={styles.title}>
-            Edit Interests
-          </Text>
-          <Text style={styles.subtitle}>
-            Interest Category
-          </Text>
+        <Text style={styles.title}>
+          Edit Interests
+        </Text>
+        <Text style={styles.subtitle}>
+          Interest Category
+        </Text>
+        <View
+          style={styles.itemContainer}
+        >
           <View
-        style={styles.itemContainer}
-      >
-        <View
-          style={styles.textDiv}
-        >
-          <Text>
-            Anime 📺
-          </Text>
-        </View>
-        <View
-          style={styles.textDiv}
+            style={styles.textDiv}
           >
-          <Text>
-            Gaming 🎮
-          </Text>
-        </View>
-        <View
-          style={styles.textDiv}
-          >
-          <Text>
-            Formula 1 🏎️
-          </Text>
-        </View>        
-              
-      </View>
-      <View
-        style={styles.itemContainer}
-      >
-        <View
-          style={styles.textDiv}
-        >
-          <Text>
-            Anime 📺
-          </Text>
-        </View>
-        <View
-          style={styles.textDiv}
-          >
-          <Text>
-            Gaming 🎮
-          </Text>
-        </View>
-        <View
-          style={styles.textDiv}
-          >
-          <Text>
-            Formula 1 🏎️
-          </Text>
-        </View>        
-              
-      </View>
-      <View style={{height: 50}}>
-
-      </View>
-
-          <Text style={styles.subtitle}>
-            Interest Category
-          </Text>
+            <Text>
+              Anime 📺
+            </Text>
+          </View>
           <View
-        style={styles.itemContainer}
-      >
+            style={styles.textDiv}
+          >
+            <Text>
+              Gaming 🎮
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Formula 1 🏎️
+            </Text>
+          </View>
+
+        </View>
         <View
-          style={styles.textDiv}
+          style={styles.itemContainer}
         >
-          <Text>
-            Anime 📺
-          </Text>
-        </View>
-        <View
-          style={styles.textDiv}
+          <View
+            style={styles.textDiv}
           >
-          <Text>
-            Gaming 🎮
-          </Text>
-        </View>
-        <View
-          style={styles.textDiv}
+            <Text>
+              Anime 📺
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
           >
-          <Text>
-            Formula 1 🏎️
-          </Text>
-        </View>        
-      </View>
-      <View
-        style={styles.itemContainer}
-      >
+            <Text>
+              Gaming 🎮
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Formula 1 🏎️
+            </Text>
+          </View>
+
+        </View>
+        <View style={{ height: 50 }} />
+
+        <Text style={styles.subtitle}>
+          Interest Category
+        </Text>
         <View
-          style={styles.textDiv}
+          style={styles.itemContainer}
         >
-          <Text>
-            Anime 📺
-          </Text>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Anime 📺
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Gaming 🎮
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Formula 1 🏎️
+            </Text>
+          </View>
         </View>
         <View
-          style={styles.textDiv}
+          style={styles.itemContainer}
+        >
+          <View
+            style={styles.textDiv}
           >
-          <Text>
-            Gaming 🎮
-          </Text>
+            <Text>
+              Anime 📺
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Gaming 🎮
+            </Text>
+          </View>
+          <View
+            style={styles.textDiv}
+          >
+            <Text>
+              Formula 1 🏎️
+            </Text>
+          </View>
         </View>
-        <View
-          style={styles.textDiv}
-          >
-          <Text>
-            Formula 1 🏎️
-          </Text>
-        </View>        
-      </View>
-      
-          <GradientButton
+
+        <GradientButton
           status="info"
-          style={styles.editButton}
-          //TODO: Change this to Edit Interests Page
+          style={[styles.editButton, { borderRadius: 30 }]}
           onPress={() => {
-            // navigation.push("FriendOptions");
             navigation.pop();
-
-            // alert('You\'re gonna edit your Interests!');
           }}
         >
           Close
         </GradientButton>
       </Layout>
-  </SafeAreaView>
+    </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   root: {
@@ -242,7 +235,7 @@ const styles = StyleSheet.create({
     color: "#000000",
     textAlign: "center",
     marginTop: 16,
-    marginBottom: 20
+    marginBottom: 20,
   },
   subtitle: {
     fontFamily: "Quicksand_600SemiBold",
@@ -250,25 +243,25 @@ const styles = StyleSheet.create({
     color: "#000000",
     textAlign: "center",
     marginTop: 16,
-    marginBottom: 20
+    marginBottom: 20,
   },
   edit: {
-    marginTop: 20
+    marginTop: 20,
   },
   bio: {
     width: "90%",
-    paddingTop:20,
-    paddingBottom:20,
-    color:'black',
-    textAlign:'center',
+    paddingTop: 20,
+    paddingBottom: 20,
+    color: "black",
+    textAlign: "center",
   },
   ModalField: {
     width: "90%",
-    paddingTop:20,
-    paddingBottom:20,
-    color:'black',
+    paddingTop: 20,
+    paddingBottom: 20,
+    color: "black",
     marginLeft: 10,
-    fontSize: 20
+    fontSize: 20,
     // textAlign:'center',
   },
   textDiv: {
@@ -276,20 +269,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    backgroundColor: '#FFEAB4',
+    backgroundColor: "#FFEAB4",
     borderRadius: 20,
-    padding:10,
+    padding: 10,
     margin: 10,
   },
   itemContainer: {
     width: "90%",
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 20,
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    display: "flex"
+    display: "flex",
   },
   photoContainer: {
     backgroundColor: "#0000",
@@ -305,7 +298,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: "flex-end",
-  }
+  },
 });
 
 export default EditInterestsScreen;

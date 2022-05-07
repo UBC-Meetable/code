@@ -4,25 +4,25 @@
 
 export type User = {
   __typename: "User",
-  id?: string,
-  email?: string,
+  id: string,
+  email: string,
   firstName?: string | null,
   lastName?: string | null,
   profilePicture?: string | null,
   bio?: string | null,
   userState?: UserState | null,
-  university?: string,
-  year?: number,
+  university: string,
+  year: number,
   major?: string | null,
   interests?: Array< string | null > | null,
-  courseGroups?: ModelCourseGroupConnectionConnection,
-  friendGroups?: ModelFriendGroupConnectionConnection,
-  quizzes?: ModelQuizConnection,
-  events?: ModelEventAttendeeConnection,
+  courseGroups?: ModelCourseGroupConnectionConnection | null,
+  friendGroups?: ModelFriendGroupConnectionConnection | null,
+  quizzes?: ModelQuizConnection | null,
+  events?: ModelEventAttendeeConnection | null,
   expoPushToken?: string | null,
   multipleGroupsOptIn?: boolean | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
@@ -37,91 +37,91 @@ export enum UserState {
 
 export type ModelCourseGroupConnectionConnection = {
   __typename: "ModelCourseGroupConnectionConnection",
-  items?:  Array<CourseGroupConnection | null >,
+  items:  Array<CourseGroupConnection | null >,
   nextToken?: string | null,
 };
 
 export type CourseGroupConnection = {
   __typename: "CourseGroupConnection",
-  id?: string,
-  groupID?: string,
-  userID?: string,
-  courseGroup?: CourseGroup,
-  user?: User,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  groupID: string,
+  userID: string,
+  courseGroup: CourseGroup,
+  user: User,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
 export type CourseGroup = {
   __typename: "CourseGroup",
-  users?: ModelCourseGroupConnectionConnection,
-  title?: string,
-  groupID?: string,
-  code?: string,
-  section?: string,
-  events?: ModelEventConnection,
-  messages?: ModelChatMessageConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  users?: ModelCourseGroupConnectionConnection | null,
+  title: string,
+  groupID: string,
+  code: string,
+  section: string,
+  events?: ModelEventConnection | null,
+  messages?: ModelChatMessageConnection | null,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
 export type ModelEventConnection = {
   __typename: "ModelEventConnection",
-  items?:  Array<Event | null >,
+  items:  Array<Event | null >,
   nextToken?: string | null,
 };
 
 export type Event = {
   __typename: "Event",
-  id?: string,
-  title?: string,
+  id: string,
+  title: string,
   description?: string | null,
-  startTime?: string,
-  endTime?: string,
+  startTime: string,
+  endTime: string,
   location?: string | null,
-  courseGroup?: CourseGroup,
-  attendees?: ModelEventAttendeeConnection,
-  messages?: ModelChatMessageConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  courseGroup: CourseGroup,
+  attendees?: ModelEventAttendeeConnection | null,
+  messages?: ModelChatMessageConnection | null,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
 export type ModelEventAttendeeConnection = {
   __typename: "ModelEventAttendeeConnection",
-  items?:  Array<EventAttendee | null >,
+  items:  Array<EventAttendee | null >,
   nextToken?: string | null,
 };
 
 export type EventAttendee = {
   __typename: "EventAttendee",
-  id?: string,
-  userID?: string,
-  eventID?: string,
-  user?: User,
-  event?: Event,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  userID: string,
+  eventID: string,
+  user: User,
+  event: Event,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
 export type ModelChatMessageConnection = {
   __typename: "ModelChatMessageConnection",
-  items?:  Array<ChatMessage | null >,
+  items:  Array<ChatMessage | null >,
   nextToken?: string | null,
 };
 
 export type ChatMessage = {
   __typename: "ChatMessage",
-  id?: string,
+  id: string,
   eventID?: string | null,
   groupChatID?: string | null,
   directChatID?: string | null,
-  userID?: string,
-  author?: User,
-  body?: string,
+  userID: string,
+  author: User,
+  body: string,
   files?:  Array<FileAttachment > | null,
   createdAt?: string | null,
   updatedAt?: string | null,
@@ -131,9 +131,9 @@ export type ChatMessage = {
 
 export type FileAttachment = {
   __typename: "FileAttachment",
-  fileURI?: string,
-  width?: number,
-  height?: number,
+  fileURI: string,
+  width: number,
+  height: number,
   type?: FileType | null,
 };
 
@@ -151,54 +151,54 @@ export enum GroupType {
 
 export type ModelFriendGroupConnectionConnection = {
   __typename: "ModelFriendGroupConnectionConnection",
-  items?:  Array<FriendGroupConnection | null >,
+  items:  Array<FriendGroupConnection | null >,
   nextToken?: string | null,
 };
 
 export type FriendGroupConnection = {
   __typename: "FriendGroupConnection",
-  id?: string,
-  groupID?: string,
-  userID?: string,
-  friendGroup?: FriendGroup,
-  user?: User,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  groupID: string,
+  userID: string,
+  friendGroup: FriendGroup,
+  user: User,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
 export type FriendGroup = {
   __typename: "FriendGroup",
-  users?: ModelFriendGroupConnectionConnection,
-  groupID?: string,
+  users?: ModelFriendGroupConnectionConnection | null,
+  groupID: string,
   title?: string | null,
-  messages?: ModelChatMessageConnection,
+  messages?: ModelChatMessageConnection | null,
   owner?: string | null,
-  createdAt?: string,
-  updatedAt?: string,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelQuizConnection = {
   __typename: "ModelQuizConnection",
-  items?:  Array<Quiz | null >,
+  items:  Array<Quiz | null >,
   nextToken?: string | null,
 };
 
 export type Quiz = {
   __typename: "Quiz",
-  id?: string,
-  userID?: string,
-  user?: User,
-  responses?:  Array<QAPair >,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  userID: string,
+  user: User,
+  responses:  Array<QAPair >,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
 export type QAPair = {
   __typename: "QAPair",
-  q?: string,
-  a?: string,
+  q: string,
+  a: string,
 };
 
 export type ModelStringKeyConditionInput = {
@@ -294,7 +294,7 @@ export type pushNotificationInput = {
 
 export type pushNotificationOutput = {
   __typename: "pushNotificationOutput",
-  statusCode?: number,
+  statusCode: number,
   body?: string | null,
 };
 
@@ -503,16 +503,16 @@ export type ModelReportConditionInput = {
 
 export type Report = {
   __typename: "Report",
-  id?: string,
-  message?: ChatMessage,
-  title?: string,
-  body?: string,
-  reportingUserID?: string,
-  reportedUserID?: string,
-  reportingUser?: User,
-  reportedUser?: User,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  message?: ChatMessage | null,
+  title: string,
+  body: string,
+  reportingUserID: string,
+  reportedUserID: string,
+  reportingUser?: User | null,
+  reportedUser?: User | null,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
@@ -544,14 +544,14 @@ export type ModelDirectChatConditionInput = {
 
 export type DirectChat = {
   __typename: "DirectChat",
-  id?: string,
-  userID1?: string,
-  userID2?: string,
-  user1?: User,
-  user2?: User,
-  messages?: ModelChatMessageConnection,
-  createdAt?: string,
-  updatedAt?: string,
+  id: string,
+  userID1: string,
+  userID2: string,
+  user1?: User | null,
+  user2?: User | null,
+  messages?: ModelChatMessageConnection | null,
+  createdAt: string,
+  updatedAt: string,
   owner?: string | null,
 };
 
@@ -708,9 +708,9 @@ export type joinFriendGroupInput = {
 
 export type joinFriendGroupOutput = {
   __typename: "joinFriendGroupOutput",
-  statusCode?: number,
+  statusCode: number,
   groupID?: string | null,
-  relevantUsers?: Array< string >,
+  relevantUsers: Array< string >,
 };
 
 export type getFriendSuggestionOutput = {
@@ -739,7 +739,7 @@ export type ModelUserFilterInput = {
 
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
-  items?:  Array<User | null >,
+  items:  Array<User | null >,
   nextToken?: string | null,
 };
 
@@ -755,7 +755,7 @@ export type ModelCourseGroupFilterInput = {
 
 export type ModelCourseGroupConnection = {
   __typename: "ModelCourseGroupConnection",
-  items?:  Array<CourseGroup | null >,
+  items:  Array<CourseGroup | null >,
   nextToken?: string | null,
 };
 
@@ -791,7 +791,7 @@ export type ModelFriendGroupFilterInput = {
 
 export type ModelFriendGroupConnection = {
   __typename: "ModelFriendGroupConnection",
-  items?:  Array<FriendGroup | null >,
+  items:  Array<FriendGroup | null >,
   nextToken?: string | null,
 };
 
@@ -808,7 +808,7 @@ export type ModelReportFilterInput = {
 
 export type ModelReportConnection = {
   __typename: "ModelReportConnection",
-  items?:  Array<Report | null >,
+  items:  Array<Report | null >,
   nextToken?: string | null,
 };
 
@@ -823,7 +823,7 @@ export type ModelDirectChatFilterInput = {
 
 export type ModelDirectChatConnection = {
   __typename: "ModelDirectChatConnection",
-  items?:  Array<DirectChat | null >,
+  items:  Array<DirectChat | null >,
   nextToken?: string | null,
 };
 
@@ -868,7 +868,7 @@ export type ModelIntKeyConditionInput = {
 };
 
 export type GetUserCoursesQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetUserCoursesQuery = {
@@ -921,7 +921,7 @@ export type GetUserCoursesQuery = {
 };
 
 export type GetUserFriendGroupsQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetUserFriendGroupsQuery = {
@@ -972,7 +972,7 @@ export type GetUserFriendGroupsQuery = {
 };
 
 export type GetUserProfileQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetUserProfileQuery = {
@@ -997,7 +997,7 @@ export type GetUserProfileQuery = {
 };
 
 export type GetUserQuizzesQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetUserQuizzesQuery = {
@@ -1054,7 +1054,7 @@ export type PushNotificationMutation = {
 };
 
 export type CreateUserMutationVariables = {
-  input?: CreateUserInput,
+  input: CreateUserInput,
   condition?: ModelUserConditionInput | null,
 };
 
@@ -1575,7 +1575,7 @@ export type CreateUserMutation = {
 };
 
 export type UpdateUserMutationVariables = {
-  input?: UpdateUserInput,
+  input: UpdateUserInput,
   condition?: ModelUserConditionInput | null,
 };
 
@@ -2096,7 +2096,7 @@ export type UpdateUserMutation = {
 };
 
 export type DeleteUserMutationVariables = {
-  input?: DeleteUserInput,
+  input: DeleteUserInput,
   condition?: ModelUserConditionInput | null,
 };
 
@@ -2617,7 +2617,7 @@ export type DeleteUserMutation = {
 };
 
 export type CreateCourseGroupMutationVariables = {
-  input?: CreateCourseGroupInput,
+  input: CreateCourseGroupInput,
   condition?: ModelCourseGroupConditionInput | null,
 };
 
@@ -3027,7 +3027,7 @@ export type CreateCourseGroupMutation = {
 };
 
 export type UpdateCourseGroupMutationVariables = {
-  input?: UpdateCourseGroupInput,
+  input: UpdateCourseGroupInput,
   condition?: ModelCourseGroupConditionInput | null,
 };
 
@@ -3437,7 +3437,7 @@ export type UpdateCourseGroupMutation = {
 };
 
 export type DeleteCourseGroupMutationVariables = {
-  input?: DeleteCourseGroupInput,
+  input: DeleteCourseGroupInput,
   condition?: ModelCourseGroupConditionInput | null,
 };
 
@@ -3847,7 +3847,7 @@ export type DeleteCourseGroupMutation = {
 };
 
 export type CreateEventAttendeeMutationVariables = {
-  input?: CreateEventAttendeeInput,
+  input: CreateEventAttendeeInput,
   condition?: ModelEventAttendeeConditionInput | null,
 };
 
@@ -4425,7 +4425,7 @@ export type CreateEventAttendeeMutation = {
 };
 
 export type UpdateEventAttendeeMutationVariables = {
-  input?: UpdateEventAttendeeInput,
+  input: UpdateEventAttendeeInput,
   condition?: ModelEventAttendeeConditionInput | null,
 };
 
@@ -5003,7 +5003,7 @@ export type UpdateEventAttendeeMutation = {
 };
 
 export type DeleteEventAttendeeMutationVariables = {
-  input?: DeleteEventAttendeeInput,
+  input: DeleteEventAttendeeInput,
   condition?: ModelEventAttendeeConditionInput | null,
 };
 
@@ -5581,7 +5581,7 @@ export type DeleteEventAttendeeMutation = {
 };
 
 export type CreateEventMutationVariables = {
-  input?: CreateEventInput,
+  input: CreateEventInput,
   condition?: ModelEventConditionInput | null,
 };
 
@@ -6049,7 +6049,7 @@ export type CreateEventMutation = {
 };
 
 export type UpdateEventMutationVariables = {
-  input?: UpdateEventInput,
+  input: UpdateEventInput,
   condition?: ModelEventConditionInput | null,
 };
 
@@ -6517,7 +6517,7 @@ export type UpdateEventMutation = {
 };
 
 export type DeleteEventMutationVariables = {
-  input?: DeleteEventInput,
+  input: DeleteEventInput,
   condition?: ModelEventConditionInput | null,
 };
 
@@ -6985,7 +6985,7 @@ export type DeleteEventMutation = {
 };
 
 export type CreateFriendGroupMutationVariables = {
-  input?: CreateFriendGroupInput,
+  input: CreateFriendGroupInput,
   condition?: ModelFriendGroupConditionInput | null,
 };
 
@@ -7216,7 +7216,7 @@ export type CreateFriendGroupMutation = {
 };
 
 export type UpdateFriendGroupMutationVariables = {
-  input?: UpdateFriendGroupInput,
+  input: UpdateFriendGroupInput,
   condition?: ModelFriendGroupConditionInput | null,
 };
 
@@ -7447,7 +7447,7 @@ export type UpdateFriendGroupMutation = {
 };
 
 export type DeleteFriendGroupMutationVariables = {
-  input?: DeleteFriendGroupInput,
+  input: DeleteFriendGroupInput,
   condition?: ModelFriendGroupConditionInput | null,
 };
 
@@ -7678,7 +7678,7 @@ export type DeleteFriendGroupMutation = {
 };
 
 export type CreateReportMutationVariables = {
-  input?: CreateReportInput,
+  input: CreateReportInput,
   condition?: ModelReportConditionInput | null,
 };
 
@@ -8464,7 +8464,7 @@ export type CreateReportMutation = {
 };
 
 export type UpdateReportMutationVariables = {
-  input?: UpdateReportInput,
+  input: UpdateReportInput,
   condition?: ModelReportConditionInput | null,
 };
 
@@ -9250,7 +9250,7 @@ export type UpdateReportMutation = {
 };
 
 export type DeleteReportMutationVariables = {
-  input?: DeleteReportInput,
+  input: DeleteReportInput,
   condition?: ModelReportConditionInput | null,
 };
 
@@ -10036,7 +10036,7 @@ export type DeleteReportMutation = {
 };
 
 export type CreateDirectChatMutationVariables = {
-  input?: CreateDirectChatInput,
+  input: CreateDirectChatInput,
   condition?: ModelDirectChatConditionInput | null,
 };
 
@@ -10713,7 +10713,7 @@ export type CreateDirectChatMutation = {
 };
 
 export type UpdateDirectChatMutationVariables = {
-  input?: UpdateDirectChatInput,
+  input: UpdateDirectChatInput,
   condition?: ModelDirectChatConditionInput | null,
 };
 
@@ -11390,7 +11390,7 @@ export type UpdateDirectChatMutation = {
 };
 
 export type DeleteDirectChatMutationVariables = {
-  input?: DeleteDirectChatInput,
+  input: DeleteDirectChatInput,
   condition?: ModelDirectChatConditionInput | null,
 };
 
@@ -12067,7 +12067,7 @@ export type DeleteDirectChatMutation = {
 };
 
 export type CreateChatMessageMutationVariables = {
-  input?: CreateChatMessageInput,
+  input: CreateChatMessageInput,
   condition?: ModelChatMessageConditionInput | null,
 };
 
@@ -12378,7 +12378,7 @@ export type CreateChatMessageMutation = {
 };
 
 export type UpdateChatMessageMutationVariables = {
-  input?: UpdateChatMessageInput,
+  input: UpdateChatMessageInput,
   condition?: ModelChatMessageConditionInput | null,
 };
 
@@ -12689,7 +12689,7 @@ export type UpdateChatMessageMutation = {
 };
 
 export type DeleteChatMessageMutationVariables = {
-  input?: DeleteChatMessageInput,
+  input: DeleteChatMessageInput,
   condition?: ModelChatMessageConditionInput | null,
 };
 
@@ -13000,7 +13000,7 @@ export type DeleteChatMessageMutation = {
 };
 
 export type CreateCourseGroupConnectionMutationVariables = {
-  input?: CreateCourseGroupConnectionInput,
+  input: CreateCourseGroupConnectionInput,
   condition?: ModelCourseGroupConnectionConditionInput | null,
 };
 
@@ -13507,7 +13507,7 @@ export type CreateCourseGroupConnectionMutation = {
 };
 
 export type UpdateCourseGroupConnectionMutationVariables = {
-  input?: UpdateCourseGroupConnectionInput,
+  input: UpdateCourseGroupConnectionInput,
   condition?: ModelCourseGroupConnectionConditionInput | null,
 };
 
@@ -14014,7 +14014,7 @@ export type UpdateCourseGroupConnectionMutation = {
 };
 
 export type DeleteCourseGroupConnectionMutationVariables = {
-  input?: DeleteCourseGroupConnectionInput,
+  input: DeleteCourseGroupConnectionInput,
   condition?: ModelCourseGroupConnectionConditionInput | null,
 };
 
@@ -14521,7 +14521,7 @@ export type DeleteCourseGroupConnectionMutation = {
 };
 
 export type CreateFriendGroupConnectionMutationVariables = {
-  input?: CreateFriendGroupConnectionInput,
+  input: CreateFriendGroupConnectionInput,
   condition?: ModelFriendGroupConnectionConditionInput | null,
 };
 
@@ -14952,7 +14952,7 @@ export type CreateFriendGroupConnectionMutation = {
 };
 
 export type UpdateFriendGroupConnectionMutationVariables = {
-  input?: UpdateFriendGroupConnectionInput,
+  input: UpdateFriendGroupConnectionInput,
   condition?: ModelFriendGroupConnectionConditionInput | null,
 };
 
@@ -15383,7 +15383,7 @@ export type UpdateFriendGroupConnectionMutation = {
 };
 
 export type DeleteFriendGroupConnectionMutationVariables = {
-  input?: DeleteFriendGroupConnectionInput,
+  input: DeleteFriendGroupConnectionInput,
   condition?: ModelFriendGroupConnectionConditionInput | null,
 };
 
@@ -15814,7 +15814,7 @@ export type DeleteFriendGroupConnectionMutation = {
 };
 
 export type CreateQuizMutationVariables = {
-  input?: CreateQuizInput,
+  input: CreateQuizInput,
   condition?: ModelQuizConditionInput | null,
 };
 
@@ -16118,7 +16118,7 @@ export type CreateQuizMutation = {
 };
 
 export type UpdateQuizMutationVariables = {
-  input?: UpdateQuizInput,
+  input: UpdateQuizInput,
   condition?: ModelQuizConditionInput | null,
 };
 
@@ -16422,7 +16422,7 @@ export type UpdateQuizMutation = {
 };
 
 export type DeleteQuizMutationVariables = {
-  input?: DeleteQuizInput,
+  input: DeleteQuizInput,
   condition?: ModelQuizConditionInput | null,
 };
 
@@ -17032,7 +17032,7 @@ export type GetFriendSuggestionQuery = {
 };
 
 export type GetUserQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetUserQuery = {
@@ -17850,7 +17850,7 @@ export type ListUsersQuery = {
 };
 
 export type GetCourseGroupQueryVariables = {
-  groupID?: string,
+  groupID: string,
 };
 
 export type GetCourseGroupQuery = {
@@ -18481,7 +18481,7 @@ export type ListCourseGroupsQuery = {
 };
 
 export type GetEventAttendeeQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetEventAttendeeQuery = {
@@ -19416,7 +19416,7 @@ export type ListEventAttendeesQuery = {
 };
 
 export type GetEventQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetEventQuery = {
@@ -20174,7 +20174,7 @@ export type ListEventsQuery = {
 };
 
 export type GetFriendGroupQueryVariables = {
-  groupID?: string,
+  groupID: string,
 };
 
 export type GetFriendGroupQuery = {
@@ -20550,7 +20550,7 @@ export type ListFriendGroupsQuery = {
 };
 
 export type GetReportQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetReportQuery = {
@@ -21811,7 +21811,7 @@ export type ListReportsQuery = {
 };
 
 export type GetDirectChatQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetDirectChatQuery = {
@@ -22930,7 +22930,7 @@ export type ListDirectChatsQuery = {
 };
 
 export type GetChatMessageQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetChatMessageQuery = {
@@ -23454,7 +23454,7 @@ export type ListChatMessagesQuery = {
 };
 
 export type GetCourseGroupConnectionQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetCourseGroupConnectionQuery = {
@@ -24292,7 +24292,7 @@ export type ListCourseGroupConnectionsQuery = {
 };
 
 export type GetFriendGroupConnectionQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetFriendGroupConnectionQuery = {
@@ -25016,7 +25016,7 @@ export type ListFriendGroupConnectionsQuery = {
 };
 
 export type GetQuizQueryVariables = {
-  id?: string,
+  id: string,
 };
 
 export type GetQuizQuery = {
@@ -26270,7 +26270,7 @@ export type ChatByUsersQuery = {
   } | null,
 };
 
-export type MessagesByEventIdQueryVariables = {
+export type MessagesByEventIDQueryVariables = {
   eventID?: string | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -26279,7 +26279,7 @@ export type MessagesByEventIdQueryVariables = {
   nextToken?: string | null,
 };
 
-export type MessagesByEventIdQuery = {
+export type MessagesByEventIDQuery = {
   messagesByEventID?:  {
     __typename: "ModelChatMessageConnection",
     items:  Array< {
@@ -26487,7 +26487,7 @@ export type MessagesByEventIdQuery = {
   } | null,
 };
 
-export type MessagesByCourseGroupChatIdQueryVariables = {
+export type MessagesByCourseGroupChatIDQueryVariables = {
   groupChatID?: string | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -26496,7 +26496,7 @@ export type MessagesByCourseGroupChatIdQueryVariables = {
   nextToken?: string | null,
 };
 
-export type MessagesByCourseGroupChatIdQuery = {
+export type MessagesByCourseGroupChatIDQuery = {
   messagesByCourseGroupChatID?:  {
     __typename: "ModelChatMessageConnection",
     items:  Array< {
@@ -26704,7 +26704,7 @@ export type MessagesByCourseGroupChatIdQuery = {
   } | null,
 };
 
-export type MessagesByDirectChatIdQueryVariables = {
+export type MessagesByDirectChatIDQueryVariables = {
   directChatID?: string | null,
   createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
@@ -26713,7 +26713,7 @@ export type MessagesByDirectChatIdQueryVariables = {
   nextToken?: string | null,
 };
 
-export type MessagesByDirectChatIdQuery = {
+export type MessagesByDirectChatIDQuery = {
   messagesByDirectChatID?:  {
     __typename: "ModelChatMessageConnection",
     items:  Array< {
@@ -36446,7 +36446,7 @@ export type OnDeleteReportSubscription = {
 };
 
 export type OnCreateDirectChatSubscriptionVariables = {
-  owner?: string,
+  owner: string,
 };
 
 export type OnCreateDirectChatSubscription = {
@@ -37122,7 +37122,7 @@ export type OnCreateDirectChatSubscription = {
 };
 
 export type OnUpdateDirectChatSubscriptionVariables = {
-  owner?: string,
+  owner: string,
 };
 
 export type OnUpdateDirectChatSubscription = {
@@ -37798,7 +37798,7 @@ export type OnUpdateDirectChatSubscription = {
 };
 
 export type OnDeleteDirectChatSubscriptionVariables = {
-  owner?: string,
+  owner: string,
 };
 
 export type OnDeleteDirectChatSubscription = {

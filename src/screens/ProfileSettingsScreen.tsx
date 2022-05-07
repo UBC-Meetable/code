@@ -21,8 +21,8 @@ const ProfileSettingsScreen = ({ navigation }: { navigation: StackNavigationProp
     <SafeAreaView style={styles.root}>
       {/* <Layout style={styles.container} /> */}
       {/* <ScrollView contentContainerStyle={styles.selectionsContainer} /> */}
-      <Layout style={{ backgroundColor: "transparent", flex: 1 }}>
-        <GradientButton onPress={() => navigation.push("EditInterests")} style={{ marginTop: 50, width: "90%" }}>
+      <Layout style={{ backgroundColor: "transparent", flex: 1, width: "90%" }}>
+        <GradientButton onPress={() => navigation.push("EditInterests")} style={{ marginTop: 50, width: "100%", borderRadius: 25 }}>
           Edit Interests
         </GradientButton>
       </Layout>

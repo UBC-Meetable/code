@@ -1,8 +1,10 @@
 import { StackNavigationProp } from "@react-navigation/stack";
-import { Layout, Spinner, Text, Button } from "@ui-kitten/components";
+import {
+  Layout, Spinner, Text, Button,
+} from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import {
-  Dimensions, Platform, SafeAreaView, StyleSheet, View, Modal
+  Dimensions, Platform, SafeAreaView, StyleSheet, View, Modal,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "react-native-paper";
@@ -18,6 +20,7 @@ import CourseGroups from "./CourseGroups";
 import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
 import UserProfile from "../components/profile/UserProfile";
 import GradientButton from "../components/ui/GradientButton";
+import EventBubble from "../components/events/EventBubble";
 
 const window = Dimensions.get("window");
 
@@ -28,7 +31,7 @@ type HomeProps = {
 const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
   const { loading, profilePicture, id } = useUserProfile();
-  const [suggestedFriends, setSuggestedFriends] = useState([]);
+  const [suggestedFriends, setSuggestedFriends] = useState<any>([]);
   const [visible, setVisible] = useState(false);
   const [friend, setFriend] = useState({});
 
@@ -45,8 +48,8 @@ const Home = ({ navigation }: HomeProps) => {
     navigation.dispatch(
       CommonActions.navigate("Event", {
         screen: "EventScreen",
-        eventID,
         eventTitle,
+        eventID,
       }),
     );
   };
@@ -54,7 +57,6 @@ const Home = ({ navigation }: HomeProps) => {
   return (
     <>
       {/* Background, Outside of Safe Area View */}
-      {/* <CourseGroupBackground width={window.width} style={{ position: "absolute", opacity: 0.7 }} /> */}
 
       {/* TODO make this safe area a global component */}
       <SafeAreaView style={{ marginTop: Platform.OS === "android" ? units.top : 0, flex: 1 }}>
@@ -85,18 +87,20 @@ const Home = ({ navigation }: HomeProps) => {
                 horizontal
                 style={[styles.scrollView, styles.suggestedFriendsContainer]}
               >
-                {suggestedFriends.map(suggestedFriend => <Button key={suggestedFriend.id} appearance="ghost" onPress={() => { setFriend(suggestedFriend); setVisible(true); }}>
-                  <SuggestedFriend {...suggestedFriend} />
-                </Button>)}
+                {suggestedFriends.map((suggestedFriend: any) => (
+                  <Button key={suggestedFriend.id} appearance="ghost" onPress={() => { setFriend(suggestedFriend); setVisible(true); }}>
+                    <SuggestedFriend {...suggestedFriend} />
+                  </Button>
+                ))}
               </ScrollView>
             </View>
             <View style={styles.row}>
               <Text style={styles.titleText}>Upcoming Events</Text>
-              {/* <PrimaryButton onPress={() => eventNavigation(
-                "Quiz 3",
+              <EventBubble onPress={() => eventNavigation(
+                "Quiz 8",
                 "1",
-                //GroupType.COURSE
-              )}>Quiz 1</PrimaryButton> */}
+              )}
+              />
               <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
                 <Text style={{ margin: 10, textAlign: "center", color: "#404040" }}>No upcoming events</Text>
               </View>
@@ -116,7 +120,15 @@ const Home = ({ navigation }: HomeProps) => {
         >
           <View style={{ backgroundColor: Colors.theme.creme, flex: 1, padding: 20 }}>
             <UserProfile user={friend} style={{ paddingTop: 50 }} />
-            <GradientButton onPress={() => setVisible(false)} style={{ marginVertical: 50 }}>Close</GradientButton>
+            <GradientButton
+              onPress={() => setVisible(false)}
+              style={{
+                marginVertical: 50,
+                borderRadius: 30,
+              }}
+            >
+              Close
+            </GradientButton>
           </View>
         </Modal>
       </SafeAreaView>

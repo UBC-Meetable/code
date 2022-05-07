@@ -1,13 +1,16 @@
-import { Button, Text, TextProps } from "@ui-kitten/components";
+import {
+  Button, ButtonProps, Text, TextProps,
+} from "@ui-kitten/components";
 import { LinearGradient, LinearGradientProps } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextStyle } from "react-native";
 
 type GradientButtonProps = {
-  textStyle?: TextProps
+  textStyle?: TextStyle;
   loading?: boolean
   gradientProps?: LinearGradientProps
-} & TextProps;
+  children: string
+} & ButtonProps;
 
 const GradientButton = (props: GradientButtonProps) => {
   const {
@@ -22,6 +25,7 @@ const GradientButton = (props: GradientButtonProps) => {
       style={[styles.linearGradient, style]}
     >
       <Button
+        size="large"
         style={[styles.button, pressedIn && styles.pressedIn]}
         onPressIn={() => {
           setPressedIn(true);
@@ -31,8 +35,11 @@ const GradientButton = (props: GradientButtonProps) => {
         }}
         onPress={(e) => onPress(e)}
       >
-        {(evaProps: any) => (
-          <Text style={[evaProps.style, styles.buttonText]}>
+        {(evaProps) => (
+          <Text
+            {...evaProps}
+            style={[textStyle, { fontFamily: "Poppins_600SemiBold" }, pressedIn && styles.pressedInText]}
+          >
             {children}
           </Text>
         )}
@@ -49,16 +56,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
-    borderRadius: 30,
   },
   button: {
     width: "100%",
     backgroundColor: "transparent",
     borderWidth: 0,
+    flexDirection: "column",
   },
   buttonText: {
     textAlign: "center",
-    paddingVertical: 5,
     fontSize: 18,
     flex: 1,
   },

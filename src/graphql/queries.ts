@@ -8352,8 +8352,8 @@ export const chatByUsers = /* GraphQL */ `
     }
   }
 `;
-export const messagesByEventId = /* GraphQL */ `
-  query MessagesByEventId(
+export const messagesByEventID = /* GraphQL */ `
+  query MessagesByEventID(
     $eventID: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -8555,8 +8555,8 @@ export const messagesByEventId = /* GraphQL */ `
     }
   }
 `;
-export const messagesByCourseGroupChatId = /* GraphQL */ `
-  query MessagesByCourseGroupChatId(
+export const messagesByCourseGroupChatID = /* GraphQL */ `
+  query MessagesByCourseGroupChatID(
     $groupChatID: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
@@ -8758,8 +8758,8 @@ export const messagesByCourseGroupChatId = /* GraphQL */ `
     }
   }
 `;
-export const messagesByDirectChatId = /* GraphQL */ `
-  query MessagesByDirectChatId(
+export const messagesByDirectChatID = /* GraphQL */ `
+  query MessagesByDirectChatID(
     $directChatID: String
     $createdAt: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection

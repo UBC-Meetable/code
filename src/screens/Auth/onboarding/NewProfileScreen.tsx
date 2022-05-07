@@ -94,7 +94,7 @@ const NewProfileScreen = ({
   return (
     <ScrollView
       contentContainerStyle={[profileStyles.container,
-      { paddingTop: units.top, paddingHorizontal: 10, paddingBottom: units.bottom }]}
+        { paddingTop: units.top, paddingHorizontal: 10, paddingBottom: units.bottom }]}
       bounces={false}
     >
       <ProfilePicture
