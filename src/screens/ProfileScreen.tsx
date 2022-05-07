@@ -9,6 +9,7 @@ import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
 import { StyleSheet, Modal } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { Chip } from "react-native-paper";
 import ProfilePicture from "../components/ProfilePicture";
 import GradientButton from "../components/ui/GradientButton";
 import Colors from "../constants/Colors";
@@ -16,7 +17,6 @@ import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
 import useCourseGroups from "../hooks/useCourseGroups";
 import Tag from "../components/profile/Tag";
-import { Chip } from "react-native-paper";
 import UserProfile from "../components/profile/UserProfile";
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
@@ -129,29 +129,6 @@ const ProfileScreen = () => {
       bounces={false}
     >
       <UserProfile user={user} />
-      {/* <ProfilePicture imageKey={key} editable />
-      <Text style={styles.name}>
-        {`${firstName} ${lastName}`.trim()}
-      </Text>
-      <Text style={styles.email}>
-        {user.email || ""}
-      </Text>
-
-      <Layout style={{ backgroundColor: "white", padding: 10, width: "100%", marginVertical: 10, borderRadius: 10 }}>
-        <Text style={{ textAlign: "center" }}>{user.bio}</Text>
-      </Layout>
-
-      <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 20, margin: 10 }} category='h2'>Enrolled Classes</Text>
-      <Layout style={{ padding: 10, borderRadius: 20, width: "100%" }}>
-        {groups.length ? groups.map(({ title, code }, index) => <Tag key={index} type="course" text={`${title} ${code}`} />)
-          : <Text style={{ margin: 10, textAlign: "center", color: "gray" }}>No courses registered</Text>}
-      </Layout>
-
-      <Text style={{ fontFamily: 'Poppins_600SemiBold', fontSize: 20, margin: 10 }} category='h2'>Interests</Text>
-      <Layout style={{ padding: 10, borderRadius: 20, width: "100%", display: "flex", flexDirection: "row", flexWrap: "wrap", alignItems: "center", justifyContent: "center" }}>
-        {user.interests.length ? user.interests.map((interest, index) => <Chip key={index} style={{ margin: 5, backgroundColor: "#FEEDDE" }} textStyle={{ fontFamily: "Poppins_500Medium", fontSize: 12 }}>{interest}</Chip>)
-          : <Text style={{ margin: 10, textAlign: "center", color: "gray" }}>No interests selected</Text>}
-      </Layout> */}
 
       <GradientButton
         onPress={open}

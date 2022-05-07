@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
@@ -73,8 +74,10 @@ export type FriendGroupStackScreens = {
   Quiz: undefined;
 };
 
-export type TabTwoParamList = {
+export type ProfileStackParamList = {
   ProfileScreen: undefined;
+  ProfileSettings: undefined;
+  EditInterests: undefined;
 };
 
 export type User =

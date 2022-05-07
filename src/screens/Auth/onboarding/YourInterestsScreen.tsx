@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Text } from "@ui-kitten/components";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { ScrollView } from "react-native-gesture-handler";
 import useUserProfile from "../../../hooks/useUserProfile";
 import { SignUpParamList } from "../../../types";
 import InterestChips from "../../../components/ui/InterestsChips";
 import { nerdStuff, outdoorActivity } from "../../../constants/Interests";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { ScrollView } from "react-native-gesture-handler";
 import GradientButton from "../../../components/ui/GradientButton";
 // import BubbleBackground from "../../../assets/images/quizBubble.svg";
 
@@ -48,7 +48,10 @@ const YourInterestsScreen = ({
         fontFamily: "Poppins_600SemiBold",
         fontSize: 20,
         textAlign: "center",
-      }}>Tell us your favourite interests!</Text>
+      }}
+      >
+        Tell us your favourite interests!
+      </Text>
       <InterestChips
         updateSelectStatus={updateSelectStatus}
         userInterests={nerdStuff}
