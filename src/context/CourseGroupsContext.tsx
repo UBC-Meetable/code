@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
@@ -25,52 +25,51 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
   }, [id]);
 
   /** Handle Messages Being Sent */
+  // useEffect(() => {
+  //   const observableObj = API.graphql({
+  //     query: onCreateChatMessage,
+  //   }) as Observable<Object>;
+
+  //   const subscription = observableObj.subscribe({
+  //     next: ({ value: { data } }: { value: { data: OnCreateChatMessageSubscription } }) => {
+  //       //
+  //       if (!data.onCreateChatMessage) return;
+
+  //       const newGroups: CourseGroup[] = [];
+
+  //       //
+
+  //       const matchedGroup = groupRef.current
+  //         ?.find((group) => group.groupID === data.onCreateChatMessage?.courseGroupMessagesId) as CourseGroup;
+
+  //       if (!matchedGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateChatMessage.courseGroupMessagesId}`);
+  //       const newMessages = matchedGroup.messages!.items as ChatMessage[];
+  //       matchedGroup.messages!.items = newMessages;
+  //       newMessages.push(data.onCreateChatMessage as ChatMessage);
+  //       groupRef.current.forEach((group) => {
+  //         if (group.groupID === data.onCreateChatMessage?.courseGroupMessagesId) {
+  //           newGroups.push(matchedGroup);
+  //         } else {
+  //           newGroups.push(group);
+  //         }
+  //       });
+
+  //       setGroups(() => newGroups);
+  //       //
+  //     },
+  //     error: (error: any) => console.warn(error),
+  //   });
+
+  //   return () => subscription.unsubscribe();
+  // });
+
+  // Handle Users Being Added to Groups
   useEffect(() => {
-    const observableObj = API.graphql({
-      query: onCreateChatMessage,
-    }) as Observable<Object>;
+    const observableObj = API.graphql(graphqlOperation(onCreateCourseGroupUsers, { owner: id })) as Observable<Object>;
 
     const subscription = observableObj.subscribe({
-      next: ({ value: { data } }: { value: { data: OnCreateChatMessageSubscription } }) => {
-        //
-        if (!data.onCreateChatMessage) return;
-
-        const newGroups: CourseGroup[] = [];
-
-        //
-
-        const matchedGroup = groupRef.current
-          ?.find((group) => group.groupID === data.onCreateChatMessage?.courseGroupMessagesId) as CourseGroup;
-
-        if (!matchedGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateChatMessage.courseGroupMessagesId}`);
-        const newMessages = matchedGroup.messages!.items as ChatMessage[];
-        matchedGroup.messages!.items = newMessages;
-        newMessages.push(data.onCreateChatMessage as ChatMessage);
-        groupRef.current.forEach((group) => {
-          if (group.groupID === data.onCreateChatMessage?.courseGroupMessagesId) {
-            newGroups.push(matchedGroup);
-          } else {
-            newGroups.push(group);
-          }
-        });
-
-        setGroups(() => newGroups);
-        //
-      },
-      error: (error: any) => console.warn(error),
-    });
-
-    return () => subscription.unsubscribe();
-  });
-
-  useEffect(() => {
-    const observableObj = API.graphql({
-      query: onCreateCourseGroupUsers,
-    }) as Observable<Object>;
-
-    const subscription = observableObj.subscribe({
-      next: ({ value: { data } }:
-        { value: { data: OnCreateCourseGroupUsersSubscription } }) => {
+      next: ({ provider, value }: any) => {
+        const { data } = value as {data: OnCreateCourseGroupUsersSubscription};
         if (!data.onCreateCourseGroupUsers) return;
 
         const newGroups: CourseGroup[] = [];
@@ -95,13 +94,15 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
     return () => subscription.unsubscribe();
   });
 
-  // update state when CourseGroupConnection deleted
+  // update state when a user is removed from a group (IE. A CourseGroupUser is deleted)
   useEffect(() => {
-    const observableObj = API.graphql({
-      query: onDeleteCourseGroupUsers,
-    }) as Observable<Object>;
+    const observableObj = API.graphql(graphqlOperation(onDeleteCourseGroupUsers, { owner: id })) as Observable<Object>;
     const subscription = observableObj.subscribe({
-      next: ({ value: { data } }: { value: { data: OnDeleteCourseGroupUsersSubscription } }) => {
+      next: ({ provider, value }: any) => {
+        console.log("DELETE EVENT CAPTURED");
+        const { data } = value as {data: OnDeleteCourseGroupUsersSubscription};
+        console.log(value);
+
         if (!data.onDeleteCourseGroupUsers) return;
         setGroups(groups.filter((group) => group.groupID !== data.onDeleteCourseGroupUsers?.courseGroupID));
       },

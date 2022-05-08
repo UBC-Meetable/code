@@ -160,7 +160,11 @@ const AuthorizedApp = () => {
     };
     if (!loading) {
       (async () => {
-        await registerForPushNotificationsAsync();
+        try {
+          await registerForPushNotificationsAsync();
+        } catch (e) {
+          // console.log(e);
+        }
       })();
     }
   }, [loading]);
