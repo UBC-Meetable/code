@@ -16,7 +16,8 @@ const UserProfile = ({ user, style }: UserProfileProps) => {
   const {
     firstName, lastName, email, bio, profilePicture, interests = [],
   } = user;
-  const groups = useCourseGroups();
+  const { groups } = useCourseGroups();
+  console.log(groups);
 
   return (
     <ScrollView contentContainerStyle={{

@@ -80,12 +80,12 @@ export type Event = {
   startTime: string,
   endTime: string,
   location?: string | null,
+  courseGroupEventsId: string,
   courseGroup: CourseGroup,
   attendees?: ModelEventAttendeesConnection | null,
   messages?: ModelChatMessageConnection | null,
   createdAt: string,
   updatedAt: string,
-  courseGroupEventsId: string,
   owner?: string | null,
 };
 
@@ -116,6 +116,7 @@ export type ModelChatMessageConnection = {
 export type ChatMessage = {
   __typename: "ChatMessage",
   id: string,
+  parentId: string,
   event?: Event | null,
   groupChat?: CourseGroup | null,
   directChat?: DirectChat | null,
@@ -371,26 +372,10 @@ export type ModelEventConditionInput = {
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   location?: ModelStringInput | null,
+  courseGroupEventsId?: ModelStringInput | null,
   and?: Array< ModelEventConditionInput | null > | null,
   or?: Array< ModelEventConditionInput | null > | null,
   not?: ModelEventConditionInput | null,
-  courseGroupEventsId?: ModelIDInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type UpdateEventInput = {
@@ -457,6 +442,7 @@ export type DeleteDirectChatInput = {
 
 export type CreateChatMessageInput = {
   id?: string | null,
+  parentId: string,
   body: string,
   files?: Array< FileAttachmentInput > | null,
   createdAt?: string | null,
@@ -476,6 +462,7 @@ export type FileAttachmentInput = {
 };
 
 export type ModelChatMessageConditionInput = {
+  parentId?: ModelStringInput | null,
   body?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
@@ -489,8 +476,25 @@ export type ModelChatMessageConditionInput = {
   chatMessageAuthorId?: ModelIDInput | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type UpdateChatMessageInput = {
   id: string,
+  parentId?: string | null,
   body?: string | null,
   files?: Array< FileAttachmentInput > | null,
   createdAt?: string | null,
@@ -650,10 +654,10 @@ export type ModelEventFilterInput = {
   startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   location?: ModelStringInput | null,
+  courseGroupEventsId?: ModelStringInput | null,
   and?: Array< ModelEventFilterInput | null > | null,
   or?: Array< ModelEventFilterInput | null > | null,
   not?: ModelEventFilterInput | null,
-  courseGroupEventsId?: ModelIDInput | null,
 };
 
 export type ModelFriendGroupFilterInput = {
@@ -688,6 +692,7 @@ export type ModelDirectChatConnection = {
 
 export type ModelChatMessageFilterInput = {
   id?: ModelStringInput | null,
+  parentId?: ModelStringInput | null,
   body?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
@@ -735,6 +740,16 @@ export type ModelIntKeyConditionInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
 };
 
 export type GetUserCoursesQueryVariables = {
@@ -989,9 +1004,9 @@ export type CreateUserMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -1001,6 +1016,7 @@ export type CreateUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1110,6 +1126,7 @@ export type CreateUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1205,6 +1222,7 @@ export type CreateUserMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -1245,6 +1263,7 @@ export type CreateUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1259,7 +1278,6 @@ export type CreateUserMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -1389,9 +1407,9 @@ export type UpdateUserMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -1401,6 +1419,7 @@ export type UpdateUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1510,6 +1529,7 @@ export type UpdateUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1605,6 +1625,7 @@ export type UpdateUserMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -1645,6 +1666,7 @@ export type UpdateUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1659,7 +1681,6 @@ export type UpdateUserMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -1789,9 +1810,9 @@ export type DeleteUserMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -1801,6 +1822,7 @@ export type DeleteUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -1910,6 +1932,7 @@ export type DeleteUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2005,6 +2028,7 @@ export type DeleteUserMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -2045,6 +2069,7 @@ export type DeleteUserMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2059,7 +2084,6 @@ export type DeleteUserMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -2178,9 +2202,9 @@ export type CreateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -2190,6 +2214,7 @@ export type CreateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2226,6 +2251,7 @@ export type CreateCourseGroupMutation = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -2255,9 +2281,9 @@ export type CreateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -2267,6 +2293,7 @@ export type CreateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2317,9 +2344,9 @@ export type CreateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -2333,6 +2360,7 @@ export type CreateCourseGroupMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -2341,9 +2369,9 @@ export type CreateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -2405,7 +2433,6 @@ export type CreateCourseGroupMutation = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -2415,6 +2442,7 @@ export type CreateCourseGroupMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -2423,6 +2451,7 @@ export type CreateCourseGroupMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -2463,6 +2492,7 @@ export type CreateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2477,7 +2507,6 @@ export type CreateCourseGroupMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -2509,9 +2538,9 @@ export type CreateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -2521,6 +2550,7 @@ export type CreateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2609,6 +2639,7 @@ export type CreateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2810,9 +2841,9 @@ export type UpdateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -2822,6 +2853,7 @@ export type UpdateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2858,6 +2890,7 @@ export type UpdateCourseGroupMutation = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -2887,9 +2920,9 @@ export type UpdateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -2899,6 +2932,7 @@ export type UpdateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -2949,9 +2983,9 @@ export type UpdateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -2965,6 +2999,7 @@ export type UpdateCourseGroupMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -2973,9 +3008,9 @@ export type UpdateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -3037,7 +3072,6 @@ export type UpdateCourseGroupMutation = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -3047,6 +3081,7 @@ export type UpdateCourseGroupMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -3055,6 +3090,7 @@ export type UpdateCourseGroupMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -3095,6 +3131,7 @@ export type UpdateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3109,7 +3146,6 @@ export type UpdateCourseGroupMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -3141,9 +3177,9 @@ export type UpdateCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -3153,6 +3189,7 @@ export type UpdateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3241,6 +3278,7 @@ export type UpdateCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3442,9 +3480,9 @@ export type DeleteCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -3454,6 +3492,7 @@ export type DeleteCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3490,6 +3529,7 @@ export type DeleteCourseGroupMutation = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -3519,9 +3559,9 @@ export type DeleteCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -3531,6 +3571,7 @@ export type DeleteCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3581,9 +3622,9 @@ export type DeleteCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -3597,6 +3638,7 @@ export type DeleteCourseGroupMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -3605,9 +3647,9 @@ export type DeleteCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -3669,7 +3711,6 @@ export type DeleteCourseGroupMutation = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -3679,6 +3720,7 @@ export type DeleteCourseGroupMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -3687,6 +3729,7 @@ export type DeleteCourseGroupMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -3727,6 +3770,7 @@ export type DeleteCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3741,7 +3785,6 @@ export type DeleteCourseGroupMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -3773,9 +3816,9 @@ export type DeleteCourseGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -3785,6 +3828,7 @@ export type DeleteCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3873,6 +3917,7 @@ export type DeleteCourseGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -3986,6 +4031,7 @@ export type CreateEventMutation = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -4068,6 +4114,7 @@ export type CreateEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -4108,6 +4155,7 @@ export type CreateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -4122,7 +4170,6 @@ export type CreateEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -4132,6 +4179,7 @@ export type CreateEventMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -4140,6 +4188,7 @@ export type CreateEventMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -4160,7 +4209,6 @@ export type CreateEventMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -4363,6 +4411,7 @@ export type CreateEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -4403,6 +4452,7 @@ export type CreateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -4417,7 +4467,6 @@ export type CreateEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -4431,6 +4480,7 @@ export type CreateEventMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -4439,6 +4489,7 @@ export type CreateEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -4479,6 +4530,7 @@ export type CreateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -4493,7 +4545,6 @@ export type CreateEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -4525,9 +4576,9 @@ export type CreateEventMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -4537,6 +4588,7 @@ export type CreateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -4625,6 +4677,7 @@ export type CreateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -4720,7 +4773,6 @@ export type CreateEventMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -4739,6 +4791,7 @@ export type UpdateEventMutation = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -4821,6 +4874,7 @@ export type UpdateEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -4861,6 +4915,7 @@ export type UpdateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -4875,7 +4930,6 @@ export type UpdateEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -4885,6 +4939,7 @@ export type UpdateEventMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -4893,6 +4948,7 @@ export type UpdateEventMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -4913,7 +4969,6 @@ export type UpdateEventMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -5116,6 +5171,7 @@ export type UpdateEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -5156,6 +5212,7 @@ export type UpdateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5170,7 +5227,6 @@ export type UpdateEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -5184,6 +5240,7 @@ export type UpdateEventMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -5192,6 +5249,7 @@ export type UpdateEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -5232,6 +5290,7 @@ export type UpdateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5246,7 +5305,6 @@ export type UpdateEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -5278,9 +5336,9 @@ export type UpdateEventMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -5290,6 +5348,7 @@ export type UpdateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5378,6 +5437,7 @@ export type UpdateEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5473,7 +5533,6 @@ export type UpdateEventMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -5492,6 +5551,7 @@ export type DeleteEventMutation = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -5574,6 +5634,7 @@ export type DeleteEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -5614,6 +5675,7 @@ export type DeleteEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5628,7 +5690,6 @@ export type DeleteEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -5638,6 +5699,7 @@ export type DeleteEventMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -5646,6 +5708,7 @@ export type DeleteEventMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -5666,7 +5729,6 @@ export type DeleteEventMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -5869,6 +5931,7 @@ export type DeleteEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -5909,6 +5972,7 @@ export type DeleteEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5923,7 +5987,6 @@ export type DeleteEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -5937,6 +6000,7 @@ export type DeleteEventMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -5945,6 +6009,7 @@ export type DeleteEventMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -5985,6 +6050,7 @@ export type DeleteEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -5999,7 +6065,6 @@ export type DeleteEventMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -6031,9 +6096,9 @@ export type DeleteEventMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -6043,6 +6108,7 @@ export type DeleteEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6131,6 +6197,7 @@ export type DeleteEventMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6226,7 +6293,6 @@ export type DeleteEventMutation = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -6326,6 +6392,7 @@ export type CreateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6355,6 +6422,7 @@ export type CreateFriendGroupMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -6363,6 +6431,7 @@ export type CreateFriendGroupMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -6403,6 +6472,7 @@ export type CreateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6417,7 +6487,6 @@ export type CreateFriendGroupMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -6449,9 +6518,9 @@ export type CreateFriendGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -6461,6 +6530,7 @@ export type CreateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6549,6 +6619,7 @@ export type CreateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6743,6 +6814,7 @@ export type UpdateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6772,6 +6844,7 @@ export type UpdateFriendGroupMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -6780,6 +6853,7 @@ export type UpdateFriendGroupMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -6820,6 +6894,7 @@ export type UpdateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6834,7 +6909,6 @@ export type UpdateFriendGroupMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -6866,9 +6940,9 @@ export type UpdateFriendGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -6878,6 +6952,7 @@ export type UpdateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -6966,6 +7041,7 @@ export type UpdateFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -7160,6 +7236,7 @@ export type DeleteFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -7189,6 +7266,7 @@ export type DeleteFriendGroupMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -7197,6 +7275,7 @@ export type DeleteFriendGroupMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -7237,6 +7316,7 @@ export type DeleteFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -7251,7 +7331,6 @@ export type DeleteFriendGroupMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -7283,9 +7362,9 @@ export type DeleteFriendGroupMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -7295,6 +7374,7 @@ export type DeleteFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -7383,6 +7463,7 @@ export type DeleteFriendGroupMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -7678,6 +7759,7 @@ export type CreateDirectChatMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -7698,7 +7780,6 @@ export type CreateDirectChatMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -7898,6 +7979,7 @@ export type CreateDirectChatMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -7918,7 +8000,6 @@ export type CreateDirectChatMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -7938,6 +8019,7 @@ export type CreateDirectChatMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -7946,6 +8028,7 @@ export type CreateDirectChatMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -7986,6 +8069,7 @@ export type CreateDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -8000,7 +8084,6 @@ export type CreateDirectChatMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -8032,9 +8115,9 @@ export type CreateDirectChatMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -8044,6 +8127,7 @@ export type CreateDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -8132,6 +8216,7 @@ export type CreateDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -8427,6 +8512,7 @@ export type UpdateDirectChatMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -8447,7 +8533,6 @@ export type UpdateDirectChatMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -8647,6 +8732,7 @@ export type UpdateDirectChatMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -8667,7 +8753,6 @@ export type UpdateDirectChatMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -8687,6 +8772,7 @@ export type UpdateDirectChatMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -8695,6 +8781,7 @@ export type UpdateDirectChatMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -8735,6 +8822,7 @@ export type UpdateDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -8749,7 +8837,6 @@ export type UpdateDirectChatMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -8781,9 +8868,9 @@ export type UpdateDirectChatMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -8793,6 +8880,7 @@ export type UpdateDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -8881,6 +8969,7 @@ export type UpdateDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -9176,6 +9265,7 @@ export type DeleteDirectChatMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -9196,7 +9286,6 @@ export type DeleteDirectChatMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -9396,6 +9485,7 @@ export type DeleteDirectChatMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -9416,7 +9506,6 @@ export type DeleteDirectChatMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -9436,6 +9525,7 @@ export type DeleteDirectChatMutation = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -9444,6 +9534,7 @@ export type DeleteDirectChatMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -9484,6 +9575,7 @@ export type DeleteDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -9498,7 +9590,6 @@ export type DeleteDirectChatMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -9530,9 +9621,9 @@ export type DeleteDirectChatMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -9542,6 +9633,7 @@ export type DeleteDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -9630,6 +9722,7 @@ export type DeleteDirectChatMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -9738,6 +9831,7 @@ export type CreateChatMessageMutation = {
   createChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -9746,6 +9840,7 @@ export type CreateChatMessageMutation = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -9804,6 +9899,7 @@ export type CreateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -9824,7 +9920,6 @@ export type CreateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -9834,6 +9929,7 @@ export type CreateChatMessageMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -9842,9 +9938,9 @@ export type CreateChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -9954,6 +10050,7 @@ export type CreateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -9974,7 +10071,6 @@ export type CreateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -9988,6 +10084,7 @@ export type CreateChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -9996,6 +10093,7 @@ export type CreateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -10016,7 +10114,6 @@ export type CreateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -10144,7 +10241,6 @@ export type CreateChatMessageMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -10229,6 +10325,7 @@ export type CreateChatMessageMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -10269,6 +10366,7 @@ export type CreateChatMessageMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -10283,7 +10381,6 @@ export type CreateChatMessageMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -10293,6 +10390,7 @@ export type CreateChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -10301,6 +10399,7 @@ export type CreateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -10321,7 +10420,6 @@ export type CreateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -10585,9 +10683,9 @@ export type CreateChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -10731,9 +10829,9 @@ export type CreateChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -10753,6 +10851,7 @@ export type CreateChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -10761,6 +10860,7 @@ export type CreateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -10781,7 +10881,6 @@ export type CreateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -11096,6 +11195,7 @@ export type CreateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -11116,7 +11216,6 @@ export type CreateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -11159,6 +11258,7 @@ export type UpdateChatMessageMutation = {
   updateChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -11167,6 +11267,7 @@ export type UpdateChatMessageMutation = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -11225,6 +11326,7 @@ export type UpdateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -11245,7 +11347,6 @@ export type UpdateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -11255,6 +11356,7 @@ export type UpdateChatMessageMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -11263,9 +11365,9 @@ export type UpdateChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -11375,6 +11477,7 @@ export type UpdateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -11395,7 +11498,6 @@ export type UpdateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -11409,6 +11511,7 @@ export type UpdateChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -11417,6 +11520,7 @@ export type UpdateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -11437,7 +11541,6 @@ export type UpdateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -11565,7 +11668,6 @@ export type UpdateChatMessageMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -11650,6 +11752,7 @@ export type UpdateChatMessageMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -11690,6 +11793,7 @@ export type UpdateChatMessageMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -11704,7 +11808,6 @@ export type UpdateChatMessageMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -11714,6 +11817,7 @@ export type UpdateChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -11722,6 +11826,7 @@ export type UpdateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -11742,7 +11847,6 @@ export type UpdateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -12006,9 +12110,9 @@ export type UpdateChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -12152,9 +12256,9 @@ export type UpdateChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -12174,6 +12278,7 @@ export type UpdateChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -12182,6 +12287,7 @@ export type UpdateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -12202,7 +12308,6 @@ export type UpdateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -12517,6 +12622,7 @@ export type UpdateChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -12537,7 +12643,6 @@ export type UpdateChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -12580,6 +12685,7 @@ export type DeleteChatMessageMutation = {
   deleteChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -12588,6 +12694,7 @@ export type DeleteChatMessageMutation = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -12646,6 +12753,7 @@ export type DeleteChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -12666,7 +12774,6 @@ export type DeleteChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -12676,6 +12783,7 @@ export type DeleteChatMessageMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -12684,9 +12792,9 @@ export type DeleteChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -12796,6 +12904,7 @@ export type DeleteChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -12816,7 +12925,6 @@ export type DeleteChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -12830,6 +12938,7 @@ export type DeleteChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -12838,6 +12947,7 @@ export type DeleteChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -12858,7 +12968,6 @@ export type DeleteChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -12986,7 +13095,6 @@ export type DeleteChatMessageMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -13071,6 +13179,7 @@ export type DeleteChatMessageMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -13111,6 +13220,7 @@ export type DeleteChatMessageMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -13125,7 +13235,6 @@ export type DeleteChatMessageMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -13135,6 +13244,7 @@ export type DeleteChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -13143,6 +13253,7 @@ export type DeleteChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -13163,7 +13274,6 @@ export type DeleteChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -13427,9 +13537,9 @@ export type DeleteChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -13573,9 +13683,9 @@ export type DeleteChatMessageMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -13595,6 +13705,7 @@ export type DeleteChatMessageMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -13603,6 +13714,7 @@ export type DeleteChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -13623,7 +13735,6 @@ export type DeleteChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -13938,6 +14049,7 @@ export type DeleteChatMessageMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -13958,7 +14070,6 @@ export type DeleteChatMessageMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -14188,6 +14299,7 @@ export type CreateCourseGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -14208,7 +14320,6 @@ export type CreateCourseGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -14305,6 +14416,7 @@ export type CreateCourseGroupUsersMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -14345,6 +14457,7 @@ export type CreateCourseGroupUsersMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -14359,7 +14472,6 @@ export type CreateCourseGroupUsersMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -14369,6 +14481,7 @@ export type CreateCourseGroupUsersMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -14377,6 +14490,7 @@ export type CreateCourseGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -14397,7 +14511,6 @@ export type CreateCourseGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -14729,6 +14842,7 @@ export type UpdateCourseGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -14749,7 +14863,6 @@ export type UpdateCourseGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -14846,6 +14959,7 @@ export type UpdateCourseGroupUsersMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -14886,6 +15000,7 @@ export type UpdateCourseGroupUsersMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -14900,7 +15015,6 @@ export type UpdateCourseGroupUsersMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -14910,6 +15024,7 @@ export type UpdateCourseGroupUsersMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -14918,6 +15033,7 @@ export type UpdateCourseGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -14938,7 +15054,6 @@ export type UpdateCourseGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -15270,6 +15385,7 @@ export type DeleteCourseGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -15290,7 +15406,6 @@ export type DeleteCourseGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -15387,6 +15502,7 @@ export type DeleteCourseGroupUsersMutation = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -15427,6 +15543,7 @@ export type DeleteCourseGroupUsersMutation = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -15441,7 +15558,6 @@ export type DeleteCourseGroupUsersMutation = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -15451,6 +15567,7 @@ export type DeleteCourseGroupUsersMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -15459,6 +15576,7 @@ export type DeleteCourseGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -15479,7 +15597,6 @@ export type DeleteCourseGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -15811,6 +15928,7 @@ export type CreateFriendGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -15831,7 +15949,6 @@ export type CreateFriendGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -15915,6 +16032,7 @@ export type CreateFriendGroupUsersMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -15923,6 +16041,7 @@ export type CreateFriendGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -15943,7 +16062,6 @@ export type CreateFriendGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -16275,6 +16393,7 @@ export type UpdateFriendGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -16295,7 +16414,6 @@ export type UpdateFriendGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -16379,6 +16497,7 @@ export type UpdateFriendGroupUsersMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -16387,6 +16506,7 @@ export type UpdateFriendGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -16407,7 +16527,6 @@ export type UpdateFriendGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -16739,6 +16858,7 @@ export type DeleteFriendGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -16759,7 +16879,6 @@ export type DeleteFriendGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -16843,6 +16962,7 @@ export type DeleteFriendGroupUsersMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -16851,6 +16971,7 @@ export type DeleteFriendGroupUsersMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -16871,7 +16992,6 @@ export type DeleteFriendGroupUsersMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -17203,6 +17323,7 @@ export type CreateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -17223,7 +17344,6 @@ export type CreateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -17246,6 +17366,7 @@ export type CreateEventAttendeesMutation = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -17304,6 +17425,7 @@ export type CreateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -17324,7 +17446,6 @@ export type CreateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -17334,6 +17455,7 @@ export type CreateEventAttendeesMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -17342,9 +17464,9 @@ export type CreateEventAttendeesMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -17454,6 +17576,7 @@ export type CreateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -17474,7 +17597,6 @@ export type CreateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -17488,6 +17610,7 @@ export type CreateEventAttendeesMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -17496,6 +17619,7 @@ export type CreateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -17516,7 +17640,6 @@ export type CreateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -17644,7 +17767,6 @@ export type CreateEventAttendeesMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,
@@ -17849,6 +17971,7 @@ export type UpdateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -17869,7 +17992,6 @@ export type UpdateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -17892,6 +18014,7 @@ export type UpdateEventAttendeesMutation = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -17950,6 +18073,7 @@ export type UpdateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -17970,7 +18094,6 @@ export type UpdateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -17980,6 +18103,7 @@ export type UpdateEventAttendeesMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -17988,9 +18112,9 @@ export type UpdateEventAttendeesMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -18100,6 +18224,7 @@ export type UpdateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -18120,7 +18245,6 @@ export type UpdateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -18134,6 +18258,7 @@ export type UpdateEventAttendeesMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -18142,6 +18267,7 @@ export type UpdateEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -18162,7 +18288,6 @@ export type UpdateEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -18290,7 +18415,6 @@ export type UpdateEventAttendeesMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,
@@ -18495,6 +18619,7 @@ export type DeleteEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -18515,7 +18640,6 @@ export type DeleteEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -18538,6 +18662,7 @@ export type DeleteEventAttendeesMutation = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -18596,6 +18721,7 @@ export type DeleteEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -18616,7 +18742,6 @@ export type DeleteEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -18626,6 +18751,7 @@ export type DeleteEventAttendeesMutation = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -18634,9 +18760,9 @@ export type DeleteEventAttendeesMutation = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -18746,6 +18872,7 @@ export type DeleteEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -18766,7 +18893,6 @@ export type DeleteEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -18780,6 +18906,7 @@ export type DeleteEventAttendeesMutation = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -18788,6 +18915,7 @@ export type DeleteEventAttendeesMutation = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -18808,7 +18936,6 @@ export type DeleteEventAttendeesMutation = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -18936,7 +19063,6 @@ export type DeleteEventAttendeesMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,
@@ -19150,6 +19276,7 @@ export type GetFriendSuggestionQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -19170,7 +19297,6 @@ export type GetFriendSuggestionQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -19300,9 +19426,9 @@ export type GetUserQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -19312,6 +19438,7 @@ export type GetUserQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -19421,6 +19548,7 @@ export type GetUserQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -19516,6 +19644,7 @@ export type GetUserQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -19556,6 +19685,7 @@ export type GetUserQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -19570,7 +19700,6 @@ export type GetUserQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -19783,6 +19912,7 @@ export type ListUsersQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -19803,7 +19933,6 @@ export type ListUsersQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -19923,9 +20052,9 @@ export type GetCourseGroupQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -19935,6 +20064,7 @@ export type GetCourseGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -19971,6 +20101,7 @@ export type GetCourseGroupQuery = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -20000,9 +20131,9 @@ export type GetCourseGroupQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -20012,6 +20143,7 @@ export type GetCourseGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -20062,9 +20194,9 @@ export type GetCourseGroupQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -20078,6 +20210,7 @@ export type GetCourseGroupQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -20086,9 +20219,9 @@ export type GetCourseGroupQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -20150,7 +20283,6 @@ export type GetCourseGroupQuery = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -20160,6 +20292,7 @@ export type GetCourseGroupQuery = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -20168,6 +20301,7 @@ export type GetCourseGroupQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -20208,6 +20342,7 @@ export type GetCourseGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -20222,7 +20357,6 @@ export type GetCourseGroupQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -20254,9 +20388,9 @@ export type GetCourseGroupQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -20266,6 +20400,7 @@ export type GetCourseGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -20354,6 +20489,7 @@ export type GetCourseGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -20546,6 +20682,7 @@ export type ListCourseGroupsQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -20586,6 +20723,7 @@ export type ListCourseGroupsQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -20600,7 +20738,6 @@ export type ListCourseGroupsQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -20610,6 +20747,7 @@ export type ListCourseGroupsQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -20618,6 +20756,7 @@ export type ListCourseGroupsQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -20638,7 +20777,6 @@ export type ListCourseGroupsQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -20785,6 +20923,7 @@ export type GetEventQuery = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -20867,6 +21006,7 @@ export type GetEventQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -20907,6 +21047,7 @@ export type GetEventQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -20921,7 +21062,6 @@ export type GetEventQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -20931,6 +21071,7 @@ export type GetEventQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -20939,6 +21080,7 @@ export type GetEventQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -20959,7 +21101,6 @@ export type GetEventQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -21162,6 +21303,7 @@ export type GetEventQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -21202,6 +21344,7 @@ export type GetEventQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -21216,7 +21359,6 @@ export type GetEventQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -21230,6 +21372,7 @@ export type GetEventQuery = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -21238,6 +21381,7 @@ export type GetEventQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -21278,6 +21422,7 @@ export type GetEventQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -21292,7 +21437,6 @@ export type GetEventQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -21324,9 +21468,9 @@ export type GetEventQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -21336,6 +21480,7 @@ export type GetEventQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -21424,6 +21569,7 @@ export type GetEventQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -21519,7 +21665,6 @@ export type GetEventQuery = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -21543,6 +21688,7 @@ export type ListEventsQuery = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -21601,6 +21747,7 @@ export type ListEventsQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -21621,7 +21768,6 @@ export type ListEventsQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -21631,6 +21777,7 @@ export type ListEventsQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -21639,9 +21786,9 @@ export type ListEventsQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -21751,6 +21898,7 @@ export type ListEventsQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -21771,7 +21919,6 @@ export type ListEventsQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -21785,6 +21932,7 @@ export type ListEventsQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -21793,6 +21941,7 @@ export type ListEventsQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -21813,7 +21962,6 @@ export type ListEventsQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -21941,7 +22089,6 @@ export type ListEventsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
@@ -22042,6 +22189,7 @@ export type GetFriendGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -22071,6 +22219,7 @@ export type GetFriendGroupQuery = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -22079,6 +22228,7 @@ export type GetFriendGroupQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -22119,6 +22269,7 @@ export type GetFriendGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -22133,7 +22284,6 @@ export type GetFriendGroupQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -22165,9 +22315,9 @@ export type GetFriendGroupQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -22177,6 +22327,7 @@ export type GetFriendGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -22265,6 +22416,7 @@ export type GetFriendGroupQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -22444,6 +22596,7 @@ export type ListFriendGroupsQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -22452,6 +22605,7 @@ export type ListFriendGroupsQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -22472,7 +22626,6 @@ export type ListFriendGroupsQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -22801,6 +22954,7 @@ export type GetDirectChatQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -22821,7 +22975,6 @@ export type GetDirectChatQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -23021,6 +23174,7 @@ export type GetDirectChatQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -23041,7 +23195,6 @@ export type GetDirectChatQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -23061,6 +23214,7 @@ export type GetDirectChatQuery = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -23069,6 +23223,7 @@ export type GetDirectChatQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -23109,6 +23264,7 @@ export type GetDirectChatQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -23123,7 +23279,6 @@ export type GetDirectChatQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -23155,9 +23310,9 @@ export type GetDirectChatQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -23167,6 +23322,7 @@ export type GetDirectChatQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -23255,6 +23411,7 @@ export type GetDirectChatQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -23499,9 +23656,9 @@ export type ListDirectChatsQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -23645,9 +23802,9 @@ export type ListDirectChatsQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -23667,6 +23824,7 @@ export type ListDirectChatsQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -23675,6 +23833,7 @@ export type ListDirectChatsQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -23695,7 +23854,6 @@ export type ListDirectChatsQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -23837,6 +23995,7 @@ export type GetChatMessageQuery = {
   getChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -23845,6 +24004,7 @@ export type GetChatMessageQuery = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -23903,6 +24063,7 @@ export type GetChatMessageQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -23923,7 +24084,6 @@ export type GetChatMessageQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -23933,6 +24093,7 @@ export type GetChatMessageQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -23941,9 +24102,9 @@ export type GetChatMessageQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -24053,6 +24214,7 @@ export type GetChatMessageQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -24073,7 +24235,6 @@ export type GetChatMessageQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -24087,6 +24248,7 @@ export type GetChatMessageQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -24095,6 +24257,7 @@ export type GetChatMessageQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -24115,7 +24278,6 @@ export type GetChatMessageQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -24243,7 +24405,6 @@ export type GetChatMessageQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -24328,6 +24489,7 @@ export type GetChatMessageQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -24368,6 +24530,7 @@ export type GetChatMessageQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -24382,7 +24545,6 @@ export type GetChatMessageQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -24392,6 +24554,7 @@ export type GetChatMessageQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -24400,6 +24563,7 @@ export type GetChatMessageQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -24420,7 +24584,6 @@ export type GetChatMessageQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -24684,9 +24847,9 @@ export type GetChatMessageQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -24830,9 +24993,9 @@ export type GetChatMessageQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -24852,6 +25015,7 @@ export type GetChatMessageQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -24860,6 +25024,7 @@ export type GetChatMessageQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -24880,7 +25045,6 @@ export type GetChatMessageQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -25195,6 +25359,7 @@ export type GetChatMessageQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -25215,7 +25380,6 @@ export type GetChatMessageQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -25263,6 +25427,7 @@ export type ListChatMessagesQuery = {
     items:  Array< {
       __typename: "ChatMessage",
       id: string,
+      parentId: string,
       event?:  {
         __typename: "Event",
         id: string,
@@ -25271,6 +25436,7 @@ export type ListChatMessagesQuery = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -25300,9 +25466,9 @@ export type ListChatMessagesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -25312,6 +25478,7 @@ export type ListChatMessagesQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -25362,9 +25529,9 @@ export type ListChatMessagesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -25378,6 +25545,7 @@ export type ListChatMessagesQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -25386,9 +25554,9 @@ export type ListChatMessagesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -25450,7 +25618,6 @@ export type ListChatMessagesQuery = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null,
       groupChat?:  {
@@ -25511,6 +25678,7 @@ export type ListChatMessagesQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -25531,7 +25699,6 @@ export type ListChatMessagesQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -25541,6 +25708,7 @@ export type ListChatMessagesQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -25549,9 +25717,9 @@ export type ListChatMessagesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -25741,6 +25909,7 @@ export type ListChatMessagesQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -25749,9 +25918,9 @@ export type ListChatMessagesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -25944,9 +26113,9 @@ export type ListChatMessagesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -26177,6 +26346,7 @@ export type GetCourseGroupUsersQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -26197,7 +26367,6 @@ export type GetCourseGroupUsersQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -26294,6 +26463,7 @@ export type GetCourseGroupUsersQuery = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -26334,6 +26504,7 @@ export type GetCourseGroupUsersQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -26348,7 +26519,6 @@ export type GetCourseGroupUsersQuery = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -26358,6 +26528,7 @@ export type GetCourseGroupUsersQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -26366,6 +26537,7 @@ export type GetCourseGroupUsersQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -26386,7 +26558,6 @@ export type GetCourseGroupUsersQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -26665,9 +26836,9 @@ export type ListCourseGroupUsersQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -26740,6 +26911,7 @@ export type ListCourseGroupUsersQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -26760,7 +26932,6 @@ export type ListCourseGroupUsersQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -26770,6 +26941,7 @@ export type ListCourseGroupUsersQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -26778,9 +26950,9 @@ export type ListCourseGroupUsersQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -27047,6 +27219,7 @@ export type GetFriendGroupUsersQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -27067,7 +27240,6 @@ export type GetFriendGroupUsersQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -27151,6 +27323,7 @@ export type GetFriendGroupUsersQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -27159,6 +27332,7 @@ export type GetFriendGroupUsersQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -27179,7 +27353,6 @@ export type GetFriendGroupUsersQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -27458,9 +27631,9 @@ export type ListFriendGroupUsersQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -27524,6 +27697,7 @@ export type ListFriendGroupUsersQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -27532,9 +27706,9 @@ export type ListFriendGroupUsersQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -27801,6 +27975,7 @@ export type GetEventAttendeesQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -27821,7 +27996,6 @@ export type GetEventAttendeesQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -27844,6 +28018,7 @@ export type GetEventAttendeesQuery = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -27902,6 +28077,7 @@ export type GetEventAttendeesQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -27922,7 +28098,6 @@ export type GetEventAttendeesQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -27932,6 +28107,7 @@ export type GetEventAttendeesQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -27940,9 +28116,9 @@ export type GetEventAttendeesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -28052,6 +28228,7 @@ export type GetEventAttendeesQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -28072,7 +28249,6 @@ export type GetEventAttendeesQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -28086,6 +28262,7 @@ export type GetEventAttendeesQuery = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -28094,6 +28271,7 @@ export type GetEventAttendeesQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -28114,7 +28292,6 @@ export type GetEventAttendeesQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -28242,7 +28419,6 @@ export type GetEventAttendeesQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,
@@ -28394,9 +28570,9 @@ export type ListEventAttendeesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -28419,6 +28595,7 @@ export type ListEventAttendeesQuery = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -28448,9 +28625,9 @@ export type ListEventAttendeesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -28460,6 +28637,7 @@ export type ListEventAttendeesQuery = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -28510,9 +28688,9 @@ export type ListEventAttendeesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -28526,6 +28704,7 @@ export type ListEventAttendeesQuery = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -28534,9 +28713,9 @@ export type ListEventAttendeesQuery = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -28598,7 +28777,6 @@ export type ListEventAttendeesQuery = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       },
       createdAt: string,
@@ -28806,6 +28984,7 @@ export type UserByUniYearQuery = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -28826,7 +29005,6 @@ export type UserByUniYearQuery = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -28842,6 +29020,1192 @@ export type UserByUniYearQuery = {
       owner?: string | null,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type EventByCourseGroupIdQueryVariables = {
+  courseGroupEventsId: string,
+  startTime?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelEventFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type EventByCourseGroupIdQuery = {
+  EventByCourseGroupId?:  {
+    __typename: "ModelEventConnection",
+    items:  Array< {
+      __typename: "Event",
+      id: string,
+      title: string,
+      description?: string | null,
+      startTime: string,
+      endTime: string,
+      location?: string | null,
+      courseGroupEventsId: string,
+      courseGroup:  {
+        __typename: "CourseGroup",
+        users?:  {
+          __typename: "ModelCourseGroupUsersConnection",
+          items:  Array< {
+            __typename: "CourseGroupUsers",
+            id: string,
+            userID: string,
+            courseGroupID: string,
+            user:  {
+              __typename: "User",
+              id: string,
+              email: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              bio?: string | null,
+              userState?: UserState | null,
+              university: string,
+              year: number,
+              major?: string | null,
+              interests?: Array< string | null > | null,
+              expoPushToken?: string | null,
+              multipleGroupsOptIn?: boolean | null,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            courseGroup:  {
+              __typename: "CourseGroup",
+              title: string,
+              groupID: string,
+              code: string,
+              section: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        title: string,
+        groupID: string,
+        code: string,
+        section: string,
+        events?:  {
+          __typename: "ModelEventConnection",
+          items:  Array< {
+            __typename: "Event",
+            id: string,
+            title: string,
+            description?: string | null,
+            startTime: string,
+            endTime: string,
+            location?: string | null,
+            courseGroupEventsId: string,
+            courseGroup:  {
+              __typename: "CourseGroup",
+              title: string,
+              groupID: string,
+              code: string,
+              section: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            attendees?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        messages?:  {
+          __typename: "ModelChatMessageConnection",
+          items:  Array< {
+            __typename: "ChatMessage",
+            id: string,
+            parentId: string,
+            event?:  {
+              __typename: "Event",
+              id: string,
+              title: string,
+              description?: string | null,
+              startTime: string,
+              endTime: string,
+              location?: string | null,
+              courseGroupEventsId: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            groupChat?:  {
+              __typename: "CourseGroup",
+              title: string,
+              groupID: string,
+              code: string,
+              section: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            directChat?:  {
+              __typename: "DirectChat",
+              id: string,
+              userID1: string,
+              userID2: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            author:  {
+              __typename: "User",
+              id: string,
+              email: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              bio?: string | null,
+              userState?: UserState | null,
+              university: string,
+              year: number,
+              major?: string | null,
+              interests?: Array< string | null > | null,
+              expoPushToken?: string | null,
+              multipleGroupsOptIn?: boolean | null,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            body: string,
+            files?:  Array< {
+              __typename: "FileAttachment",
+              fileURI: string,
+              width: number,
+              height: number,
+              type?: FileType | null,
+            } > | null,
+            createdAt?: string | null,
+            updatedAt?: string | null,
+            courseGroupMessagesId?: string | null,
+            eventMessagesId?: string | null,
+            friendGroupMessagesId?: string | null,
+            directChatMessagesId: string,
+            chatMessageAuthorId: string,
+            owner?: string | null,
+          } | null >,
+          nextToken?: string | null,
+        } | null,
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      },
+      attendees?:  {
+        __typename: "ModelEventAttendeesConnection",
+        items:  Array< {
+          __typename: "EventAttendees",
+          id: string,
+          userID: string,
+          eventID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university: string,
+            year: number,
+            major?: string | null,
+            interests?: Array< string | null > | null,
+            courseGroups?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            friendGroups?:  {
+              __typename: "ModelFriendGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            events?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            expoPushToken?: string | null,
+            multipleGroupsOptIn?: boolean | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          event:  {
+            __typename: "Event",
+            id: string,
+            title: string,
+            description?: string | null,
+            startTime: string,
+            endTime: string,
+            location?: string | null,
+            courseGroupEventsId: string,
+            courseGroup:  {
+              __typename: "CourseGroup",
+              title: string,
+              groupID: string,
+              code: string,
+              section: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            attendees?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelChatMessageConnection",
+        items:  Array< {
+          __typename: "ChatMessage",
+          id: string,
+          parentId: string,
+          event?:  {
+            __typename: "Event",
+            id: string,
+            title: string,
+            description?: string | null,
+            startTime: string,
+            endTime: string,
+            location?: string | null,
+            courseGroupEventsId: string,
+            courseGroup:  {
+              __typename: "CourseGroup",
+              title: string,
+              groupID: string,
+              code: string,
+              section: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            attendees?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          groupChat?:  {
+            __typename: "CourseGroup",
+            users?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            events?:  {
+              __typename: "ModelEventConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          directChat?:  {
+            __typename: "DirectChat",
+            id: string,
+            userID1: string,
+            userID2: string,
+            user1?:  {
+              __typename: "User",
+              id: string,
+              email: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              bio?: string | null,
+              userState?: UserState | null,
+              university: string,
+              year: number,
+              major?: string | null,
+              interests?: Array< string | null > | null,
+              expoPushToken?: string | null,
+              multipleGroupsOptIn?: boolean | null,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            user2?:  {
+              __typename: "User",
+              id: string,
+              email: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              bio?: string | null,
+              userState?: UserState | null,
+              university: string,
+              year: number,
+              major?: string | null,
+              interests?: Array< string | null > | null,
+              expoPushToken?: string | null,
+              multipleGroupsOptIn?: boolean | null,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          author:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university: string,
+            year: number,
+            major?: string | null,
+            interests?: Array< string | null > | null,
+            courseGroups?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            friendGroups?:  {
+              __typename: "ModelFriendGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            events?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            expoPushToken?: string | null,
+            multipleGroupsOptIn?: boolean | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          body: string,
+          files?:  Array< {
+            __typename: "FileAttachment",
+            fileURI: string,
+            width: number,
+            height: number,
+            type?: FileType | null,
+          } > | null,
+          createdAt?: string | null,
+          updatedAt?: string | null,
+          courseGroupMessagesId?: string | null,
+          eventMessagesId?: string | null,
+          friendGroupMessagesId?: string | null,
+          directChatMessagesId: string,
+          chatMessageAuthorId: string,
+          owner?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type SubscribeToEventsFromCourseGroupSubscriptionVariables = {
+  courseGroupEventsId: string,
+};
+
+export type SubscribeToEventsFromCourseGroupSubscription = {
+  subscribeToEventsFromCourseGroup?:  {
+    __typename: "Event",
+    id: string,
+    title: string,
+    description?: string | null,
+    startTime: string,
+    endTime: string,
+    location?: string | null,
+    courseGroupEventsId: string,
+    courseGroup:  {
+      __typename: "CourseGroup",
+      users?:  {
+        __typename: "ModelCourseGroupUsersConnection",
+        items:  Array< {
+          __typename: "CourseGroupUsers",
+          id: string,
+          userID: string,
+          courseGroupID: string,
+          user:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university: string,
+            year: number,
+            major?: string | null,
+            interests?: Array< string | null > | null,
+            courseGroups?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            friendGroups?:  {
+              __typename: "ModelFriendGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            events?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            expoPushToken?: string | null,
+            multipleGroupsOptIn?: boolean | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          courseGroup:  {
+            __typename: "CourseGroup",
+            users?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            events?:  {
+              __typename: "ModelEventConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      title: string,
+      groupID: string,
+      code: string,
+      section: string,
+      events?:  {
+        __typename: "ModelEventConnection",
+        items:  Array< {
+          __typename: "Event",
+          id: string,
+          title: string,
+          description?: string | null,
+          startTime: string,
+          endTime: string,
+          location?: string | null,
+          courseGroupEventsId: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            users?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            events?:  {
+              __typename: "ModelEventConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          attendees?:  {
+            __typename: "ModelEventAttendeesConnection",
+            items:  Array< {
+              __typename: "EventAttendees",
+              id: string,
+              userID: string,
+              eventID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          messages?:  {
+            __typename: "ModelChatMessageConnection",
+            items:  Array< {
+              __typename: "ChatMessage",
+              id: string,
+              parentId: string,
+              body: string,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              courseGroupMessagesId?: string | null,
+              eventMessagesId?: string | null,
+              friendGroupMessagesId?: string | null,
+              directChatMessagesId: string,
+              chatMessageAuthorId: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      messages?:  {
+        __typename: "ModelChatMessageConnection",
+        items:  Array< {
+          __typename: "ChatMessage",
+          id: string,
+          parentId: string,
+          event?:  {
+            __typename: "Event",
+            id: string,
+            title: string,
+            description?: string | null,
+            startTime: string,
+            endTime: string,
+            location?: string | null,
+            courseGroupEventsId: string,
+            courseGroup:  {
+              __typename: "CourseGroup",
+              title: string,
+              groupID: string,
+              code: string,
+              section: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            },
+            attendees?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          groupChat?:  {
+            __typename: "CourseGroup",
+            users?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            events?:  {
+              __typename: "ModelEventConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          directChat?:  {
+            __typename: "DirectChat",
+            id: string,
+            userID1: string,
+            userID2: string,
+            user1?:  {
+              __typename: "User",
+              id: string,
+              email: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              bio?: string | null,
+              userState?: UserState | null,
+              university: string,
+              year: number,
+              major?: string | null,
+              interests?: Array< string | null > | null,
+              expoPushToken?: string | null,
+              multipleGroupsOptIn?: boolean | null,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            user2?:  {
+              __typename: "User",
+              id: string,
+              email: string,
+              firstName?: string | null,
+              lastName?: string | null,
+              profilePicture?: string | null,
+              bio?: string | null,
+              userState?: UserState | null,
+              university: string,
+              year: number,
+              major?: string | null,
+              interests?: Array< string | null > | null,
+              expoPushToken?: string | null,
+              multipleGroupsOptIn?: boolean | null,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          author:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university: string,
+            year: number,
+            major?: string | null,
+            interests?: Array< string | null > | null,
+            courseGroups?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            friendGroups?:  {
+              __typename: "ModelFriendGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            events?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            expoPushToken?: string | null,
+            multipleGroupsOptIn?: boolean | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          body: string,
+          files?:  Array< {
+            __typename: "FileAttachment",
+            fileURI: string,
+            width: number,
+            height: number,
+            type?: FileType | null,
+          } > | null,
+          createdAt?: string | null,
+          updatedAt?: string | null,
+          courseGroupMessagesId?: string | null,
+          eventMessagesId?: string | null,
+          friendGroupMessagesId?: string | null,
+          directChatMessagesId: string,
+          chatMessageAuthorId: string,
+          owner?: string | null,
+        } | null >,
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    },
+    attendees?:  {
+      __typename: "ModelEventAttendeesConnection",
+      items:  Array< {
+        __typename: "EventAttendees",
+        id: string,
+        userID: string,
+        eventID: string,
+        user:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university: string,
+          year: number,
+          major?: string | null,
+          interests?: Array< string | null > | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupUsersConnection",
+            items:  Array< {
+              __typename: "CourseGroupUsers",
+              id: string,
+              userID: string,
+              courseGroupID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupUsersConnection",
+            items:  Array< {
+              __typename: "FriendGroupUsers",
+              id: string,
+              userID: string,
+              friendGroupID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          events?:  {
+            __typename: "ModelEventAttendeesConnection",
+            items:  Array< {
+              __typename: "EventAttendees",
+              id: string,
+              userID: string,
+              eventID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          expoPushToken?: string | null,
+          multipleGroupsOptIn?: boolean | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
+        event:  {
+          __typename: "Event",
+          id: string,
+          title: string,
+          description?: string | null,
+          startTime: string,
+          endTime: string,
+          location?: string | null,
+          courseGroupEventsId: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            users?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            events?:  {
+              __typename: "ModelEventConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          attendees?:  {
+            __typename: "ModelEventAttendeesConnection",
+            items:  Array< {
+              __typename: "EventAttendees",
+              id: string,
+              userID: string,
+              eventID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          messages?:  {
+            __typename: "ModelChatMessageConnection",
+            items:  Array< {
+              __typename: "ChatMessage",
+              id: string,
+              parentId: string,
+              body: string,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              courseGroupMessagesId?: string | null,
+              eventMessagesId?: string | null,
+              friendGroupMessagesId?: string | null,
+              directChatMessagesId: string,
+              chatMessageAuthorId: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
+        createdAt: string,
+        updatedAt: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    messages?:  {
+      __typename: "ModelChatMessageConnection",
+      items:  Array< {
+        __typename: "ChatMessage",
+        id: string,
+        parentId: string,
+        event?:  {
+          __typename: "Event",
+          id: string,
+          title: string,
+          description?: string | null,
+          startTime: string,
+          endTime: string,
+          location?: string | null,
+          courseGroupEventsId: string,
+          courseGroup:  {
+            __typename: "CourseGroup",
+            users?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            title: string,
+            groupID: string,
+            code: string,
+            section: string,
+            events?:  {
+              __typename: "ModelEventConnection",
+              nextToken?: string | null,
+            } | null,
+            messages?:  {
+              __typename: "ModelChatMessageConnection",
+              nextToken?: string | null,
+            } | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          },
+          attendees?:  {
+            __typename: "ModelEventAttendeesConnection",
+            items:  Array< {
+              __typename: "EventAttendees",
+              id: string,
+              userID: string,
+              eventID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          messages?:  {
+            __typename: "ModelChatMessageConnection",
+            items:  Array< {
+              __typename: "ChatMessage",
+              id: string,
+              parentId: string,
+              body: string,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              courseGroupMessagesId?: string | null,
+              eventMessagesId?: string | null,
+              friendGroupMessagesId?: string | null,
+              directChatMessagesId: string,
+              chatMessageAuthorId: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null,
+        groupChat?:  {
+          __typename: "CourseGroup",
+          users?:  {
+            __typename: "ModelCourseGroupUsersConnection",
+            items:  Array< {
+              __typename: "CourseGroupUsers",
+              id: string,
+              userID: string,
+              courseGroupID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          title: string,
+          groupID: string,
+          code: string,
+          section: string,
+          events?:  {
+            __typename: "ModelEventConnection",
+            items:  Array< {
+              __typename: "Event",
+              id: string,
+              title: string,
+              description?: string | null,
+              startTime: string,
+              endTime: string,
+              location?: string | null,
+              courseGroupEventsId: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          messages?:  {
+            __typename: "ModelChatMessageConnection",
+            items:  Array< {
+              __typename: "ChatMessage",
+              id: string,
+              parentId: string,
+              body: string,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              courseGroupMessagesId?: string | null,
+              eventMessagesId?: string | null,
+              friendGroupMessagesId?: string | null,
+              directChatMessagesId: string,
+              chatMessageAuthorId: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null,
+        directChat?:  {
+          __typename: "DirectChat",
+          id: string,
+          userID1: string,
+          userID2: string,
+          user1?:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university: string,
+            year: number,
+            major?: string | null,
+            interests?: Array< string | null > | null,
+            courseGroups?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            friendGroups?:  {
+              __typename: "ModelFriendGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            events?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            expoPushToken?: string | null,
+            multipleGroupsOptIn?: boolean | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          user2?:  {
+            __typename: "User",
+            id: string,
+            email: string,
+            firstName?: string | null,
+            lastName?: string | null,
+            profilePicture?: string | null,
+            bio?: string | null,
+            userState?: UserState | null,
+            university: string,
+            year: number,
+            major?: string | null,
+            interests?: Array< string | null > | null,
+            courseGroups?:  {
+              __typename: "ModelCourseGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            friendGroups?:  {
+              __typename: "ModelFriendGroupUsersConnection",
+              nextToken?: string | null,
+            } | null,
+            events?:  {
+              __typename: "ModelEventAttendeesConnection",
+              nextToken?: string | null,
+            } | null,
+            expoPushToken?: string | null,
+            multipleGroupsOptIn?: boolean | null,
+            createdAt: string,
+            updatedAt: string,
+            owner?: string | null,
+          } | null,
+          messages?:  {
+            __typename: "ModelChatMessageConnection",
+            items:  Array< {
+              __typename: "ChatMessage",
+              id: string,
+              parentId: string,
+              body: string,
+              createdAt?: string | null,
+              updatedAt?: string | null,
+              courseGroupMessagesId?: string | null,
+              eventMessagesId?: string | null,
+              friendGroupMessagesId?: string | null,
+              directChatMessagesId: string,
+              chatMessageAuthorId: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        } | null,
+        author:  {
+          __typename: "User",
+          id: string,
+          email: string,
+          firstName?: string | null,
+          lastName?: string | null,
+          profilePicture?: string | null,
+          bio?: string | null,
+          userState?: UserState | null,
+          university: string,
+          year: number,
+          major?: string | null,
+          interests?: Array< string | null > | null,
+          courseGroups?:  {
+            __typename: "ModelCourseGroupUsersConnection",
+            items:  Array< {
+              __typename: "CourseGroupUsers",
+              id: string,
+              userID: string,
+              courseGroupID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          friendGroups?:  {
+            __typename: "ModelFriendGroupUsersConnection",
+            items:  Array< {
+              __typename: "FriendGroupUsers",
+              id: string,
+              userID: string,
+              friendGroupID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          events?:  {
+            __typename: "ModelEventAttendeesConnection",
+            items:  Array< {
+              __typename: "EventAttendees",
+              id: string,
+              userID: string,
+              eventID: string,
+              createdAt: string,
+              updatedAt: string,
+              owner?: string | null,
+            } | null >,
+            nextToken?: string | null,
+          } | null,
+          expoPushToken?: string | null,
+          multipleGroupsOptIn?: boolean | null,
+          createdAt: string,
+          updatedAt: string,
+          owner?: string | null,
+        },
+        body: string,
+        files?:  Array< {
+          __typename: "FileAttachment",
+          fileURI: string,
+          width: number,
+          height: number,
+          type?: FileType | null,
+        } > | null,
+        createdAt?: string | null,
+        updatedAt?: string | null,
+        courseGroupMessagesId?: string | null,
+        eventMessagesId?: string | null,
+        friendGroupMessagesId?: string | null,
+        directChatMessagesId: string,
+        chatMessageAuthorId: string,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
   } | null,
 };
 
@@ -28957,9 +30321,9 @@ export type OnCreateUserSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -28969,6 +30333,7 @@ export type OnCreateUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29078,6 +30443,7 @@ export type OnCreateUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29173,6 +30539,7 @@ export type OnCreateUserSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -29213,6 +30580,7 @@ export type OnCreateUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29227,7 +30595,6 @@ export type OnCreateUserSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -29356,9 +30723,9 @@ export type OnUpdateUserSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -29368,6 +30735,7 @@ export type OnUpdateUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29477,6 +30845,7 @@ export type OnUpdateUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29572,6 +30941,7 @@ export type OnUpdateUserSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -29612,6 +30982,7 @@ export type OnUpdateUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29626,7 +30997,6 @@ export type OnUpdateUserSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -29755,9 +31125,9 @@ export type OnDeleteUserSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -29767,6 +31137,7 @@ export type OnDeleteUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29876,6 +31247,7 @@ export type OnDeleteUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -29971,6 +31343,7 @@ export type OnDeleteUserSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -30011,6 +31384,7 @@ export type OnDeleteUserSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30025,7 +31399,6 @@ export type OnDeleteUserSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -30143,9 +31516,9 @@ export type OnCreateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -30155,6 +31528,7 @@ export type OnCreateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30191,6 +31565,7 @@ export type OnCreateCourseGroupSubscription = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -30220,9 +31595,9 @@ export type OnCreateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -30232,6 +31607,7 @@ export type OnCreateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30282,9 +31658,9 @@ export type OnCreateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -30298,6 +31674,7 @@ export type OnCreateCourseGroupSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -30306,9 +31683,9 @@ export type OnCreateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -30370,7 +31747,6 @@ export type OnCreateCourseGroupSubscription = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -30380,6 +31756,7 @@ export type OnCreateCourseGroupSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -30388,6 +31765,7 @@ export type OnCreateCourseGroupSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -30428,6 +31806,7 @@ export type OnCreateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30442,7 +31821,6 @@ export type OnCreateCourseGroupSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -30474,9 +31852,9 @@ export type OnCreateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -30486,6 +31864,7 @@ export type OnCreateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30574,6 +31953,7 @@ export type OnCreateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30774,9 +32154,9 @@ export type OnUpdateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -30786,6 +32166,7 @@ export type OnUpdateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30822,6 +32203,7 @@ export type OnUpdateCourseGroupSubscription = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -30851,9 +32233,9 @@ export type OnUpdateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -30863,6 +32245,7 @@ export type OnUpdateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -30913,9 +32296,9 @@ export type OnUpdateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -30929,6 +32312,7 @@ export type OnUpdateCourseGroupSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -30937,9 +32321,9 @@ export type OnUpdateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -31001,7 +32385,6 @@ export type OnUpdateCourseGroupSubscription = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -31011,6 +32394,7 @@ export type OnUpdateCourseGroupSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -31019,6 +32403,7 @@ export type OnUpdateCourseGroupSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -31059,6 +32444,7 @@ export type OnUpdateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31073,7 +32459,6 @@ export type OnUpdateCourseGroupSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -31105,9 +32490,9 @@ export type OnUpdateCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -31117,6 +32502,7 @@ export type OnUpdateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31205,6 +32591,7 @@ export type OnUpdateCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31405,9 +32792,9 @@ export type OnDeleteCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -31417,6 +32804,7 @@ export type OnDeleteCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31453,6 +32841,7 @@ export type OnDeleteCourseGroupSubscription = {
         startTime: string,
         endTime: string,
         location?: string | null,
+        courseGroupEventsId: string,
         courseGroup:  {
           __typename: "CourseGroup",
           users?:  {
@@ -31482,9 +32871,9 @@ export type OnDeleteCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -31494,6 +32883,7 @@ export type OnDeleteCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31544,9 +32934,9 @@ export type OnDeleteCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -31560,6 +32950,7 @@ export type OnDeleteCourseGroupSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -31568,9 +32959,9 @@ export type OnDeleteCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -31632,7 +33023,6 @@ export type OnDeleteCourseGroupSubscription = {
         } | null,
         createdAt: string,
         updatedAt: string,
-        courseGroupEventsId: string,
         owner?: string | null,
       } | null >,
       nextToken?: string | null,
@@ -31642,6 +33032,7 @@ export type OnDeleteCourseGroupSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -31650,6 +33041,7 @@ export type OnDeleteCourseGroupSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -31690,6 +33082,7 @@ export type OnDeleteCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31704,7 +33097,6 @@ export type OnDeleteCourseGroupSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -31736,9 +33128,9 @@ export type OnDeleteCourseGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -31748,6 +33140,7 @@ export type OnDeleteCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31836,6 +33229,7 @@ export type OnDeleteCourseGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -31948,6 +33342,7 @@ export type OnCreateEventSubscription = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -32030,6 +33425,7 @@ export type OnCreateEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -32070,6 +33466,7 @@ export type OnCreateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -32084,7 +33481,6 @@ export type OnCreateEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -32094,6 +33490,7 @@ export type OnCreateEventSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -32102,6 +33499,7 @@ export type OnCreateEventSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -32122,7 +33520,6 @@ export type OnCreateEventSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -32325,6 +33722,7 @@ export type OnCreateEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -32365,6 +33763,7 @@ export type OnCreateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -32379,7 +33778,6 @@ export type OnCreateEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -32393,6 +33791,7 @@ export type OnCreateEventSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -32401,6 +33800,7 @@ export type OnCreateEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -32441,6 +33841,7 @@ export type OnCreateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -32455,7 +33856,6 @@ export type OnCreateEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -32487,9 +33887,9 @@ export type OnCreateEventSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -32499,6 +33899,7 @@ export type OnCreateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -32587,6 +33988,7 @@ export type OnCreateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -32682,7 +34084,6 @@ export type OnCreateEventSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -32700,6 +34101,7 @@ export type OnUpdateEventSubscription = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -32782,6 +34184,7 @@ export type OnUpdateEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -32822,6 +34225,7 @@ export type OnUpdateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -32836,7 +34240,6 @@ export type OnUpdateEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -32846,6 +34249,7 @@ export type OnUpdateEventSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -32854,6 +34258,7 @@ export type OnUpdateEventSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -32874,7 +34279,6 @@ export type OnUpdateEventSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -33077,6 +34481,7 @@ export type OnUpdateEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -33117,6 +34522,7 @@ export type OnUpdateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33131,7 +34537,6 @@ export type OnUpdateEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -33145,6 +34550,7 @@ export type OnUpdateEventSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -33153,6 +34559,7 @@ export type OnUpdateEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -33193,6 +34600,7 @@ export type OnUpdateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33207,7 +34615,6 @@ export type OnUpdateEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -33239,9 +34646,9 @@ export type OnUpdateEventSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -33251,6 +34658,7 @@ export type OnUpdateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33339,6 +34747,7 @@ export type OnUpdateEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33434,7 +34843,6 @@ export type OnUpdateEventSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -33452,6 +34860,7 @@ export type OnDeleteEventSubscription = {
     startTime: string,
     endTime: string,
     location?: string | null,
+    courseGroupEventsId: string,
     courseGroup:  {
       __typename: "CourseGroup",
       users?:  {
@@ -33534,6 +34943,7 @@ export type OnDeleteEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -33574,6 +34984,7 @@ export type OnDeleteEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33588,7 +34999,6 @@ export type OnDeleteEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -33598,6 +35008,7 @@ export type OnDeleteEventSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -33606,6 +35017,7 @@ export type OnDeleteEventSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -33626,7 +35038,6 @@ export type OnDeleteEventSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -33829,6 +35240,7 @@ export type OnDeleteEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -33869,6 +35281,7 @@ export type OnDeleteEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33883,7 +35296,6 @@ export type OnDeleteEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         },
         createdAt: string,
@@ -33897,6 +35309,7 @@ export type OnDeleteEventSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -33905,6 +35318,7 @@ export type OnDeleteEventSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -33945,6 +35359,7 @@ export type OnDeleteEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -33959,7 +35374,6 @@ export type OnDeleteEventSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -33991,9 +35405,9 @@ export type OnDeleteEventSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -34003,6 +35417,7 @@ export type OnDeleteEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34091,6 +35506,7 @@ export type OnDeleteEventSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34186,7 +35602,6 @@ export type OnDeleteEventSubscription = {
     } | null,
     createdAt: string,
     updatedAt: string,
-    courseGroupEventsId: string,
     owner?: string | null,
   } | null,
 };
@@ -34285,6 +35700,7 @@ export type OnCreateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34314,6 +35730,7 @@ export type OnCreateFriendGroupSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -34322,6 +35739,7 @@ export type OnCreateFriendGroupSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -34362,6 +35780,7 @@ export type OnCreateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34376,7 +35795,6 @@ export type OnCreateFriendGroupSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -34408,9 +35826,9 @@ export type OnCreateFriendGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -34420,6 +35838,7 @@ export type OnCreateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34508,6 +35927,7 @@ export type OnCreateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34701,6 +36121,7 @@ export type OnUpdateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34730,6 +36151,7 @@ export type OnUpdateFriendGroupSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -34738,6 +36160,7 @@ export type OnUpdateFriendGroupSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -34778,6 +36201,7 @@ export type OnUpdateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34792,7 +36216,6 @@ export type OnUpdateFriendGroupSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -34824,9 +36247,9 @@ export type OnUpdateFriendGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -34836,6 +36259,7 @@ export type OnUpdateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -34924,6 +36348,7 @@ export type OnUpdateFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -35117,6 +36542,7 @@ export type OnDeleteFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -35146,6 +36572,7 @@ export type OnDeleteFriendGroupSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -35154,6 +36581,7 @@ export type OnDeleteFriendGroupSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -35194,6 +36622,7 @@ export type OnDeleteFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -35208,7 +36637,6 @@ export type OnDeleteFriendGroupSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -35240,9 +36668,9 @@ export type OnDeleteFriendGroupSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -35252,6 +36680,7 @@ export type OnDeleteFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -35340,6 +36769,7 @@ export type OnDeleteFriendGroupSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -35634,6 +37064,7 @@ export type OnCreateDirectChatSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -35654,7 +37085,6 @@ export type OnCreateDirectChatSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -35854,6 +37284,7 @@ export type OnCreateDirectChatSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -35874,7 +37305,6 @@ export type OnCreateDirectChatSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -35894,6 +37324,7 @@ export type OnCreateDirectChatSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -35902,6 +37333,7 @@ export type OnCreateDirectChatSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -35942,6 +37374,7 @@ export type OnCreateDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -35956,7 +37389,6 @@ export type OnCreateDirectChatSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -35988,9 +37420,9 @@ export type OnCreateDirectChatSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -36000,6 +37432,7 @@ export type OnCreateDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -36088,6 +37521,7 @@ export type OnCreateDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -36382,6 +37816,7 @@ export type OnUpdateDirectChatSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -36402,7 +37837,6 @@ export type OnUpdateDirectChatSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -36602,6 +38036,7 @@ export type OnUpdateDirectChatSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -36622,7 +38057,6 @@ export type OnUpdateDirectChatSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -36642,6 +38076,7 @@ export type OnUpdateDirectChatSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -36650,6 +38085,7 @@ export type OnUpdateDirectChatSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -36690,6 +38126,7 @@ export type OnUpdateDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -36704,7 +38141,6 @@ export type OnUpdateDirectChatSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -36736,9 +38172,9 @@ export type OnUpdateDirectChatSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -36748,6 +38184,7 @@ export type OnUpdateDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -36836,6 +38273,7 @@ export type OnUpdateDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -37130,6 +38568,7 @@ export type OnDeleteDirectChatSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -37150,7 +38589,6 @@ export type OnDeleteDirectChatSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -37350,6 +38788,7 @@ export type OnDeleteDirectChatSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -37370,7 +38809,6 @@ export type OnDeleteDirectChatSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -37390,6 +38828,7 @@ export type OnDeleteDirectChatSubscription = {
       items:  Array< {
         __typename: "ChatMessage",
         id: string,
+        parentId: string,
         event?:  {
           __typename: "Event",
           id: string,
@@ -37398,6 +38837,7 @@ export type OnDeleteDirectChatSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -37438,6 +38878,7 @@ export type OnDeleteDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -37452,7 +38893,6 @@ export type OnDeleteDirectChatSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null,
         groupChat?:  {
@@ -37484,9 +38924,9 @@ export type OnDeleteDirectChatSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null >,
             nextToken?: string | null,
@@ -37496,6 +38936,7 @@ export type OnDeleteDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -37584,6 +39025,7 @@ export type OnDeleteDirectChatSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -37691,6 +39133,7 @@ export type OnCreateChatMessageSubscription = {
   onCreateChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -37699,6 +39142,7 @@ export type OnCreateChatMessageSubscription = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -37757,6 +39201,7 @@ export type OnCreateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -37777,7 +39222,6 @@ export type OnCreateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -37787,6 +39231,7 @@ export type OnCreateChatMessageSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -37795,9 +39240,9 @@ export type OnCreateChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -37907,6 +39352,7 @@ export type OnCreateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -37927,7 +39373,6 @@ export type OnCreateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -37941,6 +39386,7 @@ export type OnCreateChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -37949,6 +39395,7 @@ export type OnCreateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -37969,7 +39416,6 @@ export type OnCreateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -38097,7 +39543,6 @@ export type OnCreateChatMessageSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -38182,6 +39627,7 @@ export type OnCreateChatMessageSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -38222,6 +39668,7 @@ export type OnCreateChatMessageSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -38236,7 +39683,6 @@ export type OnCreateChatMessageSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -38246,6 +39692,7 @@ export type OnCreateChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -38254,6 +39701,7 @@ export type OnCreateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -38274,7 +39722,6 @@ export type OnCreateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -38538,9 +39985,9 @@ export type OnCreateChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -38684,9 +40131,9 @@ export type OnCreateChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -38706,6 +40153,7 @@ export type OnCreateChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -38714,6 +40162,7 @@ export type OnCreateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -38734,7 +40183,6 @@ export type OnCreateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -39049,6 +40497,7 @@ export type OnCreateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -39069,7 +40518,6 @@ export type OnCreateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -39111,6 +40559,7 @@ export type OnUpdateChatMessageSubscription = {
   onUpdateChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -39119,6 +40568,7 @@ export type OnUpdateChatMessageSubscription = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -39177,6 +40627,7 @@ export type OnUpdateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -39197,7 +40648,6 @@ export type OnUpdateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -39207,6 +40657,7 @@ export type OnUpdateChatMessageSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -39215,9 +40666,9 @@ export type OnUpdateChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -39327,6 +40778,7 @@ export type OnUpdateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -39347,7 +40799,6 @@ export type OnUpdateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -39361,6 +40812,7 @@ export type OnUpdateChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -39369,6 +40821,7 @@ export type OnUpdateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -39389,7 +40842,6 @@ export type OnUpdateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -39517,7 +40969,6 @@ export type OnUpdateChatMessageSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -39602,6 +41053,7 @@ export type OnUpdateChatMessageSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -39642,6 +41094,7 @@ export type OnUpdateChatMessageSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -39656,7 +41109,6 @@ export type OnUpdateChatMessageSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -39666,6 +41118,7 @@ export type OnUpdateChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -39674,6 +41127,7 @@ export type OnUpdateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -39694,7 +41148,6 @@ export type OnUpdateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -39958,9 +41411,9 @@ export type OnUpdateChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -40104,9 +41557,9 @@ export type OnUpdateChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -40126,6 +41579,7 @@ export type OnUpdateChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -40134,6 +41588,7 @@ export type OnUpdateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -40154,7 +41609,6 @@ export type OnUpdateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -40469,6 +41923,7 @@ export type OnUpdateChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -40489,7 +41944,6 @@ export type OnUpdateChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -40531,6 +41985,7 @@ export type OnDeleteChatMessageSubscription = {
   onDeleteChatMessage?:  {
     __typename: "ChatMessage",
     id: string,
+    parentId: string,
     event?:  {
       __typename: "Event",
       id: string,
@@ -40539,6 +41994,7 @@ export type OnDeleteChatMessageSubscription = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -40597,6 +42053,7 @@ export type OnDeleteChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -40617,7 +42074,6 @@ export type OnDeleteChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -40627,6 +42083,7 @@ export type OnDeleteChatMessageSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -40635,9 +42092,9 @@ export type OnDeleteChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -40747,6 +42204,7 @@ export type OnDeleteChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -40767,7 +42225,6 @@ export type OnDeleteChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -40781,6 +42238,7 @@ export type OnDeleteChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -40789,6 +42247,7 @@ export type OnDeleteChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -40809,7 +42268,6 @@ export type OnDeleteChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -40937,7 +42395,6 @@ export type OnDeleteChatMessageSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     } | null,
     groupChat?:  {
@@ -41022,6 +42479,7 @@ export type OnDeleteChatMessageSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -41062,6 +42520,7 @@ export type OnDeleteChatMessageSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -41076,7 +42535,6 @@ export type OnDeleteChatMessageSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -41086,6 +42544,7 @@ export type OnDeleteChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -41094,6 +42553,7 @@ export type OnDeleteChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -41114,7 +42574,6 @@ export type OnDeleteChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -41378,9 +42837,9 @@ export type OnDeleteChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -41524,9 +42983,9 @@ export type OnDeleteChatMessageSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             },
             createdAt: string,
@@ -41546,6 +43005,7 @@ export type OnDeleteChatMessageSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -41554,6 +43014,7 @@ export type OnDeleteChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -41574,7 +43035,6 @@ export type OnDeleteChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -41889,6 +43349,7 @@ export type OnDeleteChatMessageSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -41909,7 +43370,6 @@ export type OnDeleteChatMessageSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -42138,6 +43598,7 @@ export type OnCreateCourseGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -42158,7 +43619,6 @@ export type OnCreateCourseGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -42255,6 +43715,7 @@ export type OnCreateCourseGroupUsersSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -42295,6 +43756,7 @@ export type OnCreateCourseGroupUsersSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -42309,7 +43771,6 @@ export type OnCreateCourseGroupUsersSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -42319,6 +43780,7 @@ export type OnCreateCourseGroupUsersSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -42327,6 +43789,7 @@ export type OnCreateCourseGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -42347,7 +43810,6 @@ export type OnCreateCourseGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -42678,6 +44140,7 @@ export type OnUpdateCourseGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -42698,7 +44161,6 @@ export type OnUpdateCourseGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -42795,6 +44257,7 @@ export type OnUpdateCourseGroupUsersSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -42835,6 +44298,7 @@ export type OnUpdateCourseGroupUsersSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -42849,7 +44313,6 @@ export type OnUpdateCourseGroupUsersSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -42859,6 +44322,7 @@ export type OnUpdateCourseGroupUsersSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -42867,6 +44331,7 @@ export type OnUpdateCourseGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -42887,7 +44352,6 @@ export type OnUpdateCourseGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -43218,6 +44682,7 @@ export type OnDeleteCourseGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -43238,7 +44703,6 @@ export type OnDeleteCourseGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -43335,6 +44799,7 @@ export type OnDeleteCourseGroupUsersSubscription = {
           startTime: string,
           endTime: string,
           location?: string | null,
+          courseGroupEventsId: string,
           courseGroup:  {
             __typename: "CourseGroup",
             users?:  {
@@ -43375,6 +44840,7 @@ export type OnDeleteCourseGroupUsersSubscription = {
             items:  Array< {
               __typename: "ChatMessage",
               id: string,
+              parentId: string,
               body: string,
               createdAt?: string | null,
               updatedAt?: string | null,
@@ -43389,7 +44855,6 @@ export type OnDeleteCourseGroupUsersSubscription = {
           } | null,
           createdAt: string,
           updatedAt: string,
-          courseGroupEventsId: string,
           owner?: string | null,
         } | null >,
         nextToken?: string | null,
@@ -43399,6 +44864,7 @@ export type OnDeleteCourseGroupUsersSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -43407,6 +44873,7 @@ export type OnDeleteCourseGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -43427,7 +44894,6 @@ export type OnDeleteCourseGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -43758,6 +45224,7 @@ export type OnCreateFriendGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -43778,7 +45245,6 @@ export type OnCreateFriendGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -43862,6 +45328,7 @@ export type OnCreateFriendGroupUsersSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -43870,6 +45337,7 @@ export type OnCreateFriendGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -43890,7 +45358,6 @@ export type OnCreateFriendGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -44221,6 +45688,7 @@ export type OnUpdateFriendGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -44241,7 +45709,6 @@ export type OnUpdateFriendGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -44325,6 +45792,7 @@ export type OnUpdateFriendGroupUsersSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -44333,6 +45801,7 @@ export type OnUpdateFriendGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -44353,7 +45822,6 @@ export type OnUpdateFriendGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -44684,6 +46152,7 @@ export type OnDeleteFriendGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -44704,7 +46173,6 @@ export type OnDeleteFriendGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -44788,6 +46256,7 @@ export type OnDeleteFriendGroupUsersSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -44796,6 +46265,7 @@ export type OnDeleteFriendGroupUsersSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -44816,7 +46286,6 @@ export type OnDeleteFriendGroupUsersSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -45147,6 +46616,7 @@ export type OnCreateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -45167,7 +46637,6 @@ export type OnCreateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -45190,6 +46659,7 @@ export type OnCreateEventAttendeesSubscription = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -45248,6 +46718,7 @@ export type OnCreateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -45268,7 +46739,6 @@ export type OnCreateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -45278,6 +46748,7 @@ export type OnCreateEventAttendeesSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -45286,9 +46757,9 @@ export type OnCreateEventAttendeesSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -45398,6 +46869,7 @@ export type OnCreateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -45418,7 +46890,6 @@ export type OnCreateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -45432,6 +46903,7 @@ export type OnCreateEventAttendeesSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -45440,6 +46912,7 @@ export type OnCreateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -45460,7 +46933,6 @@ export type OnCreateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -45588,7 +47060,6 @@ export type OnCreateEventAttendeesSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,
@@ -45792,6 +47263,7 @@ export type OnUpdateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -45812,7 +47284,6 @@ export type OnUpdateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -45835,6 +47306,7 @@ export type OnUpdateEventAttendeesSubscription = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -45893,6 +47365,7 @@ export type OnUpdateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -45913,7 +47386,6 @@ export type OnUpdateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -45923,6 +47395,7 @@ export type OnUpdateEventAttendeesSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -45931,9 +47404,9 @@ export type OnUpdateEventAttendeesSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -46043,6 +47516,7 @@ export type OnUpdateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -46063,7 +47537,6 @@ export type OnUpdateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -46077,6 +47550,7 @@ export type OnUpdateEventAttendeesSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -46085,6 +47559,7 @@ export type OnUpdateEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -46105,7 +47580,6 @@ export type OnUpdateEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -46233,7 +47707,6 @@ export type OnUpdateEventAttendeesSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,
@@ -46437,6 +47910,7 @@ export type OnDeleteEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -46457,7 +47931,6 @@ export type OnDeleteEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -46480,6 +47953,7 @@ export type OnDeleteEventAttendeesSubscription = {
       startTime: string,
       endTime: string,
       location?: string | null,
+      courseGroupEventsId: string,
       courseGroup:  {
         __typename: "CourseGroup",
         users?:  {
@@ -46538,6 +48012,7 @@ export type OnDeleteEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -46558,7 +48033,6 @@ export type OnDeleteEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null >,
           nextToken?: string | null,
@@ -46568,6 +48042,7 @@ export type OnDeleteEventAttendeesSubscription = {
           items:  Array< {
             __typename: "ChatMessage",
             id: string,
+            parentId: string,
             event?:  {
               __typename: "Event",
               id: string,
@@ -46576,9 +48051,9 @@ export type OnDeleteEventAttendeesSubscription = {
               startTime: string,
               endTime: string,
               location?: string | null,
+              courseGroupEventsId: string,
               createdAt: string,
               updatedAt: string,
-              courseGroupEventsId: string,
               owner?: string | null,
             } | null,
             groupChat?:  {
@@ -46688,6 +48163,7 @@ export type OnDeleteEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -46708,7 +48184,6 @@ export type OnDeleteEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           },
           createdAt: string,
@@ -46722,6 +48197,7 @@ export type OnDeleteEventAttendeesSubscription = {
         items:  Array< {
           __typename: "ChatMessage",
           id: string,
+          parentId: string,
           event?:  {
             __typename: "Event",
             id: string,
@@ -46730,6 +48206,7 @@ export type OnDeleteEventAttendeesSubscription = {
             startTime: string,
             endTime: string,
             location?: string | null,
+            courseGroupEventsId: string,
             courseGroup:  {
               __typename: "CourseGroup",
               title: string,
@@ -46750,7 +48227,6 @@ export type OnDeleteEventAttendeesSubscription = {
             } | null,
             createdAt: string,
             updatedAt: string,
-            courseGroupEventsId: string,
             owner?: string | null,
           } | null,
           groupChat?:  {
@@ -46878,7 +48354,6 @@ export type OnDeleteEventAttendeesSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-      courseGroupEventsId: string,
       owner?: string | null,
     },
     createdAt: string,

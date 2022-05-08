@@ -6,6 +6,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import CourseGroupsContext from "../context/CourseGroupsContext";
+import useCourseGroups from "../hooks/useCourseGroups";
 import {
   ChatMessage, CourseGroup, RootStackParamList,
 } from "../types";
@@ -15,7 +16,7 @@ const CourseGroups = ({
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
 }) => {
-  const groups = useContext(CourseGroupsContext);
+  const { groups } = useCourseGroups();
 
   const moveToGroupScreen = (
     groupTitle: string,
@@ -50,15 +51,24 @@ const CourseGroups = ({
   };
 
   return (
-    groups.length ?
-      <List
-        bounces={false}
-        style={[styles.card]}
-        data={groups}
-        renderItem={renderItem}
-      /> : <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
-        <Text style={{ margin: 10, textAlign: "center", color: "#404040", fontSize: 15 }}>No registered courses</Text>
-      </View>
+    groups.length
+      ? (
+        <List
+          bounces={false}
+          style={[styles.card]}
+          data={groups}
+          renderItem={renderItem}
+        />
+      ) : (
+        <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
+          <Text style={{
+            margin: 10, textAlign: "center", color: "#404040", fontSize: 15,
+          }}
+          >
+            No registered courses
+          </Text>
+        </View>
+      )
   );
 };
 

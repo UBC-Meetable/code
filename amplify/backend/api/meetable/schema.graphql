@@ -50,7 +50,13 @@ type Event
   startTime: AWSDateTime!
   endTime: AWSDateTime!
   location: String
-  courseGroup: CourseGroup! @belongsTo
+  courseGroupEventsId: String!
+    @index(
+      name: "byCourseGroupId"
+      queryField: "EventByCourseGroupId"
+      sortKeyFields: ["startTime"]
+    )
+  courseGroup: CourseGroup! @belongsTo(fields: ["courseGroupEventsId"])
   attendees: [User!]! @manyToMany(relationName: "EventAttendees")
   messages: [ChatMessage!] @hasMany
 }
@@ -88,14 +94,20 @@ type ChatMessage
     ]
   ) {
   id: String! @primaryKey
-  event: Event @belongsTo
-  groupChat: CourseGroup @belongsTo
-  directChat: DirectChat @belongsTo
+  parentId: String!
+  event: Event @belongsTo(fields: ["parentId"])
+  groupChat: CourseGroup @belongsTo(fields: ["parentId"])
+  directChat: DirectChat @belongsTo(fields: ["parentId"])
   author: User! @hasOne
   body: String!
   files: [FileAttachment!]
   createdAt: AWSDateTime
   updatedAt: AWSDateTime
+}
+
+type Subscription {
+  subscribeToEventsFromCourseGroup(courseGroupEventsId: String!): Event
+    @aws_subscribe(mutations: ["createEvent"])
 }
 
 type FileAttachment {

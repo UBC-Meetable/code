@@ -35,6 +35,7 @@ import awsconfig from "../aws-exports";
 import ChatBackButton from "../components/Chat/ChatBackButton";
 import theme from "../constants/theme.json";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
+import { EventsProvider } from "../context/EventsContext";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
@@ -207,45 +208,46 @@ const AuthorizedApp = () => {
     <View style={{ flex: 1 }}>
       <ImageBackground source={background} style={{ flex: 1 }}>
         <CourseGroupsProvider>
-          <FriendGroupsProvider>
-            <Stack.Navigator
-              screenOptions={{
-                headerShown: false,
-                cardStyle: { backgroundColor: "transparent" },
-              }}
-              initialRouteName="Home"
-            >
-              <Stack.Screen
-                name="Home"
-                component={HomeScreen}
-              />
-              <Stack.Screen
-                name="Event"
-                component={EventScreen}
-              />
-              <Stack.Screen
-                name="Group"
-                options={({ navigation }) => generateOptions(navigation,
-                  ({ label }: { label: string }) => (
-                    <ChatBackButton navigation={navigation} label={label} />
-                  ))}
+          <EventsProvider>
+            <FriendGroupsProvider>
+              <Stack.Navigator
+                screenOptions={{
+                  headerShown: false,
+                  cardStyle: { backgroundColor: "transparent" },
+                }}
+                initialRouteName="Home"
               >
-                {(props) => (
-                  <MessageProvider groupID={props.route.params.groupID}>
-                    <GroupScreen
-                      groupType={props.route.params.groupType}
-                      groupTitle={props.route.params.groupTitle}
-                      navigation={props.navigation}
-                    />
-                  </MessageProvider>
-                )}
-              </Stack.Screen>
-              <Stack.Screen
-                name="EditCourses"
-                options={({ navigation }) => generateOptions(navigation, "Add Courses")}
-                component={EditCourseScreen}
-              />
-              {/* <Stack.Screen
+                <Stack.Screen
+                  name="Home"
+                  component={HomeScreen}
+                />
+                <Stack.Screen
+                  name="Event"
+                  component={EventScreen}
+                />
+                <Stack.Screen
+                  name="Group"
+                  options={({ navigation }) => generateOptions(navigation,
+                    ({ label }: { label: string }) => (
+                      <ChatBackButton navigation={navigation} label={label} />
+                    ))}
+                >
+                  {(props) => (
+                    <MessageProvider groupID={props.route.params.groupID}>
+                      <GroupScreen
+                        groupType={props.route.params.groupType}
+                        groupTitle={props.route.params.groupTitle}
+                        navigation={props.navigation}
+                      />
+                    </MessageProvider>
+                  )}
+                </Stack.Screen>
+                <Stack.Screen
+                  name="EditCourses"
+                  options={({ navigation }) => generateOptions(navigation, "Add Courses")}
+                  component={EditCourseScreen}
+                />
+                {/* <Stack.Screen
                 name="ProfileSettings"
                 options={({
                   navigation,
@@ -276,24 +278,25 @@ const AuthorizedApp = () => {
                 } as StackNavigationOptions)}
                 component={ProfileSettingsScreen}
               /> */}
-              <Stack.Screen
-                name="ProfileStack"
-                component={ProfileStackNavigator}
-              />
-              <Stack.Screen name="Quiz">
-                {(props) => (
-                  <QuizScreen
-                    onFinish={(q) => {
-                      Analytics.record({ name: "Finish Quiz" });
-                      props.navigation.pop();
-                      props.route.params.return(q);
-                    }}
-                    {...props}
-                  />
-                )}
-              </Stack.Screen>
-            </Stack.Navigator>
-          </FriendGroupsProvider>
+                <Stack.Screen
+                  name="ProfileStack"
+                  component={ProfileStackNavigator}
+                />
+                <Stack.Screen name="Quiz">
+                  {(props) => (
+                    <QuizScreen
+                      onFinish={(q) => {
+                        Analytics.record({ name: "Finish Quiz" });
+                        props.navigation.pop();
+                        props.route.params.return(q);
+                      }}
+                      {...props}
+                    />
+                  )}
+                </Stack.Screen>
+              </Stack.Navigator>
+            </FriendGroupsProvider>
+          </EventsProvider>
         </CourseGroupsProvider>
       </ImageBackground>
     </View>

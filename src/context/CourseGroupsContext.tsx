@@ -13,15 +13,19 @@ import fetchUserCourses from "../calls/fetchUserCourses";
 import { onCreateChatMessage, onCreateCourseGroupUsers, onDeleteCourseGroupUsers } from "../graphql/subscriptions";
 import useUserProfile from "../hooks/useUserProfile";
 
-const CourseGroupsContext = React.createContext([] as CourseGroup[]);
+type CourseGroupsContextType = {groups: CourseGroup[], loading: boolean}
+
+const CourseGroupsContext = React.createContext({ groups: [], loading: true } as CourseGroupsContextType);
 export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
   const [groups, setGroups] = useState<CourseGroup[]>([] as CourseGroup[]);
+  const [loading, setLoading] = useState(true);
   const { id = "" } = useUserProfile();
   const groupRef = useRef<CourseGroup[]>([]);
   groupRef.current = groups;
 
   useEffect(() => {
-    fetchUserCourses(id).then((groupList) => setGroups(groupList));
+    setLoading(true);
+    fetchUserCourses(id).then((groupList) => setGroups(groupList)).catch((error) => console.warn(error)).finally(() => setLoading(false));
   }, [id]);
 
   /** Handle Messages Being Sent */
@@ -113,7 +117,7 @@ export const CourseGroupsProvider = (props: { children?: ReactNode }) => {
 
   const { children } = props;
   return (
-    <CourseGroupsContext.Provider value={groups}>
+    <CourseGroupsContext.Provider value={{ groups, loading }}>
       {children}
     </CourseGroupsContext.Provider>
   );

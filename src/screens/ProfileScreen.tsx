@@ -35,8 +35,6 @@ const ProfileScreen = () => {
   const [key, setKey] = React.useState(user.profilePicture);
   const [visible, setVisible] = React.useState(false);
 
-  const groups = useCourseGroups();
-
   const pickImage = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
