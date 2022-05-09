@@ -6,6 +6,7 @@ import { StyleSheet, View, Text } from "react-native";
 import { GroupType } from "../API";
 import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
 import CourseGroupsContext from "../context/CourseGroupsContext";
+import useCourseGroups from "../hooks/useCourseGroups";
 import {
   ChatMessage, CourseGroup, RootStackParamList,
 } from "../types";
@@ -15,7 +16,7 @@ const CourseGroups = ({
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
 }) => {
-  const groups = useContext(CourseGroupsContext);
+  const { groups } = useCourseGroups();
 
   const moveToGroupScreen = (
     groupTitle: string,

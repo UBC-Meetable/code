@@ -107,9 +107,9 @@ export const createUser = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -117,6 +117,7 @@ export const createUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -212,6 +213,7 @@ export const createUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -297,6 +299,7 @@ export const createUser = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -329,6 +332,7 @@ export const createUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -343,7 +347,6 @@ export const createUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           createdAt
@@ -457,9 +460,9 @@ export const updateUser = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -467,6 +470,7 @@ export const updateUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -562,6 +566,7 @@ export const updateUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -647,6 +652,7 @@ export const updateUser = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -679,6 +685,7 @@ export const updateUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -693,7 +700,6 @@ export const updateUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           createdAt
@@ -807,9 +813,9 @@ export const deleteUser = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -817,6 +823,7 @@ export const deleteUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -912,6 +919,7 @@ export const deleteUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -997,6 +1005,7 @@ export const deleteUser = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -1029,6 +1038,7 @@ export const deleteUser = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1043,7 +1053,6 @@ export const deleteUser = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           createdAt
@@ -1146,9 +1155,9 @@ export const createCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -1156,6 +1165,7 @@ export const createCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1190,6 +1200,7 @@ export const createCourseGroup = /* GraphQL */ `
           startTime
           endTime
           location
+          courseGroupEventsId
           courseGroup {
             users {
               items {
@@ -1214,9 +1225,9 @@ export const createCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -1224,6 +1235,7 @@ export const createCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1270,9 +1282,9 @@ export const createCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -1284,6 +1296,7 @@ export const createCourseGroup = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -1291,9 +1304,9 @@ export const createCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -1351,7 +1364,6 @@ export const createCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          courseGroupEventsId
           owner
         }
         nextToken
@@ -1359,6 +1371,7 @@ export const createCourseGroup = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -1366,6 +1379,7 @@ export const createCourseGroup = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -1398,6 +1412,7 @@ export const createCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1412,7 +1427,6 @@ export const createCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -1439,9 +1453,9 @@ export const createCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -1449,6 +1463,7 @@ export const createCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1526,6 +1541,7 @@ export const createCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1703,9 +1719,9 @@ export const updateCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -1713,6 +1729,7 @@ export const updateCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1747,6 +1764,7 @@ export const updateCourseGroup = /* GraphQL */ `
           startTime
           endTime
           location
+          courseGroupEventsId
           courseGroup {
             users {
               items {
@@ -1771,9 +1789,9 @@ export const updateCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -1781,6 +1799,7 @@ export const updateCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1827,9 +1846,9 @@ export const updateCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -1841,6 +1860,7 @@ export const updateCourseGroup = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -1848,9 +1868,9 @@ export const updateCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -1908,7 +1928,6 @@ export const updateCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          courseGroupEventsId
           owner
         }
         nextToken
@@ -1916,6 +1935,7 @@ export const updateCourseGroup = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -1923,6 +1943,7 @@ export const updateCourseGroup = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -1955,6 +1976,7 @@ export const updateCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -1969,7 +1991,6 @@ export const updateCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -1996,9 +2017,9 @@ export const updateCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -2006,6 +2027,7 @@ export const updateCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2083,6 +2105,7 @@ export const updateCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2260,9 +2283,9 @@ export const deleteCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -2270,6 +2293,7 @@ export const deleteCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2304,6 +2328,7 @@ export const deleteCourseGroup = /* GraphQL */ `
           startTime
           endTime
           location
+          courseGroupEventsId
           courseGroup {
             users {
               items {
@@ -2328,9 +2353,9 @@ export const deleteCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -2338,6 +2363,7 @@ export const deleteCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2384,9 +2410,9 @@ export const deleteCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -2398,6 +2424,7 @@ export const deleteCourseGroup = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -2405,9 +2432,9 @@ export const deleteCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -2465,7 +2492,6 @@ export const deleteCourseGroup = /* GraphQL */ `
           }
           createdAt
           updatedAt
-          courseGroupEventsId
           owner
         }
         nextToken
@@ -2473,6 +2499,7 @@ export const deleteCourseGroup = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -2480,6 +2507,7 @@ export const deleteCourseGroup = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -2512,6 +2540,7 @@ export const deleteCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2526,7 +2555,6 @@ export const deleteCourseGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -2553,9 +2581,9 @@ export const deleteCourseGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -2563,6 +2591,7 @@ export const deleteCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2640,6 +2669,7 @@ export const deleteCourseGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2743,6 +2773,7 @@ export const createEvent = /* GraphQL */ `
       startTime
       endTime
       location
+      courseGroupEventsId
       courseGroup {
         users {
           items {
@@ -2812,6 +2843,7 @@ export const createEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -2844,6 +2876,7 @@ export const createEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -2858,7 +2891,6 @@ export const createEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -2866,6 +2898,7 @@ export const createEvent = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -2873,6 +2906,7 @@ export const createEvent = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -2890,7 +2924,6 @@ export const createEvent = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -3070,6 +3103,7 @@ export const createEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -3102,6 +3136,7 @@ export const createEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3116,7 +3151,6 @@ export const createEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           createdAt
@@ -3128,6 +3162,7 @@ export const createEvent = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -3135,6 +3170,7 @@ export const createEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -3167,6 +3203,7 @@ export const createEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3181,7 +3218,6 @@ export const createEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -3208,9 +3244,9 @@ export const createEvent = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -3218,6 +3254,7 @@ export const createEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3295,6 +3332,7 @@ export const createEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3382,7 +3420,6 @@ export const createEvent = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      courseGroupEventsId
       owner
     }
   }
@@ -3399,6 +3436,7 @@ export const updateEvent = /* GraphQL */ `
       startTime
       endTime
       location
+      courseGroupEventsId
       courseGroup {
         users {
           items {
@@ -3468,6 +3506,7 @@ export const updateEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -3500,6 +3539,7 @@ export const updateEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3514,7 +3554,6 @@ export const updateEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -3522,6 +3561,7 @@ export const updateEvent = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -3529,6 +3569,7 @@ export const updateEvent = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -3546,7 +3587,6 @@ export const updateEvent = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -3726,6 +3766,7 @@ export const updateEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -3758,6 +3799,7 @@ export const updateEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3772,7 +3814,6 @@ export const updateEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           createdAt
@@ -3784,6 +3825,7 @@ export const updateEvent = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -3791,6 +3833,7 @@ export const updateEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -3823,6 +3866,7 @@ export const updateEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3837,7 +3881,6 @@ export const updateEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -3864,9 +3907,9 @@ export const updateEvent = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -3874,6 +3917,7 @@ export const updateEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -3951,6 +3995,7 @@ export const updateEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4038,7 +4083,6 @@ export const updateEvent = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      courseGroupEventsId
       owner
     }
   }
@@ -4055,6 +4099,7 @@ export const deleteEvent = /* GraphQL */ `
       startTime
       endTime
       location
+      courseGroupEventsId
       courseGroup {
         users {
           items {
@@ -4124,6 +4169,7 @@ export const deleteEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -4156,6 +4202,7 @@ export const deleteEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4170,7 +4217,6 @@ export const deleteEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -4178,6 +4224,7 @@ export const deleteEvent = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -4185,6 +4232,7 @@ export const deleteEvent = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -4202,7 +4250,6 @@ export const deleteEvent = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -4382,6 +4429,7 @@ export const deleteEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -4414,6 +4462,7 @@ export const deleteEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4428,7 +4477,6 @@ export const deleteEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           createdAt
@@ -4440,6 +4488,7 @@ export const deleteEvent = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -4447,6 +4496,7 @@ export const deleteEvent = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -4479,6 +4529,7 @@ export const deleteEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4493,7 +4544,6 @@ export const deleteEvent = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -4520,9 +4570,9 @@ export const deleteEvent = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -4530,6 +4580,7 @@ export const deleteEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4607,6 +4658,7 @@ export const deleteEvent = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4694,7 +4746,6 @@ export const deleteEvent = /* GraphQL */ `
       }
       createdAt
       updatedAt
-      courseGroupEventsId
       owner
     }
   }
@@ -4778,6 +4829,7 @@ export const createFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4805,6 +4857,7 @@ export const createFriendGroup = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -4812,6 +4865,7 @@ export const createFriendGroup = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -4844,6 +4898,7 @@ export const createFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4858,7 +4913,6 @@ export const createFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -4885,9 +4939,9 @@ export const createFriendGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -4895,6 +4949,7 @@ export const createFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -4972,6 +5027,7 @@ export const createFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5142,6 +5198,7 @@ export const updateFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5169,6 +5226,7 @@ export const updateFriendGroup = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -5176,6 +5234,7 @@ export const updateFriendGroup = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -5208,6 +5267,7 @@ export const updateFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5222,7 +5282,6 @@ export const updateFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -5249,9 +5308,9 @@ export const updateFriendGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -5259,6 +5318,7 @@ export const updateFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5336,6 +5396,7 @@ export const updateFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5506,6 +5567,7 @@ export const deleteFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5533,6 +5595,7 @@ export const deleteFriendGroup = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -5540,6 +5603,7 @@ export const deleteFriendGroup = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -5572,6 +5636,7 @@ export const deleteFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5586,7 +5651,6 @@ export const deleteFriendGroup = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -5613,9 +5677,9 @@ export const deleteFriendGroup = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -5623,6 +5687,7 @@ export const deleteFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5700,6 +5765,7 @@ export const deleteFriendGroup = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -5958,6 +6024,7 @@ export const createDirectChat = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -5975,7 +6042,6 @@ export const createDirectChat = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -6148,6 +6214,7 @@ export const createDirectChat = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -6165,7 +6232,6 @@ export const createDirectChat = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -6183,6 +6249,7 @@ export const createDirectChat = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -6190,6 +6257,7 @@ export const createDirectChat = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -6222,6 +6290,7 @@ export const createDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -6236,7 +6305,6 @@ export const createDirectChat = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -6263,9 +6331,9 @@ export const createDirectChat = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -6273,6 +6341,7 @@ export const createDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -6350,6 +6419,7 @@ export const createDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -6608,6 +6678,7 @@ export const updateDirectChat = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -6625,7 +6696,6 @@ export const updateDirectChat = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -6798,6 +6868,7 @@ export const updateDirectChat = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -6815,7 +6886,6 @@ export const updateDirectChat = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -6833,6 +6903,7 @@ export const updateDirectChat = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -6840,6 +6911,7 @@ export const updateDirectChat = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -6872,6 +6944,7 @@ export const updateDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -6886,7 +6959,6 @@ export const updateDirectChat = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -6913,9 +6985,9 @@ export const updateDirectChat = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -6923,6 +6995,7 @@ export const updateDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -7000,6 +7073,7 @@ export const updateDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -7258,6 +7332,7 @@ export const deleteDirectChat = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -7275,7 +7350,6 @@ export const deleteDirectChat = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -7448,6 +7522,7 @@ export const deleteDirectChat = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -7465,7 +7540,6 @@ export const deleteDirectChat = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -7483,6 +7557,7 @@ export const deleteDirectChat = /* GraphQL */ `
       messages {
         items {
           id
+          parentId
           event {
             id
             title
@@ -7490,6 +7565,7 @@ export const deleteDirectChat = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -7522,6 +7598,7 @@ export const deleteDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -7536,7 +7613,6 @@ export const deleteDirectChat = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           groupChat {
@@ -7563,9 +7639,9 @@ export const deleteDirectChat = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               nextToken
@@ -7573,6 +7649,7 @@ export const deleteDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -7650,6 +7727,7 @@ export const deleteDirectChat = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -7748,6 +7826,7 @@ export const createChatMessage = /* GraphQL */ `
   ) {
     createChatMessage(input: $input, condition: $condition) {
       id
+      parentId
       event {
         id
         title
@@ -7755,6 +7834,7 @@ export const createChatMessage = /* GraphQL */ `
         startTime
         endTime
         location
+        courseGroupEventsId
         courseGroup {
           users {
             items {
@@ -7806,6 +7886,7 @@ export const createChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -7823,7 +7904,6 @@ export const createChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             nextToken
@@ -7831,6 +7911,7 @@ export const createChatMessage = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -7838,9 +7919,9 @@ export const createChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -7939,6 +8020,7 @@ export const createChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -7956,7 +8038,6 @@ export const createChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -7968,6 +8049,7 @@ export const createChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -7975,6 +8057,7 @@ export const createChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -7992,7 +8075,6 @@ export const createChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -8107,7 +8189,6 @@ export const createChatMessage = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        courseGroupEventsId
         owner
       }
       groupChat {
@@ -8179,6 +8260,7 @@ export const createChatMessage = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -8211,6 +8293,7 @@ export const createChatMessage = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -8225,7 +8308,6 @@ export const createChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -8233,6 +8315,7 @@ export const createChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -8240,6 +8323,7 @@ export const createChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -8257,7 +8341,6 @@ export const createChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -8494,9 +8577,9 @@ export const createChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -8627,9 +8710,9 @@ export const createChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -8647,6 +8730,7 @@ export const createChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -8654,6 +8738,7 @@ export const createChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -8671,7 +8756,6 @@ export const createChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -8946,6 +9030,7 @@ export const createChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -8963,7 +9048,6 @@ export const createChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -9003,6 +9087,7 @@ export const updateChatMessage = /* GraphQL */ `
   ) {
     updateChatMessage(input: $input, condition: $condition) {
       id
+      parentId
       event {
         id
         title
@@ -9010,6 +9095,7 @@ export const updateChatMessage = /* GraphQL */ `
         startTime
         endTime
         location
+        courseGroupEventsId
         courseGroup {
           users {
             items {
@@ -9061,6 +9147,7 @@ export const updateChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -9078,7 +9165,6 @@ export const updateChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             nextToken
@@ -9086,6 +9172,7 @@ export const updateChatMessage = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -9093,9 +9180,9 @@ export const updateChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -9194,6 +9281,7 @@ export const updateChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -9211,7 +9299,6 @@ export const updateChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -9223,6 +9310,7 @@ export const updateChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -9230,6 +9318,7 @@ export const updateChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -9247,7 +9336,6 @@ export const updateChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -9362,7 +9450,6 @@ export const updateChatMessage = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        courseGroupEventsId
         owner
       }
       groupChat {
@@ -9434,6 +9521,7 @@ export const updateChatMessage = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -9466,6 +9554,7 @@ export const updateChatMessage = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -9480,7 +9569,6 @@ export const updateChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -9488,6 +9576,7 @@ export const updateChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -9495,6 +9584,7 @@ export const updateChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -9512,7 +9602,6 @@ export const updateChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -9749,9 +9838,9 @@ export const updateChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -9882,9 +9971,9 @@ export const updateChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -9902,6 +9991,7 @@ export const updateChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -9909,6 +9999,7 @@ export const updateChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -9926,7 +10017,6 @@ export const updateChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -10201,6 +10291,7 @@ export const updateChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -10218,7 +10309,6 @@ export const updateChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -10258,6 +10348,7 @@ export const deleteChatMessage = /* GraphQL */ `
   ) {
     deleteChatMessage(input: $input, condition: $condition) {
       id
+      parentId
       event {
         id
         title
@@ -10265,6 +10356,7 @@ export const deleteChatMessage = /* GraphQL */ `
         startTime
         endTime
         location
+        courseGroupEventsId
         courseGroup {
           users {
             items {
@@ -10316,6 +10408,7 @@ export const deleteChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -10333,7 +10426,6 @@ export const deleteChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             nextToken
@@ -10341,6 +10433,7 @@ export const deleteChatMessage = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -10348,9 +10441,9 @@ export const deleteChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -10449,6 +10542,7 @@ export const deleteChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -10466,7 +10560,6 @@ export const deleteChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -10478,6 +10571,7 @@ export const deleteChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -10485,6 +10579,7 @@ export const deleteChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -10502,7 +10597,6 @@ export const deleteChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -10617,7 +10711,6 @@ export const deleteChatMessage = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        courseGroupEventsId
         owner
       }
       groupChat {
@@ -10689,6 +10782,7 @@ export const deleteChatMessage = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -10721,6 +10815,7 @@ export const deleteChatMessage = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -10735,7 +10830,6 @@ export const deleteChatMessage = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -10743,6 +10837,7 @@ export const deleteChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -10750,6 +10845,7 @@ export const deleteChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -10767,7 +10863,6 @@ export const deleteChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -11004,9 +11099,9 @@ export const deleteChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -11137,9 +11232,9 @@ export const deleteChatMessage = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               createdAt
@@ -11157,6 +11252,7 @@ export const deleteChatMessage = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -11164,6 +11260,7 @@ export const deleteChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -11181,7 +11278,6 @@ export const deleteChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -11456,6 +11552,7 @@ export const deleteChatMessage = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -11473,7 +11570,6 @@ export const deleteChatMessage = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -11673,6 +11769,7 @@ export const createCourseGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -11690,7 +11787,6 @@ export const createCourseGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -11774,6 +11870,7 @@ export const createCourseGroupUsers = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -11806,6 +11903,7 @@ export const createCourseGroupUsers = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -11820,7 +11918,6 @@ export const createCourseGroupUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -11828,6 +11925,7 @@ export const createCourseGroupUsers = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -11835,6 +11933,7 @@ export const createCourseGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -11852,7 +11951,6 @@ export const createCourseGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -12142,6 +12240,7 @@ export const updateCourseGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -12159,7 +12258,6 @@ export const updateCourseGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -12243,6 +12341,7 @@ export const updateCourseGroupUsers = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -12275,6 +12374,7 @@ export const updateCourseGroupUsers = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -12289,7 +12389,6 @@ export const updateCourseGroupUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -12297,6 +12396,7 @@ export const updateCourseGroupUsers = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -12304,6 +12404,7 @@ export const updateCourseGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -12321,7 +12422,6 @@ export const updateCourseGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -12611,6 +12711,7 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -12628,7 +12729,6 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -12712,6 +12812,7 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
             startTime
             endTime
             location
+            courseGroupEventsId
             courseGroup {
               users {
                 nextToken
@@ -12744,6 +12845,7 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
             messages {
               items {
                 id
+                parentId
                 body
                 createdAt
                 updatedAt
@@ -12758,7 +12860,6 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
             }
             createdAt
             updatedAt
-            courseGroupEventsId
             owner
           }
           nextToken
@@ -12766,6 +12867,7 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -12773,6 +12875,7 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -12790,7 +12893,6 @@ export const deleteCourseGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -13080,6 +13182,7 @@ export const createFriendGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -13097,7 +13200,6 @@ export const createFriendGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -13169,6 +13271,7 @@ export const createFriendGroupUsers = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -13176,6 +13279,7 @@ export const createFriendGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -13193,7 +13297,6 @@ export const createFriendGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -13483,6 +13586,7 @@ export const updateFriendGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -13500,7 +13604,6 @@ export const updateFriendGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -13572,6 +13675,7 @@ export const updateFriendGroupUsers = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -13579,6 +13683,7 @@ export const updateFriendGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -13596,7 +13701,6 @@ export const updateFriendGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -13886,6 +13990,7 @@ export const deleteFriendGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -13903,7 +14008,6 @@ export const deleteFriendGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -13975,6 +14079,7 @@ export const deleteFriendGroupUsers = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -13982,6 +14087,7 @@ export const deleteFriendGroupUsers = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -13999,7 +14105,6 @@ export const deleteFriendGroupUsers = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -14289,6 +14394,7 @@ export const createEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -14306,7 +14412,6 @@ export const createEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -14328,6 +14433,7 @@ export const createEventAttendees = /* GraphQL */ `
         startTime
         endTime
         location
+        courseGroupEventsId
         courseGroup {
           users {
             items {
@@ -14379,6 +14485,7 @@ export const createEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -14396,7 +14503,6 @@ export const createEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             nextToken
@@ -14404,6 +14510,7 @@ export const createEventAttendees = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -14411,9 +14518,9 @@ export const createEventAttendees = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -14512,6 +14619,7 @@ export const createEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -14529,7 +14637,6 @@ export const createEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -14541,6 +14648,7 @@ export const createEventAttendees = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -14548,6 +14656,7 @@ export const createEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -14565,7 +14674,6 @@ export const createEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -14680,7 +14788,6 @@ export const createEventAttendees = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        courseGroupEventsId
         owner
       }
       createdAt
@@ -14856,6 +14963,7 @@ export const updateEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -14873,7 +14981,6 @@ export const updateEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -14895,6 +15002,7 @@ export const updateEventAttendees = /* GraphQL */ `
         startTime
         endTime
         location
+        courseGroupEventsId
         courseGroup {
           users {
             items {
@@ -14946,6 +15054,7 @@ export const updateEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -14963,7 +15072,6 @@ export const updateEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             nextToken
@@ -14971,6 +15079,7 @@ export const updateEventAttendees = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -14978,9 +15087,9 @@ export const updateEventAttendees = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -15079,6 +15188,7 @@ export const updateEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -15096,7 +15206,6 @@ export const updateEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -15108,6 +15217,7 @@ export const updateEventAttendees = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -15115,6 +15225,7 @@ export const updateEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -15132,7 +15243,6 @@ export const updateEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -15247,7 +15357,6 @@ export const updateEventAttendees = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        courseGroupEventsId
         owner
       }
       createdAt
@@ -15423,6 +15532,7 @@ export const deleteEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -15440,7 +15550,6 @@ export const deleteEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -15462,6 +15571,7 @@ export const deleteEventAttendees = /* GraphQL */ `
         startTime
         endTime
         location
+        courseGroupEventsId
         courseGroup {
           users {
             items {
@@ -15513,6 +15623,7 @@ export const deleteEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -15530,7 +15641,6 @@ export const deleteEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             nextToken
@@ -15538,6 +15648,7 @@ export const deleteEventAttendees = /* GraphQL */ `
           messages {
             items {
               id
+              parentId
               event {
                 id
                 title
@@ -15545,9 +15656,9 @@ export const deleteEventAttendees = /* GraphQL */ `
                 startTime
                 endTime
                 location
+                courseGroupEventsId
                 createdAt
                 updatedAt
-                courseGroupEventsId
                 owner
               }
               groupChat {
@@ -15646,6 +15757,7 @@ export const deleteEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -15663,7 +15775,6 @@ export const deleteEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             createdAt
@@ -15675,6 +15786,7 @@ export const deleteEventAttendees = /* GraphQL */ `
         messages {
           items {
             id
+            parentId
             event {
               id
               title
@@ -15682,6 +15794,7 @@ export const deleteEventAttendees = /* GraphQL */ `
               startTime
               endTime
               location
+              courseGroupEventsId
               courseGroup {
                 title
                 groupID
@@ -15699,7 +15812,6 @@ export const deleteEventAttendees = /* GraphQL */ `
               }
               createdAt
               updatedAt
-              courseGroupEventsId
               owner
             }
             groupChat {
@@ -15814,7 +15926,6 @@ export const deleteEventAttendees = /* GraphQL */ `
         }
         createdAt
         updatedAt
-        courseGroupEventsId
         owner
       }
       createdAt

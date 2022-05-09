@@ -17,6 +17,7 @@ import ProfilePicture from "../components/ProfilePicture";
 import SuggestedFriend from "../components/SuggestedFriend";
 import GradientButton from "../components/ui/GradientButton";
 import Colors from "../constants/Colors";
+import useEvents from "../hooks/useEvents";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
@@ -32,10 +33,13 @@ const Home = ({ navigation }: HomeProps) => {
   const [suggestedFriends, setSuggestedFriends] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [friend, setFriend] = useState({});
+  const { events, loading: eventsLoading } = useEvents();
 
   if (loading) return <Spinner />;
 
   useEffect(() => {
+    console.log("*****", events);
+
     if (id) {
       fetchSuggestedFriends({ id }).then((friends) => setSuggestedFriends(friends || []));
     }
