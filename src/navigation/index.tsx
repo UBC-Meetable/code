@@ -18,37 +18,39 @@ import {
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
-  ApplicationProvider as UiProvider, Layout, IconRegistry,
+  ApplicationProvider as UiProvider, IconRegistry,
 } from "@ui-kitten/components";
+import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import Amplify, { Analytics } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react-native";
 import * as Notifications from "expo-notifications";
-import * as React from "react";
-import { Dimensions, Platform, ImageBackground, View } from "react-native";
 import { merge } from "lodash";
-import { EvaIconsPack } from "@ui-kitten/eva-icons";
+import * as React from "react";
+import {
+  Dimensions, ImageBackground, Platform, View,
+} from "react-native";
 import { UserState } from "../API";
+import background from "../assets/images/meetable-background.jpeg";
 import awsconfig from "../aws-exports";
 import ChatBackButton from "../components/Chat/ChatBackButton";
+import theme from "../constants/theme.json";
 import { CourseGroupsProvider } from "../context/CourseGroupsContext";
 import { FriendGroupsProvider } from "../context/FriendGroupsContext";
 import { MessageProvider } from "../context/MessageContext";
 import { UserProvider } from "../context/UserContext";
 import { UserProfileProvider } from "../context/UserProfileContext";
+import useUserProfile from "../hooks/useUserProfile";
 import LoginFlowController from "../screens/Auth/login/LoginFlowController";
 import QuizScreen from "../screens/Auth/onboarding/QuizScreen";
 import EditCourseScreen from "../screens/edit/EditCourseScreen";
-import GroupScreen from "../screens/GroupScreen";
 import EventScreen from "../screens/EventScreen";
+import GroupScreen from "../screens/GroupScreen";
+import HomeScreen from "../screens/HomeScreen";
 import { RootStackParamList, SignUpParamList } from "../types";
 import Blank from "./Blank";
 import generateOptions from "./generateOptions";
-import SignUpStackNavigator from "./SignUpStackNavigator";
-import theme from "../constants/theme.json";
-import HomeScreen from "../screens/HomeScreen";
 import ProfileStackNavigator from "./ProfileStackNavigator";
-import useUserProfile from "../hooks/useUserProfile";
-import background from "../assets/images/meetable-background.jpeg";
+import SignUpStackNavigator from "./SignUpStackNavigator";
 
 Amplify.configure({ ...awsconfig });
 Analytics.record("Initialization");
@@ -158,7 +160,11 @@ const AuthorizedApp = () => {
     };
     if (!loading) {
       (async () => {
-        await registerForPushNotificationsAsync();
+        try {
+          await registerForPushNotificationsAsync();
+        } catch (e) {
+          // console.log(e);
+        }
       })();
     }
   }, [loading]);
@@ -172,20 +178,20 @@ const AuthorizedApp = () => {
     let initRoute: keyof SignUpParamList;
 
     switch (userState) {
-      case UserState.SIGNED_UP:
-        initRoute = "UniScreen";
-        break;
-      case UserState.UNI_SELECTED:
-        initRoute = "NewProfileScreen";
-        break;
-      case UserState.PROFILE_CREATED:
-        initRoute = "YourInterestsScreen";
-        break;
-      case UserState.INTERESTS_SELECTED:
-        initRoute = "NewEditCoursesScreen";
-        break;
-      default:
-        throw new Error("UserState undefined");
+    case UserState.SIGNED_UP:
+      initRoute = "UniScreen";
+      break;
+    case UserState.UNI_SELECTED:
+      initRoute = "NewProfileScreen";
+      break;
+    case UserState.PROFILE_CREATED:
+      initRoute = "YourInterestsScreen";
+      break;
+    case UserState.INTERESTS_SELECTED:
+      initRoute = "NewEditCoursesScreen";
+      break;
+    default:
+      throw new Error("UserState undefined");
     }
 
     return (
@@ -205,7 +211,7 @@ const AuthorizedApp = () => {
             <Stack.Navigator
               screenOptions={{
                 headerShown: false,
-                cardStyle: { backgroundColor: 'transparent' },
+                cardStyle: { backgroundColor: "transparent" },
               }}
               initialRouteName="Home"
             >

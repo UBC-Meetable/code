@@ -40,7 +40,9 @@ const EventScreen = (props: any) => {
         </Text>
         <Card style={styles.card}>
           <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 14 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque molestie sed elementum pretium purus pharetra scelerisque sit. Et varius lectus id netus.
+            Lorem ipsum dolor sit amet, consectetur
+            adipiscing elit. Pellentesque molestie sed
+            elementum pretium purus pharetra scelerisque sit. Et varius lectus id netus.
           </Text>
         </Card>
       </Layout>

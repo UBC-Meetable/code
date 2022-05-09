@@ -1,18 +1,19 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
 import {
-  GetCourseGroupQuery, GetCourseGroupQueryVariables,
+  CourseGroup,
+  GetCourseGroupQuery,
+  GetCourseGroupQueryVariables,
 } from "../API";
 import { getCourseGroup } from "../graphql/queries";
-import { CourseGroup } from "../types";
 
 const fetchCourseGroup = async ({ groupID }: GetCourseGroupQueryVariables) => {
-  const res = await API.graphql({
+  const res = (await API.graphql({
     query: getCourseGroup,
     variables: {
       groupID,
     },
-  }) as GraphQLResult<GetCourseGroupQuery>;
+  })) as GraphQLResult<GetCourseGroupQuery>;
   if (res.data?.getCourseGroup) {
     return res.data.getCourseGroup as CourseGroup;
   }

@@ -25,38 +25,38 @@ export const FriendGroupsProvider = (props: { children?: ReactNode }) => {
     getFriendGroups();
   }, []);
 
-  useEffect(() => {
-    const observableObj = API.graphql({
-      query: onCreateChatMessage,
-    }) as Observable<Object>;
+  // useEffect(() => {
+  //   const observableObj = API.graphql({
+  //     query: onCreateChatMessage,
+  //   }) as Observable<Object>;
 
-    const subscription = observableObj.subscribe({
-      next: ({ value: { data } }: {value: {data: OnCreateChatMessageSubscription}}) => {
-        if (!data.onCreateChatMessage) return;
-        if (data.onCreateChatMessage.groupType !== GroupType.FRIEND) return;
-        const newGroups:FriendGroup[] = [];
-        const matchedGroup = groupRef.current
-          ?.find((group) => group.groupID === data.onCreateChatMessage?.groupChatID) as FriendGroup;
-        if (!matchedGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateChatMessage.groupChatID}`);
-        const newMessages = matchedGroup.messages?.items as ChatMessage[];
-        matchedGroup.messages!.items = newMessages;
-        newMessages.push(data.onCreateChatMessage as ChatMessage);
-        groupRef.current.forEach((group) => {
-          if (group.groupID === data.onCreateChatMessage?.groupChatID) {
-            newGroups.push(matchedGroup);
-          } else {
-            newGroups.push(group);
-          }
-        });
+  //   const subscription = observableObj.subscribe({
+  //     next: ({ value: { data } }: {value: {data: OnCreateChatMessageSubscription}}) => {
+  //       if (!data.onCreateChatMessage) return;
+  //       if (data.onCreateChatMessage.groupType !== GroupType.FRIEND) return;
+  //       const newGroups:FriendGroup[] = [];
+  //       const matchedGroup = groupRef.current
+  //         ?.find((group) => group.groupID === data.onCreateChatMessage?.groupChatID) as FriendGroup;
+  //       if (!matchedGroup) throw new Error(`Unable to find matching group with GroupID ${data.onCreateChatMessage.groupChatID}`);
+  //       const newMessages = matchedGroup.messages?.items as ChatMessage[];
+  //       matchedGroup.messages!.items = newMessages;
+  //       newMessages.push(data.onCreateChatMessage as ChatMessage);
+  //       groupRef.current.forEach((group) => {
+  //         if (group.groupID === data.onCreateChatMessage?.groupChatID) {
+  //           newGroups.push(matchedGroup);
+  //         } else {
+  //           newGroups.push(group);
+  //         }
+  //       });
 
-        setGroups(() => newGroups);
-        //
-      },
-      error: (error:any) => console.warn(error),
-    });
+  //       setGroups(() => newGroups);
+  //       //
+  //     },
+  //     error: (error:any) => console.warn(error),
+  //   });
 
-    return () => subscription.unsubscribe();
-  });
+  //   return () => subscription.unsubscribe();
+  // });
 
   const { children } = props;
   return (

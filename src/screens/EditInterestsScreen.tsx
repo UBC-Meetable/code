@@ -1,34 +1,21 @@
-import { useHeaderHeight, StackNavigationProp } from "@react-navigation/stack";
-import {
-  Input, Layout, Spinner, Text, Button,
-} from "@ui-kitten/components";
-import { Storage } from "aws-amplify";
-import * as ImageManipulator from "expo-image-manipulator";
-import * as ImagePicker from "expo-image-picker";
-import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { Layout, Text } from "@ui-kitten/components";
 import * as React from "react";
 import {
-  StyleSheet, Modal, View, KeyboardAvoidingView,
+  StyleSheet, View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FlexViewCrossStyleProps } from "@ui-kitten/components/devsupport";
-import ProfilePicture from "../components/ProfilePicture";
-import Colors from "../constants/Colors";
-import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
-import useUserProfile from "../hooks/useUserProfile";
-import PrimaryButton from "../components/ui/PrimaryButton";
 import GradientButton from "../components/ui/GradientButton";
-import { RootStackParamList } from "../types";
-// import { Modalize } from 'react-native-modalize';
-/** TODO: Cache user profile so we don't need to fetch so often. */
+import Colors from "../constants/Colors";
+import { ProfileStackParamList } from "../types";
 
 interface LabelProps {
   title: string
 }
 const Label = ({ title }: LabelProps) => <Text style={styles.ModalField}>{title}</Text>;
 
-const EditInterestsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "EditInterest">;}) => {
+const EditInterestsScreen = ({ navigation }:{ navigation: StackNavigationProp<ProfileStackParamList, "EditInterests">;}) => {
   return (
     <SafeAreaView style={styles.root}>
       <Layout style={styles.container}>
@@ -149,7 +136,8 @@ const EditInterestsScreen = ({ navigation }:{ navigation: StackNavigationProp<Ro
 
         <GradientButton
           status="info"
-          style={[styles.editButton, { borderRadius: 30 }]}
+          style={styles.editButton}
+          // TODO: Change this to Edit Interests Page
           onPress={() => {
             navigation.pop();
           }}
@@ -167,13 +155,10 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     display: "flex",
     height: "100%",
-    // justifyContent: "space-between",
-    // alignItems: "center",
     backgroundColor: Colors.theme.lightCreme,
   },
   container: {
     width: "100%",
-    // height: "100%",
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
@@ -184,8 +169,6 @@ const styles = StyleSheet.create({
   selectionsContainer: {
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "space-between",
-    // alignItems: "center",
     width: "75%",
     backgroundColor: Colors.theme.lightCreme,
     marginTop: 10,
@@ -211,9 +194,6 @@ const styles = StyleSheet.create({
     marginVertical: 12,
     width: "90%",
     height: 60,
-    // position: "absolute",
-    // bottom: "0%",
-    // width:"100%",
   },
   email: { fontSize: 14 },
   image: {
@@ -221,7 +201,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center",
   },
   modal: {
     padding: 24,
@@ -262,7 +241,6 @@ const styles = StyleSheet.create({
     color: "black",
     marginLeft: 10,
     fontSize: 20,
-    // textAlign:'center',
   },
   textDiv: {
     flexDirection: "row",

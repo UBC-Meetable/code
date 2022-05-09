@@ -9,12 +9,6 @@
       ],
       "FriendGroup:@model(appsync)": [
         "read"
-      ],
-      "CourseGroupConnection:@model(appsync)": [
-        "read"
-      ],
-      "FriendGroupConnection:@model(appsync)": [
-        "read"
       ]
     }
   },

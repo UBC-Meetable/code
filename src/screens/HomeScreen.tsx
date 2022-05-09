@@ -1,28 +1,26 @@
+import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
-  Layout, Spinner, Text, Button,
+  Button, Layout, Spinner, Text,
 } from "@ui-kitten/components";
 import React, { useEffect, useState } from "react";
 import {
-  Dimensions, Platform, SafeAreaView, StyleSheet, View, Modal,
+  Modal, Platform, SafeAreaView, StyleSheet, View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "react-native-paper";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { CommonActions } from "@react-navigation/native";
 import Smile from "../assets/images/meetable-logo.svg";
+import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
+import UserProfile from "../components/profile/UserProfile";
 import ProfilePicture from "../components/ProfilePicture";
 import SuggestedFriend from "../components/SuggestedFriend";
+import GradientButton from "../components/ui/GradientButton";
 import Colors from "../constants/Colors";
 import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
-import fetchSuggestedFriends from "../calls/fetchSuggestedFriends";
-import UserProfile from "../components/profile/UserProfile";
-import GradientButton from "../components/ui/GradientButton";
 import EventBubble from "../components/events/EventBubble";
-
-const window = Dimensions.get("window");
 
 type HomeProps = {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
@@ -31,14 +29,16 @@ type HomeProps = {
 const Home = ({ navigation }: HomeProps) => {
   const units = useSafeAreaInsets();
   const { loading, profilePicture, id } = useUserProfile();
-  const [suggestedFriends, setSuggestedFriends] = useState<any>([]);
+  const [suggestedFriends, setSuggestedFriends] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [friend, setFriend] = useState({});
 
   if (loading) return <Spinner />;
 
   useEffect(() => {
-    fetchSuggestedFriends({ id }).then(setSuggestedFriends);
+    if (id) {
+      fetchSuggestedFriends({ id }).then((friends) => setSuggestedFriends(friends || []));
+    }
   }, []);
 
   const eventNavigation = (
@@ -56,9 +56,6 @@ const Home = ({ navigation }: HomeProps) => {
 
   return (
     <>
-      {/* Background, Outside of Safe Area View */}
-
-      {/* TODO make this safe area a global component */}
       <SafeAreaView style={{ marginTop: Platform.OS === "android" ? units.top : 0, flex: 1 }}>
         {/* Welcome Banner */}
         <ScrollView>
@@ -138,21 +135,14 @@ const Home = ({ navigation }: HomeProps) => {
 
 const styles = StyleSheet.create({
   row: {
-    // marginHorizontal: 10,
-    // alignItems: "center",
     marginVertical: 10,
   },
   eventsContainer: {
-    // flex: 1,
     backgroundColor: "transparent",
   },
   suggestedFriendsContainer: {
-    // marginLeft: -10,
     marginRight: -20,
     paddingLeft: 5,
-    // width: "auto",
-    // flex: 1,
-    // backgroundColor: "transparent",
     flexDirection: "row",
     marginBottom: 15,
   },

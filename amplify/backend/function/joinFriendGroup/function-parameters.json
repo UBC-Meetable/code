@@ -13,16 +13,6 @@
         "read",
         "update",
         "delete"
-      ],
-      "FriendGroupConnection:@model(appsync)": [
-        "create",
-        "read",
-        "update",
-        "delete"
-      ],
-      "Quiz:@model(appsync)": [
-        "read",
-        "update"
       ]
     }
   },
