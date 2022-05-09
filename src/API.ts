@@ -41290,10 +41290,6 @@ export type OnDeleteDirectChatSubscription = {
   } | null,
 };
 
-export type OnCreateChatMessageSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnCreateChatMessageSubscription = {
   onCreateChatMessage?:  {
     __typename: "ChatMessage",
@@ -42716,10 +42712,6 @@ export type OnCreateChatMessageSubscription = {
   } | null,
 };
 
-export type OnUpdateChatMessageSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnUpdateChatMessageSubscription = {
   onUpdateChatMessage?:  {
     __typename: "ChatMessage",
@@ -44140,10 +44132,6 @@ export type OnUpdateChatMessageSubscription = {
     chatMessageAuthorId: string,
     owner?: string | null,
   } | null,
-};
-
-export type OnDeleteChatMessageSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteChatMessageSubscription = {

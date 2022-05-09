@@ -11,6 +11,8 @@ const simplifyCourseGroup = (group: CourseGroup) => {
   return newGroup;
 };
 
-const simplifyCourseGroups = (groups: CourseGroup[]) => groups.map(simplifyCourseGroup);
+const simplifyCourseGroups = (groups: CourseGroup[]) => {
+  return groups.map(simplifyCourseGroup);
+};
 
 export { simplifyCourseGroup, simplifyCourseGroups };

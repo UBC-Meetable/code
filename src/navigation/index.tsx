@@ -138,8 +138,6 @@ const AuthorizedApp = () => {
       if (finalStatus !== "granted") {
         Analytics.record({ name: "Push Notifications Failed" });
         console.log("Push notifications not enabled");
-        //  TODO error? Prompt?
-        // alert("Failed to get push token for push notification!");
         return;
       }
 

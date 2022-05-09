@@ -1,15 +1,18 @@
 import { Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
+import { ChatMessage } from "../../API";
 import Colors from "../../constants/Colors";
 
-type SelfMessageProps = {};
+type SelfMessageProps = {
+  message: ChatMessage;
+};
 
-const SelfMessage = (props:SelfMessageProps) => {
+const SelfMessage = ({ message }:SelfMessageProps) => {
   return (
     <Layout style={styles.root}>
       <Text style={styles.text}>
-        hello
+        {message.body}
       </Text>
     </Layout>
   );

@@ -89,7 +89,7 @@ type ChatMessage
   @model
   @auth(
     rules: [
-      { allow: owner }
+      { allow: owner, operations: [create] }
       { allow: private, operations: [read, update, delete] }
     ]
   ) {

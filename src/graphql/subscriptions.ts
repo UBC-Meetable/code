@@ -9687,8 +9687,8 @@ export const onDeleteDirectChat = /* GraphQL */ `
   }
 `;
 export const onCreateChatMessage = /* GraphQL */ `
-  subscription OnCreateChatMessage($owner: String) {
-    onCreateChatMessage(owner: $owner) {
+  subscription OnCreateChatMessage {
+    onCreateChatMessage {
       id
       parentId
       event {
@@ -10945,8 +10945,8 @@ export const onCreateChatMessage = /* GraphQL */ `
   }
 `;
 export const onUpdateChatMessage = /* GraphQL */ `
-  subscription OnUpdateChatMessage($owner: String) {
-    onUpdateChatMessage(owner: $owner) {
+  subscription OnUpdateChatMessage {
+    onUpdateChatMessage {
       id
       parentId
       event {
@@ -12203,8 +12203,8 @@ export const onUpdateChatMessage = /* GraphQL */ `
   }
 `;
 export const onDeleteChatMessage = /* GraphQL */ `
-  subscription OnDeleteChatMessage($owner: String) {
-    onDeleteChatMessage(owner: $owner) {
+  subscription OnDeleteChatMessage {
+    onDeleteChatMessage {
       id
       parentId
       event {

@@ -4,10 +4,9 @@ import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
 import Observable from "zen-observable-ts";
-import { OnCreateChatMessageSubscription, SubscribeToMessagesFromParentSubscription } from "../API";
+import { ChatMessage, OnCreateChatMessageSubscription, SubscribeToMessagesFromParentSubscription } from "../API";
 import fetchCourseGroupMessages from "../calls/fetchCourseGroupMessages";
 import { onCreateChatMessage, subscribeToMessagesFromParent } from "../graphql/subscriptions";
-import { ChatMessage } from "../types";
 
 type MessageContextType = {
   messages: ChatMessage[],
@@ -31,6 +30,8 @@ export const MessageProvider = (props: { groupID: string, children?: ReactNode }
   const { children, groupID } = props;
 
   const getMessages = async () => {
+    console.log("getting messages");
+
     if (reachedEnd) return;
     const { messages: fetchedMessages, token } = await fetchCourseGroupMessages({
       parentId: groupID,

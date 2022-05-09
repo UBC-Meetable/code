@@ -13,7 +13,7 @@ import { simplifyCourseGroup, simplifyCourseGroups } from "./helpers";
 // Todo: componentize file
 /** TODO: Cache user courses so we don't need to fetch so often. */
 const NewEditCoursesScreen = () => {
-  const courseGroups = useContext(CourseGroupsContext);
+  const { groups: courseGroups } = useContext(CourseGroupsContext);
   const [courses, setCourses] = useState(simplifyCourseGroups(courseGroups));
   const [newCourses, setNewCourses] = useState([] as SimpleCourseGroup[]);
   const [currTitle, setTitle] = useState("");

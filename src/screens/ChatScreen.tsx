@@ -3,7 +3,7 @@ import { Input, Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
 import {
   ImageBackground,
-  KeyboardAvoidingView, Platform, StyleSheet, View,
+  KeyboardAvoidingView, Platform, RefreshControl, StyleSheet, View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import OtherMessage from "../components/chat/OtherMessage";
@@ -11,17 +11,32 @@ import SelfMessage from "../components/chat/SelfMessage";
 import { RootStackParamList } from "../types";
 import { HeaderLeft } from "./GroupScreen";
 import background from "../assets/images/meetable-background.jpeg";
+import useMessages from "../hooks/useMessages";
+import useUserProfile from "../hooks/useUserProfile";
 
 type ChatScreenProps = {
   navigation: StackNavigationProp<RootStackParamList>;
   route: any;
 }
 
-const ChatScreen = ({ navigation, route }: ChatScreenProps) => {
-  const { groupID, groupTitle } = route.params;
-  console.log("groupID", groupID);
+const ReachedEndMessage = () => {
+  return (
+    <RefreshControl refreshing={false}>
+      <Text>👍</Text>
+      {/* <Text style={[styles.inputText, styles.refreshText]}>No More New Messages 👍</Text> */}
+    </RefreshControl>
+  );
+};
 
+const ChatScreen = ({ navigation, route }: ChatScreenProps) => {
+  const { groupTitle } = route.params;
+
+  const { id: myId } = useUserProfile();
   const headerHeight = useHeaderHeight();
+  const {
+    messages, getMessages, loading, reachedEnd,
+  } = useMessages();
+
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -40,35 +55,24 @@ const ChatScreen = ({ navigation, route }: ChatScreenProps) => {
       >
         <View style={{ flex: 1 }}>
           <ScrollView
+            refreshControl={(
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={getMessages}
+                enabled={!reachedEnd}
+              />
+            )}
             maintainVisibleContentPosition={{ minIndexForVisible: 0 }}
             keyboardDismissMode="interactive"
             keyboardShouldPersistTaps="handled"
             style={[styles.scroll]}
           >
-            <SelfMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <SelfMessage />
-            <OtherMessage />
-            <OtherMessage />
-            <SelfMessage />
-            <OtherMessage />
+            {messages.map((message) => {
+              if (message.chatMessageAuthorId === myId) {
+                return <SelfMessage message={message} />;
+              }
+              return <OtherMessage message={message} />;
+            })}
           </ScrollView>
         </View>
         <Input multiline textStyle={[styles.inputText]} style={[styles.input]} placeholder="Say Hello 👋" />
@@ -78,6 +82,9 @@ const ChatScreen = ({ navigation, route }: ChatScreenProps) => {
 };
 
 const styles = StyleSheet.create({
+  refreshText: {
+    textAlign: "center",
+  },
   scroll: {
     paddingHorizontal: 20,
   },

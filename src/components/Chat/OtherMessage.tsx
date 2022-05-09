@@ -1,23 +1,31 @@
 import { Avatar, Layout, Text } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { ChatMessage } from "../../API";
 import Colors from "../../constants/Colors";
+import noAvatar from "../../assets/images/noavatar.png";
+import ProfilePicture from "../ProfilePicture";
+import { ProfilePictureSize } from "../../types";
 
-type OtherMessageProps = {};
+type OtherMessageProps = {
+  message: ChatMessage;
+};
 
-const OtherMessage = (props:OtherMessageProps) => {
+const OtherMessage = ({ message }:OtherMessageProps) => {
+  const uri = message.author.profilePicture;
+
   return (
     <View style={styles.root}>
-      <Text style={styles.name}>Trevor</Text>
+      <Text style={styles.name}>{message.author.firstName || ""}</Text>
       <View style={styles.row}>
-        <Avatar size="tiny" source={require("../../assets/images/profilePic2.jpg")} />
+        <ProfilePicture size={ProfilePictureSize.MESSAGE} imageKey={uri} />
         <Layout style={styles.message}>
           <Text style={{
             color: "white",
             fontFamily: "Quicksand_400Regular",
           }}
           >
-            hello
+            {message.body}
           </Text>
         </Layout>
       </View>
