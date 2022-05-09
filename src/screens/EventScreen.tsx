@@ -5,52 +5,48 @@ import React from "react";
 import Icon from "react-native-vector-icons/Ionicons";
 import { StyleSheet, View } from "react-native";
 import GradientButton from "../components/ui/GradientButton";
-
-export const EventDetails = () => (
-  <Card style={styles.card}>
-    <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 18 }}>
-      🕒 April 12 3:00 - 3:30 pm
-    </Text>
-    <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 18 }}>
-      📚 APSC 100
-    </Text>
-  </Card>
-);
+import EventBubble from "../components/events/EventBubble";
+import { Event } from "../API";
 
 const EventScreen = (props: any) => {
-  const { navigation } = props;
+  const { navigation, route } = props;
+  const { event, courseName } = route.params;
+  const {
+    description, title, startTime, endTime,
+  } = event as Event;
 
   return (
     <View style={styles.background}>
       <Layout style={styles.rowTop}>
-        <Icon name="ios-chevron-back" size={32} onPress={() => navigation.navigate("Home")} />
+        <Icon name="ios-chevron-back" size={32} onPress={() => navigation.pop()} />
       </Layout>
       <Layout style={styles.row}>
         <Text style={{ fontFamily: "Poppins_700Bold", fontSize: 32 }} category="h1">
-          {props.route.params.eventTitle}
+          {title}
         </Text>
       </Layout>
-      {/* <Layout style={styles.row}>
-            </Layout>
-            <Layout style={styles.row}>
-            </Layout> */}
-      <Layout style={styles.row}>
-        <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 20 }} category="h2">
-          Description
-        </Text>
-        <Card style={styles.card}>
-          <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 14 }}>
-            Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Pellentesque molestie sed
-            elementum pretium purus pharetra scelerisque sit. Et varius lectus id netus.
+      {description && (
+        <Layout style={styles.row}>
+          <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 20 }} category="h2">
+            Description
           </Text>
-        </Card>
-      </Layout>
+          <Card style={styles.card}>
+            <Text style={{ fontFamily: "Poppins_400Regular", fontSize: 14 }}>
+              {description}
+            </Text>
+          </Card>
+        </Layout>
+      )}
       <Layout style={styles.row}>
         <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 20 }} category="h2">
           Details
         </Text>
-        <EventDetails />
+        <EventBubble
+          courseName={courseName}
+          title={title}
+          startTime={startTime}
+          endTime={endTime}
+        />
       </Layout>
       <Layout style={styles.row}>
         <Text style={{ fontFamily: "Poppins_600SemiBold", fontSize: 20 }} category="h2">
@@ -65,7 +61,7 @@ const EventScreen = (props: any) => {
         </Layout>
       </Layout>
       <Layout style={styles.bottom}>
-        <GradientButton>Join Chat</GradientButton>
+        <GradientButton style={{ borderRadius: 25 }}>Join Chat</GradientButton>
       </Layout>
     </View>
   );

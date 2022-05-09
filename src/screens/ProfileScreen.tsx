@@ -64,7 +64,6 @@ const ProfileScreen = () => {
   const uploadImage = (toUpload: ImageInfo) => {
     const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
     const imageKey = `${user.id}/${imageName}`;
-    console.log(toUpload.uri);
 
     fetch(toUpload.uri).then((response) => {
       response.blob()

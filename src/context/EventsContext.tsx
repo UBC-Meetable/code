@@ -42,7 +42,6 @@ export const EventsProvider = (props: { children?: ReactNode }) => {
         newEvents.set(result.groupId, result.events);
       });
       setEvents(newEvents);
-      console.log("fetched existing events", newEvents);
     };
     getExistingEvents().then(() => setLoading(false));
   }, [groups]);
@@ -75,7 +74,6 @@ export const EventsProvider = (props: { children?: ReactNode }) => {
         const newEvents:Map<string, Event[]> = eventsRef.current;
         newEvents.set(group.groupID, [...newEvents.get(group.groupID) || [], createdEvent]);
         setEvents(() => newEvents);
-        console.log(newEvents.size);
       }, (err) => console.log(err));
       subscriptions.push(subscription);
     }

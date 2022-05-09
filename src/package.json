@@ -32,11 +32,13 @@
     "@ui-kitten/eva-icons": "^5.1.1",
     "aws-amplify": "^3.3.26",
     "aws-amplify-react-native": "^4.3.2",
+    "date-fns": "^2.28.0",
     "expo": "^42.0.0",
     "expo-fast-image": "^1.1.2",
     "expo-font": "~9.2.1",
     "expo-image-manipulator": "~9.2.2",
     "expo-image-picker": "~10.2.2",
+    "expo-linear-gradient": "~9.2.0",
     "expo-notifications": "~0.12.3",
     "expo-secure-store": "~10.2.0",
     "expo-server-sdk": "^3.6.0",
@@ -60,8 +62,7 @@
     "react-native-svg-image": "^2.0.1",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-vector-icons": "^7.1.0",
-    "uuid": "^8.3.2",
-    "expo-linear-gradient": "~9.2.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/react": "~16.9.35",

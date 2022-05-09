@@ -22,6 +22,7 @@ import useUserProfile from "../hooks/useUserProfile";
 import { ProfilePictureSize, RootStackParamList } from "../types";
 import CourseGroups from "./CourseGroups";
 import EventBubble from "../components/events/EventBubble";
+import EventsList from "../components/events/EventsList";
 
 type HomeProps = {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
@@ -33,30 +34,13 @@ const Home = ({ navigation }: HomeProps) => {
   const [suggestedFriends, setSuggestedFriends] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [friend, setFriend] = useState({});
-  const { events, loading: eventsLoading } = useEvents();
-
   if (loading) return <Spinner />;
 
   useEffect(() => {
-    console.log("*****", events);
-
     if (id) {
       fetchSuggestedFriends({ id }).then((friends) => setSuggestedFriends(friends || []));
     }
   }, []);
-
-  const eventNavigation = (
-    eventTitle: string,
-    eventID: string,
-  ) => {
-    navigation.dispatch(
-      CommonActions.navigate("Event", {
-        screen: "EventScreen",
-        eventTitle,
-        eventID,
-      }),
-    );
-  };
 
   return (
     <>
@@ -97,14 +81,16 @@ const Home = ({ navigation }: HomeProps) => {
             </View>
             <View style={styles.row}>
               <Text style={styles.titleText}>Upcoming Events</Text>
-              <EventBubble onPress={() => eventNavigation(
+              <EventsList navigation={navigation} />
+              {/* <EventBubble onPress={() => eventNavigation(
                 "Quiz 8",
                 "1",
               )}
               />
               <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
-                <Text style={{ margin: 10, textAlign: "center", color: "#404040" }}>No upcoming events</Text>
-              </View>
+                <Text style={{ margin: 10,
+                  textAlign: "center", color: "#404040" }}>No upcoming events</Text>
+              </View> */}
             </View>
             <View style={styles.row}>
               <Text style={styles.titleText}>Courses</Text>

@@ -16,8 +16,11 @@ const CourseGroups = ({
 }: {
   navigation: StackNavigationProp<RootStackParamList, "Home">;
 }) => {
-  const { groups } = useCourseGroups();
+  const { groups, loading } = useCourseGroups();
 
+  if (loading) {
+    return <Spinner />;
+  }
   const moveToGroupScreen = (
     groupTitle: string,
     groupID: string,
