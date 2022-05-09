@@ -71,9 +71,10 @@ export const EventsProvider = (props: { children?: ReactNode }) => {
         const { data } = value as {data: SubscribeToEventsFromCourseGroupSubscription};
         if (!data.subscribeToEventsFromCourseGroup) return;
         const createdEvent = data.subscribeToEventsFromCourseGroup as Event;
-        const newEvents:Map<string, Event[]> = eventsRef.current;
+        const newEvents:Map<string, Event[]> = new Map(eventsRef.current);
         newEvents.set(group.groupID, [...newEvents.get(group.groupID) || [], createdEvent]);
         setEvents(() => newEvents);
+        console.log("Got the event via subscription:", createdEvent);
       }, (err) => console.log(err));
       subscriptions.push(subscription);
     }

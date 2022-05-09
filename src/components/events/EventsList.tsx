@@ -54,7 +54,7 @@ const EventsList = ({ navigation }:EventsListProps) => {
   };
 
   return (
-    events.size > 0
+    flattenedEvents.length > 0
       ? (
         <List
           bounces={false}
