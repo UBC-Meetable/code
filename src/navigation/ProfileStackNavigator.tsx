@@ -1,22 +1,22 @@
-// You can explore the built-in icon families and icons on the web at:
-
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import { IconProps } from "react-native-vector-icons/Icon";
-import Icon from "react-native-vector-icons/Ionicons";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import Octicons from "react-native-vector-icons/Octicons";
 import ProfileScreen from "../screens/ProfileScreen";
-import { TabTwoParamList } from "../types";
+import { ProfileStackParamList } from "../types";
 import HeaderOptions from "./HeaderOptions";
+import ProfileSettingsScreen from "../screens/ProfileSettingsScreen";
+import EditInterestsScreen from "../screens/EditInterestsScreen";
 
-// https://icons.expo.fyi/
-
-// Each tab has its own navigation stack, you can read more about this pattern here:
-// https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-
-const ProfileTabStack = createStackNavigator<TabTwoParamList>();
+const ProfileTabStack = createStackNavigator<ProfileStackParamList>();
 
 export const Ionicon = (props: IconProps) => (
-  <Icon {...props} />
+  <Ionicons {...props} />
+);
+
+export const Octicon = (props: IconProps) => (
+  <Octicons {...props} />
 );
 
 const ProfileStackNavigator = () => (
@@ -37,12 +37,38 @@ const ProfileStackNavigator = () => (
           marginLeft: 10,
         },
         headerRight: () => (
-          <GearIcon onPress={() => navigation.navigate("ProfileSettings")} />
+          <Octicon name="gear" size={24} onPress={() => navigation.navigate("ProfileSettings")} />
         ),
         headerRightContainerStyle: {
           marginRight: 24,
         },
       })}
+    />
+    <ProfileTabStack.Screen
+      name="ProfileSettings"
+      component={ProfileSettingsScreen}
+      options={{
+        headerShown: true,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
+        headerRightContainerStyle: {
+          marginRight: 24,
+        },
+      }}
+    />
+    <ProfileTabStack.Screen
+      name="EditInterests"
+      component={EditInterestsScreen}
+      options={{
+        headerShown: true,
+        headerLeftContainerStyle: {
+          marginLeft: 10,
+        },
+        headerRightContainerStyle: {
+          marginRight: 24,
+        },
+      }}
     />
   </ProfileTabStack.Navigator>
 );

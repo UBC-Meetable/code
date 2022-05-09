@@ -1,11 +1,7 @@
-
-# [MODELS]
 type User
-  @model 
-  @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) 
-  @key(fields: ["id"]) 
-  @key(name: "byUniYear", fields: ["university", "year"], queryField: "UserByUniYear") {
-  id: String!
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  id: String! @primaryKey
   email: String!
   firstName: String
   lastName: String
@@ -13,120 +9,113 @@ type User
   bio: String
   userState: UserState
   university: String!
+    @index(
+      name: "byUniYear"
+      queryField: "UserByUniYear"
+      sortKeyFields: ["year"]
+    )
   year: Int!
   major: String
   interests: [String]
-  courseGroups: [CourseGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
-  friendGroups: [FriendGroupConnection!]! @connection(keyName: "byUser", fields: ["id"])
-  quizzes: [Quiz!]! @connection(keyName: "byUser", fields: ["id"])
-  events: [EventAttendee!]! @connection(keyName: "byUser", fields: ["id"])
+  courseGroups: [CourseGroup!]! @manyToMany(relationName: "CourseGroupUsers")
+  friendGroups: [FriendGroup!]! @manyToMany(relationName: "FriendGroupUsers")
+  events: [Event!]! @manyToMany(relationName: "EventAttendees")
   expoPushToken: String
-  multipleGroupsOptIn: Boolean # undefined interpreted same as false
+  multipleGroupsOptIn: Boolean
 }
 
-# Course Groups
 type CourseGroup
-    @model 
-    @key(fields: ["groupID"])
-    @auth(rules: [{allow: owner, operations: [create]}]){
-  users: [CourseGroupConnection!] @connection(keyName: "byCourseGroup", fields: ["groupID"])
+  @model
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read, update, delete] }
+    ]
+  ) {
+  users: [User!]! @manyToMany(relationName: "CourseGroupUsers")
   title: String!
-  groupID: String!
+  groupID: String! @primaryKey
   code: String!
   section: String!
-  events: [Event!]! @connection(keyName: "byCourseGroup", fields: ["groupID"])
-  messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
-}
-
-type EventAttendee
-  @model
-  @key(name: "byEvent", fields: ["eventID", "userID"])
-  @key(name: "byUser", fields: ["userID", "eventID"])
-  @auth(rules: [{allow: owner, operations: [create]}]){
-  id: ID!
-  userID: String!
-  eventID: String!
-  user: User! @connection(fields: ["userID"])
-  event: Event! @connection(fields: ["eventID"])
+  events: [Event!]! @hasMany
+  messages: [ChatMessage!] @hasMany
 }
 
 type Event
-  @model 
-  @key(name: "byCourseGroup", fields: ["id", "startTime"])
-  @auth(rules: [{ allow: owner, operations: [create, delete, update]}]) {
-  id: String!
+  @model
+  @auth(rules: [{ allow: owner }, { allow: private, operations: [read] }]) {
+  id: String! @primaryKey
   title: String!
   description: String
   startTime: AWSDateTime!
   endTime: AWSDateTime!
   location: String
-  courseGroup: CourseGroup! @connection(fields: ["id"])
-  attendees: [EventAttendee!]! @connection(keyName: "byEvent", fields: ["id"])
-  messages: [ChatMessage!] @connection(keyName: "byEventID", fields: ["id"])
+  courseGroupEventsId: String!
+    @index(
+      name: "byCourseGroupId"
+      queryField: "EventByCourseGroupId"
+      sortKeyFields: ["startTime"]
+    )
+  courseGroup: CourseGroup! @belongsTo(fields: ["courseGroupEventsId"])
+  attendees: [User!]! @manyToMany(relationName: "EventAttendees")
+  messages: [ChatMessage!] @hasMany
 }
 
-# Friend Groups 
 type FriendGroup
   @model
-  @key(fields: ["groupID"])
-  @auth(rules: [{allow: owner, operations:[create]}])
-  {
-  users: [FriendGroupConnection!] @connection(keyName: "byFriendGroup", fields: ["groupID"])
-  groupID: String!
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read, update, delete] }
+    ]
+  ) {
+  users: [User!] @manyToMany(relationName: "FriendGroupUsers")
+  groupID: String! @primaryKey
   title: String
-  messages: [ChatMessage!] @connection(keyName: "byCourseGroupChatID", fields: ["groupID"])
+  messages: [ChatMessage!] @hasMany
   owner: String
-} 
+}
 
-type Report
-  @model
-  @key(name: "byReporter", fields: ["reportingUserID"])
-  @key(name: "byReported", fields: ["reportedUserID"])
-  @auth(rules: [{ allow: owner, operations: [create]}])
-  {
-    id: ID!
-    message: ChatMessage
-    title: String!
-    body: String!
-    reportingUserID: String!
-    reportedUserID: String!
-    reportingUser: User @connection(fields: ["reportingUserID"])
-    reportedUser: User @connection(fields: ["reportedUserID"])
-  } 
+type DirectChat @model @auth(rules: [{ allow: owner }]) {
+  id: String! @primaryKey
+  userID1: String!
+  userID2: String!
+  user1: User @hasOne(fields: ["userID1"])
+  user2: User @hasOne(fields: ["userID2"])
+  messages: [ChatMessage!]! @hasMany
+}
 
-type DirectChat
-  @model
-  @key(name: "byUsers", fields: ["userID1", "userID2"], queryField: "chatByUsers")
-  @auth(rules: [{ allow: owner, operations: [create, update, delete, read]}])
-  {
-    id: String!
-    userID1: String!
-    userID2: String!
-    user1: User @connection(fields: ["userID1"])
-    user2: User @connection(fields: ["userID2"])
-    messages: [ChatMessage!]! @connection(keyName: "byDirectChatID", fields: ["id"])
-  }
- 
-# [CONNECTIONS]
-
-#[Many ChatMessages: Many Users]
 type ChatMessage
   @model
-  @key(name: "byEventID", fields: ["eventID", "createdAt"], queryField: "messagesByEventID")
-  @key(name: "byCourseGroupChatID", fields: ["groupChatID", "createdAt"], queryField: "messagesByCourseGroupChatID")
-  @key(name: "byDirectChatID", fields: ["directChatID", "createdAt"], queryField: "messagesByDirectChatID")
-  @auth(rules: [{allow: owner, operations: [create]}]) {
-    eventID: String
-    groupChatID: String # removing ! to allow ChatMessages in DMs
-    directChatID: String
-    userID: String!
-    author: User! @connection(fields: ["userID"])
-    body: String!
-    files: [FileAttachment!]
-    createdAt: AWSDateTime
-    updatedAt: AWSDateTime
-    groupType: GroupType # removing ! to allow ChatMessages in DMs, could be a bad soln though
-  }
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: private, operations: [read, update, delete] }
+    ]
+  ) {
+  id: String! @primaryKey
+  parentId: String!
+    @index(
+      name: "byParentId"
+      queryField: "ChatMessageByParentId"
+      sortKeyFields: ["createdAt"]
+    )
+  event: Event @belongsTo(fields: ["parentId"])
+  groupChat: CourseGroup @belongsTo(fields: ["parentId"])
+  directChat: DirectChat @belongsTo(fields: ["parentId"])
+  author: User! @hasOne
+  body: String!
+  files: [FileAttachment!]
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Subscription {
+  subscribeToEventsFromCourseGroup(courseGroupEventsId: String!): Event
+    @aws_subscribe(mutations: ["createEvent"])
+  subscribeToMessagesFromParent(parentId: String!): ChatMessage
+    @aws_subscribe(mutations: ["createChatMessage"])
+}
 
 type FileAttachment {
   fileURI: String!
@@ -144,48 +133,11 @@ enum GroupType {
   COURSE
   FRIEND
 }
-# [Many UserProfiles: Many CourseGroups]
-# Represents a connection between a User and a CourseGroup
-type CourseGroupConnection
-  @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-  @model
-  @key(name: "byCourseGroup", fields: ["groupID", "userID"])
-  @key(name: "byUser", fields: ["userID", "groupID"], queryField: "CourseGroupByUser") {
-  id: ID!
-  groupID: String!
-  userID: String!
-  courseGroup: CourseGroup! @connection(fields: ["groupID"])
-  user: User! @connection(fields: ["userID"])
-}
-
-type FriendGroupConnection
-  @auth(rules: [{allow: owner, operations: [create, update, delete]}])
-  @model
-  @key(name: "byFriendGroup", fields: ["groupID", "userID"])
-  @key(name: "byUser", fields: ["userID", "groupID"], queryField: "FriendGroupByUser") {
-  id: ID!
-  groupID: String!
-  userID: String!
-  friendGroup: FriendGroup! @connection(fields: ["groupID"])
-  user: User! @connection(fields: ["userID"])
-}
-
-type Quiz
-  @model
-  @key(name: "byUser", fields: ["userID"])
-  @auth(rules: [{allow: owner, operations:[create]}])
-  {
-    userID: String!
-    user: User! @connection(fields: ["userID"])
-    responses: [QAPair!]! # always has an array with 0 or more QAPair only
-    createdAt: AWSDateTime! # quiz won't be modified after
-  }
-
-# [PRIVATE HELPER TYPES]
 enum UserState {
   SIGNED_UP
   UNI_SELECTED
   PROFILE_CREATED
+  INTERESTS_SELECTED
   DONE
 }
 
@@ -194,12 +146,11 @@ type QAPair {
   a: String!
 }
 
-# [LAMBDA FUNCTIONS]
-
-# joinFriendGroupInput -> GroupID
 type Query {
-  joinFriendGroup(user: joinFriendGroupInput): joinFriendGroupOutput @function(name: "joinFriendGroup-${env}")
-  getFriendSuggestion(id: getFriendSuggestionInput): getFriendSuggestionOutput @function(name: "getFriendSuggestionConnectedToDatabase-${env}")
+  joinFriendGroup(user: joinFriendGroupInput): joinFriendGroupOutput
+    @function(name: "joinFriendGroup-${env}")
+  getFriendSuggestion(id: String): getFriendSuggestionOutput
+    @function(name: "getSuggestedFriends-${env}")
 }
 
 input joinFriendGroupInput {
@@ -214,20 +165,17 @@ type joinFriendGroupOutput {
   relevantUsers: [String!]!
 }
 
-input getFriendSuggestionInput {
-  id : String!
-}
-
 type getFriendSuggestionOutput {
-  user: [User!]!
+  user: [User]
 }
 
 type Mutation {
-  pushNotification(input: pushNotificationInput): pushNotificationOutput @function(name: "pushNotification-${env}")
+  pushNotification(input: pushNotificationInput): pushNotificationOutput
+    @function(name: "pushNotification-${env}")
 }
 
 input pushNotificationInput {
-  groupID: String # either groupID or userID2 is included, but not both (indicating DM or group)
+  groupID: String
   userID2: String
   userID: String!
   userName: String!
@@ -240,15 +188,3 @@ type pushNotificationOutput {
   statusCode: Int!
   body: String
 }
-
-
-# this fn may not need to exist in the schema if it's not called by the frontend directly (?)
-# also I think the fn having no input causes a syntax error
-# type Mutation {
-#   periodicGrouping(): periodicGroupingOutput @function(name: "periodicGrouping-${env}")
-# }
-
-# type periodicGroupingOutput {
-#   statusCode: Int!
-#   body: String
-# }

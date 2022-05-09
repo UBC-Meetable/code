@@ -1,31 +1,29 @@
 import { GraphQLResult } from "@aws-amplify/api";
 import { API } from "aws-amplify";
-import { MessagesByCourseGroupChatIdQuery, MessagesByCourseGroupChatIdQueryVariables } from "../API";
-import { messagesByCourseGroupChatId } from "../graphql/queries";
+import { ChatMessageByParentIdQuery, ChatMessageByParentIdQueryVariables } from "../API";
+import { chatMessageByParentId } from "../graphql/queries";
 import { ChatMessage } from "../types";
 
-const fetchCourseGroupMessages = async ({ groupChatID, limit, nextToken }:
-    MessagesByCourseGroupChatIdQueryVariables) => {
-  console.log("Fetching Messages");
-
+const fetchCourseGroupMessages = async ({ parentId, limit, nextToken }:
+    ChatMessageByParentIdQueryVariables) => {
   const res = await API.graphql({
-    query: messagesByCourseGroupChatId,
+    query: chatMessageByParentId,
     variables: {
-      groupChatID,
+      parentId,
       limit,
       nextToken,
       sortDirection: "DESC",
     },
-  }) as GraphQLResult<MessagesByCourseGroupChatIdQuery>;
+  }) as GraphQLResult<ChatMessageByParentIdQuery>;
 
-  if (res.data?.messagesByCourseGroupChatID) {
+  if (res.data?.ChatMessageByParentId) {
     return {
-      messages: res.data.messagesByCourseGroupChatID.items as ChatMessage[],
-      token: res.data.messagesByCourseGroupChatID.nextToken,
+      messages: res.data.ChatMessageByParentId.items as ChatMessage[],
+      token: res.data.ChatMessageByParentId.nextToken,
     };
   }
 
-  throw new Error(`Failed to get course group with groupID ${groupChatID}`);
+  throw new Error(`Failed to get messages for group with ID ${parentId}`);
 };
 
 export default fetchCourseGroupMessages;

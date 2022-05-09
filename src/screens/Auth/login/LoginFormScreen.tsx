@@ -1,4 +1,4 @@
-import Auth from "@aws-amplify/auth";
+import { Auth } from "@aws-amplify/auth";
 import { Input, Layout, Text } from "@ui-kitten/components";
 import React, { useContext, useRef, useState } from "react";
 import { Dimensions, KeyboardAvoidingView, StyleSheet } from "react-native";
@@ -20,27 +20,21 @@ type LoginFormScreenProps = {
 const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreenProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [errors, setError] = useState<string[]>([]);
   const emailRef = useRef<Input>(null);
   const passwordRef = useRef<Input>(null);
   const { setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const confirmForm = () => {
-    // setError(() => []);
     let flag = true;
     if (!email) {
-      // setError((prevErrors) => [...prevErrors, "Email cannot be blank"]);
       flag = false;
     }
     if (!password) {
-      // setError((prevErrors) => [...prevErrors, "Password cannot be blank"]);
       flag = false;
     }
     return flag;
   };
   const login = async () => {
-    // setError([]);
-
     if (!confirmForm()) return;
     try {
       setLoading(true);
@@ -49,14 +43,11 @@ const LoginFormScreen = ({ onSignUp, onNotConfirmed, onForgot }: LoginFormScreen
         password,
       });
       setUser(user);
-    } catch (e) {
+    } catch (e: any) {
       console.log(e);
       if (e.code === "UserNotConfirmedException") {
         onNotConfirmed(email);
       }
-
-      // const message = e.message as string;
-      // setError((prevErrors) => [...prevErrors, message]);
     } finally {
       setLoading(false);
     }

@@ -1,12 +1,12 @@
-import { API } from "aws-amplify";
+import { API, graphqlOperation } from "aws-amplify";
 import { isNull } from "lodash";
 import React, {
   ReactNode, useEffect, useRef, useState,
 } from "react";
 import Observable from "zen-observable-ts";
-import { OnCreateChatMessageSubscription } from "../API";
+import { OnCreateChatMessageSubscription, SubscribeToMessagesFromParentSubscription } from "../API";
 import fetchCourseGroupMessages from "../calls/fetchCourseGroupMessages";
-import { onCreateChatMessage } from "../graphql/subscriptions";
+import { onCreateChatMessage, subscribeToMessagesFromParent } from "../graphql/subscriptions";
 import { ChatMessage } from "../types";
 
 type MessageContextType = {
@@ -33,7 +33,7 @@ export const MessageProvider = (props: { groupID: string, children?: ReactNode }
   const getMessages = async () => {
     if (reachedEnd) return;
     const { messages: fetchedMessages, token } = await fetchCourseGroupMessages({
-      groupChatID: groupID,
+      parentId: groupID,
       limit: 20,
       nextToken,
     });
@@ -50,18 +50,20 @@ export const MessageProvider = (props: { groupID: string, children?: ReactNode }
   }, []);
 
   useEffect(() => {
-    const observableObj = API.graphql({
-      query: onCreateChatMessage,
-      variables: {
-        groupChatID: groupID,
-      },
-    }) as Observable<Object>;
+    const observableObj = API.graphql(
+      graphqlOperation(subscribeToMessagesFromParent,
+        { parentId: groupID }),
+    ) as Observable<Object>;
 
     const subscription = observableObj.subscribe({
-      next: ({ value: { data } }: {value: {data: OnCreateChatMessageSubscription}}) => {
-        if (!data.onCreateChatMessage) return;
+      next: ({ provider, value }: any) => {
+        console.log("got message!", value);
+        const { data } = value as {data: SubscribeToMessagesFromParentSubscription};
 
-        setMessages(() => [...messagesRef.current, data.onCreateChatMessage as ChatMessage]);
+        if (!data.subscribeToMessagesFromParent) return;
+
+        setMessages(() => [...messagesRef.current,
+           data.subscribeToMessagesFromParent as ChatMessage]);
       },
       error: (error:any) => console.warn(error),
     });

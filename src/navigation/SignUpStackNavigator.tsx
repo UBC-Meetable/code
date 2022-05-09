@@ -2,7 +2,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import NewProfileScreen from "../screens/Auth/onboarding/NewProfileScreen";
 import UniScreen from "../screens/Auth/onboarding/UniScreen";
-import NewEditCourseScreen from "../screens/edit/NewEditCoursesScreen";
+import YourInterestsScreen from "../screens/Auth/onboarding/YourInterestsScreen";
+import NewEditCoursesScreen from "../screens/edit/NewEditCoursesScreen";
 import { SignUpParamList } from "../types";
 
 const SignUpStack = createStackNavigator<SignUpParamList>();
@@ -13,17 +14,27 @@ type SignUpStackNavigatorProps = {
 const SignUpStackNavigator = ({
   initRoute,
 }: SignUpStackNavigatorProps) => (
-  <SignUpStack.Navigator initialRouteName={initRoute}>
-    <SignUpStack.Screen name="UniScreen" options={{ headerShown: false }} component={UniScreen} />
+  <SignUpStack.Navigator
+    initialRouteName={initRoute}
+    screenOptions={{
+      headerShown: false,
+      cardStyle: { backgroundColor: 'transparent' }
+    }}>
+    <SignUpStack.Screen
+      name="UniScreen"
+      component={UniScreen}
+    />
     <SignUpStack.Screen
       name="NewProfileScreen"
-      options={{ headerShown: false }}
       component={NewProfileScreen}
     />
     <SignUpStack.Screen
-      name="NewEditCourses"
-      options={{ headerShown: false }}
-      component={NewEditCourseScreen}
+      name="YourInterestsScreen"
+      component={YourInterestsScreen}
+    />
+    <SignUpStack.Screen
+      name="NewEditCoursesScreen"
+      component={NewEditCoursesScreen}
     />
   </SignUpStack.Navigator>
 );

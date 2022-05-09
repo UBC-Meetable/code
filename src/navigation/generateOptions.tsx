@@ -3,7 +3,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import React from "react";
 import { Layout } from "@ui-kitten/components";
 import { Dimensions, StyleProp, ViewStyle } from "react-native";
-import ChatBackButton from "../components/Chat/ChatBackButton";
+import ChatBackButton from "../components/Chat_old/ChatBackButton";
 import Colors from "../constants/Colors";
 import { RootStackParamList } from "../types";
 import BubbleHeader from "../assets/images/chat-bubble.svg";

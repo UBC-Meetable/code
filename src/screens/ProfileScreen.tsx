@@ -7,12 +7,19 @@ import * as ImageManipulator from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
 import * as React from "react";
-import { StyleSheet, Modal } from "react-native";
+import { StyleSheet, Modal, ImageBackground } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { Chip } from "react-native-paper";
 import ProfilePicture from "../components/ProfilePicture";
+import GradientButton from "../components/ui/GradientButton";
 import Colors from "../constants/Colors";
 import { profileStyles } from "./Auth/onboarding/NewProfileScreen";
 import useUserProfile from "../hooks/useUserProfile";
+import useCourseGroups from "../hooks/useCourseGroups";
+import Tag from "../components/profile/Tag";
+import UserProfile from "../components/profile/UserProfile";
+import background from "../assets/images/meetable-background.jpeg";
+
 /** TODO: Cache user profile so we don't need to fetch so often. */
 
 interface LabelProps {
@@ -59,7 +66,6 @@ const ProfileScreen = () => {
   const uploadImage = (toUpload: ImageInfo) => {
     const imageName = toUpload.uri.replace(/^.*[\\/]/, "");
     const imageKey = `${user.id}/${imageName}`;
-    console.log(toUpload.uri);
 
     fetch(toUpload.uri).then((response) => {
       response.blob()
@@ -114,80 +120,84 @@ const ProfileScreen = () => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={[
-        profileStyles.container,
-        { paddingTop: headerHeight },
-      ]}
-      bounces={false}
-    >
-      <ProfilePicture imageKey={key} />
-      <Text style={styles.name}>
-        {`${firstName} ${lastName}`.trim()}
-      </Text>
-      <Text style={styles.email}>
-        {user.email || ""}
-      </Text>
-      <Button
-        appearance="ghost"
-        onPress={open}
+    <ImageBackground source={background} style={{ flex: 1 }}>
+      <ScrollView
+        contentContainerStyle={[
+          profileStyles.container,
+          { paddingTop: headerHeight, paddingHorizontal: 20 },
+        ]}
+        bounces={false}
       >
-        Edit Profile
-      </Button>
-      <Modal
-        animationType="slide"
-        presentationStyle="formSheet"
-        visible={visible}
-      >
-        <Layout style={styles.modal}>
-          <Text style={styles.title}>Edit Profile</Text>
-          <Layout
-            style={profileStyles.nameContainer}
-          >
-            <ProfilePicture
-              imageKey={key}
-              onPress={pickImage}
+        <UserProfile user={user} />
+
+        <GradientButton
+          onPress={open}
+          textStyle={{ fontSize: 20 }}
+          style={{
+            marginVertical: 50, borderRadius: 25, width: "100%",
+          }}
+        >
+          Edit Profile
+        </GradientButton>
+
+        <Modal
+          animationType="slide"
+          presentationStyle="formSheet"
+          visible={visible}
+        >
+          <Layout style={styles.modal}>
+            <Text style={styles.title}>Edit Profile</Text>
+            <Layout
+              style={{ alignItems: "center", backgroundColor: "transparent" }}
+            >
+              <ProfilePicture
+                imageKey={key}
+                onPress={pickImage}
+                editable
+              />
+            </Layout>
+            <Input
+              label={() => <Label title="First Name" />}
+              value={firstName || ""}
+              placeholder="First Name"
+              onChangeText={setFirstName}
+              style={profileStyles.inputStyle}
+              textStyle={profileStyles.inputTextStyle}
             />
+            <Input
+              label={() => <Label title="Last Name" />}
+              value={lastName || ""}
+              placeholder="Last Name"
+              onChangeText={setLastName}
+              style={profileStyles.inputStyle}
+              textStyle={profileStyles.inputTextStyle}
+            />
+            <Input
+              label={() => <Label title="Bio" />}
+              value={bio || ""}
+              placeholder="Write a short bio about yourself..."
+              multiline
+              scrollEnabled
+              numberOfLines={1}
+              maxLength={175}
+              onChangeText={setBio}
+              style={profileStyles.inputStyle}
+              textStyle={profileStyles.inputTextStyle}
+            />
+            <GradientButton onPress={save} style={{ marginTop: 16, borderRadius: 25 }}>
+              Save
+            </GradientButton>
+            <Button appearance="ghost" onPress={close}>Close</Button>
           </Layout>
-          <Input
-            label={() => <Label title="First Name" />}
-            value={firstName || ""}
-            placeholder="First Name"
-            onChangeText={setFirstName}
-            style={profileStyles.inputStyle}
-            textStyle={profileStyles.inputTextStyle}
-          />
-          <Input
-            label={() => <Label title="Last Name" />}
-            value={lastName || ""}
-            placeholder="Last Name"
-            onChangeText={setLastName}
-            style={profileStyles.inputStyle}
-            textStyle={profileStyles.inputTextStyle}
-          />
-          <Input
-            label={() => <Label title="Bio" />}
-            value={bio || ""}
-            placeholder="Write a short bio about yourself..."
-            multiline
-            scrollEnabled
-            numberOfLines={1}
-            maxLength={175}
-            onChangeText={setBio}
-            style={profileStyles.inputStyle}
-            textStyle={profileStyles.inputTextStyle}
-          />
-          <Button onPress={save} style={{ marginTop: 16 }}>Save</Button>
-          <Button appearance="ghost" onPress={close}>Close</Button>
-        </Layout>
-      </Modal>
-    </ScrollView>
+        </Modal>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   name: {
-    fontFamily: "Quicksand_600SemiBold",
+    fontFamily: "Poppins_600SemiBold",
     fontSize: 20,
     marginTop: 16,
     marginBottom: 8,
@@ -199,8 +209,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   title: {
-    fontFamily: "Quicksand_600SemiBold",
-    color: "#FBBA82",
+    fontFamily: "Poppins_600SemiBold",
+    fontSize: 18,
+    // color: "#FBBA82",
   },
 });
 

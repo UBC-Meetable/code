@@ -1,26 +1,29 @@
 import { Layout } from "@ui-kitten/components";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { User } from "../../API";
 import useAuthenticatedUser from "../../hooks/useAuthenticatedUser";
+import useMessages from "../../hooks/useMessages";
 import { ChatMessage, CourseGroup } from "../../types";
 import PictureStack from "../PictureStack";
 import MessagePreview from "./MessagePreview";
 
 type CourseGroupBubbleProps = {
     courseGroup: CourseGroup,
-    messages: ChatMessage[],
+    // messages?: ChatMessage[],
     moveToGroupScreen: () => void;
 }
 
 const CourseGroupBubble = ({
-  courseGroup, moveToGroupScreen, messages,
+  courseGroup, moveToGroupScreen,
 }: CourseGroupBubbleProps) => {
   const {
     groupID, users, title = groupID,
   } = courseGroup;
 
+  const { messages } = useMessages();
   const me = useAuthenticatedUser();
   const userSet = new Set<User>();
   const userIdSet = new Set<string>();
@@ -48,46 +51,50 @@ const CourseGroupBubble = ({
 
   if (!groupID || !users || !title) return null;
   return (
-    <TouchableOpacity style={groupBubbleStyles.bubble} onPress={() => moveToGroupScreen()}>
-      <Layout style={groupBubbleStyles.topContainer}>
-        <Layout style={groupBubbleStyles.textContainer}>
-          <Text style={groupBubbleStyles.bubbleText}>
-            {title || groupID}
-            {" "}
-            {courseGroup.code}
-          </Text>
-        </Layout>
-      </Layout>
-
-      <Layout style={groupBubbleStyles.bottomContainer}>
-        <Layout style={groupBubbleStyles.bottomTextContainer}>
-          <MessagePreview messages={messages} />
-        </Layout>
-        <Layout style={groupBubbleStyles.bottomPhotoContainer}>
-          <TouchableWithoutFeedback
-            onPress={moveToGroupScreen}
-            style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}
-          >
-            <PictureStack users={userPile} />
-          </TouchableWithoutFeedback>
+    <TouchableOpacity onPress={() => moveToGroupScreen()}>
+      <LinearGradient
+        start={{ x: 0.3, y: 0 }}
+        end={{ x: 1, y: 0 }}
+        colors={["rgba(255, 255, 255, 0.6)", "rgba(255, 255, 255, 1)"]}
+        style={groupBubbleStyles.bubble}
+      >
+        <Layout style={groupBubbleStyles.topContainer}>
+          <Layout style={groupBubbleStyles.textContainer}>
+            <Text style={groupBubbleStyles.bubbleText}>
+              {title || groupID}
+              {" "}
+              {courseGroup.code}
+            </Text>
+          </Layout>
         </Layout>
 
-      </Layout>
+        <Layout style={groupBubbleStyles.bottomContainer}>
+          <Layout style={groupBubbleStyles.bottomTextContainer}>
+            <MessagePreview messages={messages} />
+          </Layout>
+          <Layout style={groupBubbleStyles.bottomPhotoContainer}>
+            <TouchableWithoutFeedback
+              onPress={moveToGroupScreen}
+              style={[groupBubbleStyles.bubbleSection, groupBubbleStyles.nameSection]}
+            >
+              <PictureStack users={userPile} />
+            </TouchableWithoutFeedback>
+          </Layout>
+        </Layout>
+      </LinearGradient>
     </TouchableOpacity>
   );
 };
 
 export const groupBubbleStyles = StyleSheet.create({
   bubble: {
-    minHeight: 100,
-    height: 100,
+    minHeight: 90,
+    height: 90,
     display: "flex",
     margin: 1,
+    marginBottom: 12,
     padding: 5,
     borderRadius: 24,
-    backgroundColor: "#E6F4F9",
-    borderWidth: 1,
-    borderColor: "#CACACA",
     elevation: 10,
     position: "relative",
   },

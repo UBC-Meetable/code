@@ -2,10 +2,12 @@ import { CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { List, Spinner } from "@ui-kitten/components";
 import React, { useContext } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import { GroupType } from "../API";
-import CourseGroupBubble from "../components/Chat/CourseGroupBubble";
+import CourseGroupBubble from "../components/Chat_old/CourseGroupBubble";
 import CourseGroupsContext from "../context/CourseGroupsContext";
+import { MessageProvider } from "../context/MessageContext";
+import useCourseGroups from "../hooks/useCourseGroups";
 import {
   ChatMessage, CourseGroup, RootStackParamList,
 } from "../types";
@@ -13,10 +15,13 @@ import {
 const CourseGroups = ({
   navigation,
 }: {
-  navigation: StackNavigationProp<RootStackParamList, "Home">;
+  navigation: StackNavigationProp<RootStackParamList>;
 }) => {
-  const groups = useContext(CourseGroupsContext);
+  const { groups, loading } = useCourseGroups();
 
+  if (loading) {
+    return <Spinner />;
+  }
   const moveToGroupScreen = (
     groupTitle: string,
     groupID: string,
@@ -34,37 +39,45 @@ const CourseGroups = ({
 
   const renderItem = ({ item }: { item: CourseGroup }) => {
     if (!item.groupID) return <Spinner />;
-    const messages = item.messages?.items as ChatMessage[];
     const itemName = `${item.title} ${item.code}`;
     return (
-      <CourseGroupBubble
-        courseGroup={item}
-        messages={messages}
-        moveToGroupScreen={() => moveToGroupScreen(
-          itemName,
+      <MessageProvider groupID={item.groupID}>
+        <CourseGroupBubble
+          courseGroup={item}
+          moveToGroupScreen={() => moveToGroupScreen(
+            itemName,
           item.groupID!,
           GroupType.COURSE,
-        )}
-      />
+          )}
+        />
+      </MessageProvider>
     );
   };
 
   return (
-    <List
-      bounces={false}
-      // refreshControl={
-      //   <RefreshControl refreshing={loading} />
-      // }
-      style={[styles.card]}
-      data={[...groups]}
-      renderItem={renderItem}
-    />
+    groups.length
+      ? (
+        <List
+          bounces={false}
+          style={[styles.card]}
+          data={groups}
+          renderItem={renderItem}
+        />
+      ) : (
+        <View style={{ padding: 10, width: "100%", marginVertical: 10 }}>
+          <Text style={{
+            margin: 10, textAlign: "center", color: "#404040", fontSize: 15,
+          }}
+          >
+            No registered courses
+          </Text>
+        </View>
+      )
   );
 };
 
 const styles = StyleSheet.create({
   card: {
-    // height: "100%",
     overflow: "scroll",
     backgroundColor: "transparent",
   },

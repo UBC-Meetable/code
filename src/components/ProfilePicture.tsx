@@ -1,16 +1,17 @@
 import { Layout, Spinner, StyleType } from "@ui-kitten/components";
+import { Analytics, Storage } from "aws-amplify";
 import * as FileSystem from "expo-file-system";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import { Analytics, Storage } from "aws-amplify";
 import noAvatar from "../assets/images/noavatar.png";
 import { ProfilePictureDimensions, ProfilePictureSize } from "../types";
 
 type ProfilePictureProps = {
-    imageKey: string;
-    size?: ProfilePictureSize;
-    onPress?: () => void;
-    imageStyle?: StyleType;
+  imageKey: string | null | undefined;
+  size?: ProfilePictureSize;
+  onPress?: () => void;
+  imageStyle?: StyleType;
+  editable?: boolean;
 };
 
 const ProfilePicture = ({
@@ -18,15 +19,16 @@ const ProfilePicture = ({
   size = ProfilePictureSize.PROFILE,
   onPress,
   imageStyle = {},
-}:ProfilePictureProps) => {
+  editable = false,
+}: ProfilePictureProps) => {
   const [uri, setUri] = useState("");
   const [imageLoading, setImageLoading] = useState(false);
 
   /** Get image from cache first, download it if there is an update  */
   useEffect(() => {
-    const checkCache = async () => {
+    const checkCache = async (key: string) => {
       setImageLoading(true);
-      const safePathName = imageKey.replace(/^.*[\\/]/, "");
+      const safePathName = key.replace(/^.*[\\/]/, "");
       const path = `${FileSystem.cacheDirectory}${safePathName}`;
       const image = await FileSystem.getInfoAsync(path);
       if (image.exists) {
@@ -36,7 +38,7 @@ const ProfilePicture = ({
       }
       console.log("Got from s3");
       setTimeout(async () => {
-        const s3Uri = await Storage.get(imageKey, { download: false, expires: 604800 })
+        const s3Uri = await Storage.get(key, { download: false, expires: 604800 })
           .catch((error) => console.log(error)) as string;
         Image.getSize(s3Uri, async () => {
           const newImage = await FileSystem.downloadAsync(s3Uri, path);
@@ -51,10 +53,10 @@ const ProfilePicture = ({
       }, 1000);
     };
 
-    if (imageKey) { checkCache(); }
+    if (imageKey) { checkCache(imageKey); }
   }, [imageKey]);
 
-  let sizeObj: {height: number, width: number};
+  let sizeObj: { height: number, width: number };
   /** TODO: Maybe have these not as static sizes? */
   switch (size) {
   case ProfilePictureSize.PROFILE:
@@ -65,6 +67,9 @@ const ProfilePicture = ({
     break;
   case ProfilePictureSize.MESSAGE:
     sizeObj = ProfilePictureDimensions.MESSAGE;
+    break;
+  case ProfilePictureSize.FRIEND:
+    sizeObj = ProfilePictureDimensions.FRIEND;
     break;
   case ProfilePictureSize.TOP:
     sizeObj = ProfilePictureDimensions.TOP;

@@ -1,31 +1,37 @@
-import Auth from "@aws-amplify/auth";
+import { Auth } from "@aws-amplify/auth";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Layout } from "@ui-kitten/components";
 import React from "react";
 import { StyleSheet } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { CommonActions } from "@react-navigation/core";
 import PrimaryButton from "../components/ui/PrimaryButton";
-import Colors from "../constants/Colors";
-import { RootStackParamList } from "../types";
+import GradientButton from "../components/ui/GradientButton";
+import { ProfileStackParamList } from "../types";
 
-const ProfileSettingsScreen = ({ navigation }:{ navigation: StackNavigationProp<RootStackParamList, "ProfileSettings">; }) => {
+const ProfileSettingsScreen = ({ navigation }: {
+  navigation: StackNavigationProp<ProfileStackParamList>;
+}) => {
   const handleLogout = async () => {
     Auth.signOut();
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "Home" }],
-    });
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: "Home" },
+        ],
+      }),
+    );
   };
 
   return (
     <SafeAreaView style={styles.root}>
-      <Layout style={styles.container} />
-      <ScrollView contentContainerStyle={styles.selectionsContainer} />
-      <PrimaryButton
-        status="info"
-        onPress={handleLogout}
-      >
+      <Layout style={{ backgroundColor: "transparent", flex: 1, width: "90%" }}>
+        <GradientButton onPress={() => navigation.push("EditInterests")} style={{ marginTop: 50, width: "100%", borderRadius: 25 }}>
+          Edit Interests
+        </GradientButton>
+      </Layout>
+      <PrimaryButton status="info" onPress={handleLogout}>
         Log Out
       </PrimaryButton>
     </SafeAreaView>
@@ -37,29 +43,8 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     height: "100%",
-    justifyContent: "space-around",
-    alignItems: "center",
-    backgroundColor: Colors.theme.lightCreme,
-  },
-  container: {
-    width: "100%",
-    marginTop: 10,
-    marginLeft: 10,
-    marginRight: 10,
-    marginBottom: 10,
-    backgroundColor: Colors.theme.lightCreme,
-  },
-  selectionsContainer: {
-    display: "flex",
-    flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "75%",
-    backgroundColor: Colors.theme.lightCreme,
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10,
-    marginRight: 10,
   },
 });
 

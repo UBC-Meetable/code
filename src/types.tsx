@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 /* eslint-disable camelcase */
 import { ImageInfo } from "expo-image-picker/build/ImagePicker.types";
@@ -26,9 +27,8 @@ export type RootStackParamList = {
   Tutorial: undefined;
   Login: undefined;
   Signup: undefined;
-  Chat: {
+  ChatScreen: {
     groupID: string;
-    groupType: GroupType;
     groupTitle: string;
   };
   Quiz: {
@@ -38,6 +38,10 @@ export type RootStackParamList = {
     groupID: string;
     groupType: GroupType;
     groupTitle: string;
+  };
+  Event: {
+    eventID: string;
+    eventTitle: string;
   };
   UniScreen: undefined;
   EditCourses: undefined;
@@ -74,13 +78,16 @@ export type FriendGroupStackScreens = {
   Quiz: undefined;
 };
 
-export type TabTwoParamList = {
+export type ProfileStackParamList = {
   ProfileScreen: undefined;
+  ProfileSettings: undefined;
+  EditInterests: undefined;
 };
 
 export type User =
   {
     at_hash: string;
+    interests: string[];
     aud: string;
     exp: number;
     family_name: string;
@@ -121,7 +128,8 @@ export type QuestionType = {
 export type SignUpParamList = {
   UniScreen: undefined;
   NewProfileScreen: undefined;
-  NewEditCourses: undefined;
+  NewEditCoursesScreen: undefined;
+  YourInterestsScreen: undefined;
 };
 
 export type CognitoUser = {
@@ -166,6 +174,7 @@ export enum ProfilePictureSize {
   "PROFILE",
   "BUBBLE",
   "MESSAGE",
+  "FRIEND",
   "TOP"
 }
 
@@ -173,6 +182,7 @@ export const ProfilePictureDimensions = {
   PROFILE: { height: 125, width: 125 },
   BUBBLE: { height: 38, width: 38 },
   MESSAGE: { height: 30, width: 30 },
+  FRIEND: { height: 70, width: 70 },
   TOP: { height: 50, width: 50 },
 };
 

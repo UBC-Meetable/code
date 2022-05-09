@@ -5,8 +5,8 @@ import {
 } from "react-native";
 import { ChatMessage, FriendGroup } from "../../API";
 import Colors from "../../constants/Colors";
-import { groupBubbleStyles } from "../Chat/CourseGroupBubble";
-import MessagePreview from "../Chat/MessagePreview";
+import { groupBubbleStyles } from "../Chat_old/CourseGroupBubble";
+import MessagePreview from "../Chat_old/MessagePreview";
 import PictureStack from "../PictureStack";
 
 type FriendGroupBubbleProps = {

@@ -1,26 +1,23 @@
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Button, Layout, Text } from "@ui-kitten/components";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
-import Chat from "../components/Chat/Chat";
+import { ImageBackground, StyleSheet } from "react-native";
+import Chat from "../components/Chat_old/Chat";
 import CourseGroup from "../components/courseGroup/CourseGroup";
 import Colors from "../constants/Colors";
 import { Ionicon } from "../navigation/ProfileStackNavigator";
 import { GroupType, RootStackParamList } from "../types";
+import background from "../assets/images/meetable-background.jpeg";
 
 type HeaderComponentProps = {
-  navigation: StackNavigationProp<RootStackParamList, "Group">;
+  navigation: StackNavigationProp<RootStackParamList>;
 };
 
-const HeaderLeft = ({ navigation }: HeaderComponentProps) => {
+export const HeaderLeft = ({ navigation }: HeaderComponentProps) => {
   return (
     <Layout style={styles.headerLeftRoot}>
-      <Button
-        onPress={() => navigation.popToTop()}
-        style={styles.iconButton}
-        appearance="ghost"
-        accessoryLeft={<Ionicon name="home" size={20} />}
-      />
+      <Ionicon name="ios-chevron-back" size={32} onPress={() => navigation.pop()} />
     </Layout>
   );
 };
@@ -37,15 +34,14 @@ const HeaderRight = ({
 }: HeaderRightProps) => {
   return (
     <Layout style={styles.headerLeftRoot}>
-      <Button
-        onPress={() => navigation.navigate("Chat", {
+      <Ionicon
+        name="chatbox"
+        size={25}
+        style={styles.iconButton}
+        onPress={() => navigation.navigate("ChatScreen", {
           groupID,
           groupTitle,
-          groupType,
         })}
-        style={styles.iconButton}
-        appearance="ghost"
-        accessoryLeft={<Ionicon name="chatbox" size={20} />}
       />
     </Layout>
   );
@@ -65,7 +61,7 @@ const GroupScreen = ({
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      headerTitleAlign: "left",
+      headerTitleAlign: "center",
       headerTitleStyle: styles.headerTitle,
       headerTransparent: true,
       headerTitle: groupTitle,
@@ -83,9 +79,11 @@ const GroupScreen = ({
     });
   }, [groupTitle, groupType]);
   return (
-    <Layout style={styles.root}>
-      <CourseGroup />
-    </Layout>
+    <ImageBackground source={background} style={{ flex: 1 }}>
+      <Layout style={styles.root}>
+        <CourseGroup groupTitle={groupTitle} courseId={groupID} navigation={navigation} />
+      </Layout>
+    </ImageBackground>
   );
 };
 
@@ -96,26 +94,17 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: "space-evenly",
     alignItems: "center",
-    backgroundColor: Colors.theme.lightCreme,
+    backgroundColor: Colors.theme.transparent,
   },
   iconButton: {
-    width: 32,
-    height: 32,
-    borderRadius: 100,
-    marginRight: 10,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    marginRight: 15,
   },
   headerLeftRoot: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "transparent",
   },
   headerTitle: {
-    fontSize: 30,
-    fontFamily: "Poppins_600SemiBold",
+    fontFamily: "Poppins_700Bold",
+    fontSize: 32,
   },
 });
 

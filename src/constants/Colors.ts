@@ -18,9 +18,11 @@ export default {
     error: "#ff0033",
   },
   theme: {
-    transparent: "#0000",
+    grey: "#6A6A6A",
+    blue: "#3AB7F4",
+    transparent: "transparent",
     background: "#fff",
-    creme: "#FEEDDE",
+    creme: "#FFF8E6",
     lightCreme: "#FFF8F3",
     brightOrange: "#FFBC01",
   },
